@@ -1,0 +1,167 @@
+<?php
+############################################################################################
+####  Name:             go_freshdesk.php                                                ####
+####  Type: 		    ci views                                                        ####
+####  Version:          3.0                                                             ####
+####  Copyright:        GOAutoDial Inc. - Christopher Lomuntad <chris@goautodial.com>   ####
+####  License:          AGPLv2                                                          ####
+############################################################################################
+?>
+<style>
+    .error{
+       color: red;
+       font-size: 11px;
+       vertical-align: 10px;
+    }
+</style>
+
+
+<div id='outbody' class="wrap">
+<div id="icon-support" class="icon32">
+</div>
+<h2><? echo $bannertitle; ?></h2>
+
+	<div id="dashboard-widgets-wrap">
+		<div id="dashboard-widgets" class="metabox-holder">
+			
+			<!-- START LEFT WIDGETS -->
+			<div class="postbox-container" style="width:59.5%;">
+				<div class="meta-box-sortables ui-sortable">
+					
+					<!-- Listings of all submitted tickets -->
+					<div id="freshdesk_widget" class="postbox">
+						<div class="handlediv" title="Click to toggle">
+							<br>
+						</div>
+						<h3 class="hndle">
+							<span>Submitted Tickets</span>
+						</h3>
+						<div class="inside">
+							
+							<p class="submenu" align="center"><a class="submenu" href="javascript:filterticket('jeff@goautodial.com',1);" rel="all">All Tickets</a> &nbsp;&diams;&nbsp; <a class="submenu" href="javascript:filterticket('jeff@goautodial.com',2)" rel="open_pending">Open Or Pending</a> &nbsp;&diams;&nbsp; <a class="submenu" href="javascript:filterticket('jeff@;goautodial.com',3);" rel="resolved_closed">Resolved Or Closed</a></p>
+							<div class="table table_submitted_tickets" id="table_submitted_tickets">
+							</div>
+							
+							
+							<!-- <div class="widgets-content-text">
+							<br class="clear">								
+
+							<br class="clear"> -->
+							<!--
+							<p>
+								Configure this widget's (today's status) settings.
+								<a href="" class="button">Configure</a>
+							</p>
+							<p>
+								You are using GoAutoDial 3.0.1.
+								<a href="" class="button">Update to 3.1.3</a>
+							</p>
+							-->
+							<!-- </div> -->
+						        <br class="clear">
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<!-- END LEFT WIDGETS -->
+	
+			<!-- START RIGHT WIDGETS -->
+			<div class="postbox-container" style="width:39.5%;">
+				<div class="meta-box-sortables ui-sortable">
+
+					<!-- Form for creating tickets -->
+					<div id="freshdesk_widget" class="postbox ">
+						<div class="handlediv" title="Click to toggle">
+							<br>
+						</div>
+						<h3 class="hndle">
+							<span>Create A New Ticket</span>
+						</h3>
+						<div class="inside">
+                                                      <form id="newticket" action="go_support">
+                                                      <p>VOIP/Cloud Account Number *</p>
+                                                      <input type="text" name="accountNum" size="60" id="accountNum">
+                                                      <p>First Name *</p>
+                                                      <input type="text" name="firstName" size="60" id="firstName">
+                                                      <p>Last Name *</p>
+                                                      <input type="text" name="lastName" size="60" id="lastName">
+                                                      <p>Email *</p>
+                                                      <input type="text" name="accntemail" size="60" id="accntemail">
+                                                      <p>Subject *</p>
+                                                      <input type="text" name="subject" size="60" id="subject">
+                                                      <div >
+                                                          <div style="float:left;width:50%">
+                                                          <p>Type *</p>
+                                                          <select name="type" id="type">
+                                                              <option>Paid Support</option>
+                                                              <option>Question's</option>
+                                                              <option>Dialer Issue</option>
+                                                              <option>Phone Registration</option>
+                                                              <option>VOIP Issue</option>
+                                                          </select>
+                                                          </div>
+                                                          <div style="float:left;width:50%">
+                                                          <p>Group *</p>
+                                                          <select id="group" name="group">
+                                                              <option value="">...</option>
+                                                              <option value="20572">Billing</option>
+                                                              <option value="20551">Sales</option>
+                                                              <option value="20549">Support</option>
+                                                              <option value="23822">VOIP</option>
+                                                          </select>
+                                                          </div>
+                                                      </div>
+                                                      <br class="clear">
+                                                      <p>Description *</p>
+                                                        <textarea name="description" id="description" cols="55" ></textarea> 
+                                                      <div style="text-align:right;margin-top:10px;">
+                                                           <input type="submit" value="Submit" id="submit">
+                                                      </div>
+                                                      </form>
+						      <br class="clear">
+						</div>
+					</div>
+
+					</div>	
+				</div>
+			</div>
+			<!-- END RIGHT WIDGETS -->
+	
+			<div class="postbox-container" style="display:none;width:49.5%;">
+				<div style="" id="column3-sortables" class="meta-box-sortables ui-sortable">
+				</div>
+			</div>
+			<div class="postbox-container" style="display:none;width:49.5%;">
+				<div style="" id="column4-sortables" class="meta-box-sortables ui-sortable">
+				</div>
+			</div>
+		</div><!-- dashboard-widgets -->
+	</div><!-- dashboard-widgets-wrap -->
+							<br /><br style="font-size:380px" />
+</div><!-- wrap -->
+
+
+							<?
+echo "<div id='popup_analytics_all' class='popup_block'>\n";
+?>
+
+			<div class="table go_dashboard_analytics_in_popup_cmonth_daily" id="go_dashboard_analytics_in_popup_cmonth_daily">
+			</div>
+	
+			<div class="table go_dashboard_analytics_in_popup_weekly" id="go_dashboard_analytics_in_popup_weekly">
+			</div>
+
+			<div class="table go_dashboard_analytics_in_popup_hourly" id="go_dashboard_analytics_in_popup_hourly">
+			</div>
+
+<?
+echo "</div>\n";
+?>
+
+
+
+<div class="clear"></div></div><!-- wpbody-content -->
+<div class="clear"></div></div><!-- wpbody -->
+<div class="clear"></div></div><!-- wpcontent -->
+</div><!-- wpwrap -->

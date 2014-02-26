@@ -1,0 +1,16 @@
+/*
+############################################################################################
+####  Name:             go_script_ce.css                                                ####
+####  Type:             ci view (css for script)                                        ####
+####  Version:          3.0                                                             ####
+####  Copyright:        GOAutoDial Inc. - Franco Hora <info@goautodial.com>             ####
+####  License:          AGPLv2                                                          ####
+############################################################################################
+*/
+
+.server-settings{width:50%;float:center;margin:auto;padding:10px 20px;}
+.settings-label{width:50%;float:left;text-align:right;padding-right:30px;padding-top:5px;}
+.settings-value{width:40%;float:left;left:10px;padding-top:5px;}
+.settings-value select{padding-top:0;}
+.settings-separator{font-size:1pt;border-top:1px solid #dfdfdf;margin:5px 10px 0;}
+.settings-action{text-align:center;padding-top:5px;}

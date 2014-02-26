@@ -1,0 +1,87 @@
+		<script language="javascript">
+		$(document).ready(function ()
+			{
+				LoadSelected() ;
+				mydialog.SetOkButton( true ) ;
+
+SelectField( 'cquestions' ) ;
+	});
+
+	var eSelected = dialog.Selection.GetSelectedElement() ;
+
+	function LoadSelected()
+	{
+if ( !eSelected )
+	return ;
+if ( eSelected.tagName == 'SPAN' && eSelected._fckLimeReplacementFields )
+	 document.getElementById('cquestions').value = eSelected._fckLimeReplacementFields ;
+else
+	eSelected == null ;
+	}
+	function Ok()
+	{
+var sValue = document.getElementById('cquestions').value ;
+FCKLimeReplacementFieldss.Add( sValue ) ;
+return true ;
+	}
+	</script>
+</head>
+	<body scroll="no" style="OVERFLOW: hidden;">
+<table height="100%" cellSpacing="0" cellPadding="0" width="100%" border="0">
+	<tr>
+<td>
+	<select name='cquestions' id='cquestions' style='font-family:verdana; background-color: #FFFFFF; font-size:10; border: 0px;width:99%;' size='15' ondblclick='Ok();'>
+<optgroup label='Standard fields'>
+	<option value='TOKEN:FIRSTNAME' title='First name from token'>First name from token</option>
+	<option value='TOKEN:LASTNAME' title='Last name from token'>Last name from token</option>
+	<option value='TOKEN:EMAIL' title='Email from the token'>Email from the token</option>
+	<option value='TOKEN:USESLEFT' title='Uses left'>Uses left</option>
+	<option value='EXPIRY' title='Survey expiration date'>Survey expiration date</option>
+</optgroup>
+<optgroup label=' '>
+	<option value='' title=''> </option>
+</optgroup>
+<optgroup label='GoAutoDial/Vicidial Fields'>
+	<option value='GO_LEAD_ID'                 title='LEAD ID                '>  LEAD ID                 </option>
+	<option value='GO_ENTRY_DATE'              title='ENTRY DATE             '>  ENTRY DATE              </option>
+	<option value='GO_MODIFY_DATE'             title='MODIFY DATE            '>  MODIFY DATE             </option>
+	<option value='GO_STATUS'                  title='STATUS                 '>  STATUS                  </option>
+	<option value='GO_USER'                    title='USER                   '>  USER                    </option>
+	<option value='GO_VENDOR_LEAD_CODE'        title='VENDOR LEAD CODE       '>  VENDOR LEAD CODE        </option>
+	<option value='GO_SOURCE_ID'               title='SOURCE ID              '>  SOURCE ID               </option>
+	<option value='GO_LIST_ID'                 title='LIST ID                '>  LIST ID                 </option>
+	<option value='GO_GMT_OFFSET_NOW'          title='GMT OFFSET NOW         '>  GMT OFFSET NOW          </option>
+	<option value='GO_CALLED_SINCE_LAST_RESET' title='CALLED SINCE LAST RESET'>  CALLED SINCE LAST RESET </option>
+	<option value='GO_PHONE_CODE'              title='PHONE CODE             '>  PHONE CODE              </option>
+	<option value='GO_PHONE_NUMBER'            title='PHONE NUMBER           '>  PHONE NUMBER            </option>
+	<option value='GO_TITLE'                   title='TITLE                  '>  TITLE                   </option>
+	<option value='GO_FIRST_NAME'              title='FIRST NAME             '>  FIRST NAME              </option>
+	<option value='GO_MIDDLE_INITIAL'          title='MIDDLE INITIAL         '>  MIDDLE INITIAL          </option>
+	<option value='GO_LAST_NAME'               title='LAST NAME              '>  LAST NAME               </option>
+	<option value='GO_ADDRESS1'                title='ADDRESS1               '>  ADDRESS1                </option>
+	<option value='GO_ADDRESS2'                title='ADDRESS2               '>  ADDRESS2                </option>
+	<option value='GO_ADDRESS3'                title='ADDRESS3               '>  ADDRESS3                </option>
+	<option value='GO_CITY'                    title='CITY                   '>  CITY                    </option>
+	<option value='GO_STATE'                   title='STATE                  '>  STATE                   </option>
+	<option value='GO_PROVINCE'                title='PROVINCE               '>  PROVINCE                </option>
+	<option value='GO_POSTAL_CODE'             title='POSTAL CODE            '>  POSTAL CODE             </option>
+	<option value='GO_COUNTRY_CODE'            title='COUNTRY CODE           '>  COUNTRY CODE            </option>
+	<option value='GO_GENDER'                  title='GENDER                 '>  GENDER                  </option>
+	<option value='GO_DATE_OF_BIRTH'           title='DATE OF BIRTH          '>  DATE OF BIRTH           </option>
+	<option value='GO_ALT_PHONE'               title='ALT PHONE              '>  ALT PHONE               </option>
+	<option value='GO_EMAIL'                   title='EMAIL                  '>  EMAIL                   </option>
+	<option value='GO_SECURITY_PHRASE'         title='SECURITY PHRASE        '>  SECURITY PHRASE         </option>
+	<option value='GO_COMMENTS'                title='COMMENTS               '>  COMMENTS                </option>
+	<option value='GO_CALLED_COUNT'            title='CALLED COUNT           '>  CALLED COUNT            </option>
+	<option value='GO_LAST_LOCAL_CALL_TIME'    title='LAST LOCAL CALL TIME   '>  LAST LOCAL CALL TIME    </option>
+	<option value='GO_RANK'                    title='RANK                   '>  RANK                    </option>
+	<option value='GO_OWNER'                   title='OWNER                  '>  OWNER                   </option>
+	<option value='GO_ENTRY_LIST_ID'           title='ENTRY LIST ID          '>  ENTRY LIST ID           </option>
+</optgroup>
+<optgroup label=' '>
+	<option value='' title=''> </option>
+</optgroup>
+	</select>
+</td>
+	</tr>
+</table>

@@ -1,0 +1,458 @@
+/*
+############################################################################################
+####  Name:             goautodial.css                                                  ####
+####  Version:          2.0                                                             ####
+####  Copyright:        GOAutoDial Inc. - Januarius Manipol <januarius@goautodial.com>  ####
+####                    Modified by     - Franco Hora <franco@goautodial.com>           ####
+####  License:          AGPLv2                                                          ####
+############################################################################################
+*/
+
+@charset "UTF-8";
+
+#gomenu {
+   position:relative;
+   z-index:100;
+   height:auto;
+   top: 120px;
+   font: bold 14px/24px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   color: #6A6A6A;
+   text-transform: uppercase;
+}
+
+#gomenu .gomenu {
+    position:absolute;
+}
+
+#gomenu * {
+    list-style:none;
+    border:0;
+    padding:0;
+    margin:0;
+}
+
+#gomenu a {
+    display:block;
+    padding:7px 14px 7px 14px;
+    white-space:nowrap;
+}
+
+#gomenu li {
+    float:right;
+}
+
+#gomenu li li {
+    float:none;
+}
+
+#gomenu div {
+    visibility:hidden;
+    position:absolute;
+}
+
+#gomenu li:hover>div { visibility:visible; }
+
+#gomenu a {
+    text-decoration:none;
+      color: #6A6A6A;
+    position:relative;
+    z-index:77;
+}
+
+#gomenu a:hover {
+    /*background:url(images/back.png);*/
+    color: #008000;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#getstartedbutton a:hover,
+#helpbutton a:hover,
+#welcomebutton a:hover  {
+}
+
+
+
+
+
+
+
+
+#helptitletext p,
+#welcometitletext p,
+#getstartedtitletext p  {
+   font: bold 18px/29px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   margin: 0px;
+   color: #303030;
+   text-align: justify;
+}
+
+
+#helptitletext a,
+#welcometitletext a,
+#getstartedtitletext a  {
+   font: bold 18px/29px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   margin: 0px;
+   color: #303030;
+   text-align: justify;
+   font-style: Normal;
+   text-decoration: none;
+}
+
+
+
+
+
+#helpbodytext p,
+#welcomebodytext p,
+#getstartedbodytext p  {
+   font: 12px/24px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   margin: 0px;
+   text-align: left;
+}
+#getstartedbodytext,
+#helpbodytext,
+#welcomebodytext  {
+   visibility: visible;
+   position: absolute;
+   top: 515px;
+   z-index: 1;
+   width: 200px;
+}
+#welcomebodytext p a:hover  {
+   font-style: italic;
+}
+
+#bodytext p  {
+   font: 12px/14px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   margin: 0px;
+   padding-bottom: 10px;
+   color: #696969;
+}
+#welcomebodytext  {
+   left: 97px;
+}
+#getstartedbodytext p  {
+   color: #404040;
+}
+#helpbodytext p  {
+   color: #404040;
+}
+#welcomebodytext a  {
+   font-style: Normal;
+   color: #78A407;
+   text-decoration: none;
+}
+#getstartedbodytext  {
+   left: 393px;
+}
+#welcomebodytext p  {
+   color: #78A407;
+}
+#helpbodytext  {
+   left: 693px;
+}
+#bannertext p  {
+   font: bold 36px/43px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   margin: 0px;
+   text-align: left;
+   color: #FEFEFD;
+}
+#bannertext  {
+   visibility: visible;
+   position: absolute;
+   left: 7px;
+   top: 210px;
+   z-index: 1;
+   width: 498px;
+}
+
+#footer{margin-bottom:0px;}
+#footer,#footer a{color: #636363; font-size:12px;font-family:“Lucida Sans Unicode”, Lucida Grande, sans-serif;}
+#footer p{color: #636363; margin:0;padding:15px;line-height:20px;}
+#footer a{font-weight: bold; color: #636363; text-decoration:none;}
+
+#footer
+    {
+        clear:both;
+        position:absolute;
+        min-width: 1024px;
+	width: 100%;
+text-align: center;
+bottom: 0px;
+    }
+    
+    
+#footer
+    {
+      border-top:#5c7a00;
+      background:-moz-linear-gradient(bottom,#CAD9B1,#F7FFE9);
+      background:-webkit-gradient(linear,left bottom,left top,from(#FFFFFF),to(#CAD9B1));
+    }
+    
+    
+#footer a:hover
+    {
+        color:#008000;
+        text-decoration:underline!important;
+    }
+    
+
+
+
+
+
+
+
+
+#bodytext p  {
+   text-align: center;
+   font-style: italic;
+}
+#bodytext  {
+   visibility: visible;
+   position: absolute;
+   left: 30px;
+   top: 800px;
+   z-index: 1;
+   width: 890px;
+}
+
+
+
+
+
+
+
+
+#getstartedtitletext  {
+   visibility: visible;
+   position: absolute;
+   left: 386px;
+   top: 472px;
+   z-index: 1;
+   width: 235px;
+}
+#welcometitletext  {
+   visibility: visible;
+   position: absolute;
+   left: 90px;
+   top: 472px;
+   z-index: 1;
+   width: 144px;
+}
+#helptitletext  {
+   visibility: visible;
+   position: absolute;
+   left: 686px;
+   top: 472px;
+   z-index: 1;
+   width: 165px;
+}
+
+
+
+
+
+
+
+
+#welcomebutton a  {
+   background: url(../img/welcomebutton.png) no-repeat 0% 0px;
+   display: block;
+   height: 70px;
+   width: 70px;
+   font-size: 42px;
+   line-height: 42px;
+}
+#getstartedbutton a  {
+   background: url(../img/getstartedbutton.png) no-repeat 0% 0px;
+   display: block;
+   height: 70px;
+   width: 70px;
+   font-size: 41px;
+   line-height: 41px;
+}
+#helpbutton a  {
+   background: url(../img/helpbutton.png) no-repeat 0% 0px;
+   display: block;
+   height: 70px;
+   width: 70px;
+   font-size: 46px;
+   line-height: 46px;
+}
+
+
+
+
+
+
+
+
+#welcomebutton  {
+   visibility: visible;
+   position: absolute;
+   left: 25px;
+   top: 460px;
+   z-index: 1;
+   width: 57px;
+   height: 42px;
+}
+#getstartedbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 321px;
+   top: 460px;
+   z-index: 1;
+   width: 57px;
+   height: 41px;
+}
+#helpbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 622px;
+   top: 459px;
+   z-index: 1;
+   width: 57px;
+   height: 46px;
+}
+
+
+
+
+
+
+
+
+#helpbox,
+#welcomebox,
+#getstartedbox  {
+   background: url(../img/welcomebox.png) no-repeat;
+   visibility: visible;
+   position: absolute;
+   top: 510px;
+   z-index: 1;
+   width: 232px;
+   height: 215px;
+}
+#getstartedbox  {
+   left: 378px;
+}
+#welcomebox  {
+   left: 82px;
+}
+#helpbox  {
+   left: 678px;
+}
+
+
+
+
+#contents  {
+   background: url(../img/contents.png) no-repeat;
+   visibility: visible;
+   position: absolute;
+   left: 0px;
+   top: 408px;
+   z-index: 1;
+   width: 1024px;
+   height: 474px;
+}
+
+
+
+#bannericon  {
+   background: url(../img/bannericon.png) no-repeat;
+   visibility: visible;
+   position: absolute;
+   left: 630px;
+   top: 173px;
+   z-index: 1;
+   width: 310px;
+   height: 250px;
+}
+#gologo a {
+   display: block;
+   height: 76px;
+   width: 252px;
+   line-height: 76px;
+}
+#gologo  {
+   background: url(../img/gologo.jpg) no-repeat;
+   visibility: visible;
+   position: absolute;
+   left: 0px;
+   top: 50px;
+   z-index: 1;
+   width: 280px;
+   height: 87px;
+}
+#webtemp21  {
+   margin: 0px auto 0px auto;
+   width: 955px;
+   position: relative;
+}
+
+#language_select  {
+  float: right;
+  margin: -10.8em 0em 0em 0em;
+  font: 12px/14px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+}
+
+#theme  {
+  float: right;
+  margin: -10.8em 9.5em 0em 0em;
+  font: 12px/14px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+}
+
+html, body  {
+   padding: 0px;
+   margin: -20px 0px 0px 0px;
+   background: #FFFFFF;
+}
+
+
+#bannerbg {
+    position:absolute;
+    height:270px;
+    border-bottom:#5c7a00 1px solid;
+    background:-moz-linear-gradient(bottom,#77a30a,#476000);
+    background:-webkit-gradient(linear,left bottom,left top,from(#77a30a),to(#476000));
+    top:110px;
+    width: 100%;
+   min-width: 1024px;
+    
+    
+    
+-moz-box-shadow: 1px 0px 1px 1px #ccc;
+  -webkit-box-shadow: 1px 0px 1px 1px #ccc;
+  box-shadow: 1px 0px 1px 1px #ccc;
+}
+
+#messageid {
+font-family:“Lucida Sans Unicode”, Lucida Grande, sans-serif;
+font-weight: bold;
+color:#FF8000;
+font-size:13px;
+position:relative;
+top: 5px;
+}

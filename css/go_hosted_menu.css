@@ -1,0 +1,44 @@
+/* CSS Document for primary links */
+.yuimenubar{visibility:visible;position:static;}
+.yuimenu .yuimenu,.yuimenubar .yuimenu{visibility:hidden;position:absolute;top:-10000px;left:-10000px;}
+.yui-menu-shadow{position:absolute;visibility:hidden;z-index:-1;}
+
+.yuimenubar ul, .yuimenu ul { list-style-type:none;}
+
+.yuimenubar ul, .yuimenu ul, .yuimenubar li, .yuimenu li, .yuimenu h6, .yuimenubar h6 { margin:0; padding:0;}
+#productsandservices { overflow:hidden; padding-left:0px; position:relative; z-index:1}
+
+.yuimenuitemlabel, .yuimenubaritemlabel { white-space:nowrap;}
+
+.hide-scrollbars * { overflow:hidden;}
+
+.hide-scrollbars select { display:none;}
+
+.yuimenu.show-scrollbars { overflow:visible;}
+
+.yui-skin-sam .yuimenubar > .bd > ul:after { clear:both; content:"."; display:block; height:0; line-height:0; visibility:hidden; }
+
+
+.yui-skin-sam .yuimenubaritem { float:left;}
+
+.yui-skin-sam .yuimenubarnav .yuimenubaritem { line-height:1.42em; padding-right:10px}
+
+.yui-skin-sam .yuimenubaritemlabel { display:block; *position:relative; text-decoration:none; text-align:center; text-transform:uppercase; line-height:1.42em; color:#4a4a4a; width:92px; padding:7px 0px 22px 0px; font-family:Arial, Helvetica, sans-serif;}
+
+/*.yui-skin-sam .yuimenubaritemlabel-selected, .yui-skin-sam .yuimenubaritem a.active { color:#fff; background:url(../img/images/bg-li-active.png) no-repeat 0 0;}
+.yui-skin-sam .yuimenubaritem-hassubmenu-selected{ color:#fff; background:url(../img/images/bg-li-active2.png) no-repeat 0 0;}*/
+.yui-skin-sam .yuimenubaritemlabel-selected, .yui-skin-sam .yuimenubaritem a.active { color:##4a4a4a; background:url(../img/images/go-bg-li-activess.png) no-repeat 0 0;}
+.yui-skin-sam .yuimenubaritem-hassubmenu-selected{ color:#fff; background:url(../img/images/go-bg-li-active2s.png) no-repeat 0 0;}
+
+.yui-skin-sam .yuimenubarnav .yuimenubaritemlabel {	font-size:14px !important; line-height:1.42em; font-weight:bold; float:left;}
+/** + html .yui-skin-sam .yuimenubarnav .yuimenubaritemlabel { padding:5px 0px 0px 0px; }*/
+
+.yui-skin-sam .yuimenu { background:url(../img/images/bg-drop-bot.png) no-repeat 0 bottom;}
+
+.yui-skin-sam .yuimenu .bd { left:0; top:0; overflow:hidden; width:158px; background:url(../img/images/go-bg-drop-top.png) no-repeat 0 0; margin-top:-8px;}
+.yui-skin-sam .yuimenu ul { padding:12px 0px 10px 0;}
+.yui-skin-sam .yuimenu li { border-bottom:1px solid #ececec}
+
+.yui-skin-sam .yuimenuitemlabel{ font-size:14px; color:#4a4a4a; line-height:30px; padding-left:18px; text-decoration:none; text-transform:uppercase; font-weight:bold;}
+.yui-skin-sam .yuimenuitemlabel-selected, .yui-skin-sam .bd .yuimenuitem a.active{ background:#eeeeee; overflow:hidden; display:block;}
+/*.first-of-type a, .first-of-type li a.active, a.yuimenubaritemlabel  { font-size:34px; color:#fff; text-transform:uppercase;}*/ /***For IE with cufon***/ 

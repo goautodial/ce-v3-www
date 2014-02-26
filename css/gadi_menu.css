@@ -1,0 +1,139 @@
+/*
+############################################################################################
+####  Name:             gadi_menu.css                                                   ####
+####  Version:          2.0                                                             ####
+####  Copyright:        GOAutoDial Inc. - Januarius Manipol <januarius@goautodial.com>  ####
+####  License:          AGPLv2                                                          ####
+############################################################################################
+*/
+
+@charset "UTF-8";
+
+* { margin:0;
+    padding:0;
+}
+html { background:#FFFFFF; }
+body {
+    margin:5px 5px;
+    width:auto;
+    overflow:hidden;
+    font-family: 'Verdana, Arial, Helvetica, Sans-serif';
+    font-weight: bold;
+}
+div#menu {
+    top:5px;
+    left:5px;
+    width:500px;
+}
+div#copyright { display: none; }
+/* menu::base */
+#menu {
+    position:relative;
+    z-index:100;
+    height:auto;
+}
+#menu .menu {
+    position:absolute;
+}
+#menu * {
+    list-style:none;
+    border:0;
+    padding:0;
+    margin:0;
+}
+#menu a {
+    display:block;
+    padding:7px 14px 7px 14px;
+    white-space:nowrap;
+}
+#menu li {
+    float:left;
+    background:#fff;
+}
+#menu li li {
+    float:none;
+    _border:1px solid #fff; /** fix for ie6 */
+}
+#menu ul ul {
+    background: #FFFFFF;
+    border:1px solid #a2a2a2; /** fix for ie6 */
+}
+#menu div {
+    visibility:hidden;
+    position:absolute;
+    background:url(images/pix.gif);
+}
+#menu div div {
+    margin:-24px 0 0 -1px;
+    left:100%;
+}
+#menu li:hover>div { visibility:visible; }
+
+/* menu::special styles */
+/* menu::level 1 */
+#menu a {
+    text-decoration:none;
+    color:#fff;
+    position:relative;
+    z-index:77;
+}
+#menu a:hover {
+    /*background:url(images/back.png);*/
+    color:#008000;
+}
+#menu a:hover span { color:#008000; }
+#menu>ul>li:hover>a {
+   /*background:url(images/back.png);*/
+    color:#6bb90d;
+}
+#menu>ul>li:hover>a span { color:#008000; }
+#menu span {
+    text-transform:uppercase;
+    font:12px/18px 'Verdana', Arial, Helvetica, Sans-serif;
+    color:#626262;
+}
+#menu li { background:none; }
+/* menu::level >= 2 */
+#menu li li a {
+    padding:0;
+    position:static;
+}
+#menu li li a:hover { background:#008000; }
+#menu li li a span { color:#626262; }
+#menu li li a:hover span { color:#ffffff; }
+#menu li li a.parent span { background:url(images/pointer.gif) no-repeat right 9px; _background-position:right 10px; }
+*+html #menu li li a.parent span { background-position:right 10px; }
+#menu li li span {
+    display:block;
+    text-transform:none;
+    line-height:16px;
+    padding:4px 25px 4px 14px;
+    font-size:11px;
+}
+#menu li div { /*background:url(images/back.png);*/ }
+/** <fix for ie6> */
+#menu div div {
+    _margin-top:-25px;
+    _background:#FFFFFF;
+}
+#menu li li li { _border:1px solid #FFFFFF; }
+#menu div div div { _background:#FFFFFF; }
+#menu li li li li { _border:1px solid #FFFFFF; }
+/** </fix for ie6> */
+
+/* lava lamp */
+div#menu li.back {
+    width:10px;
+    height:32px;
+    z-index:8;
+    position:absolute;
+}
+div#menu li.back .left {
+    width:auto;
+    height:32px;
+    float:none;
+    position:relative;
+    top:0;
+    left:0;
+    visibility:visible;
+}

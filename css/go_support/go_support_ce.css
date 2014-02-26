@@ -1,0 +1,83 @@
+/*
+############################################################################################
+####  Name:             go_script_ce.css                                                ####
+####  Type:             ci view (css for script)                                        ####
+####  Version:          3.0                                                             ####
+####  Copyright:        GOAutoDial Inc. - Franco Hora <info@goautodial.com>             ####
+####  License:          AGPLv2                                                          ####
+############################################################################################
+*/
+
+.error{color:red;font-size:11px;vertical-align:10px;}
+
+.support-container{width:99%;font-family:Verdana, Arial, Helvetica, sans-serif;}
+
+.support-add-container{cursor:pointer;font-weight:bold;float:right;text-align:right;z-index:2;width:auto;margin:3px;padding:5px;}
+.support-add-container img{height:14px;vertical-align:middle;}
+.support-add-container a{cursor:pointer;}
+
+.support-wizard-container{
+     background-color:#ffffff;
+     width:760px;
+     /*box-shadow: 7px 7px 10px #333333;*/
+     position:fixed;
+     top:-3000px;
+     padding:20px 20px 10px 20px;
+     z-index:950;
+     left:14%;
+     right:14%;
+}
+
+.support-wizard-steps{width:100%;}
+.support-wizard-breadcrumb{width:100%;border-bottom:2px solid #DFDFDF;vertical-align:middle;padding-top:10px;}
+.support-wizard-breadcrumb img{float:right;margin-bottom:10px;}
+.support-wizard-content{width:100%;padding:10px;}
+.support-wizard-content{cursor:pointer;}
+.support-wizard-action{width:100%;border-top:2px solid #DFDFDF;text-align:right;padding-top:10px;}
+.support-wizard-action a{color:#7A9E22;cursor:pointer;text-decoration:none;}
+.support-wizard-action a:hover {color:#7A9E22;font-weight:bold;}
+
+.support-labels{
+   float: left;
+   /*width: 30%; */
+   width:20%;
+   height:100%;
+   text-align:center;
+   padding-top:3px;
+   position:relative;
+   bottom:0;
+   color:#777777;
+}
+
+.support-labels-rewidth{width:35%;}
+
+.support-values{
+   float: left;
+   /*width: 70%;*/
+   width: 80%;
+   position:relative;
+   height:auto;
+   bottom:0;
+   padding-top:2px;
+   text-align:left;
+}
+
+.support-values-rewidth{width:50%;}
+
+.support-values select{cursor:pointer;}
+
+.minimum{min-width:1150px;}
+.overlay-closer{z-index:951;}
+.overlay-closer2{
+  background : url(../../img/images/go_list/cancel.png) no-repeat transparent;
+  height:26px;
+  z-index: 951; 
+  width:26px;
+  position:fixed;
+  cursor:pointer;
+  top:-3000px;
+}
+
+.desc h3{background:none;border:0 !important;}
+.desc table{margin-left:10px;border:0 !important;}
+.desc div{margin-left:10px;border:0 !important;}

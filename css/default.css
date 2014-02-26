@@ -1,0 +1,161 @@
+/* Start of Page Layout */
+ html { background-color: #FAFAD2; } 
+body { 
+	margin: 0; padding: 0; 
+	 background-color: #FAFAD2; 
+	font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 1em; 
+}
+/* default link tags for page */
+a { color:#547699; text-decoration:underline; outline: none; }
+a:hover { color:#999999; text-decoration:none; }
+a:visited { color: navy; }
+
+blockquote {
+	margin: 1em 0em 1em 2em; padding: .5em 2em .5em 2em; 
+	background-color: #E6E6FA; border-top: 1px solid Navy; border-bottom: 1px solid Navy; 
+}
+blockquote p { margin:.2em; }
+
+ACRONYM { cursor: help; border-bottom: #000 1px dotted }
+
+/* wrap the page to allow margins */
+#wrapper { min-width: 800px; margin: 2em; border: thin solid Navy; background-color: White; }
+
+/* Setup top of the page */
+#header {
+	margin: 0; height: 60px; background-color: #6495ED; 
+	background: url(../img/page_top.png) repeat-x; border-bottom: thin solid Navy; 
+}
+#header img { float: left; }
+
+#language_select {
+	position: absolute;
+	top: 3.5em;
+	left: 8em;
+	font-family: sans-serif;
+}
+
+#header h1 {
+	position: absolute;
+	top: 1em;
+	left: 8.5em;
+
+	height: 60px; color: white;
+	overflow: hidden; line-height: 60px; text-align: center;
+}
+
+#header h1 a { color:#547699; text-decoration:none; }
+#header h1 a:hover { color:#999999; text-decoration:none; }
+
+/* wrapper for content & columnLeft to aid positioning */
+#container { 
+	margin: 0; 
+	background: url(../img/background.gif) repeat-y; 
+}
+
+/* position content */
+html>body #content {
+	margin-left: 14.7em; /* space for columnLeft */
+	border-left: thin dotted Navy;
+}
+#content {
+	margin-left: 14.7em; /* space for columnLeft */
+	right: 2.25em;
+	padding: 1em 1.4em 2em 1.5em;
+	background: #ffffff;
+	font-size: .9em;
+	border-left: thin solid Silver;
+	border-right: thin solid Silver;
+	border-top: thin solid Silver;
+	min-height: 420px;
+}
+#content h2 { font-size: 1.5em; letter-spacing: .1em; color: Navy; }
+#content h3 { font-size: 1.2em; letter-spacing: .1em; color: #6666ff; }
+
+#columnLeft {
+	position: absolute;
+	left: 2.25em;
+	top: 6.55em;
+	width: 12em;
+	margin: 0;
+	padding: 1.2em .5em 2em 1.5em;
+	font-size: .9em;
+}
+
+#columnLeft h2 {
+	margin: 1em 0 -1em 0; 	padding: 0 0 .2em 0;
+	font-size: 1.5em; letter-spacing: .1em; color: #7F0080;
+}
+
+#columnLeft h3 {
+	margin: 0 0 -1em 0; padding: 0;
+	font-size: 1.2em; letter-spacing: .1em; color: #7F0080;
+}
+
+#columnLeft ul.menu {
+	position: relative;
+	margin: 1.5em 0 -1em 0;
+	padding: 0;
+	list-style: none;
+}
+
+#columnLeft ul.sub_menu { position: relative; margin: .1em; padding: 0; list-style: none; }
+#columnLeft li.menu { background-image: url(../img/bullet.gif); }
+#columnLeft li.menu_open { background-image: url(../img/bullet_down.gif); }
+#columnLeft li.sub_folder { margin: 0; background-image: url(../img/bullet_plus.gif); }
+#columnLeft li.sub_item { margin: 0; background-image: url(../img/bullet_dash.gif); }
+
+#columnLeft li {
+	margin: 0 0 .4em 0; padding: 0 0 0 1.25em; color: Navy;
+	background-position: 0 .2em; background-repeat: no-repeat;
+}
+
+#columnLeft li a {
+	margin: 0 0 0 0; color: Maroon;
+	text-decoration: none; display: block;
+}
+
+#columnLeft li a:hover { color: #008041; text-decoration: underline;
+}
+#adminMenu { position: absolute; left: 1.5em; top: 15em; }
+.login {
+	margin: 0; padding: .8em .3em .2em .6em; color: Maroon;
+	border: thin solid #6666ff; background-color: Silver;
+}
+#login { position: absolute; left: 1.4em; top: 17em; min-width: 11em; }
+#loggedin { position: absolute; left: 1.4em; top: 21em; min-width: 11em; }
+#login_button {
+	padding: .5em 0em 0em 0em;
+}
+
+#tech_link {
+	position: absolute; top: 29.5em; float: left; 
+	padding-top: 0px; margin-left: 3px;
+}
+
+#tech_validate {
+	position: absolute; top: 30.5em; float: left;
+	padding-top: 4px; margin-left: 3px;
+}
+
+#footer {
+	background: url(../img/footer.png) repeat-x bottom;
+	background-color: #81909F;
+	text-align: center;
+	height: 60px;
+	border-top: thin solid Silver;
+}
+#elapsed { 
+	max-width: 30em; 
+	margin: 12px; 
+	color: White;
+}
+#copyright {
+	text-align: center;
+	font-size: smaller;
+	color: Navy;
+	margin: 5px; 
+}
+
+
+

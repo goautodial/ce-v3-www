@@ -1,0 +1,3 @@
+2011-05-10 14:29:25|vdc_db_query|01032|130|Incorrect file format 'vicidial_conferences'|SELECT conf_exten FROM vicidial_conferences where extension='SIP/cc150' and server_ip = '192.168.100.69' LIMIT 1;|agent001|192.168.100.69|1305052165_cc15017578180|
+2011-05-10 14:29:25|vdc_db_query|01033|130|Incorrect file format 'vicidial_conferences'|SELECT count(*) FROM vicidial_conferences where server_ip='192.168.100.69' and ((extension='') or (extension is null));|agent001|192.168.100.69|1305052165_cc15017578180|
+2011-05-10 14:29:25|vdc_db_query|01036|130|Incorrect file format 'vicidial_list'|UPDATE vicidial_list set status='ERI', user='' where status IN('QUEUE','INCALL') and user ='agent001';|agent001|192.168.100.69|1305052165_cc15017578180|

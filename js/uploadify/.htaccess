@@ -1,0 +1,15 @@
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>
+
+Options All -Indexes
+
+#<IfModule mod_rewrite.c>
+#RewriteEngine On
+#RewriteBase /
+#turn off HTTPS for uploadify.php
+#RewriteCond %{HTTPS} On
+#RewriteCond %{REQUEST_URI} ^(js/uploadify/uploadify.php) 
+#RewriteRule (.*) https://%{HTTP_HOST}/js/uploadify/uploadify.php [R=301,L]
+#</IfModule>

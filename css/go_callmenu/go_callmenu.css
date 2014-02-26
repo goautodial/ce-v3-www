@@ -1,0 +1,66 @@
+/*
+############################################################################################
+####  Name:             go_callmenu.css                                                 ####
+####  Type:             ci view (css for script)                                        ####
+####  Version:          3.0                                                             ####
+####  Copyright:        GOAutoDial Inc. - Franco Hora <info@goautodial.com>             ####
+####  License:          AGPLv2                                                          ####
+############################################################################################
+*/
+
+
+.callmenu-wizard{
+
+   width:300px;
+   position:fixed;
+   top: -3000px;
+   padding: 20px 20px 10px 10px;
+   z-index: 950;
+   left: 14%;
+   right:14%;
+
+}
+
+.callmenu-wizard .corner-all{border-color:#000;}
+
+.phone-type{
+   float:left;
+   width:298px;
+   padding:5px;
+}
+
+.phone-entry div.entry-label{width:30%;float:left;}
+.phone-entry div.entry-elem{width:auto;float:left;}
+
+.phone-digits{float:left !important;margin-top:5px;}
+
+.digit-display{
+   float:left !important;
+   margin-left:300px;
+   position:absolute;
+   display:none;
+   width: 450px;
+   z-index: -10;
+   margin-top:10px;
+   margin-bottom:10px;
+}
+
+.digit-hide{
+   width:1px;
+   position:fixed;
+   float:center;
+}
+
+.digit-display-container{
+   margin-left:15px;
+   height:300px;
+}
+
+.display-action{text-align:right;padding-right:10px;padding-bottom:5px;color:#7A9E22;}
+.display-action:hover {cursor:pointer;font-weight:bold;}
+
+.phone-digits input[type='button']{width:90px;}
+.phone-digits input[type='button']:hover {cursor:pointer;}
+
+.callmenu{display:none;}
+.phone{display:none;}

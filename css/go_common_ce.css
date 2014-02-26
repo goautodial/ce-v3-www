@@ -1,0 +1,208 @@
+/*
+########################################################################################################
+####  Name:             	go_common_ce.css                                                    ####
+####  Type:             	ci views - administrator                                            ####	
+####  Version:          	3.0                                                                 ####	   
+####  Build:            	1366344000                                                          ####
+####  Copyright:        	GOAutoDial Inc. (c) 2011-2013 - GoAutoDial Open Source Community    ####
+####			        <community@goautodial.com>            			            ####
+####  Written by:       	Franco Hora				            		    ####
+####  Edited by:		GoAutoDial Development Team					    ####
+####  License:          	AGPLv2                                                              ####
+########################################################################################################
+*/
+
+body,table,td,textarea,input,select,div,span,strong{
+  font-family:Verdana,Arial,Helvetica,sans-serif;
+  font-size:13px;
+  font-stretch:normal;
+}
+
+body{height:90%;}
+
+.corner-all{
+    border-width:1.5px;
+    border-style:solid;
+    border-color:#dfdfdf;
+    -moz-border-radius:6px;
+    -khtml-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    padding:3px;
+    background-color: #fff;
+}
+
+.corner-bottom{
+     -webkit-border-bottom-right-radius:6px;
+     -webkit-border-bottom-left-radius:6px;
+     -khtml-border-bottom-right-radius:6px;
+     -khtml-border-bottom-left-radius:6px;
+     border-bottom-right-radius:6px;
+     border-bottom-left-radius:6px;
+}
+
+.corner-top{
+     -webkit-border-top-right-radius:6px;
+     -webkit-border-top-left-radius:6px;
+     -khtml-border-top-right-radius:6px;
+     -khtml-border-top-left-radius:6px;
+     border-top-right-radius:6px;
+     border-top-left-radius:6px;
+}
+
+*.closed-element h3{
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    cursor: pointer;
+}
+
+.sort{cursor:pointer;}
+
+.toggle-click{
+   float: right;
+   width: 23px;
+   height: 26px;
+}
+
+.inside .be-aware{
+   color: #FF3333;
+   position:relative;
+   float: left;
+   cursor: pointer;
+}
+
+.inside .be-aware a:hover {color: #FF3333;font-weight:bold;}
+
+.element-action{
+   color: #7A9E22;
+   position: relative;
+   float: right;
+   cursor: pointer;
+}
+
+.overlay{
+   background: url('../img/images/go_list/overlay.png') repeat scroll left top transparent;
+   bottom: 0;
+   left: 0;
+   position: fixed;
+   right:0;
+   top:0;
+   z-index:100;
+   display:none;
+   padding: 70px;
+}
+
+.overlay-container{
+  z-index:900;
+  width:100%;
+  text-align:center;
+}
+
+.overlay-closer{
+  background : url(../img/images/go_list/cancel.png) no-repeat transparent;
+  height:26px;
+  z-index: 990; 
+  width:26px;
+  /*position:fixed;*/
+  cursor:pointer;
+  top:60px;
+  float:right;
+  margin-right:-30px;
+  margin-top:-30px;
+}
+
+/*.trash{
+    position:relative;
+    background : url(../../../img/trashtransparent.png) -16px -20px no-repeat;
+    padding:10px;
+    float:right;
+    width:110px;
+    height:130px;
+}*/
+
+.trash-over {
+    position:relative;
+    background : url(../../../img/trashtransparent.png) -154px -12px no-repeat;
+    padding:10px;
+    float:right;
+    width:110px;
+    height:130px;
+}
+
+.error{color:red;font-size:12px;}
+
+.tab-container{border:0;margin:0;}
+div.postbox div.inside-tab{padding:0;margin:0;}
+div.postbox div.inside-tab .ui-tabs{padding:0;margin:0;background-color:#FFFFFF;}
+div.postbox div.inside-tab .ui-corner-all{border-radius:0px;}
+/*div.postbox div.inside-tab .ui-tabs .ui-tabs-panel{padding:7px 13px 15px;}*/
+div.postbox div.inside-tab div.ui-tabs ul.ui-tabs-nav{
+   margin:0;
+   padding:0;
+   background:none repeat scroll #FFFFFF;border-right:0;
+   border-top:0;
+   border-left:0;
+   /* border-bottom: 1px solid #dfdfdf; */
+   border-bottom:0;
+   box-shadow:0 1px #FFFFFF inset, 0 -1px #DDDDDD inset;
+   top:0;
+}
+div.postbox div.inside-tab div.ui-tabs ul.ui-tabs-nav li{font-size:13px;}
+div.postbox div.inside-tab div.ui-tabs ul.ui-tabs-nav li.ui-corner-all{border-radius:0px;}
+div.postbox div.inside-tab div.ui-tabs ul.ui-tabs-nav li{border-left:0;border-radius:0px;margin-left:0;position:relative;}
+div.postbox div.inside-tab div.ui-tabs ul.ui-tabs-nav li.ui-state-default{position:relative;margin:0;top:0;border-top:0; padding-bottom: 0;}
+div.postbox div.inside-tab div.ui-tabs ul.ui-tabs-nav li.ui-tabs-selected{border-top:0; padding-bottom:0; border-bottom: 1px solid #dfdfdf !important; } 
+
+/* div.postbox div.inside-tab div.ui-tabs div.ui-tabs-panel{padding:7px 10px 10px 9px; border-top: 1px solid #dfdfdf;} */
+div.postbox div.inside-tab div.ui-tabs div.ui-tabs-panel{padding:4px 10px 10px 9px;}
+
+.minimum{min-width:1150px;}
+.elem-tbl{width:100%;font-family:Verdana, Arial, Helvetica, sans-serif;font-size:13px;}
+.elem-tbl-hdr{width:100%;position:relative;}
+.elem-tbl-container{width:100%;padding:2px 0;position:relative;}
+.elem-tbl-rows{width:100%;border-bottom:1px dashed #D0D0D0;}
+.elem-tbl-rows-odd{background-color:#E0F8E0;}
+.elem-tbl-rows-even{background-color:#EFFBEF;}
+.elem-tbl-cols{width:19%;padding-top:5px;left:4px;float:left;bottom:0;margin:0;white-space:nowrap;font-family:Verdana, Arial, Helvetica, sans-serif;font-size:13px;}
+.elem-tbl-cols a{cursor:pointer;}
+.elem-tbl-cols a:hover {font-weight:bold;}
+.elem-tbl-cols .cols-action-container{width:100%;text-align:right;padding:0;margin:0;}
+.elem-tbl-cols .cols-action-container .cols-action{width:13%;position:relative;float:right;text-align:center;}
+.elem-tbl-cols .cols-action-container .cols-action img{width:12px;cursor:pointer;}
+/*.elem-tbl-cols .elem-cols-action img:hover {width:20px;}*/
+.elem-tbl-cols-centered{text-align:center;}
+.elem-tbl-cols-centered .elem-cols-action-lbl{float:right;width:40%;}
+.elem-tbl-cols-centered .elem-cols-action-lbl span{cursor:pointer;}
+/*.elem-tbl-cols-centered .elem-cols-action-lbl img:hover {width:12px;}*/
+.elem-tbl-cols-centered .elem-cols-action-chkbox{width:10%;position:relative;float:right;padding-bottom:1px;}
+.elem-tbl-spacer{font-size:1px;}
+.elem-tbl-cols-chkbox{width:10%;}
+
+.active{color:green;font-weight:bold;}
+.inactive{color:#FF0000;font-weight:bold;}
+
+.pager-container{padding:2px;vertical-align:middle;}
+.pager-container span.pager-perpage{float:left;}
+.pager-container span.pager-perpage select{cursor:pointer;}
+.pager-container span.pager-paginater{float:right;}
+.pager-container span.pager-paginater img{padding:0 3px;cursor:pointer;vertical-align:middle;}
+
+/* This is the float wizard caller*/
+.overlay-call-container{cursor:pointer;font-weight:bold;float:right;text-align:right;z-index:2;width:auto;margin:3px;padding:5px;}
+.overlay-call-container img{height:14px;vertical-align:middle;}
+.overlay-call-container a{cursor:pointer;}
+
+.overlay-box-header{border-bottom:1px solid #DFDFDF;text-align:left;font-weight:bold;height:20px;font-family:Verdana,Arial,Helvetica,sans-serif;}
+
+.re-width{width:20%;}
+.wizard-title{float:left;font-size:16px;vertical-align:middle;margin-bottom:10px;}
+
+.processing{z-index:500;position:fixed;text-align:center;top:0;bottom:0;left:0;right:0;}
+.processing img{margin-top:150px;opacity:0.8;}
+
+.individual{width:100%;}
+.image-holder{width:12%;margin:10px;min-height:150px;float:left;}
+.individual-info{width:80%;float:left;margin:10px;}
+
+.team-thanks{width:93%;padding:20px;}
+.team-thanks span.contributors{padding:20px;}

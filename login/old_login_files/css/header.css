@@ -1,0 +1,9 @@
+
+.img-grd {
+background-image: url(wp-logo3.png), -moz-linear-gradient(bottom,  #77a30a,  #476000);
+background-image: url(wp-logo3.png), -webkit-gradient(linear, left top, left bottom, from(#77a30a), to(#476000));
+background-position:left;
+background-repeat: no-repeat;
+border:#B8C6A1 .5px solid!important; color:#000;
+font-size:small;
+}

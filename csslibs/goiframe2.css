@@ -1,0 +1,608 @@
+/*
+############################################################################################
+####  Name:             goiframe2.css                                                   ####
+####  Version:          2.0                                                             ####
+####  Copyright:        GOAutoDial Inc. - Januarius Manipol <januarius@goautodial.com>  ####
+####  License:          AGPLv2                                                          ####
+############################################################################################
+*/
+
+@charset "UTF-8";
+
+a  {
+   text-decoration: none;
+   color: #000000;
+}
+
+a ins  {
+   text-decoration: none;
+}
+
+#supportbutton a,
+#adminbutton a,
+#adminbuttons a,
+#goadminbutton a,
+#forcelogout a,
+#phpmyadminbutton a,
+#systembutton a,
+#supportbutton2 a,
+#vtigerbutton a,
+#mainbutton a,
+#mainbutton2 a,
+#getstartedbutton a,
+#getstartedbutton2 a,
+#termsofusebutton a,
+#agentbutton a,
+#pubadminbutton a,
+#combutton a  {
+   background-repeat: no-repeat;
+   display: block;
+   height: 36px;
+   background-position: 0% 0px;
+   font: bold 14px/24px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   color: #808080;
+   text-transform: uppercase;
+   text-align: center;
+   line-height: 36px;
+}
+
+#gologo a,
+#gologo2 a {
+   display: block;
+   height: 76px;
+   width: 252px;
+   line-height: 76px;
+}
+
+#forcelogout a:hover,
+#adminbutton a:hover,
+#adminbuttons a:hover,
+#goadminbutton a:hover,
+#systembutton a:hover,
+#phpmyadminbutton a:hover,
+#supportbutton a:hover,
+#agentbutton a:hover,
+#pubadminbutton a:hover,
+#combutton a:hover,
+#supportbutton2 a:hover,
+#vtigerbutton a:hover,
+#getstartedbutton a:hover,
+#getstartedbutton2 a:hover,
+#termsofusebutton a:hover,
+#mainbutton2 a:hover,
+#mainbutton a:hover  {
+   background-position: -130px 0%;
+   color: #008000;
+}
+
+#welcometitletext p,
+#getstartedtitletext p,
+#helptitletext p  {
+   font: bold 24px/29px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   margin: 0px;
+   color: #626262;
+   text-align: justify;
+}
+
+#helpbodytext p,
+#getstartedbodytext p,
+#welcomebodytext p  {
+   font: bold 14px/24px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   margin: 0px;
+   text-align: left;
+}
+
+#helpbodytext,
+#welcomebodytext,
+#getstartedbodytext  {
+   visibility: visible;
+   position: absolute;
+   top: 476px;
+   z-index: 3;
+   width: 200px;
+}
+
+#welcomebutton a:hover,
+#getstartedbutton a:hover  {
+   background-position: -45px 0%;
+}
+
+#systembutton a:hover,
+#phpmyadminbutton a:hover,
+#combutton a:hover,
+#pubadminbutton a:hover  {
+   background-position: -131px 0%;
+}
+
+#getstartedbox,
+#welcomebox,
+#helpbox  {
+   background: url(../images/welcomebox.png) no-repeat;
+   visibility: visible;
+   position: absolute;
+   top: 470px;
+   z-index: 2;
+   width: 232px;
+   height: 215px;
+}
+
+#footertext p,
+#bodytext p  {
+   font: 12px/14px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   margin: 0px;
+   padding-bottom: 11px;
+   color: #303030;
+}
+
+#welcomebodytext p a:hover  {
+   font-style: italic;
+}
+
+#getstartedbodytext p  {
+   color: #808080;
+}
+
+#welcomebodytext p a  {
+   font-style: Normal;
+   color: #78A407;
+   text-decoration: none;
+   font-weight: bold;
+}
+
+#getstartedtitletext  {
+   visibility: visible;
+   position: absolute;
+   left: 386px;
+   top: 426px;
+   z-index: 2;
+   width: 235px;
+}
+
+#getstartedbodytext  {
+   left: 393px;
+}
+
+#forcelogout a  {
+   width: 70px;
+/*   background-image: url(../images/getsupportbutton.png);*/
+}
+
+#supportbutton2 a  {
+   width: 160px;
+}
+
+#vtigerbutton a  {
+   width: 150px;
+}
+
+#mainbutton a  {
+   width: 110px;
+}
+
+#termsofusebutton a  {
+   width: 150px;
+}
+
+#mainbutton2 a  {
+   width: 110px;
+}
+
+#getstartedbutton a  {
+   width: 130px;
+}
+
+#getstartedbutton2 a  {
+   width: 130px;
+}
+
+#agentbutton a  {
+   width: 130px;
+}
+
+#pubadminbutton a  {
+   width: 131px;
+}
+
+#helpbutton a:hover  {
+   background-position: -42px 0%;
+}
+
+#combutton a  {
+   width: 131px;
+}
+
+#getstartedbutton a  {
+   background: url(../images/getstartedbutton.png) no-repeat 0% 0px;
+   display: block;
+   height: 45px;
+   width: 45px;
+   font-size: 45px;
+   line-height: 45px;
+}
+
+#welcomebodytext p  {
+   color: #78A407;
+}
+
+#supportbutton2  {
+   visibility: visible;
+   position: absolute;
+   left: 720px;
+   top: 0px;
+   z-index: 3;
+   height: 36px;
+}
+
+#getstartedbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 680px;
+   top: 0px;
+   z-index: 3;
+   width: 130px;
+   height: 36px;
+}
+
+#getstartedbutton2  {
+   visibility: visible;
+   position: absolute;
+   left: 750px;
+   top: 0px;
+   z-index: 3;
+   height: 36px;
+}
+
+#vtigerbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 740px;
+   top: 0px;
+   z-index: 3;
+   height: 36px;
+}
+
+#mainbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 855px;
+   top: 0px;
+   z-index: 5;
+   height: 36px;
+}
+
+#termsofusebutton  {
+   visibility: visible;
+   position: absolute;
+   left: 740px;
+   top: 0px;
+   z-index: 3;
+   height: 36px;
+}
+
+#mainbutton2  {
+   visibility: visible;
+   position: absolute;
+   left: 855px;
+   top: 0px;
+   z-index: 5;
+   height: 36px;
+}
+
+#pubadminbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 540px;
+   top: 0px;
+   z-index: 2;
+   width: 131px;
+   height: 36px;
+}
+
+#combutton  {
+   visibility: visible;
+   position: absolute;
+   left: 801px;
+   top: 0px;
+   z-index: 5;
+   width: 131px;
+   height: 36px;
+}
+
+#agentbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 410px;
+   top: 0px;
+   z-index: 1;
+   width: 130px;
+   height: 36px;
+}
+
+#forcelogout  {
+   visibility: visible;
+   position: absolute;
+   left: 862px;
+   top: 0px;
+   z-index: 5;
+   width: 130px;
+   height: 36px;
+}
+
+#welcometitletext  {
+   visibility: visible;
+   position: absolute;
+   left: 90px;
+   top: 426px;
+   z-index: 2;
+   width: 144px;
+}
+
+#getstartedbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 333px;
+   top: 422px;
+   z-index: 2;
+   width: 45px;
+   height: 45px;
+}
+
+#welcomebutton a  {
+   background: url(../images/welcomebutton.png) no-repeat 0% 0px;
+   display: block;
+   height: 44px;
+   width: 45px;
+   font-size: 44px;
+   line-height: 44px;
+}
+
+#welcomebodytext  {
+   left: 97px;
+}
+
+#supportbutton a  {
+   width: 150px;
+/*   background-image: url(../images/vtigerbutton.png);*/
+}
+
+#helpbodytext p  {
+   color: #808080;
+}
+
+#adminbutton a  {
+   width: 150px;
+/*   background-image: url(../images/agentbutton.png);*/
+}
+
+#adminbuttons a  {
+   width: 150px;
+/*   background-image: url(../images/agentbutton.png);*/
+}
+
+#phpmyadminbutton a  {
+   width: 130px;
+/*   background-image: url(../images/adminbutton.png);*/
+}
+
+#helptitletext  {
+   visibility: visible;
+   position: absolute;
+   left: 686px;
+   top: 426px;
+   z-index: 2;
+   width: 165px;
+}
+
+#welcomebutton  {
+   visibility: visible;
+   position: absolute;
+   left: 38px;
+   top: 423px;
+   z-index: 2;
+   width: 45px;
+   height: 44px;
+}
+
+#getstartedbox  {
+   left: 378px;
+}
+
+#helpbutton a  {
+   background: url(../images/helpbutton.png) no-repeat 0% 0px;
+   display: block;
+   height: 41px;
+   width: 42px;
+   font-size: 41px;
+   line-height: 41px;
+}
+
+#bannertext p  {
+   font: bold 28px/40px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   margin: 0px;
+   text-align: left;
+   color: #FEFEFD;
+}
+
+#footertext p  {
+   text-align: center;
+}
+
+#helpbodytext  {
+   left: 693px;
+}
+
+#systembutton a  {
+   width: 131px;
+/*   background-image: url(../images/combutton.png);*/
+}
+
+#supportbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 700px;
+   top: 0px;
+   z-index: 3;
+   width: 150px;
+   height: 36px;
+}
+
+#phpmyadminbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 570px;
+   top: 0px;
+   z-index: 2;
+   width: 131px;
+   height: 36px;
+}
+
+#adminbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 320px;
+   top: 0px;
+   z-index: 1;
+   width: 150px;
+   height: 36px;
+}
+
+#adminbuttons {
+   visibility: visible;
+   position: absolute;
+   left: 420px;
+   top: 0px;
+   z-index: 1;
+   width: 150px;
+   height: 36px;
+}
+
+#goadminbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 470px;
+   top: 0px;
+   z-index: 1;
+   width: 100px;
+   height: 36px;
+}
+
+#welcomebox  {
+   left: 82px;
+}
+
+#footertext  {
+   visibility: visible;
+   z-index: 1;
+   width: 890px;
+   background-color: #E5EDCE;
+   padding-top: 10px;
+}
+
+#bannertext  {
+   visibility: visible;
+   position: absolute;
+   left: 0px;
+   top: 112px;
+   z-index: 1;
+   width: 498px;
+}
+
+#bodytext p  {
+   text-align: left;
+   font-style: italic;
+}
+
+#helpbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 633px;
+   top: 422px;
+   z-index: 2;
+   width: 42px;
+   height: 41px;
+}
+
+#systembutton  {
+   visibility: visible;
+   position: absolute;
+   left: 725px;
+   top: 0px;
+   z-index: 5;
+   width: 131px;
+   height: 36px;
+}
+
+#webtemp18  {
+   margin: 0px 0px 0px auto;
+   width: 100%;
+   position: relative;
+}
+
+#contents  {
+/*   background: url(../images/contents.png) no-repeat;*/
+   visibility: visible;
+   position: absolute;
+   left: 0px;
+   top: 186px;
+   z-index: 1;
+   width: 100%;
+}
+
+#bodytext  {
+   visibility: visible;
+   position: absolute;
+   left: 26px;
+   top: 725px;
+   z-index: 2;
+   width: 891px;
+}
+
+#helpbox  {
+   left: 678px;
+}
+
+#gologo  {
+   background: url(../images/gologo.png) no-repeat;
+   visibility: visible;
+   position: absolute;
+   left: 0px;
+   top: 5px;
+   z-index: 1;
+   width: 272px;
+   height: 116px;
+}
+
+#header {
+   visibility: visible;
+   position: absolute;
+   left: 50%;
+   top: 25px;
+   z-index: 1;
+   width: 930px;
+   margin-left: -465px;
+}
+
+#gologo2  {
+   background: url(../images/gologo.png) no-repeat;
+   visibility: visible;
+   position: absolute;
+   left: 0px;
+   top: 5px;
+   z-index: 1;
+   width: 272px;
+   height: 116px;
+}
+
+#gomenu {
+   visibility: visible;
+   position: absolute;
+   top: 75px;
+   z-index: 1;
+   width: 930px;
+}
+
+html, body  {
+   padding: 0px;
+   margin: 0px 0px 0px 0px;
+   background: #FFFFFF url(../images/bg2.png) right top repeat-x;
+}

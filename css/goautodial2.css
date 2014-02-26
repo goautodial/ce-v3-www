@@ -1,0 +1,414 @@
+/*
+############################################################################################
+####  Name:             goautodial2.css                                                 ####
+####  Version:          2.0                                                             ####
+####  Copyright:        GOAutoDial Inc. - Januarius Manipol <januarius@goautodial.com>  ####
+####  License:          AGPLv2                                                          ####
+############################################################################################
+*/
+
+@charset "UTF-8";
+
+a  {
+   text-decoration: none;
+   color: #000000;
+}
+
+a ins  {
+   text-decoration: none;
+}
+
+#vtigerbutton a,
+#agentbutton a,
+#getsupportbutton a,
+#adminbutton a,
+#combutton a  {
+   background-repeat: no-repeat;
+   display: block;
+   height: 36px;
+   background-position: 0% 0px;
+   font: bold 14px/24px Verdana;
+   color: #808080;
+   text-align: center;
+   line-height: 36px;
+}
+
+
+
+#gologo a {
+   display: block;
+   height: 76px;
+   width: 252px;
+   line-height: 76px;
+}
+
+#getsupportbutton a:hover,
+#agentbutton a:hover,
+#adminbutton a:hover,
+#combutton a:hover,
+#vtigerbutton a:hover  {
+   background-position: -130px 0%;
+   color: darkgreen;
+}
+
+#welcometitletext p,
+#getstartedtitletext p,
+#helptitletext p  {
+   font: bold 24px/29px Verdana;
+   margin: 0px;
+   color: #303030;
+   text-align: justify;
+}
+
+#helpbodytext p,
+#getstartedbodytext p,
+#welcomebodytext p  {
+   font: bold 14px/24px Verdana;
+   margin: 0px;
+   text-align: left;
+}
+
+#helpbodytext,
+#welcomebodytext,
+#getstartedbodytext  {
+   visibility: visible;
+   position: absolute;
+   top: 76px;
+   z-index: 3;
+   width: 200px;
+}
+
+#welcomebutton a:hover,
+#getstartedbutton a:hover  {
+   background-position: -45px 0%;
+}
+
+#combutton a:hover,
+#adminbutton a:hover  {
+   background-position: -131px 0%;
+}
+
+#getstartedbox,
+#welcomebox,
+#helpbox  {
+   background: url(../images/welcomebox.png) no-repeat;
+   visibility: visible;
+   position: absolute;
+   top: 70px;
+   z-index: 2;
+   width: 232px;
+   height: 215px;
+}
+
+#footertext p,
+#bodytext p  {
+   font: 12px/14px Verdana;
+   margin: 0px;
+   padding-bottom: 11px;
+   color: #303030;
+}
+
+#welcomebodytext a:hover  {
+   font-style: italic;
+}
+
+#getstartedbodytext p,
+#welcomebodytext p  {
+   color: #303030;
+}
+
+#welcomebodytext a  {
+   font-style: Normal;
+   color: #78A407;
+   text-decoration: none;
+   font-weight: bold;
+}
+
+#getstartedtitletext  {
+   visibility: visible;
+   position: absolute;
+   left: 386px;
+   top: 26px;
+   z-index: 2;
+   width: 235px;
+}
+
+#getstartedbodytext  {
+   left: 393px;
+}
+
+#getsupportbutton a  {
+   width: 130px;
+   background-image: url(../images/getsupportbutton.png);
+}
+
+#helpbutton a:hover  {
+   background-position: -42px 0%;
+}
+
+#getstartedbutton a  {
+   background: url(../images/getstartedbutton.png) no-repeat 0% 0px;
+   display: block;
+   height: 45px;
+   width: 45px;
+   font-size: 45px;
+   line-height: 45px;
+}
+
+#getsupportbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 688px;
+   top: 85px;
+   z-index: 4;
+   width: 130px;
+   height: 36px;
+}
+
+#welcometitletext  {
+   visibility: visible;
+   position: absolute;
+   left: 90px;
+   top: 26px;
+   z-index: 2;
+   width: 144px;
+}
+
+#getstartedbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 333px;
+   top: 22px;
+   z-index: 2;
+   width: 45px;
+   height: 45px;
+}
+
+#welcomebutton a  {
+   background: url(../images/welcomebutton.png) no-repeat 0% 0px;
+   display: block;
+   height: 44px;
+   width: 45px;
+   font-size: 44px;
+   line-height: 44px;
+}
+
+#welcomebodytext  {
+   left: 97px;
+}
+
+#vtigerbutton a  {
+   width: 130px;
+/*   background-image: url(../images/vtigerbutton.png);*/
+}
+
+#helpbodytext p  {
+   color: #303030;
+}
+
+#agentbutton a  {
+   width: 130px;
+/*   background-image: url(../images/agentbutton.png);*/
+}
+
+#adminbutton a  {
+   width: 131px;
+/*   background-image: url(../images/adminbutton.png);*/
+}
+
+#helptitletext  {
+   visibility: visible;
+   position: absolute;
+   left: 686px;
+   top: 26px;
+   z-index: 2;
+   width: 165px;
+}
+
+#welcomebutton  {
+   visibility: visible;
+   position: absolute;
+   left: 38px;
+   top: 23px;
+   z-index: 2;
+   width: 45px;
+   height: 44px;
+}
+
+#getstartedbox  {
+   left: 378px;
+}
+
+#vtigerbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 671px;
+   top: 5px;
+   z-index: 3;
+   width: 130px;
+   height: 36px;
+}
+
+#helpbutton a  {
+   background: url(../images/helpbutton.png) no-repeat 0% 0px;
+   display: block;
+   height: 41px;
+   width: 42px;
+   font-size: 41px;
+   line-height: 41px;
+}
+
+#bannertext p  {
+   font: bold 36px/43px Verdana;
+   margin: 0px;
+   text-align: left;
+   color: #FEFEFD;
+}
+
+#footertext p  {
+   text-align: center;
+}
+
+#helpbodytext  {
+   left: 693px;
+}
+
+#combutton a  {
+   width: 131px;
+/*   background-image: url(../images/combutton.png);*/
+}
+
+#adminbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 410px;
+   top: 5px;
+   z-index: 2;
+   width: 131px;
+   height: 36px;
+}
+
+#agentbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 540px;
+   top: 5px;
+   z-index: 1;
+   width: 130px;
+   height: 36px;
+}
+
+#welcomebox  {
+   left: 82px;
+}
+
+#footertext  {
+   visibility: visible;
+   position: absolute;
+   left: 50%;
+   top: 898px;
+   z-index: 1;
+   width: 890px;
+   margin-left: -445px;
+}
+
+#bannertext  {
+   visibility: visible;
+   position: absolute;
+   left: 0px;
+   top: 191px;
+   z-index: 1;
+   width: 498px;
+}
+
+#bodytext p  {
+   text-align: left;
+   font-style: italic;
+}
+
+#helpbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 633px;
+   top: 22px;
+   z-index: 2;
+   width: 42px;
+   height: 41px;
+}
+
+#combutton  {
+   visibility: visible;
+   position: absolute;
+   left: 801px;
+   top: 5px;
+   z-index: 5;
+   width: 131px;
+   height: 36px;
+}
+
+#webtemp18  {
+   margin: 0px 0px 0px auto;
+   width: 100%;
+   position: relative;
+}
+
+#contents  {
+   background: url(../images/contents.png) no-repeat center;
+   visibility: visible;
+   position: absolute;
+   left: 50%;
+   top: 408px;
+   z-index: 1;
+   width: 974px;
+   height: 474px;
+   margin-left: -487px;
+}
+
+#bodytext  {
+   visibility: visible;
+   position: absolute;
+   left: 36px;
+   top: 375px;
+   z-index: 2;
+   width: 891px;
+}
+
+#helpbox  {
+   left: 678px;
+}
+
+#gologo  {
+   background: url(../images/gologo.png) no-repeat;
+   visibility: visible;
+   position: absolute;
+   left: 0px;
+   top: 45px;
+   z-index: 1;
+   width: 272px;
+   height: 116px;
+}
+
+#header {
+   visibility: visible;
+   position: absolute;
+   left: 50%;
+   top: 5px;
+   z-index: 1;
+   width: 930px;
+   margin-left: -465px;
+}
+
+#gomenu {
+   visibility: visible;
+   position: absolute;
+   top: 110px;
+   z-index: 1;
+   width: 930px;
+}
+
+html, body  {
+   padding: 0px;
+   margin: -20px 0px 0px 0px;
+   background: #FFFFFF url(../images/exteriortile.png) right top repeat-x;
+}
+

@@ -1,0 +1,60 @@
+/*
+############################################################################################
+####  Name:             go_did_ce.css                                                   ####
+####  Type:             ci view (css for script)                                        ####
+####  Version:          3.0                                                             ####
+####  Copyright:        GOAutoDial Inc. - Franco Hora <info@goautodial.com>             ####
+####  License:          AGPLv2                                                          ####
+############################################################################################
+*/
+
+#did-tab .ui-tabs-panel .elem-tbl-cols{width:16.5%;}
+
+.did-labels{
+   float: left;
+   width: 30%; 
+   text-align:center;
+}
+
+.did-values{
+   float: left;
+   width: 70%;
+}
+
+.did-add-container{cursor:pointer;font-weight:bold;float:right;text-align:right;z-index:2;width:auto;margin:3px;padding:5px;font-family:Verdana,Arial,Helvetica,sans-serif;}
+.did-add-container img{height:14px;vertical-align:middle;}
+.did-add-container a{cursor:pointer;}
+
+.did-add-wizard-container{
+     background-color:#ffffff;
+     width:760px;
+     display:none;
+     box-shadow: 7px 7px 10px #333333;
+}
+
+.did-add-wizard-container{padding:10px;}
+.did-wizard-steps{width:100%;}
+.did-wizard-breadcrumb{width:100%;border-bottom:1px solid #DFDFDF;text-align:right;}
+.did-wizard-breadcrumb img{margin:5px;}
+.did-wizard-content{width:100%;}
+.did-wizard-content div#wizard-form-elems {background-color:transparent;width:100%;}
+.did-wizard-content div#wizard-form-elems select{cursor:pointer;}
+.did-wizard-action{width:100%;border-top:1px solid #DFDFDF;text-align:right;}
+.did-wizard-action a{color:#7A9E22;cursor:pointer;text-decoration:none;}
+.did-wizard-action a:hover {color:#7A9E22;font-weight:bold;}
+.did-add-labels {margin-top:15px;width:30%;}
+.did-add-values {margin-top:10px;width:70%;}
+
+.edit-form {
+   width: 800px;
+   height:500px;
+   overflow:auto;
+   display:none;
+   box-shadow: 7px 7px 10px #333333;
+   padding: 5px;
+}
+.did-form-action{text-align:right;padding:3px;margin:2px;float:left;width:95%;}
+.did-form-action a{color:#7A9E22;cursor:pointer;}
+.did-form-action a:hover {color:#7A9E22;font-weight:bold;text-decoration:none;}
+.did-modify-container{float:left;width:25%;position:relative;}
+.did-modify-container select{width:55%;}

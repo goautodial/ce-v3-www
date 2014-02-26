@@ -1,0 +1,344 @@
+/*
+############################################################################################
+####  Name:             main.css                                                        ####
+####  Version:          2.0                                                             ####
+####  Copyright:        GOAutoDial Inc. - Januarius Manipol <januarius@goautodial.com>  ####
+####  License:          AGPLv2                                                          ####
+############################################################################################
+*/
+
+@charset "UTF-8";
+
+#commenu li a:hover,
+#vtigermenu li a:hover,
+#adminmenu li a:hover,
+#agentmenu li a:hover,
+#getsupportmenu li a:hover  {
+   color: #008000;
+}
+
+#vtigermenu li a,
+#adminmenu li a,
+#commenu li a,
+#agentmenu li a,
+#getsupportmenu li a  {
+   padding-left: 0px;
+   padding-right: 0px;
+   text-decoration: none;
+   color: #6A6A6A;
+   height: 100%;
+}
+
+#agentmenu li,
+#getsupportmenu li,
+#commenu li,
+#adminmenu li,
+#vtigermenu li  {
+   height: 100%;
+   display: inline;
+   margin: 0px;
+}
+
+#getstartedbutton a:hover,
+#helpbutton a:hover,
+#welcomebutton a:hover  {
+   background-position: -76px 0%;
+}
+
+#vtigermenu,
+#agentmenu,
+#getsupportmenu,
+#commenu,
+#adminmenu  {
+   font: 18px/22px Verdana;
+   margin: 0px;
+   height: 22px;
+   padding: 0px;
+   list-style: none;
+   text-align: left;
+   color: #6A6A6A;
+   position: absolute;
+   top: 102px;
+}
+
+#helptitletext p,
+#welcometitletext p,
+#getstartedtitletext p  {
+   font: bold 24px/29px Verdana;
+   margin: 0px;
+   color: #626262;
+   text-align: justify;
+}
+
+#helpbodytext p,
+#welcomebodytext p,
+#getstartedbodytext p  {
+   font: bold 14px/24px Verdana;
+   margin: 0px;
+   text-align: left;
+}
+
+#getstartedbodytext,
+#helpbodytext,
+#welcomebodytext  {
+   visibility: visible;
+   position: absolute;
+   top: 476px;
+   z-index: 3;
+   width: 200px;
+}
+
+#helpbox,
+#welcomebox,
+#getstartedbox  {
+   background: url(../images/welcomebox.png) no-repeat;
+   visibility: visible;
+   position: absolute;
+   top: 470px;
+   z-index: 2;
+   width: 232px;
+   height: 215px;
+}
+
+#welcomebodytext p a:hover  {
+   font-style: italic;
+}
+
+#footertext p,
+#bodytext p  {
+   font: 12px/14px Verdana;
+   margin: 0px;
+   padding-bottom: 11px;
+   color: #696969;
+}
+
+#getstartedbodytext p  {
+   color: #808080;
+}
+
+#getstartedtitletext  {
+   visibility: visible;
+   position: absolute;
+   left: 386px;
+   top: 426px;
+   z-index: 4;
+   width: 235px;
+}
+
+#welcomebodytext p a  {
+   font-style: Normal;
+   color: #78A407;
+   text-decoration: none;
+   font-weight: bold;
+}
+
+#getstartedbodytext  {
+   left: 393px;
+}
+
+#getstartedbutton a  {
+   background: url(../images/getstartedbutton.png) no-repeat 0% 0px;
+   display: block;
+   height: 55px;
+   width: 76px;
+   font-size: 55px;
+   line-height: 55px;
+}
+
+#welcomebodytext p  {
+   color: #78A407;
+}
+
+#welcometitletext  {
+   visibility: visible;
+   position: absolute;
+   left: 90px;
+   top: 426px;
+   z-index: 2;
+   width: 144px;
+}
+
+#getstartedbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 309px;
+   top: 415px;
+   z-index: 3;
+   width: 76px;
+   height: 55px;
+}
+
+#welcomebutton a  {
+   background: url(../images/welcomebutton.png) no-repeat 0% 0px;
+   display: block;
+   height: 56px;
+   width: 76px;
+   font-size: 56px;
+   line-height: 56px;
+}
+
+#welcomebodytext  {
+   left: 97px;
+}
+
+#helpbodytext p  {
+   color: #808080;
+}
+
+#getsupportmenu  {
+   z-index: 4;
+   left: 696px;
+}
+
+#getstartedbox  {
+   left: 378px;
+}
+
+#helptitletext  {
+   visibility: visible;
+   position: absolute;
+   left: 686px;
+   top: 426px;
+   z-index: 4;
+   width: 165px;
+}
+
+#welcomebutton  {
+   visibility: visible;
+   position: absolute;
+   left: 13px;
+   top: 415px;
+   z-index: 3;
+   width: 76px;
+   height: 56px;
+}
+
+#bannertext p  {
+   font: bold 36px/43px Verdana;
+   margin: 0px;
+   text-align: left;
+   color: #FEFEFD;
+}
+
+#footertext p  {
+   text-align: center;
+}
+
+#helpbodytext  {
+   left: 693px;
+}
+
+#helpbutton a  {
+   background: url(../images/helpbutton.png) no-repeat 0% 0px;
+   display: block;
+   height: 61px;
+   width: 76px;
+   font-size: 61px;
+   line-height: 61px;
+}
+
+#bannertext  {
+   visibility: visible;
+   position: absolute;
+   left: 7px;
+   top: 191px;
+   z-index: 1;
+   width: 498px;
+}
+
+#footertext  {
+   visibility: visible;
+   position: absolute;
+   left: 26px;
+   top: 881px;
+   z-index: 1;
+   width: 891px;
+}
+
+#bodytext p  {
+   text-align: left;
+   font-style: italic;
+}
+
+#vtigermenu  {
+   z-index: 3;
+   left: 580px;
+}
+
+#helpbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 610px;
+   top: 410px;
+   z-index: 3;
+   width: 76px;
+   height: 61px;
+}
+
+#welcomebox  {
+   left: 82px;
+}
+
+#adminmenu  {
+   z-index: 2;
+   left: 450px;
+}
+
+#agentmenu  {
+   z-index: 1;
+   left: 328px;
+   top: 103px;
+}
+
+#webtemp21  {
+   margin: 0px auto 0px auto;
+   width: 954px;
+   position: relative;
+}
+
+#contents  {
+   background: url(../images/contents.png) no-repeat;
+   visibility: visible;
+   position: absolute;
+   left: 0px;
+   top: 388px;
+   z-index: 1;
+   width: 953px;
+   height: 474px;
+}
+
+#bodytext  {
+   visibility: visible;
+   position: absolute;
+   left: 26px;
+   top: 725px;
+   z-index: 2;
+   width: 891px;
+}
+
+#helpbox  {
+   left: 678px;
+}
+
+#commenu  {
+   z-index: 5;
+   left: 824px;
+}
+
+#gologo  {
+   background: url(../images/gologo.png) no-repeat;
+   visibility: visible;
+   position: absolute;
+   left: 4px;
+   top: 39px;
+   z-index: 1;
+   width: 280px;
+   height: 87px;
+}
+
+html, body  {
+   padding: 0px;
+   margin: 0px;
+   background: #FFFFFF url(../images/exteriortile.png) center top repeat-x;
+}
+

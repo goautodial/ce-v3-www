@@ -1,0 +1,397 @@
+/*
+############################################################################################
+####  Name:             goautodial.css                                                  ####
+####  Version:          2.0                                                             ####
+####  Copyright:        GOAutoDial Inc. - Januarius Manipol <januarius@goautodial.com>  ####
+####  License:          AGPLv2                                                          ####
+############################################################################################
+*/
+
+@charset "UTF-8";
+
+#gomenu {
+   position:relative;
+   z-index:100;
+   height:auto;
+   top: 120px;
+   font: bold 14px/24px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   color: #6A6A6A;
+   text-transform: uppercase;
+}
+
+#gomenu .gomenu {
+    position:absolute;
+}
+
+#gomenu * {
+    list-style:none;
+    border:0;
+    padding:0;
+    margin:0;
+}
+
+#gomenu a {
+    display:block;
+    padding:7px 14px 7px 14px;
+    white-space:nowrap;
+}
+
+#gomenu li {
+    float:right;
+}
+
+#gomenu li li {
+    float:none;
+}
+
+#gomenu div {
+    visibility:hidden;
+    position:absolute;
+}
+
+#gomenu li:hover>div { visibility:visible; }
+
+#gomenu a {
+    text-decoration:none;
+      color: #6A6A6A;
+    position:relative;
+    z-index:77;
+}
+
+#gomenu a:hover {
+    /*background:url(images/back.png);*/
+    color: #008000;
+}
+
+
+
+
+
+
+
+
+#getstartedbutton a:hover,
+#helpbutton a:hover,
+#welcomebutton a:hover  {
+   background-position: -57px 0%;
+}
+
+
+
+
+
+
+
+
+#helptitletext p,
+#welcometitletext p,
+#getstartedtitletext p  {
+   font: bold 18px/29px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   margin: 0px;
+   color: #303030;
+   text-align: justify;
+}
+
+
+#helptitletext a,
+#welcometitletext a,
+#getstartedtitletext a  {
+   font: bold 18px/29px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   margin: 0px;
+   color: #303030;
+   text-align: justify;
+   font-style: Normal;
+   text-decoration: none;
+}
+
+
+
+
+
+#helpbodytext p,
+#welcomebodytext p,
+#getstartedbodytext p  {
+   font: 12px/24px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   margin: 0px;
+   text-align: left;
+}
+#getstartedbodytext,
+#helpbodytext,
+#welcomebodytext  {
+   visibility: visible;
+   position: absolute;
+   top: 515px;
+   z-index: 1;
+   width: 200px;
+}
+#welcomebodytext p a:hover  {
+   font-style: italic;
+}
+#footertext p,
+#bodytext p  {
+   font: 12px/14px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   margin: 0px;
+   padding-bottom: 11px;
+   color: #696969;
+}
+#welcomebodytext  {
+   left: 97px;
+}
+#getstartedbodytext p  {
+   color: #404040;
+}
+#helpbodytext p  {
+   color: #404040;
+}
+#welcomebodytext a  {
+   font-style: Normal;
+   color: #78A407;
+   text-decoration: none;
+}
+#getstartedbodytext  {
+   left: 393px;
+}
+#welcomebodytext p  {
+   color: #78A407;
+}
+#bannertext p  {
+   font: bold 36px/43px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+   margin: 0px;
+   text-align: left;
+   color: #FEFEFD;
+}
+#footertext p  {
+   text-align: center;
+}
+#helpbodytext  {
+   left: 693px;
+}
+#bannertext  {
+   visibility: visible;
+   position: absolute;
+   left: 7px;
+   top: 218px;
+   z-index: 1;
+   width: 498px;
+}
+#footertext  {
+   visibility: visible;
+   position: absolute;
+   left: 26px;
+   top: 900px;
+   z-index: 1;
+   width: 890px;
+}
+#bodytext p  {
+   text-align: left;
+   font-style: italic;
+}
+#bodytext  {
+   visibility: visible;
+   position: absolute;
+   left: 30px;
+   top: 820px;
+   z-index: 1;
+   width: 890px;
+}
+
+
+
+
+
+
+
+
+#getstartedtitletext  {
+   visibility: visible;
+   position: absolute;
+   left: 386px;
+   top: 472px;
+   z-index: 1;
+   width: 235px;
+}
+#welcometitletext  {
+   visibility: visible;
+   position: absolute;
+   left: 90px;
+   top: 472px;
+   z-index: 1;
+   width: 144px;
+}
+#helptitletext  {
+   visibility: visible;
+   position: absolute;
+   left: 686px;
+   top: 472px;
+   z-index: 1;
+   width: 165px;
+}
+
+
+
+
+
+
+
+
+#welcomebutton a  {
+   background: url(../img/welcomebutton.png) no-repeat 0% 0px;
+   display: block;
+   height: 42px;
+   width: 57px;
+   font-size: 42px;
+   line-height: 42px;
+}
+#getstartedbutton a  {
+   background: url(../img/getstartedbutton.png) no-repeat 0% 0px;
+   display: block;
+   height: 41px;
+   width: 57px;
+   font-size: 41px;
+   line-height: 41px;
+}
+#helpbutton a  {
+   background: url(../img/helpbutton.png) no-repeat 0% 0px;
+   display: block;
+   height: 46px;
+   width: 57px;
+   font-size: 46px;
+   line-height: 46px;
+}
+
+
+
+
+
+
+
+
+#welcomebutton  {
+   visibility: visible;
+   position: absolute;
+   left: 25px;
+   top: 460px;
+   z-index: 1;
+   width: 57px;
+   height: 42px;
+}
+#getstartedbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 321px;
+   top: 460px;
+   z-index: 1;
+   width: 57px;
+   height: 41px;
+}
+#helpbutton  {
+   visibility: visible;
+   position: absolute;
+   left: 622px;
+   top: 459px;
+   z-index: 1;
+   width: 57px;
+   height: 46px;
+}
+
+
+
+
+
+
+
+
+#helpbox,
+#welcomebox,
+#getstartedbox  {
+   background: url(../img/welcomebox.png) no-repeat;
+   visibility: visible;
+   position: absolute;
+   top: 510px;
+   z-index: 1;
+   width: 232px;
+   height: 215px;
+}
+#getstartedbox  {
+   left: 378px;
+}
+#welcomebox  {
+   left: 82px;
+}
+#helpbox  {
+   left: 678px;
+}
+
+
+
+
+
+
+
+
+#contents  {
+   background: url(../img/contents.png) no-repeat;
+   visibility: visible;
+   position: absolute;
+   left: 0px;
+   top: 408px;
+   z-index: 1;
+   width: 1024px;
+   height: 474px;
+}
+
+
+
+
+
+
+
+#bannericon  {
+   background: url(../img/bannericon-orange.png) no-repeat;
+   visibility: visible;
+   position: absolute;
+   left: 550px;
+   top: 210px;
+   z-index: 1;
+   width: 370px;
+   height: 177px;
+}
+#gologo a {
+   display: block;
+   height: 76px;
+   width: 252px;
+   line-height: 76px;
+}
+#gologo  {
+   background: url(../img/gologo.png) no-repeat;
+   visibility: visible;
+   position: absolute;
+   left: 0px;
+   top: 50px;
+   z-index: 1;
+   width: 280px;
+   height: 87px;
+}
+#webtemp21  {
+   margin: 0px auto 0px auto;
+   width: 955px;
+   position: relative;
+}
+
+#language_select  {
+  float: right;
+  margin: -13.5em -2em 0em 0em;
+  font: 12px/14px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+}
+
+#theme  {
+  float: right;
+  margin: -13.5em 8em 0em 0em;
+  font: 12px/14px "helvetica neue", "myriad pro", helvetica, arial, sans-serif;
+}
+
+html, body  {
+   padding: 0px;
+   margin: -20px 0px 0px 0px;
+   background: #FFFFFF url(../img/exteriortile-orange.png) center top repeat-x;
+}
