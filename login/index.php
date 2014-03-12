@@ -24,9 +24,18 @@ if(!$firefox && !$chrome) {
 
 $version = file_get_contents('../version.txt');
 
-if ( file_exists("/etc/goautodial.conf") )
+
+if (file_exists("/etc/goautodial.conf")) {
+	$conf_path = "/etc/goautodial.conf";
+} elseif (file_exists("{$_SERVER['DOCUMENT_ROOT']}/goautodial.conf")) {
+	$conf_path = "{$_SERVER['DOCUMENT_ROOT']}/goautodial.conf";
+} else {
+	die ("ERROR: 'goautodial.conf' file not found.");
+}
+
+if ( file_exists($conf_path) )
         {
-        $DBCagc = file("/etc/goautodial.conf");
+        $DBCagc = file($conf_path);
         foreach ($DBCagc as $DBCline)
                 {
                 $DBCline = preg_replace("/ |>|\n|\r|\t|\#.*|;.*/","",$DBCline);
@@ -35,10 +44,17 @@ if ( file_exists("/etc/goautodial.conf") )
                 }
         }
 
+if (file_exists("/etc/astguiclient.conf")) {
+	$conf_path = "/etc/astguiclient.conf";
+} elseif (file_exists("{$_SERVER['DOCUMENT_ROOT']}/astguiclient.conf")) {
+	$conf_path = "{$_SERVER['DOCUMENT_ROOT']}/astguiclient.conf";
+} else {
+	die ("ERROR: 'astguiclient.conf' file not found.");
+}
 
-if ( file_exists("/etc/astguiclient.conf") )
+if ( file_exists($conf_path) )
         {
-        $DBCagc = file("/etc/astguiclient.conf");
+        $DBCagc = file($conf_path);
         foreach ($DBCagc as $DBCline)
                 {
                 $DBCline = preg_replace("/ |>|\n|\r|\t|\#.*|;.*/","",$DBCline);
