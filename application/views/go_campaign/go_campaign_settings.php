@@ -29,7 +29,7 @@ if ($campinfo->campaign_vdad_exten=="8366" || $campinfo->campaign_vdad_exten=="8
 
 foreach ($campcalltimes as $call_times)
 {
-	$local_call_times .= '<option value="'.$call_times->call_time_id.'">'.$call_times->call_time_id.' - '.$call_times->call_time_name.'</option>';
+	$local_call_times .= '<option value="'.trim($call_times->call_time_id).'">'.$call_times->call_time_id.' - '.$call_times->call_time_name.'</option>';
 }
 
 for ($i=1;$i<=20;$i+=.5)
@@ -966,22 +966,30 @@ if ($isSurvey)
 		<td><input id="survey_dtmf_digits" name="survey_dtmf_digits" class="advanceSettings" type="text" maxlength="16" size="16" placeholder="eg. 0123456789*#" value="<?php echo $campinfo->survey_dtmf_digits; ?>" /> <small>* customer define key press e.g.0123456789*#</small></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
+		<td style="text-align:right;">Survey Wait Seconds:</td>
+		<td><input id="survey_wait_sec" name="survey_wait_sec" class="advanceSettings" type="text" maxlength="2" size="5" value="<?php echo $campinfo->survey_wait_sec; ?>" /></td>
+	</tr>
+	<tr class="advance_settings" style="display:none;">
 		<td style="text-align:right;">DID:</td>
 		<td><input id="survey_xfer_exten" name="survey_xfer_exten" class="advanceSettings" type="text" maxlength="25" size="20" value="<?php echo $campinfo->survey_xfer_exten; ?>" /></td>
+	</tr>
+	<tr class="advance_settings" style="display:none;">
+		<td style="text-align:right;">Survey Opt-In Audio File:</td>
+		<td><input id="survey_opt_in_audio_file" name="survey_opt_in_audio_file" class="advanceSettings" type="text" maxlength="50" size="25" value="<?php echo $campinfo->survey_opt_in_audio_file; ?>" /><input type="button" value="Audio" style="cursor:pointer;" class="selectAudio" id="opt_audio" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
 		<td colspan="2">&nbsp;</td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 8 Not Interested Digit:</td>
+		<td style="text-align:right;">Survey Not Interested Digit:</td>
 		<td><input id="survey_ni_digit" name="survey_ni_digit" class="advanceSettings" type="text" maxlength="10" size="5" value="<?php echo $campinfo->survey_ni_digit; ?>" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 8 Not Interested Audio File:</td>
+		<td style="text-align:right;">Survey Not Interested Audio File:</td>
 		<td><input id="survey_ni_audio_file" name="survey_ni_audio_file" class="advanceSettings" type="text" maxlength="50" size="25" value="<?php echo $campinfo->survey_ni_audio_file; ?>" /><input type="button" value="Audio" style="cursor:pointer;" class="selectAudio" id="ni_audio" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 8 Not Interested Status:</td>
+		<td style="text-align:right;">Survey Not Interested Status:</td>
 		<td>
 			<select id="survey_ni_status" name="survey_ni_status" class="advanceSettings">
 				<option value="NI">NI - Not Interested</option>
@@ -993,38 +1001,38 @@ if ($isSurvey)
 		<td colspan="2">&nbsp;</td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 3 Digit:</td>
+		<td style="text-align:right;">Survey Third Digit:</td>
 		<td><input id="survey_third_digit" name="survey_third_digit" class="advanceSettings" type="text" maxlength="10" size="5" value="<?php echo $campinfo->survey_third_digit; ?>" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 3 Audio File:</td>
+		<td style="text-align:right;">Survey Third Audio File:</td>
 		<td><input id="survey_third_audio_file" name="survey_third_audio_file" class="advanceSettings" type="text" maxlength="50" size="25" value="<?php echo $campinfo->survey_third_audio_file; ?>" /><input type="button" value="Audio" style="cursor:pointer;" class="selectAudio" id="third_audio" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 3 Status:</td>
+		<td style="text-align:right;">Survey Third Status:</td>
 		<td><input id="survey_third_status" name="survey_third_status" class="advanceSettings" type="text" maxlength="6" size="10" value="<?php echo $campinfo->survey_third_status; ?>" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 3 DID:</td>
+		<td style="text-align:right;">Survey Third DID:</td>
 		<td><input id="survey_third_exten" name="survey_third_exten" class="advanceSettings" type="text" maxlength="25" size="20" value="<?php echo $campinfo->survey_third_exten; ?>" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
 		<td colspan="2">&nbsp;</td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 4 Digit:</td>
+		<td style="text-align:right;">Survey Fourth Digit:</td>
 		<td><input id="survey_fourth_digit" name="survey_fourth_digit" class="advanceSettings" type="text" maxlength="10" size="5" value="<?php echo $campinfo->survey_fourth_digit; ?>" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 4 Audio File:</td>
+		<td style="text-align:right;">Survey Fourth Audio File:</td>
 		<td><input id="survey_fourth_audio_file" name="survey_fourth_audio_file" class="advanceSettings" type="text" maxlength="50" size="25" value="<?php echo $campinfo->survey_fourth_audio_file; ?>" /><input type="button" value="Audio" style="cursor:pointer;" class="selectAudio" id="fourth_audio" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 4 Status:</td>
+		<td style="text-align:right;">Survey Fourth Status:</td>
 		<td><input id="survey_fourth_status" name="survey_fourth_status" class="advanceSettings" type="text" maxlength="6" size="10" value="<?php echo $campinfo->survey_fourth_status; ?>" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 4 DID:</td>
+		<td style="text-align:right;">Survey Fourth DID:</td>
 		<td><input id="survey_fourth_exten" name="survey_fourth_exten" class="advanceSettings" type="text" maxlength="25" size="20" value="<?php echo $campinfo->survey_fourth_exten; ?>" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">

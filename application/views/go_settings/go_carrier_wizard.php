@@ -267,9 +267,9 @@ $(function()
                         $("#box").append("<div class='processing'><img src='<?=$base?>img/goloading.gif' ></div>");
 			var items = $('#carrierForm').serialize();
 
-                        if(!$("#servers_checkbox").prop("checked")){
-                             items = items + "&server_ip=" + $("#server_ip").val();
-                        }
+                        //if(!$("#servers_checkbox").prop("checked")){
+                        //     items = items + "&server_ip=" + $("#server_ip").val();
+                        //}
 
 			$.post("<?=$base?>index.php/go_carriers_ce/go_carrier_wizard", { items: items, action: "add_new_carrier" },
 			function(data){
@@ -815,7 +815,7 @@ function changeValue(cVar,cVal,cOpt)
 						{
 							$serverArray["{$server->server_ip}"] = "{$server->server_ip} - {$server->server_description}";
 						}
-						echo form_dropdown('',$serverArray,null,'id="server_ip" style');
+						echo form_dropdown('server_ip',$serverArray,$_SERVER["SERVER_ADDR"],'id="server_ip"');
 						?>
                         </td>
                     </tr>

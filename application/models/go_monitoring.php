@@ -368,6 +368,12 @@ class Go_monitoring extends Model {
 						$color="white";
 						}
 	
+					if ( eregi("DISPO",$status) ) 
+						{
+						$bgcolor="white";
+						$color="#333";
+						}
+	
 					if ( (eregi("INCALL",$status)) or (eregi("QUEUE",$status))  or (eregi("3-WAY",$status)) or (eregi("PARK",$status))) {$agent_incall++;  $agent_total++;}
 					if ( (eregi("READY",$status)) or (eregi("CLOSER",$status)) ) {$agent_ready++;  $agent_total++;}
 	

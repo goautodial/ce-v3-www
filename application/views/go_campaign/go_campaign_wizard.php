@@ -561,12 +561,12 @@ $(function()
 		}
 	});
 	
-	$('#campaign_id').bind("keydown keypress", function(event)
+	$('#campaign_id,#campaign_name').bind("keydown keypress", function(event)
 	{
 		//console.log(event.type + " -- " + event.altKey + " -- " + event.which);
 		if (event.type == "keydown") {
 			// For normal key press
-			if (event.keyCode == 32 || event.keyCode == 222 || event.keyCode == 221 || event.keyCode == 220
+			if ((event.keyCode == 32 && $(this).attr('id') != "campaign_name") || event.keyCode == 222 || event.keyCode == 221 || event.keyCode == 220
 				|| event.keyCode == 219 || event.keyCode == 192 || event.keyCode == 191 || event.keyCode == 190
 				|| event.keyCode == 188 || event.keyCode == 61 || event.keyCode == 59)
 				return false;
@@ -574,11 +574,12 @@ $(function()
 			if (event.shiftKey && (event.keyCode > 47 && event.keyCode < 58))
 				return false;
 			
-			if (!event.shiftKey && event.keyCode == 173)
+			if (!event.shiftKey && event.keyCode == 173 && $(this).attr('id') != "campaign_name")
 				return false;
 		} else {
 			// For ASCII Key Codes
-			if ((event.which > 31 && event.which < 48) || (event.which > 57 && event.which < 65)
+			if ((event.which > 32 && event.which < 45) || (event.which == 45 && $(this).attr('id') != "campaign_name") || (event.which > 45 && event.which < 48)
+				|| (event.which == 32 && $(this).attr('id') != "campaign_name") || (event.which > 57 && event.which < 65)
 				|| (event.which > 90 && event.which < 94) || (event.which == 96) || (event.which > 122))
 				return false;
 		}

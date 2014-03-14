@@ -103,7 +103,7 @@ class Go_campaign extends Model {
 									blind_monitor_filename,closer_campaigns,default_xfer_group,xfer_groups,survey_first_audio_file,survey_dtmf_digits,survey_ni_digit,
 									survey_opt_in_audio_file,survey_ni_audio_file,survey_method,survey_menu_id,survey_no_response_action,survey_response_digit_map,survey_third_status,
 									survey_third_audio_file,survey_third_digit,survey_third_exten,survey_fourth_audio_file,survey_fourth_digit,survey_fourth_status,
-									survey_fourth_exten,survey_xfer_exten,survey_camp_record_dir,survey_ni_status
+									survey_fourth_exten,survey_xfer_exten,survey_camp_record_dir,survey_ni_status,survey_wait_sec
 									FROM vicidial_campaigns	WHERE campaign_id='$camp'");
 		$campinfo = $query->row();
 
@@ -944,12 +944,12 @@ class Go_campaign extends Model {
 											dial_timeout,campaign_vdad_exten,campaign_recording,
 											campaign_rec_filename,scheduled_callbacks,scheduled_callbacks_alert,
 											no_hopper_leads_logins,per_call_notes,agent_lead_search,use_internal_dnc,
-											use_campaign_dnc,campaign_cid,user_group,drop_call_seconds)
+											use_campaign_dnc,campaign_cid,user_group,drop_call_seconds,survey_opt_in_audio_file)
 											VALUES('$campaign_id','$campaign_desc','','N','RATIO','NEW',
 											' N NA A AA DROP B NEW -','DOWN','','','','Y','100','1.0',
 											'Y','random','$local_call_time','','','','$SQLdate','Y','DISABLED','','','',
 											'30','$routingExten','NEVER','FULLDATE_CUSTPHONE_CAMPAIGN_AGENT','Y',
-											'BLINK_RED','Y','ENABLED','ENABLED','Y','Y','5164536886','$tenant_id','7')");
+											'BLINK_RED','Y','ENABLED','ENABLED','Y','Y','5164536886','$tenant_id','7','')");
 				
 					$query = $this->db->query("INSERT INTO vicidial_campaign_stats (campaign_id) values('$campaign_id')");
 					

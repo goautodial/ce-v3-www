@@ -105,7 +105,7 @@ class Go_reports extends Model {
 	function go_get_campaigns()
 	{
 	    $groupId = $this->go_get_groupid();
-	    if ($groupId == 'ADMIN' || $groupId == 'admin')
+	    if ($this->commonhelper->checkIfTenant($groupId))
 	    {
 	       $ul='';
 	    }

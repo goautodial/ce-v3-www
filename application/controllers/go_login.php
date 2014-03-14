@@ -94,6 +94,13 @@ class Go_login extends Controller {
 			$this->session->set_userdata($data);
 			
 			#$this->session->set_userdata('ua_language', 'french');
+			
+			$query = $this->db->query("SELECT new_signup FROM go_login_type WHERE account_num='$uname'");
+			$result = $query->num_rows();
+			
+			if ($result < 1) {
+				$query = $this->db->query("INSERT INTO go_login_type VALUES('$uname','1','1')");
+			}
 
 			$remember_me = $this->input->post('remember_me');
 

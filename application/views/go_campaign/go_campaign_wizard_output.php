@@ -544,7 +544,7 @@ $(document).ready(function()
                 </tr>
                 <tr>
                 	<td class="label">Survey Call Menu:</td>
-                    <td><?php echo $survey_info->survey_method; ?>
+                    <td>
 			<?php
 			$callMenuArray[''] = "---NONE---";
 			if (count($call_menus) > 0) {

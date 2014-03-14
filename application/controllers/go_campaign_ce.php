@@ -336,6 +336,23 @@ class Go_campaign_ce extends Controller {
 		$data['inbound_dids'] = $this->go_campaign->go_get_inbound_dids($data['campaign_id']);
 		$data['allowed_trans'] = $this->go_campaign->go_get_allowed_trans($data['campaign_id']);
 		$data['carrier_info'] = $this->go_campaign->go_get_carriers();
+		
+		$groupId = $this->go_campaign->go_get_groupid();
+		if (!$this->commonhelper->checkIfTenant($groupId))
+		{
+		   $ul = '';
+		}
+		else
+		{
+		   $ul = "WHERE user_group='$groupId'";
+		}
+		$query = $this->db->query("SELECT lead_filter_id,lead_filter_name FROM vicidial_lead_filters $ul");
+		$filters[''] = "NONE";
+		foreach ($query->result() as $filter)
+		{
+			$filters[$filter->lead_filter_id] = "{$filter->lead_filter_id} - {$filter->lead_filter_name}";
+		}
+		$data['lead_filters'] = $filters;
 
         $this->load->view('go_campaign/go_campaign_settings',$data);
 	}

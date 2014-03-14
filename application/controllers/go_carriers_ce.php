@@ -796,10 +796,10 @@ class Go_carriers_ce extends Controller {
         }
 
         function createAccount($postdata=null){
-			$webPath = $this->config->item('VARWWWPATH');
-            include("$webPath/sippysignup/xmlrpc/xmlrpc.inc");
-            if(!is_null($postdata)){
-            $params = array(new xmlrpcval(array("username"      => new xmlrpcval('${N:[2][0][1][2][0-9][0-9][0-9][0-9][0-9][0-9]}', "string"),
+		$webPath = $this->config->item('VARWWWPATH');
+		include("$webPath/sippysignup/xmlrpc/xmlrpc.inc");
+		if(!is_null($postdata)){
+		$params = array(new xmlrpcval(array("username"      => new xmlrpcval('${N:[4][6][2][3][0-9][0-9][0-9][0-9][0-9][0-9]}', "string"),
 				    "web_password"      	=> new xmlrpcval('${P:8}', "string"),
                                     "authname"          	=> new xmlrpcval('${C:username}', "string"),
                                     "voip_password"     	=> new xmlrpcval('${P:7}', "string"),
