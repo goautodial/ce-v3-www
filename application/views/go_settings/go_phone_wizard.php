@@ -162,7 +162,7 @@ $(function()
 });
 </script>
 
-<div style="float:right;" id="small_step_number"><img src="<?php echo $base; ?>img/step2of2-nav-small.png" /></div>
+<div style="float:right;" id="small_step_number"><img src="<?php echo $base; ?>img/step2of2-navigation-small.png" /></div>
 <div style="font-weight:bold;font-size:16px;color:#333;">Phone Wizard &raquo; Add New Phone</div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
@@ -193,7 +193,15 @@ $(function()
                         <label class="modify-value">Phone Login Password:</label>
                         </td>
                         <td>
-                        <?=form_input('pass_'.$key,$gens["pass_$key"],'id="pass_'.$key.'" maxlength="10" size="10"') ?>
+                        <?=form_input('pass_'.$key,$gens["pass_$key"],'id="pass_'.$key.'" maxlength="10" size="10" onblur="document.getElementById(\'conf_secret_'.$key.'\').value=this.value;"') ?>
+                        </td>
+                    </tr>
+                    <tr class="advance_settings" style="display:none">
+                        <td style="text-align:right;width:30%;height:10px;">
+                        <label class="modify-value">Phone Registration Password:</label>
+                        </td>
+                        <td>
+                        <?=form_input('conf_secret_'.$key,$gens["pass_$key"],'id="conf_secret_'.$key.'" maxlength="10" size="10"') ?>
                         </td>
                     </tr>
                     <tr <?=($gens["protocol_$key"]=="EXTERNAL") ? "" : 'style="display:none"'; ?>>
@@ -269,14 +277,6 @@ $(function()
                         </td>
                         <td>
                         <?=form_input('login_'.$key,null,'id="login_'.$key.'" maxlength="15" size="15"') ?>
-                        </td>
-                    </tr>
-                    <tr class="advance_settings" style="display:none;">
-                        <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">SIP Registration Password:</label>
-                        </td>
-                        <td>
-                        <?=form_input('conf_secret_'.$key,$gens["pass_$key"],'id="conf_secret_'.$key.'" maxlength="10" size="10"') ?>
                         </td>
                     </tr>
                     <tr style="display:none;">

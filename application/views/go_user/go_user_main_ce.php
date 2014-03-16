@@ -219,8 +219,8 @@ $(function()
                              <?php #if($user_level < 9){?>
                                   <!-- <span><?#=$username?></span> -->
                              <?php #} else {
-                                       $attr = 'id="accountNum" ';
-									   $accnt_group = (!$this->commonhelper->checkIfTenant($user_group)) ? "AGENTS" : "$user_group";
+                                       $attr = 'id="accountNum" style="width:300px;"';
+				       $accnt_group = (!$this->commonhelper->checkIfTenant($user_group)) ? "AGENTS" : "$user_group";
                                        echo form_dropdown('accountNum',$accnt_list,$accnt_group,$attr);
                                        echo "<script>var go_accounts = $foradd</script>";
                                    #}
@@ -331,12 +331,22 @@ $(function()
             <div class="boxleftside boxleftside-modify">Hotkeys:</div>
             <div class="boxrightside boxrightside-modify">
                  <?=form_dropdown('hotkeys_active',array('1'=>'Yes','0'=>'No'),null,'id="hotkeys_active"')?>
-            </div>
+            </div><br class="clear">
             <div class="boxleftside boxleftside-modify">User Level:</div>
             <div class="boxrightside boxrightside-modify">
                  <?$levels = range(0,$user_level);unset($levels[0])?>
                  <?=form_dropdown('user_level',$levels,null,'id="user_level"')?>
-            </div>
+            </div><br class="clear">
+	    <?php
+	    if ($user_group === "ADMIN") {
+	    ?>
+            <div class="boxleftside boxleftside-modify">Modify Same User Level:</div>
+            <div class="boxrightside boxrightside-modify">
+		<?=form_dropdown('modify_same_user_level',array('1'=>'Yes','0'=>'No'),null,'id="modify_same_user_level"')?>
+	    </div>
+	    <?php
+	    }
+	    ?>
             <!-- <div class="boxleftside"><a class="useraccess-remote" id="advance-toggle">Advance [+] </a></div><br class="clear"/>
             <?#foreach($useraccess as $group => $access):?>
                 <br class="clear"/><div class="boxleftside boxleftside-modify <?=substr($group,0,strpos($group," "))?>" style="padding:10px;"><?=$group?></div><br class="boxleftside-modify clear"/>

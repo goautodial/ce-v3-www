@@ -150,7 +150,7 @@ class Go_user_ce extends Controller{
                   #if($userlevel < 9){
                   #    $display .= "<div class='boxrightside'><span>".$_POST[0]['accountNum']."</span></div>";
                   #} else {
-                      $display .= "<div class='boxrightside' $hideDiv><span>".form_dropdown('accountNum',$accnt,$accnt_group,"id='accountNum' ")."</span></div><br class='clear'/>";
+                      $display .= "<div class='boxrightside' $hideDiv><span>".form_dropdown('accountNum',$accnt,$accnt_group,"id='accountNum' style='width:300px;'")."</span></div><br class='clear'/>";
                   #}
                   #$display .= "<div class='boxleftside'>User Group</div>";
                   #if($userlevel < 9){
@@ -163,7 +163,7 @@ class Go_user_ce extends Controller{
                       $display .= "<div class='boxrightside'><span>".$wizardrow[0]->lastnum."</span>".
                                               form_hidden(array('hidcount'=>$_POST[0]['hidcount']))."</div><br class='clear'/>";
                   #}else{
-                  #    $display .= "<div class='boxrightside'><span id='count'>&nbsp;</pan>".
+                  #    $display .= "<div class='boxrightside'><span id='count'>&nbsp;</span>".
                   #                            form_hidden(array('hidcount'=>$_POST[0]['hidcount']))."</div>";
                   #}
                   $display .= "<div class='boxleftside'><strong>Additional Seats:</strong></div>";
@@ -911,10 +911,16 @@ class Go_user_ce extends Controller{
 
 
         # pagination part
-	if ($this->commonhelper->checkIfTenant($data['user_group'])) {
-		 $addedSQL = "and user_group='{$data['user_group']}'";
+        $query = $this->gouser->asteriskDB->query("SELECT modify_same_user_level FROM vicidial_users WHERE user='$username'");
+	$modify_same_level = $query->row()->modify_same_user_level;
+	if ($this->commonhelper->checkIfTenant($data['user_group']) && $this->session->userdata("users_level") < 9) {
+	    $addedSQL = "and user_group='{$data['user_group']}'";
 	}else{
-                 $addedSQL = "";
+	    if ($modify_same_level) {
+		$addedSQL = "and user_level <= '{$data['user_level']}'";
+	    } else {
+		$addedSQL = "and user_level < '{$data['user_level']}'";
+	    }
         }
 
 

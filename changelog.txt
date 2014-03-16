@@ -1,5 +1,73 @@
 Filename: changelog.txt
 
+1395028800 - Added a feature where when you add a new admin and you set the Modify Same User Level to No. That user/admin will not be able to modify/view other user logins with the same user level. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_user_ce.php
+           - * application/views/go_user/go_user_main_ce.php
+           - * js/go_user/go_user_ce.js
+           - * js/go_user/go_user_panel1_ce.js
+
+1394856000 - Fixed an issue when adding new carrier and leaving Server IP checked. It doesn't save the server's IP on the carrier's db. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/views/go_settings/go_carrier_wizard.php
+
+           - Changed the first 4 digits of the username used when applying for a sippy account. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/controllers/go_carriers_ce.php
+
+           - Added a query upon logging in to see if the username exist on go_login_type. If not, it will insert a new data. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/controllers/go_login.php
+
+
+1394596800 - Fixed the adding of new phone extension using phone wizard and user wizard. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_user_ce.php
+           - * application/views/go_settings/go_phone_wizard.php
+
+           - Fixed an issue where when you uncheck the Cluster Status on the user group settings, the widget still shows up. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/views/go_dashboard.php
+
+1394510400 - Fixed a bug on limesurvey when modifying a script. (Issue #1131) -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/models/go_script.php
+
+1394168400 - Added a list archiver when setting the list id INACTIVE and putting it back when set to ACTIVE. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/models/golist.php
+           - * application/views/go_list/go_list.php
+           - * application/views/go_list/go_values.php
+           - * Added Files:
+           - * /usr/share/goautodial/ADMIN_archive_list_tables.pl
+           - * /usr/share/goautodial/go_list_archiver.pl
+
+1394082000 - Fixed a bug when modifying campaigns in advanced settings. (Issue #1135) -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/controllers/go_campaign_ce.php
+
+           - Changed the default value of Survey Opt-in Audio File to blank and added it to Survey Campaign's advance settings. (Issue #1137) -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/models/go_campaign.php
+           - * application/views/go_campaign/go_campaign_settings.php
+
+1393822800 - Fixed an issue with the campaign wizard where you can still input special characters on the campaign name. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/views/go_campaign/go_campaign_wizard.php
+           - * application/views/go_campaign/go_campaign_wizard_output.php
+
+           - Fixed some bug on getting campaign ids to show on the dropdown menu when viewing the reports page. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/models/go_reports.php
+
+           - Fixed css issue where the color of the agent that is on DISPO is showing the same as with a DEAD call. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/models/go_monitoring.php
+
+           - Fixed a bug when modifying a campaign where the local_call_time has having a space at the end of the option value. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/views/go_campaign/go_campaign_settings.php
+
 1393218000 - Fixed an issue when adding new users. Added an option on whether to generate phone login or not. (Issue #1121) -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * application/controllers/go_user_ce.php

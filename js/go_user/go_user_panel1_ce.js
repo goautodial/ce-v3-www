@@ -80,11 +80,11 @@ $(function(){
                protocol+"//"+host+"/index.php/go_user_ce/collectuserinfo/"+$(this).attr("rel"),
                function(data){
 
-                     var $checkThisout = $("div.boxleftside-modify")[9];
+                     var $checkThisout = $("div.boxleftside-modify")[10];
 
                      if($($checkThisout).css("display") === "block"){
                           $("div.boxleftside-modify").siblings("div.boxleftside-modify").each(function(indx,vals){
-                               if(indx > 8){
+                               if(indx > 9){
                                    $(vals).hide();
                                    var $partner = $("div.boxrightside-modify")[indx];
                                    $($partner).hide();
@@ -93,7 +93,7 @@ $(function(){
                           $("#advance-toggle").empty().text("Advance [ + ]");
                      }else{
                           $("div.boxleftside-modify").siblings("div.boxleftside-modify").each(function(indx,vals){
-                               if(indx > 8){
+                               if(indx > 9){
                                    $(vals).show();
                                    var $partner = $("div.boxrightside-modify")[indx];
                                    $($partner).show();
@@ -112,7 +112,7 @@ $(function(){
    });
 
    $("div.boxleftside-modify").siblings("div.boxleftside-modify").each(function(indx,vals){
-          if(indx > 8){
+          if(indx > 9){
              $(vals).hide();
              var $partner = $("div.boxrightside-modify")[indx];
              $($partner).hide();
@@ -187,7 +187,7 @@ $(function(){
         $('.wizard-box-modify').animate({top:"-3000"});
         $('.add-close-modify').animate({top:"-300"});
         $("div.boxleftside-modify").siblings("div.boxleftside-modify").each(function(indx,vals){
-                if(indx > 8){
+                if(indx > 9){
                     $(vals).hide();
                     var $partner = $("div.boxrightside-modify")[indx];
                     $($partner).hide();

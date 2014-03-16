@@ -222,6 +222,10 @@ $(function (){
                                         $(this).attr("id","user_level-"+$user);
                                         $(this).attr("name","user_level-"+$user);
                                    }
+                                   if($currId.indexOf('modify_same_user_level') !== -1){
+                                        $(this).attr("id","modify_same_user_level-"+$user);
+                                        $(this).attr("name","modify_same_user_level-"+$user);
+                                   }
                                 }
                               });
                               if(index === 0){
@@ -242,6 +246,7 @@ $(function (){
                                       $("#active-"+$user+" option[value='"+this.active+"']").attr('selected','selected');
                                       $("#hotkeys_active-"+$user+" option[value='"+this.active+"']").attr('selected','selected');
                                       $("#user_group-"+$user+" option[value='"+this.user_group+"']").attr('selected','selected');
+                                      $("#modify_same_user_level-"+$user+" option[value='"+this.modify_same_user_level+"']").attr('selected','selected');
                                       $("#user_level-"+$user+" option[value='"+this.user_level+"']").attr('selected','selected');
                                       $("#modify_users_id").html(this.user);
                                       $("body").animate({scrollTop: 0},1000); 
@@ -312,7 +317,11 @@ $(function (){
                                    if($currId.indexOf('hotkeys_active') !== -1){
                                         $(this).attr("id","hotkeys_active-"+$user);
                                         $(this).attr("name","hotkeys_active-"+$user);
-                                   }                                 
+                                   }
+                                   if($currId.indexOf('modify_same_user_level') !== -1){
+                                        $(this).attr("id","modify_same_user_level-"+$user);
+                                        $(this).attr("name","modify_same_user_level-"+$user);
+                                   }
                                     if($currId.indexOf('user_level') !== -1){
                                         $(this).attr("id","user_level-"+$user);
                                         $(this).attr("name","user_level-"+$user);
@@ -343,6 +352,7 @@ $(function (){
                                           $("#active-"+$user+" option[value='"+this.active+"']").attr('selected','selected');
                                           $("#hotkeys_active-"+$user+" option[value='"+this.hotkeys_active+"']").attr('selected','selected');
                                           $("#user_group-"+$user+" option[value='"+this.user_group+"']").attr('selected','selected');
+                                          $("#modify_same_user_level-"+$user+" option[value='"+this.modify_same_user_level+"']").attr('selected','selected');
                                           $("#user_level-"+$user+" option[value='"+this.user_level+"']").attr('selected','selected'); 
                                           $("#advance-toggle").attr("rel",this.user_id);
                                           var $collect = this;

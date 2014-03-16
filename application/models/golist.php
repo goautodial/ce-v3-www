@@ -46,10 +46,11 @@ class Golist extends Model {
 		  $start = 0;
 	  if ($limit==null || $limit < 1)
 		  $limit = 25;
-		  
+	  
 	  $limitSQL = (! $showall) ? "LIMIT $start,$limit" : "";
 	 
-	  $stmt="SELECT list_id,list_name,list_description,(SELECT count(*) as tally FROM vicidial_list WHERE list_id = vicidial_lists.list_id) as tally,active,list_lastcalldate,campaign_id,reset_time from vicidial_lists $wherecampaigns order by list_id $limitSQL";
+	  $stmt="SELECT list_id,list_name,list_description,IF(active='Y',(SELECT count(*) as tally FROM vicidial_list WHERE list_id = vicidial_lists.list_id),(SELECT count(*) as tally FROM vicidial_list_archive WHERE list_id = vicidial_lists.list_id)) as tally,active,list_lastcalldate,campaign_id,reset_time from vicidial_lists $wherecampaigns order by list_id $limitSQL";
+	  //$stmt="SELECT list_id,list_name,list_description,(SELECT count(*) as tally FROM vicidial_list WHERE list_id = vicidial_lists.list_id) as tally,active,list_lastcalldate,campaign_id,reset_time from vicidial_lists $wherecampaigns order by list_id $limitSQL";
 	  
 	  		
    	  $listall = $this->asteriskDB->query($stmt);

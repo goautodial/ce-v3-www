@@ -51,6 +51,8 @@
 		$reset_field = htmlspecialchars(urldecode($reset_field[1]));
 		$campaign_field = split('=', $itemsumitexplode[5]);
 		$campaign_field = htmlspecialchars(urldecode($campaign_field[1]));
+		$active_field = split('=', $itemsumitexplode[8]);
+		$active_field = htmlspecialchars(urldecode($active_field[1]));
 		
 		if(is_null($sucesshint)) {
 	 		
@@ -72,7 +74,15 @@
 						$this->golist->resetleads($queryreset);
 						$this->golist->resetleads($hopperreset);
 					} 
-				} 
+				}
+				
+				if ($showval=="active") {
+					if ($active_field == "Y") {
+						$result = exec("/usr/share/goautodial/go_list_archiver.pl --listid={$listid_data} --action=activate --quiet");
+					} else {
+						$result = exec("/usr/share/goautodial/go_list_archiver.pl --listid={$listid_data} --action=deactivate --quiet");
+					}
+				}
 				
 				if($showval=="web_form_address") {
 					
@@ -146,10 +156,11 @@
 			}
 			
 			if($sucesshint=="FAILED") {
-				echo "FAILED: List I.D. $listid_data deleted";
+				echo "FAILED: List I.D. $listid_data not activated";
 				$sucesshint = "FAILED";
 			} else {
-				echo "SUCCESS: List I.D. $listid_data deleted";
+				$result = exec("/usr/share/goautodial/go_list_archiver.pl --listid={$listiddel} --action=activate --quiet");
+				echo "SUCCESS: List I.D. $listid_data activated";
 				$sucesshint = "";
 			}
 	}
@@ -165,10 +176,11 @@
 			}
 			
 			if($sucesshint=="FAILED") {
-				echo "FAILED: List I.D. $listid_data deleted";
+				echo "FAILED: List I.D. $listid_data not deactivated";
 				$sucesshint = "FAILED";
 			} else {
-				echo "SUCCESS: List I.D. $listid_data deleted";
+				$result = exec("/usr/share/goautodial/go_list_archiver.pl --listid={$listiddel} --action=deactivate --quiet");
+				echo "SUCCESS: List I.D. $listid_data deactivated";
 				$sucesshint = "";
 			}
 	}

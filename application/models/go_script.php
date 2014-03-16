@@ -442,17 +442,20 @@ class Go_script extends Model{
       
                     case "vicidial":
                              $obj = "asteriskDB";
+                             $tableName = $table;
                     break;
 
                     case "limesurvey":
                              $obj = "limesurveyDB";
+                             $dbname = $this->$obj->database;
+                             $tableName = "`$dbname`.`$table`";
                     break;
 
                }
 
                $this->$obj->trans_start();
                     $this->$obj->where($content['condition']);
-                    $this->$obj->update($table,$content['data']);
+                    $this->$obj->update($tableName,$content['data']);
                     $this->commonhelper->auditadmin("MODIFY","MODIFY SCRIPT in $table values ".implode(",",$content['data']));
                $this->$obj->trans_complete();
 

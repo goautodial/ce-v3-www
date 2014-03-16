@@ -479,7 +479,7 @@ $(document).ready(function()
  										document.getElementById('listname_edit').value=datas[2];
  										document.getElementById('listdesc_edit').value=datas[5];
  										document.getElementById('campid_edit').value=datas[3];
- 										document.getElementById('reslist_edit').value=datas[8];
+ 										document.getElementById('reslist_edit').value='N';
  										document.getElementById('act_edit').value=datas[4];
  										document.getElementById('restime_edit').value=datas[8];
  										document.getElementById('agcscp_edit').value=datas[9];
@@ -518,6 +518,8 @@ $(document).ready(function()
 
 			document.getElementById('showval').value=listID;
 			document.getElementById('showvaledit').value=listID;
+			
+			$('#box').append("<span style='position:absolute;top:200px;z-index:99;width:100%;'><center><img src='<? echo $base; ?>img/goloading.gif' style='background-color:white;' /></center></span>");
 
 			var itemsumit = $('#edit_go_listfrm').serialize();
 				$.post("<?=$base?>index.php/go_list/editsubmit", { itemsumit: itemsumit, action: "editlistfinal" },
@@ -596,7 +598,7 @@ $(document).ready(function()
 			for (i=0;i<count_listid;i++) {
 			 		$.post("<?=$base?>index.php/go_list/deletesubmit", { listid_delete: listID[i], action: actionmo },
 						function(data){
-							alert("List ID successfully deleted.");	
+							alert(data);	
 						});
 			}
 			
@@ -717,7 +719,7 @@ function delDNC(dnc_num)
 		{
 			var pnum = dnc_num.split('-');
 			$("#dnc_placeholder").empty().html('<center><img src="<? echo $base; ?>img/goloading.gif" /></center>');
-			$('#dnc_placeholder').load('<? echo $base; ?>index.php/go_dnc_ce/go_search_dnc/1/');
+			$('#dnc_placeholder').load('<? echo $base; ?>index.php/go_dnc_ce/go_search_dnc/');
 
 			if (data)
 			{
@@ -739,8 +741,8 @@ $(document).ready(function()
 		
 		//DNC START
 		$('#search_dnc').val('');
-		//$("#dnc_placeholder").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
-		//$("#dnc_placeholder").load("<?php echo $base;?>index.php/go_dnc_ce/go_search_dnc/1/");
+		$("#dnc_placeholder").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
+		$("#dnc_placeholder").load("<?php echo $base;?>index.php/go_dnc_ce/go_search_dnc/");
 		
 		$('.tab').click(function()
 		{
@@ -847,7 +849,7 @@ $(document).ready(function()
 		$(this).hide();
 		$("#search_dnc").val('');
                 $("#dnc_placeholder").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
-                $('#dnc_placeholder').load('<? echo $base; ?>index.php/go_dnc_ce/go_search_dnc/1/');
+                $('#dnc_placeholder').load('<? echo $base; ?>index.php/go_dnc_ce/go_search_dnc/');
 	});
 	
 	$("#submit_search_dnc").click(function()
@@ -981,7 +983,7 @@ $(document).ready(function()
                 {
                         var position = $(this).offset();
                         $('#go_action_menu').css('left',position.left-110);
-                        $('#go_action_menu').css('top',position.top-120);
+                        $('#go_action_menu').css('top',position.top-97);
                         $('#go_action_menu').slideDown('fast');
                         toggleAction = $('#go_action_menu').css('display');
                 }
@@ -2020,7 +2022,7 @@ echo "<body onload='genListID()'>";
 						<td style="padding-left:50px;" valign="top" colspan="2">
 							<table width="100%">
 								
-								<tr style="display:none">
+								<tr>
 									<td align="right"><label class="modify-value">Auto Generate:&nbsp;&nbsp;&nbsp;</label></td>
 									<td><input type="checkbox" id="auto_gen" name="auto_gen" onclick="showRow();" checked="checked"></td>
 								</tr>
@@ -2121,7 +2123,7 @@ echo "<body onload='genListID()'>";
                                                                 <td><label class="">Campaign:</label></td>
                                                                 <td>
                                                                         <select size="1" name="campaign_id" id="campid_edit" style="width:300px;">
-                                                                                <option>--- Select Campaign ---</option>
+                                                                                <option value="">--- Select Campaign ---</option>
                                                                                 <?php
                                                         foreach($campaigns as $campaignInfo){
                                                                                                 $cid = $campaignInfo->campaign_id;

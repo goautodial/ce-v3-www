@@ -317,11 +317,16 @@ $(function()
                           }
                        }
                        if($indx !== "left_html" && $indx !== "right_html"){
+			    var $wdgt = $indx;
+			    if ($indx === "dashboard_clusters") {
+				$wdgt = "dashboard_cluster_status";
+			    }
                             if($val === "N"){
-                                $("#"+$indx).hide();
+                                $("#"+$wdgt).hide();
                                 $("input[id*='"+$indx+"']").attr("checked",false);
                             }else if($val === "PN"){
-                                $("#"+$indx).hide();
+                                $("#"+$wdgt).hide();
+				$("label[for*='"+$indx+"']").hide();
                                 $("input[id*='"+$indx+"']").attr("checked",false).attr("disabled",true);
                             }
                        }
