@@ -50,6 +50,9 @@ foreach ($cluster_status as $key => $cluster)
 	{
 		$s_time = $query->row()->s_time;
 		$u_time = $query->row()->u_time + 5;
+	} else {
+		$s_time = "TIME SYNC";
+		$u_time = 0;
 	}
 	
 	$query = $this->go_dashboard->db->query("SELECT svn_revision from servers where server_ip='{$cluster['server_ip']}';");
@@ -59,10 +62,15 @@ foreach ($cluster_status as $key => $cluster)
 	}
 	
 	$status = ($cluster['active'] == 'Y') ? "<span style='color:green;'>ACTIVE</span>" : "<span style='color:#FF0000;'>INACTIVE</span>";
-	$colors = ($key%2) ? "#EFFBEF" : "#E0F8E0";
-	if ($web_u_time > $u_time) { $colors = "#FF0000;color:white"; }
+	$colors = ($key%2) ? "#EFFBEF;color:#777777" : "#E0F8E0;color:#777777";
+	if ($web_u_time > $u_time) {
+		$colors = "#FA5858;color:white";
+		if ($cluster['active'] == 'N') {
+			$status = "<span style='color:#FFFFFF;'>INACTIVE</span>";
+		}
+	}
 	
-	echo "<tr style='background-color:{$colors};cursor:default; line-height: 20px; color: #777777;'>";
+	echo "<tr style='background-color:{$colors};cursor:default; line-height: 20px;'>";
 	echo "<td style='border-top:#D0D0D0 dashed 1px;' title='{$cluster['server_description']}' class='toolTip'>&nbsp;<a style='cursor:pointer;' onclick='modifyServer(\"{$cluster['server_id']}\",\"{$cluster['server_ip']}\");'>{$cluster['server_id']}</a>&nbsp;</td>";
 	echo "<td style='border-top:#D0D0D0 dashed 1px;display:none;' title='{$cluster['server_description']}' class='toolTip'>&nbsp;{$cluster['server_description']}&nbsp;</td>";
 	echo "<td style='border-top:#D0D0D0 dashed 1px;' title='{$cluster['server_description']}' class='toolTip'>&nbsp;{$cluster['server_ip']}&nbsp;</td>";

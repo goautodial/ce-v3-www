@@ -11,6 +11,10 @@ Filename: changelog.txt
            - * Affected File:
            - * application/models/golist.php
 
+           - Fixed an error on cluster widget when the query on table server_updater returns null. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/views/go_cluster_status.php
+
 1394856000 - Fixed an issue when adding new carrier and leaving Server IP checked. It doesn't save the server's IP on the carrier's db. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected File:
            - * application/views/go_settings/go_carrier_wizard.php
