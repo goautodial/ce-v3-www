@@ -7,6 +7,10 @@ Filename: changelog.txt
            - * js/go_user/go_user_ce.js
            - * js/go_user/go_user_panel1_ce.js
 
+           - Fixed an issue when downloading leads that doesn't have custom fields. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/models/golist.php
+
 1394856000 - Fixed an issue when adding new carrier and leaving Server IP checked. It doesn't save the server's IP on the carrier's db. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected File:
            - * application/views/go_settings/go_carrier_wizard.php
