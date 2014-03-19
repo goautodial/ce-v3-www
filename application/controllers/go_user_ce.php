@@ -1026,7 +1026,7 @@ class Go_user_ce extends Controller{
 
              echo "Success: User(s) deleted";
         }else{
-            die("Error: You are not allowed to disable this user");
+            die("Error: You are not allowed to delete this user");
         }
 
     }
