@@ -1005,7 +1005,7 @@ class Go_user_ce extends Controller{
         }
         $access = unserialize($this->session->userdata('useraccess'));
 	
-        if(in_array('modify_users',$access)){
+        if(in_array('modify_users',str_replace(':','',$access))){
              $userid = (!is_null($passuserid)?$passuserid:$this->uri->segment(3));
              $vicidial_user = $this->uri->segment(4);
              #$result = $this->gouser->updateuser(array($userid=>array('active'=>'N','users_id'=>$vicidial_user))); 
