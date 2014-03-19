@@ -1,5 +1,15 @@
 Filename: changelog.txt
 
+1395288000 - Fixed some permission/limitation when setting up a new level 9 user which is not on the ADMIN user group. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/views/includes/go_menu.php
+           - * application/views/go_settings/go_phone_list.php
+           - * application/views/go_settings/go_phone_view.php
+
+           - Fixed an error where creating a new user will not set the right permissions/access. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/models/go_access.php
+
 1395028800 - Added a feature where when you add a new admin and you set the Modify Same User Level to No. That user/admin will not be able to modify/view other user logins with the same user level. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * application/controllers/go_user_ce.php

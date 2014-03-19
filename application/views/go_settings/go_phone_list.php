@@ -118,8 +118,14 @@ $(function()
 		<tr style="font-weight:bold;">
 			<th>&nbsp;EXTEN</th>
 			<th>&nbsp;PROTOCOL</th>
+			<?php
+			if ($this->session->userdata('user_group') == "ADMIN") {
+			?>
 			<th>&nbsp;SERVER</th>
 			<th>&nbsp;DIAL PLAN</th>
+			<?php
+			}
+			?>
 			<th>&nbsp;STATUS</th>
 			<th>&nbsp;NAME</th>
 			<th colspan="2">&nbsp;VMAIL</th>
@@ -149,8 +155,10 @@ if (count($phones) > 0) {
 		echo "<tr style='background-color:$bgcolor;'>";
 		echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;<a onclick=\"modify('{$list->extension}')\">{$list->extension}</a></td>";
 		echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;{$list->protocol}</td>";
-		echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;{$list->server_ip}</td>";
-		echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;{$list->dialplan_number}</td>";
+		if ($this->session->userdata('user_group') == "ADMIN") {
+			echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;{$list->server_ip}</td>";
+			echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;{$list->dialplan_number}</td>";
+		}
 		echo "<td style='border-top:#D0D0D0 dashed 1px;display:none;'>&nbsp;{$list->voicemail_id}</td>";
 		echo "<td style='border-top:#D0D0D0 dashed 1px;color:$acolor;font-weight:bold;width:10%;'>&nbsp;$status</td>";
 		echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;{$list->fullname}</td>";

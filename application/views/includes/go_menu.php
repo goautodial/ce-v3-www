@@ -342,11 +342,15 @@ $(function()
 <li class="go_header_submenu">Admin Settings</li>
 <li class="go_system_submenu" title="Admin Logs" id="logs">&raquo; Admin Logs</li>
 <li class="go_system_submenu" title="Call Times" id="calltimes">&raquo; Call Times</li>
+<?php if ($this->session->userdata('user_group') === "ADMIN") { ?>
 <li class="go_system_submenu" title="Carriers" id="carriers">&raquo; Carriers</li>
+<?php } ?>
 <li class="go_system_submenu" title="Phones" id="phones">&raquo; Phones</li>
+<?php if ($this->session->userdata('user_group') === "ADMIN") { ?>
 <li class="go_system_submenu" title="Servers" id="servers">&raquo; Servers</li>
 <li class="go_system_submenu" title="System Settings" id="settings">&raquo; System Settings</li>
 <li class="go_system_submenu" title="User Groups" id="usergroups">&raquo; User Groups</li>
+<?php } ?>
 <li class="go_system_submenu" title="Voicemails" id="voicemails">&raquo; Voicemails</li>
 </ul>
 </div>

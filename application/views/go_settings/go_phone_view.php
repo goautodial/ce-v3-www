@@ -10,6 +10,11 @@ $base = base_url();
 
 if (! $isAdvance)
 	$isAdvance = 0;
+	
+$hideMe = "";
+if ($this->session->userdata('user_group') != "ADMIN") {
+	$hideMe = "style='display:none;'";
+}
 ?>
 <script>
 $(function()
@@ -98,7 +103,7 @@ switch ($type)
 	<tr>
     	<td style="text-align:right;" nowrap>Phone Password:</td><td><?=form_input('pass',$phone_info->pass,'size="10" maxlength="10"') ?></td>
     </tr>
-	<tr>
+	<tr <?=$hideMe?>>
     	<td style="text-align:right;" nowrap>Dial Plan Number:</td><td><?=form_input('dialplan_number',$phone_info->dialplan_number,'size="20" maxlength="20"') ?></td>
     </tr>
 	<tr>
@@ -113,7 +118,7 @@ switch ($type)
 	<tr style="display:none;">
     	<td style="text-align:right;" nowrap>Computer IP Address:</td><td><?=form_input('computer_ip',$phone_info->computer_ip,'size="20" maxlength="15"') ?></td>
     </tr>
-	<tr>
+	<tr <?=$hideMe?>>
     	<td style="text-align:right;" nowrap>Server IP:</td><td>
 		<?php
 		$serverArray = array();
