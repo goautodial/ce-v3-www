@@ -52,13 +52,21 @@ class Gouser extends Model {
                   $this->asteriskDB->where("user RLIKE",$search);
                   $this->asteriskDB->or_where("full_name RLIKE",$search);
               }
-              if ($this->commonhelper->checkIfTenant($account))
+              if ($this->commonhelper->checkIfTenant($account) && $this->session->userdata("users_level") < 9)
               {
                   $this->asteriskDB->where('user_group =',$account);
               }
               $this->asteriskDB->where("full_name NOT LIKE","%Survey%");
               $this->asteriskDB->where("user_level !=",'4');
-              $this->asteriskDB->where("user_level <=",$this->session->userdata("users_level"));
+              if ($level < 9) {
+                  $this->asteriskDB->where("user_level <=",$level);
+              } else {
+                  if ($modify_same_level) {
+                      $this->asteriskDB->where("user_level <=",$level);
+                  } else {
+                      $this->asteriskDB->where("user_level <",$level);
+                  }
+              }
               #if($this->session->userdata("user_group") != "ADMIN"){
                   $this->asteriskDB->limit($limit,$offset);
               #}
@@ -444,7 +452,7 @@ class Gouser extends Model {
                        // update phone login and pass on phones table
                        $this->asteriskDB->trans_start();
                        $this->asteriskDB->where('login',$phone_login);
-                       $this->asteriskDB->update('phones',array('pass'=>$phone_pass));
+                       $this->asteriskDB->update('phones',array('pass'=>$phone_pass,'conf_secret'=>$phone_pass));
                        $this->asteriskDB->trans_complete();
                        
                        
