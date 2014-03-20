@@ -144,6 +144,12 @@ var userSettings = {
 <script type="text/javascript">
 
 //var currenttime = '<!--#config timefmt="%B %d, %Y %H:%M:%S"--><!--#echo var="DATE_LOCAL" -->' //SSI method of getting server date
+<?php
+$offset = $this->commonhelper->get_system_settings('default_local_gmt');
+$tz = timezone_name_from_abbr(null, $offset * 3600, false);
+if($tz === false) $tz = timezone_name_from_abbr(null, $offset * 3600, true);
+date_default_timezone_set($tz);
+?>
 var currenttime = '<? print date("F d, Y H:i:s", time())?>' //PHP method of getting server date
 
 var todayarray=new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");

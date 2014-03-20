@@ -6,6 +6,17 @@
 ####  Copyright:        GOAutoDial Inc. - Franco Hora <info@goautodial.com>             ####
 ####  License:          AGPLv2                                                          ####
 ############################################################################################
+
+$gmtArray = array(
+    '12.75'=>'12.75','12.00'=>'12.00','11.00'=>'11.00','10.00'=>'10.00',
+    '9.50'=>'9.50','9.00'=>'9.00','8.00'=>'8.00','7.00'=>'7.00',
+    '6.50'=>'6.50','6.00'=>'6.00','5.75'=>'5.75','5.50'=>'5.50',
+    '5.00'=>'5.00','4.50'=>'4.50','4.00'=>'4.00','3.50'=>'3.50',
+    '3.00'=>'3.00','2.00'=>'2.00','1.00'=>'1.00','0.00'=>'0.00',
+    '-1.00'=>'-1.00','-2.00'=>'-2.00','-3.00'=>'-3.00','-3.50'=>'-3.50',
+    '-4.00'=>'-4.00','-5.00'=>'-5.00','-6.00'=>'-6.00','-7.00'=>'-7.00',
+    '-8.00'=>'-8.00','-9.00'=>'-9.00','-10.00'=>'-10.00','-11.00'=>'-11.00','-12.00'=>'-12.00'
+);
 ?>
 
 <link type="text/css" rel="stylesheet" href="<?=base_url()?>css/go_common_ce.css">
@@ -81,6 +92,10 @@
                         <div class="settings-separator">&nbsp;</div>
                         <div class="settings-label">Timeclock End Of Day</div>
                         <div class="settings-value"><?=form_input('timeclock_end_of_day',$settings[0]->timeclock_end_of_day,'id="timeclock_end_of_day" size="5"')?></div>
+                        <br class="clear"/>
+                        <div class="settings-separator">&nbsp;</div>
+                        <div class="settings-label">Default Local GMT</div>
+                        <div class="settings-value"><?=form_dropdown('default_local_gmt',$gmtArray,$settings[0]->default_local_gmt,'id="default_local_gmt"')?></div>
                         <br class="clear"/>
                         <div class="settings-separator">&nbsp;</div>
                         <div class="settings-label">Timeclock Last Auto Logout</div>
@@ -323,7 +338,7 @@
                         <div class="settings-value"><?=form_input('webphone_systemkey',$settings[0]->webphone_systemkey,'id="webphone_systemkey"')?></div>
                         <br class="clear"/>
                         <div class="settings-separator">&nbsp;</div>
-                        <div class="settings-action"><input type="button" value="Submit" id="updatesettings"></div>
+                        <div class="settings-action"><input type="button" value="Submit" id="updatesettings" style="cursor:pointer"></div>
                         <br class="clear"/>
 
                   </div>
