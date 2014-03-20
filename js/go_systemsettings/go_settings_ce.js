@@ -6,6 +6,8 @@ $(function(){
                    $("#system-settings").serialize(),
                    function(data){
                         alert(data);
+                        
+                        location.reload();
                    }
              );
 

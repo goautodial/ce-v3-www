@@ -1,5 +1,11 @@
 Filename: changelog.txt
 
+1395374400 - Added the option to change the default time on the damin UI header by changing the Default Local GMT from the system settings. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/views/go_systemsettings/index.php
+           - * application/views/includes/go_dashboard_header_jsloader.php
+           - * js/go_systemsettings/go_settings_ce.js
+
 1395288000 - Fixed some permission/limitation when setting up a new level 9 user which is not on the ADMIN user group. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * application/views/includes/go_menu.php
