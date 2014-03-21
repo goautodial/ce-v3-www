@@ -2041,17 +2041,21 @@ class Go_user_ce extends Controller{
 	$account = $this->session->userdata('user_group');
 
 	if ($this->commonhelper->checkIfTenant($account)) {
-		 $addedSQL = "and user_group='$account'";
+	    $addedSQL = "and user_group='$account'";
 	}else{
-                 $addedSQL = "";
+            $addedSQL = "";
         }
+	
+	if ($account != 'ADMIN') {
+	    $userGroupSQL = "and user_group != 'ADMIN'";
+	}
 
 	$searchSQL = '';
 	if ((!is_null($search) && $search) || strlen($search) > 0) {
-	    $searchSQL = "AND user RLIKE '$search' OR full_name RLIKE '$search'";
+	    $searchSQL = "AND (user RLIKE '$search' OR full_name RLIKE '$search')";
 	}
 	if (is_null($page) || $page < 1) { $page = 1; }
-	$query = $this->gouser->asteriskDB->query("SELECT count(*) as ucnt from vicidial_users where active='Y' and user_level != '4' $addedSQL $searchSQL order by user;");
+	$query = $this->gouser->asteriskDB->query("SELECT count(*) as ucnt from vicidial_users where user_level != '4' $addedSQL $userGroupSQL $searchSQL order by user;");
 	$rp 	= 25;
 	$total 	= $query->row()->ucnt;
 	$limit 	= 5;

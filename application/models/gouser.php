@@ -35,45 +35,32 @@ class Gouser extends Model {
      function collectusers($account=null,$page=null,$search=null){
 
           $level = $this->session->userdata('users_level');
+          $username = $this->session->userdata('user_name');
+          $query = $this->asteriskDB->query("SELECT modify_same_user_level FROM vicidial_users WHERE user='$username'");
+          $modify_same_level = $query->row()->modify_same_user_level;
           if(!is_null($account)){
-              $this->asteriskDB->select('*');
-              $this->asteriskDB->from('vicidial_users');
-              //$this->asteriskDB->join('vicidial_user_groups','vicidial_users.user_group = vicidial_user_groups.user_group');
-              //if($level < 9){
-              //     $this->asteriskDB->like('vicidial_user_groups.user_group',$account);
-              //}
-
               $limit = ($page=='ALL') ? 10000 : 25;
               $offset = (($page-1) * $limit);
-
-              $this->asteriskDB->where("user !=","VDAD");
-              $this->asteriskDB->where("user !=","VDCL");
-              if (!is_null($search) && strlen($search) > 0) {
-                  $this->asteriskDB->where("user RLIKE",$search);
-                  $this->asteriskDB->or_where("full_name RLIKE",$search);
-              }
-              if ($this->commonhelper->checkIfTenant($account) && $this->session->userdata("users_level") < 9)
-              {
-                  $this->asteriskDB->where('user_group =',$account);
-              }
-              $this->asteriskDB->where("full_name NOT LIKE","%Survey%");
-              $this->asteriskDB->where("user_level !=",'4');
-              if ($level < 9) {
-                  $this->asteriskDB->where("user_level <=",$level);
+              
+              if ($modify_same_level) {
+                  $levelSQL = "AND user_level <= '$level'";
               } else {
-                  if ($modify_same_level) {
-                      $this->asteriskDB->where("user_level <=",$level);
-                  } else {
-                      $this->asteriskDB->where("user_level <",$level);
-                  }
+                  $levelSQL = "AND (user_level < '$level' OR (user_level = '$level' AND user = '$username'))";
               }
-              #if($this->session->userdata("user_group") != "ADMIN"){
-                  $this->asteriskDB->limit($limit,$offset);
-              #}
-              $this->asteriskDB->order_by('user','asc');
-              #$this->asteriskDB->order_by('vicidial_users.user_group','desc');
-              #$this->asteriskDB->order_by('vicidial_users.user_level','desc');
-              $users = $this->asteriskDB->get(); 
+              
+              if (!is_null($search) && strlen($search) > 0) {
+                  $searchSQL = "AND (user RLIKE '$search' OR full_name RLIKE '$search')";
+              }
+              
+              if ($this->commonhelper->checkIfTenant($account) & $level < 9) {
+                  $userGroupSQL = "AND user_group = '$account'";
+              }
+              
+              if ($account != 'ADMIN') {
+                  $notAdminSQL = "AND user_group != 'ADMIN'";
+              }
+              $stmt = "SELECT * FROM vicidial_users WHERE user NOT IN ('VDAD','VDCL') AND user_level != '4' $levelSQL $searchSQL $userGroupSQL $notAdminSQL ORDER BY user ASC LIMIT $offset,$limit";
+              $users = $this->asteriskDB->query($stmt);
               $collectedusers = array(); 
               $ctr = 0;
               foreach($users->result() as $info){

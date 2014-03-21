@@ -1,5 +1,11 @@
 Filename: changelog.txt
 
+1395460800 - Fixed a bug on displaying users when Modify Same User Level is either turned on or off. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_user_ce.php
+           - * application/models/gouser.php
+           - * application/views/go_user/go_user_listall_ce.php
+
 1395374400 - Added the option to change the default time on the damin UI header by changing the Default Local GMT from the system settings. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * application/views/go_systemsettings/index.php

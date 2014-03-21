@@ -87,7 +87,7 @@ $(function(){
 	<thead>
         <tr style="font-weight:bold;text-align: left;">
             <th style="width:12%">&nbsp;&nbsp;AGENT ID</th>
-            <th>&nbsp;&nbsp;AGENT NAME <?=$search_list ?></th>
+            <th>&nbsp;&nbsp;AGENT NAME</th>
             <th>&nbsp;&nbsp;LEVEL</th>
 			<?php
 			if (!$this->commonhelper->checkIfTenant($user_group)){
