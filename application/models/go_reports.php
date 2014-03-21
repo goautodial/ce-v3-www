@@ -112,7 +112,11 @@ class Go_reports extends Model {
 	    else
 	    {  
 	       $stringv = $this->go_getall_allowed_campaigns();
-	       $ul = " and campaign_id IN ('$stringv') ";         
+	       if ($stringv === "ALLCAMPAIGNS") {
+		  $ul = "";
+	       } else {
+		  $ul = " and campaign_id IN ('$stringv') ";
+	       }
 	    }
 		
 		$query = $this->reportsdb->query("SELECT campaign_id,campaign_name FROM vicidial_campaigns WHERE active='Y' $ul ORDER BY campaign_id");

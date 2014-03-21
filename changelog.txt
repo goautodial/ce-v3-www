@@ -6,6 +6,10 @@ Filename: changelog.txt
            - * application/models/gouser.php
            - * application/views/go_user/go_user_listall_ce.php
 
+           - Fixed a bug when displaying list of campaigns when viewing reports page. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/models/go_reports.php
+
 1395374400 - Added the option to change the default time on the damin UI header by changing the Default Local GMT from the system settings. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * application/views/go_systemsettings/index.php
