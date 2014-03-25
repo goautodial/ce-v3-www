@@ -472,10 +472,7 @@ $(document).ready(function()
 						}
 		
 						for (i=0;i<count_listid;i++) {
-                						if(datas[i]=="") {
-												datas[i]=" ";
- 											}
-											 											
+											
  										document.getElementById('listname_edit').value=datas[2];
  										document.getElementById('listdesc_edit').value=datas[5];
  										document.getElementById('campid_edit').value=datas[3];

@@ -1,5 +1,9 @@
 Filename: changelog.txt
 
+1395806400 - Fixed an issue on modifying list ids that when it gets a blank data, it replaces with a space which ruins the transfer presets on agent ui. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/views/go_list/go_list.php
+
 1395460800 - Fixed a bug on displaying users when Modify Same User Level is either turned on or off. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * application/controllers/go_user_ce.php
