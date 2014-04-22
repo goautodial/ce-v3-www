@@ -67,7 +67,7 @@ $NOW = date('Y-m-d');
 .processing img{margin-top:150px;opacity:0.8;}
 
 .welcome-header{width:100%;text-align:center;}
-.sales-email{float:right;text-align:left;font-size:12px;margin-top:25px;}
+.sales-email{float:right;text-align:left;font-size:12px;margin-top:5px; margin-right: 30px}
 .signup60{cursor:pointer;}
 span{padding:3px;}
 </style>

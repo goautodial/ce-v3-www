@@ -161,6 +161,8 @@ $(document).ready(function()
 //                             $("#ssh_status").empty().css("color",(($results.sshd === 'Running')?'green':'#FF0000')).append($results.sshd);
                             }
                 );
+		
+		// Every 60 seconds
                 var refreshId = setInterval(function(){
                          $.post(
                                 "<?=$base?>index.php/go_site/control_panel",
@@ -201,21 +203,9 @@ $(document).ready(function()
 		// Reloads every 5 seconds
 		var refreshId = setInterval(function()
 			{
-				// $("#table_sales").empty().html('<img src="<? echo $base; ?>img/loading.gif" />');
-				//$('#table_sales').slideUp(300).delay(800).fadeIn(400);
-				//$("#table_sales").effect("shake", { times:3 }, 300);
-				//$("#table_sales").empty().html('<img src="<? echo $base; ?>img/loading.gif" />');
-				//$('#table_sales').fadeOut("slow").load('<? echo $base; ?>index.php/go_site/go_widget_today').fadeIn("slow");
-				$('#table_sales').load('<? echo $base; ?>index.php/go_site/go_dashboard_sales_today');
 				$('#table_calls').load('<? echo $base; ?>index.php/go_site/go_dashboard_calls_today');
-				$('#table_drops').load('<? echo $base; ?>index.php/go_site/go_dashboard_drops_today');
-
 				$('#table_agents').load('<? echo $base; ?>index.php/go_site/go_dashboard_agents');
-// 				$('#table_analytics_in').load('<? echo $base; ?>index.php/go_site/go_dashboard_analytics_in');
-// 				$('#table_analytics_out').load('<? echo $base; ?>index.php/go_site/go_dashboard_analytics_out');
-
-
-
+				
 				$('#table_vitals').load('<? echo $base; ?>application/views/phpsysinfo/vitals.php');
 				$('#table_memory').load('<? echo $base; ?>application/views/phpsysinfo/memory.php');
 				$('#table_filesystems').load('<? echo $base; ?>application/views/phpsysinfo/filesystems.php');
@@ -224,6 +214,8 @@ $(document).ready(function()
 		//sippy reloads every 5 minutes
                 var refreshId = setInterval(function()
                         {
+				$('#table_sales').load('<? echo $base; ?>index.php/go_site/go_dashboard_sales_today');
+				$('#table_drops').load('<? echo $base; ?>index.php/go_site/go_dashboard_drops_today');
                                 $('#sippydiv').load('<? echo $base; ?>index.php/go_site/sippyinfo');
                         }, 300000);
 		
@@ -254,6 +246,7 @@ $(document).ready(function()
 			}, (realtimeInterval*1000));
 
 
+		// Reloads every 30 minutes
 		var refreshId = setInterval(function()
 			{
 				$('#rss_widget').load('<? echo $base; ?>index.php/go_site/go_rssview').fadeIn("slow");
@@ -265,10 +258,11 @@ $(document).ready(function()
 
 
 		//var intres = 20000;
+		// Reloads every 60 seconds
 		var refreshId = setInterval(function()
 			{
 				$('#table_leads').load('<? echo $base; ?>index.php/go_site/go_dashboard_leads');
-			}, 30000);
+			}, 60000);
 
 
 		// Reloads every 5 minutes

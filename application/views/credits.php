@@ -53,7 +53,7 @@ $base = base_url();
                                     Levy Ryan D. Nolasco<br />
                                     Jefferson C. Varias<br />
                                     Regie V. Irupang<br />
-                                    Erwin C. De Luna<br />
+                                    Tristan Kendrick A. Biscocho<br />
                                 </div>
                             <br />
                             <span><b>Contributors:</b></span>
@@ -62,10 +62,10 @@ $base = base_url();
                                     Carlo Roy V. Taguinod<br />
                                     Rafael R. Pekson II<br />
                                     Rodolfo Januarius T. Manipol<br />
-                                    Tristan Kendrick A. Biscocho<br />
                                     Kristian T. Antiligando<br />
                                     Wilperson D.S. Necesario<br />
                                     Wittie H. Manansala<br />
+                                    Erwin C. De Luna<br />
                                     Franco E. Hora<br />
                                     Jerico James F. Milo<br />
                                 </div>

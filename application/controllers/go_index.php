@@ -90,7 +90,7 @@ class Go_index extends Controller {
 		#echo "<script>javascript:alert('NOTICE: Logout successful! Thank you!'); window.location='../../'; history.replaceState ='../../'</script>";
 	}
 	
-function closebrowser()
+	function closebrowser()
 	{
 		$remember_me = $this->session->userdata('remember_me');
 		if ($remember_me=='') {
@@ -140,6 +140,7 @@ function closebrowser()
 	}
 	
         function credits(){
+		$this->load->library(array('commonhelper'));
 		$data['go_main_content'] = 'credits';
 		$data['cssloader'] = 'go_dashboard_cssloader.php';
 		$data['jsheaderloader'] = 'go_dashboard_header_jsloader.php';
@@ -147,16 +148,17 @@ function closebrowser()
 		$data['sup']= 'wp-has-current-submenu';
 	
 		$data['folded'] = 'folded';
-		$data['bannertitle'] = 'GoAutoDial Project Page';
+		$data['bannertitle'] = 'GOautodial Project Page';
 		//$data['userfulname'] = $callfunc;
                 $data['hideinfo'] = "yes";
 		$data['adminheaderlink'] = 1;
 		$data['logo'] = "smalllogo.png";
-		$data['title'] = "GoAutoDial - Empowering the Next Generation Contact Centers";
+		$data['title'] = "GOautodial - Empowering the Next Generation Contact Centers";
 		$this->load->view('includes/go_dashboard_template', $data);
         }
 	
 	function agplv2(){
+		$this->load->library(array('commonhelper'));
 		$data['go_main_content'] = 'license-agplv2';
 		$data['cssloader'] = 'go_dashboard_cssloader.php';
 		$data['jsheaderloader'] = 'go_dashboard_header_jsloader.php';
@@ -175,6 +177,7 @@ function closebrowser()
 	
 	
 	function gplv2(){
+		$this->load->library(array('commonhelper'));
 		$data['go_main_content'] = 'license-gplv2';
 		$data['cssloader'] = 'go_dashboard_cssloader.php';
 		$data['jsheaderloader'] = 'go_dashboard_header_jsloader.php';

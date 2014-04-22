@@ -14,7 +14,7 @@
 class Go_carriers_ce extends Controller {
 	var $userLevel;
 
-    function __construct()
+	function __construct()
 	{
 		parent::Controller();
 		#parent::Model();
@@ -53,8 +53,8 @@ class Go_carriers_ce extends Controller {
 		
 		$data['carriers'] = $this->go_carriers->go_get_carrier_list();
 
-        $data['go_main_content'] = 'go_settings/go_carriers';
-        $this->load->view('includes/go_dashboard_template',$data);
+		$data['go_main_content'] = 'go_settings/go_carriers';
+		$this->load->view('includes/go_dashboard_template',$data);
 	}
 	
 	function go_get_carrier()
@@ -70,13 +70,13 @@ class Go_carriers_ce extends Controller {
 			default:
 				$query = $this->db->query("SELECT * FROM vicidial_server_carriers WHERE carrier_id='$carrier';");
 				$data['carrier_info'] = $query->row();
-
-                                $prefixes = explode("\n",$data['carrier_info']->dialplan_entry);
-                                $prefix = explode(",",$prefixes[0]);
-                                $prefixuse = substr(ltrim($prefix[0],"exten => _ "),0,(strpos(".",$prefix[0]) - 1));
-
-                                $this->db->where('dial_prefix',$prefixuse);
-                                $data['campaigns'] = $this->db->get('vicidial_campaigns')->result();
+				
+				$prefixes = explode("\n",$data['carrier_info']->dialplan_entry);
+				$prefix = explode(",",$prefixes[0]);
+				$prefixuse = substr(ltrim($prefix[0],"exten => _ "),0,(strpos(".",$prefix[0]) - 1));
+				
+				$this->db->where('dial_prefix',$prefixuse);
+				$data['campaigns'] = $this->db->get('vicidial_campaigns')->result();
 				break;
 		}
 		
@@ -84,7 +84,7 @@ class Go_carriers_ce extends Controller {
 		$data['servers'] = $this->go_carriers->go_list_server_ips();
 		
 		$data['type'] = $type;
-        $this->load->view('go_settings/go_carrier_view',$data);
+		$this->load->view('go_settings/go_carrier_view',$data);
 	}
 
         function go_carrier_type(){
@@ -720,63 +720,63 @@ class Go_carriers_ce extends Controller {
         }
 
         function sippy_register(){
-            session_start();
-	    $webPath = $this->config->item('VARWWWPATH');
-            include("$webPath/sippysignup/xmlrpc/xmlrpc.inc");
-       
-            if($_POST['captcha'] !== $_SESSION['captcha']){
-                 echo "Error: Invalid Captcha";
-            } else {
+		session_start();
+		$webPath = $this->config->item('VARWWWPATH');
+		include("$webPath/sippysignup/xmlrpc/xmlrpc.inc");
+		
+		if($_POST['captcha'] !== $_SESSION['captcha']){
+		     echo "Error: Invalid Captcha";
+		} else {
 
-                 $r = $this->createAccount($_POST);
-                 
-                 if(!in_array($r,array(402,400,412,490,500))){
-                     $a = array();
-                     $v = $r->structmem('username');
-                     $a['username'] = $v->scalarval();
-                     $v = $r->structmem('web_password');
-                     $a['web_password'] = $v->scalarval();
-                     $v = $r->structmem('authname');
-                     $a['authname'] = $v->scalarval();
-                     $v = $r->structmem('voip_password');
-                     $a['voip_password'] = $v->scalarval();
-                     $v = $r->structmem('vm_password');
-                     $a['vm_password'] = $v->scalarval();
-                     $v = $r->structmem('i_account');
-                     $a['i_account'] = $v->scalarval();
-
-		     $this->sendEMail($a,$_POST);
-		  
-
-                     # insert values to vicidial_servers_carriers
-		     $data['vicidial_server_carriers']['carrier_id'] = "GOCE{$a['authname']}";
-                     $data['vicidial_server_carriers']['carrier_name'] = "JustGOVoIP";
-                     $data['vicidial_server_carriers']['carrier_description'] = "VoIP service powered by GOautodial";
-                     $data['vicidial_server_carriers']['registration_string'] = mysql_real_escape_string("register => {$a['authname']}:{$a['voip_password']}@dal.justgovoip.com:5060/{$a['authname']}");
-                     $data['vicidial_server_carriers']['account_entry'] = mysql_real_escape_string("[{$data['vicidial_server_carriers']['carrier_id']}]");
-                     $data['vicidial_server_carriers']['account_entry'] .= "\n".mysql_real_escape_string("disallow=all")."\n".mysql_real_escape_string("allow=gsm")."\n".mysql_real_escape_string("allow=g729")."\n".mysql_real_escape_string("allow=ulaw")."\n".mysql_real_escape_string("type=friend")."\n".
-                                                                           mysql_real_escape_string("username={$a['authname']}")."\n".mysql_real_escape_string("secret={$a['voip_password']}").
-                                                                           "\n".mysql_real_escape_string("host=dal.justgovoip.com")."\n".mysql_real_escape_string("dtmfmode=rfc2833").
-                                                                           "\n".mysql_real_escape_string("context=trunkinbound")."\n".mysql_real_escape_string("qualify=yes").
-                                                                           "\n".mysql_real_escape_string("insecure=very").
-                                                                           "\n".mysql_real_escape_string("nat=yes");
-                     $data['vicidial_server_carriers']['dialplan_entry'] = mysql_real_escape_string("exten => _".$a['authname'].".,1,AGI(agi://127.0.0.1:4577/call_log)")."\n";
-                     $data['vicidial_server_carriers']['dialplan_entry'] .= mysql_real_escape_string('exten => _'.$a['authname'].'.,2,Dial(SIP/${EXTEN:'.strlen($a['authname']).'}@'.$data['vicidial_server_carriers']['carrier_id'].",,tTo)")."\n";
-                     $data['vicidial_server_carriers']['dialplan_entry'] .= mysql_real_escape_string("exten => _".$a['authname'].".,3,Hangup");
-                     $data['vicidial_server_carriers']['server_ip'] = $_SERVER['SERVER_ADDR'];
-                     
-
-		     $data['justgovoip_sippy_info'] = $a;
-                     $data['justgovoip_sippy_info']['carrier_id'] = "GOCE{$a['authname']}";
-                     $this->go_carriers->go_carrier_autogen($data);
-                     $this->commonhelper->auditadmin('ADD',"Added New Carrier {$data['vicidial_server_carriers']['carrier_id']}");
-                
-                     $query = $this->db->query("UPDATE servers SET rebuild_conf_files='Y' where generate_vicidial_conf='Y' and active_asterisk_server='Y' and server_ip='{$_SERVER['SERVER_ADDR']}';");
-                     
-		     echo "Success: Account creation successful. Please check your email for instructions on how to login to your account.";
-                 } else {
-                    echo "Error: Can't create sippy user ";
-                 }
+		$r = $this->createAccount($_POST);
+		
+		if(!in_array($r,array(402,400,412,490,500))){
+			$a = array();
+			$v = $r->structmem('username');
+			$a['username'] = $v->scalarval();
+			$v = $r->structmem('web_password');
+			$a['web_password'] = $v->scalarval();
+			$v = $r->structmem('authname');
+			$a['authname'] = $v->scalarval();
+			$v = $r->structmem('voip_password');
+			$a['voip_password'] = $v->scalarval();
+			$v = $r->structmem('vm_password');
+			$a['vm_password'] = $v->scalarval();
+			$v = $r->structmem('i_account');
+			$a['i_account'] = $v->scalarval();
+	
+			$this->sendEMail($a,$_POST);
+		     
+	
+			# insert values to vicidial_servers_carriers
+			$data['vicidial_server_carriers']['carrier_id'] = "GOCE{$a['authname']}";
+			$data['vicidial_server_carriers']['carrier_name'] = "JustGOVoIP";
+			$data['vicidial_server_carriers']['carrier_description'] = "VoIP service powered by GOautodial";
+			$data['vicidial_server_carriers']['registration_string'] = mysql_real_escape_string("register => {$a['authname']}:{$a['voip_password']}@dal.justgovoip.com:5060/{$a['authname']}");
+			$data['vicidial_server_carriers']['account_entry'] = mysql_real_escape_string("[{$data['vicidial_server_carriers']['carrier_id']}]");
+			$data['vicidial_server_carriers']['account_entry'] .= "\n".mysql_real_escape_string("disallow=all")."\n".mysql_real_escape_string("allow=gsm")."\n".mysql_real_escape_string("allow=g729")."\n".mysql_real_escape_string("allow=ulaw")."\n".mysql_real_escape_string("type=friend")."\n".
+									      mysql_real_escape_string("username={$a['authname']}")."\n".mysql_real_escape_string("secret={$a['voip_password']}").
+									      "\n".mysql_real_escape_string("host=dal.justgovoip.com")."\n".mysql_real_escape_string("dtmfmode=rfc2833").
+									      "\n".mysql_real_escape_string("context=trunkinbound")."\n".mysql_real_escape_string("qualify=yes").
+									      "\n".mysql_real_escape_string("insecure=very").
+									      "\n".mysql_real_escape_string("nat=yes");
+			$data['vicidial_server_carriers']['dialplan_entry'] = mysql_real_escape_string("exten => _".$a['authname'].".,1,AGI(agi://127.0.0.1:4577/call_log)")."\n";
+			$data['vicidial_server_carriers']['dialplan_entry'] .= mysql_real_escape_string('exten => _'.$a['authname'].'.,2,Dial(SIP/${EXTEN:'.strlen($a['authname']).'}@'.$data['vicidial_server_carriers']['carrier_id'].",,tTo)")."\n";
+			$data['vicidial_server_carriers']['dialplan_entry'] .= mysql_real_escape_string("exten => _".$a['authname'].".,3,Hangup");
+			$data['vicidial_server_carriers']['server_ip'] = $_SERVER['SERVER_ADDR'];
+			
+	
+			$data['justgovoip_sippy_info'] = $a;
+			$data['justgovoip_sippy_info']['carrier_id'] = "GOCE{$a['authname']}";
+			$this->go_carriers->go_carrier_autogen($data);
+			$this->commonhelper->auditadmin('ADD',"Added New Carrier {$data['vicidial_server_carriers']['carrier_id']}");
+		   
+			$query = $this->db->query("UPDATE servers SET rebuild_conf_files='Y' where generate_vicidial_conf='Y' and active_asterisk_server='Y' and server_ip='{$_SERVER['SERVER_ADDR']}';");
+			
+			echo "Success: Account creation successful. Please check your email for instructions on how to login to your account.";
+		} else {
+			echo "Error: Can't create sippy user ";
+		}
             }
         }
 
@@ -838,7 +838,9 @@ class Go_carriers_ce extends Controller {
                                     "vm_notify_emails"  => new xmlrpcval('', "string"),
                                     "vm_forward_emails" => new xmlrpcval('', "string"),
                                     "vm_del_after_fwd"  => new xmlrpcval('', "int"),
-                                    "company_name"      => new xmlrpcval($postdata['company_name'], "string"),
+                                    "company_name"      => new xmlrpcval($postdata['company_name'], "string"),
+
+                                    "description"       => new xmlrpcval($postdata['company_name'], "string"),
                                     "salutation"        => new xmlrpcval('', "string"),
                                     "first_name"        => new xmlrpcval($postdata['first_name'], "string"),
                                     "last_name"         => new xmlrpcval($postdata['last_name'], "string"),
@@ -920,7 +922,7 @@ class Go_carriers_ce extends Controller {
                                                 "to"        => new xmlrpcval($postdata['email'], "string"),
                                                 "cc"        => new xmlrpcval($postdata['cc'], "string"),
                                                 "bcc"       => new xmlrpcval('noc@goautodial.com', "string"),
-                                                "subject"   => new xmlrpcval('JustGOVoIP Signup Confirmation', "string"),
+                                                "subject"   => new xmlrpcval('JustGOVoIP CE Signup Confirmation', "string"),
                                                 "body"      => new xmlrpcval($body, "string")),'struct'));
             $msg = new xmlrpcmsg('sendEMail', $params);
 	    $_F=__FILE__;$_X='Pz48P3BocCAkY2w0ID0gbjV3IHhtbHJwY19jbDQ1bnQoJ2h0dHBzOi8vZDFsLmozc3RnMnYyNHAuYzJtL3htbDFwNC94bWwxcDQnKTsNCiA/Pg==';eval(base64_decode('JF9YPWJhc2U2NF9kZWNvZGUoJF9YKTskX1g9c3RydHIoJF9YLCcxMjM0NTZhb3VpZScsJ2FvdWllMTIzNDU2Jyk7JF9SPWVyZWdfcmVwbGFjZSgnX19GSUxFX18nLCInIi4kX0YuIiciLCRfWCk7ZXZhbCgkX1IpOyRfUj0wOyRfWD0wOw=='));
@@ -951,7 +953,7 @@ class Go_carriers_ce extends Controller {
 			$data['system_settings'] = $this->go_carriers->go_get_systemsettings();
 			$data['templates'] = $this->go_carriers->go_list_templates();
 			
-	        $this->load->view('go_settings/go_carrier_wizard',$data);
+			$this->load->view('go_settings/go_carrier_wizard',$data);
 		} else {
 			if ($action == "add_new_carrier")
 			{
@@ -1058,9 +1060,9 @@ class Go_carriers_ce extends Controller {
 
 					$this->checkInfo($amount);
 					if($amount > 0){
-					   $yesToDelete = "blockAccount";
+						$yesToDelete = "blockAccount";
 					}else{
-					   $yesToDelete = "deleteAccount";
+						$yesToDelete = "deleteAccount";
 					}
 	
 					$webPath = $this->config->item('VARWWWPATH');
@@ -1144,41 +1146,42 @@ class Go_carriers_ce extends Controller {
 
         function checkInfo(&$amount=null){
 
-                   $this->go_carriers->goautodialDB->where(array('carrier_id'=>$_POST['carrier']));
-                   $sippy = $this->go_carriers->goautodialDB->get('justgovoip_sippy_info');
-                   if($sippy->num_rows() > 0){
-						$webPath = $this->config->item('VARWWWPATH');
-                        include("$webPath/sippysignup/xmlrpc/xmlrpc.inc");
-                        $row = $sippy->result();
-                        $params = array(new xmlrpcval(array("i_account" => new xmlrpcval($row[0]->i_account, "int")), "struct"));
-                        $msg = new xmlrpcmsg('getAccountInfo', $params);
-          $_F=__FILE__;$_X='Pz48P3BocCAkY2w0ID0gbjV3IHhtbHJwY19jbDQ1bnQoJ2h0dHBzOi8vZDFsLmozc3RnMnYyNHAuYzJtL3htbDFwNC94bWwxcDQnKTsNCiA/Pg==';eval(base64_decode('JF9YPWJhc2U2NF9kZWNvZGUoJF9YKTskX1g9c3RydHIoJF9YLCcxMjM0NTZhb3VpZScsJ2FvdWllMTIzNDU2Jyk7JF9SPWVyZWdfcmVwbGFjZSgnX19GSUxFX18nLCInIi4kX0YuIiciLCRfWCk7ZXZhbCgkX1IpOyRfUj0wOyRfWD0wOw=='));
-          $_F=__FILE__;$_X='Pz48P3BocCAkY2w0LT5zNXRDcjVkNW50NDFscygnajNzdGcydjI0cC1jNScsICdLMW0ydEU2YW91JywgQ1VSTEFVVEhfRElHRVNUKTsgPz4=';eval(base64_decode('JF9YPWJhc2U2NF9kZWNvZGUoJF9YKTskX1g9c3RydHIoJF9YLCcxMjM0NTZhb3VpZScsJ2FvdWllMTIzNDU2Jyk7JF9SPWVyZWdfcmVwbGFjZSgnX19GSUxFX18nLCInIi4kX0YuIiciLCRfWCk7ZXZhbCgkX1IpOyRfUj0wOyRfWD0wOw=='));
-                        $cli->setSSLVerifyPeer(false);
-                        $search = $cli->send($msg, 12);
-                        $v = $search->value()->structmem('balance');
-                        echo abs($v->scalarval());
-                        $amount = abs($v->scalarval());
-                   }else{
-                       echo "proceed";
-                   }
+		$this->go_carriers->goautodialDB->where(array('carrier_id'=>$_POST['carrier']));
+		$sippy = $this->go_carriers->goautodialDB->get('justgovoip_sippy_info');
+		if($sippy->num_rows() > 0){
+			$webPath = $this->config->item('VARWWWPATH');
+			include("$webPath/sippysignup/xmlrpc/xmlrpc.inc");
+			$row = $sippy->result();
+			$params = array(new xmlrpcval(array("i_account" => new xmlrpcval($row[0]->i_account, "int")), "struct"));
+			$msg = new xmlrpcmsg('getAccountInfo', $params);
+			$_F=__FILE__;$_X='Pz48P3BocCAkY2w0ID0gbjV3IHhtbHJwY19jbDQ1bnQoJ2h0dHBzOi8vZDFsLmozc3RnMnYyNHAuYzJtL3htbDFwNC94bWwxcDQnKTsNCiA/Pg==';eval(base64_decode('JF9YPWJhc2U2NF9kZWNvZGUoJF9YKTskX1g9c3RydHIoJF9YLCcxMjM0NTZhb3VpZScsJ2FvdWllMTIzNDU2Jyk7JF9SPWVyZWdfcmVwbGFjZSgnX19GSUxFX18nLCInIi4kX0YuIiciLCRfWCk7ZXZhbCgkX1IpOyRfUj0wOyRfWD0wOw=='));
+			$_F=__FILE__;$_X='Pz48P3BocCAkY2w0LT5zNXRDcjVkNW50NDFscygnajNzdGcydjI0cC1jNScsICdLMW0ydEU2YW91JywgQ1VSTEFVVEhfRElHRVNUKTsgPz4=';eval(base64_decode('JF9YPWJhc2U2NF9kZWNvZGUoJF9YKTskX1g9c3RydHIoJF9YLCcxMjM0NTZhb3VpZScsJ2FvdWllMTIzNDU2Jyk7JF9SPWVyZWdfcmVwbGFjZSgnX19GSUxFX18nLCInIi4kX0YuIiciLCRfWCk7ZXZhbCgkX1IpOyRfUj0wOyRfWD0wOw=='));
+			$cli->setSSLVerifyPeer(false);
+			$search = $cli->send($msg, 12);
+			$v = $search->value()->structmem('balance');
+			echo abs($v->scalarval());
+			$amount = abs($v->scalarval());
+		} else {
+			echo "proceed";
+		}
 
         }
 
 
         function checkJustgovoip($internalCheck=null,&$response=null){
-            if(!empty($_POST)){
-		if((!empty($internalCheck) && !is_null($internalCheck))){
-			$this->go_carriers->goautodialDB->where(array('carrier_id'=>$internalCheck));
-		}else{
-			$this->go_carriers->goautodialDB->where(array('carrier_id'=>$_POST['carrier']));
+		if(!empty($_POST)){
+			if((!empty($internalCheck) && !is_null($internalCheck))){
+				$this->go_carriers->goautodialDB->where(array('carrier_id'=>$internalCheck));
+			}else{
+				$this->go_carriers->goautodialDB->where(array('carrier_id'=>$_POST['carrier']));
+			}
+			
+			$justgovoip = $this->go_carriers->goautodialDB->get('justgovoip_sippy_info');
+			$response = $justgovoip->num_rows();
+			if(empty($internalCheck) && is_null($internalCheck)){
+				echo $justgovoip->num_rows();
+			}
 		}
-		$justgovoip = $this->go_carriers->goautodialDB->get('justgovoip_sippy_info');
-		$response = $justgovoip->num_rows();
-		if(empty($internalCheck) && is_null($internalCheck)){
-			echo $justgovoip->num_rows();
-		}
-            }
         }
 	
 	function go_check_carrier()
@@ -1233,28 +1236,27 @@ class Go_carriers_ce extends Controller {
                                         $this->go_carriers->goautodialDB->where(array('carrier_id'=>$carrier));
                                         $sippy = $this->go_carriers->goautodialDB->get('justgovoip_sippy_info');
                                         if($sippy->num_rows() > 0){
-
-                                             $_POST['carrier'] = $carrier;
-                                             $this->checkInfo($amount);
-                                             if($amount > 0){
-                                                $toBlock = "blockAccount";
-                                             }else{
-                                                $toBlock = "deleteAccount";
+						$_POST['carrier'] = $carrier;
+						$this->checkInfo($amount);
+						if($amount > 0){
+							$toBlock = "blockAccount";
+						} else {
+							$toBlock = "deleteAccount";
+						}
+						
 						$webPath = $this->config->item('VARWWWPATH');
-                                                include("$webPath/sippysignup/xmlrpc/xmlrpc.inc");
-                                                $sippy_info = $sippy->result();
-                                                $params = array(new xmlrpcval(array("i_account" => new xmlrpcval($sippy_info[0]->i_account, "int")), "struct"));
-                                                $msg = new xmlrpcmsg($toBlock, $params);
-                                                $_F=__FILE__;$_X='Pz48P3BocCAkY2w0ID0gbjV3IHhtbHJwY19jbDQ1bnQoJ2h0dHBzOi8vZDFsLmozc3RnMnYyNHAuYzJtL3htbDFwNC94bWwxcDQnKTsNCiA/Pg==';eval(base64_decode('JF9YPWJhc2U2NF9kZWNvZGUoJF9YKTskX1g9c3RydHIoJF9YLCcxMjM0NTZhb3VpZScsJ2FvdWllMTIzNDU2Jyk7JF9SPWVyZWdfcmVwbGFjZSgnX19GSUxFX18nLCInIi4kX0YuIiciLCRfWCk7ZXZhbCgkX1IpOyRfUj0wOyRfWD0wOw=='));
-                                                $_F=__FILE__;$_X='Pz48P3BocCAkY2w0LT5zNXRDcjVkNW50NDFscygnajNzdGcydjI0cC1jNScsICdLMW0ydEU2YW91JywgQ1VSTEFVVEhfRElHRVNUKTsgPz4=';eval(base64_decode('JF9YPWJhc2U2NF9kZWNvZGUoJF9YKTskX1g9c3RydHIoJF9YLCcxMjM0NTZhb3VpZScsJ2FvdWllMTIzNDU2Jyk7JF9SPWVyZWdfcmVwbGFjZSgnX19GSUxFX18nLCInIi4kX0YuIiciLCRfWCk7ZXZhbCgkX1IpOyRfUj0wOyRfWD0wOw=='));
-                                                $cli->setSSLVerifyPeer(false);
-                                                $search = $cli->send($msg, 20);
-
-                                             }
-
-                                             $this->go_carriers->goautodialDB->where(array('carrier_id'=>$carrier));
-                                             $this->go_carriers->goautodialDB->delete('justgovoip_sippy_info');                                             $this->go_carriers->db->where(array('carrier_id'=>$carrier));
-                                             $this->go_carriers->db->delete('justgovoip_sippy_info');
+						include("$webPath/sippysignup/xmlrpc/xmlrpc.inc");
+						$sippy_info = $sippy->result();
+						$params = array(new xmlrpcval(array("i_account" => new xmlrpcval($sippy_info[0]->i_account, "int")), "struct"));
+						$msg = new xmlrpcmsg($toBlock, $params);
+						$_F=__FILE__;$_X='Pz48P3BocCAkY2w0ID0gbjV3IHhtbHJwY19jbDQ1bnQoJ2h0dHBzOi8vZDFsLmozc3RnMnYyNHAuYzJtL3htbDFwNC94bWwxcDQnKTsNCiA/Pg==';eval(base64_decode('JF9YPWJhc2U2NF9kZWNvZGUoJF9YKTskX1g9c3RydHIoJF9YLCcxMjM0NTZhb3VpZScsJ2FvdWllMTIzNDU2Jyk7JF9SPWVyZWdfcmVwbGFjZSgnX19GSUxFX18nLCInIi4kX0YuIiciLCRfWCk7ZXZhbCgkX1IpOyRfUj0wOyRfWD0wOw=='));
+						$_F=__FILE__;$_X='Pz48P3BocCAkY2w0LT5zNXRDcjVkNW50NDFscygnajNzdGcydjI0cC1jNScsICdLMW0ydEU2YW91JywgQ1VSTEFVVEhfRElHRVNUKTsgPz4=';eval(base64_decode('JF9YPWJhc2U2NF9kZWNvZGUoJF9YKTskX1g9c3RydHIoJF9YLCcxMjM0NTZhb3VpZScsJ2FvdWllMTIzNDU2Jyk7JF9SPWVyZWdfcmVwbGFjZSgnX19GSUxFX18nLCInIi4kX0YuIiciLCRfWCk7ZXZhbCgkX1IpOyRfUj0wOyRfWD0wOw=='));
+						$cli->setSSLVerifyPeer(false);
+						$search = $cli->send($msg, 20);
+	
+						$this->go_carriers->goautodialDB->where(array('carrier_id'=>$carrier));
+						$this->go_carriers->goautodialDB->delete('justgovoip_sippy_info');						$this->go_carriers->db->where(array('carrier_id'=>$carrier));
+						$this->go_carriers->db->delete('justgovoip_sippy_info');
                                         }
 
 				}
@@ -1267,7 +1269,7 @@ class Go_carriers_ce extends Controller {
 		$carriers = $this->go_carriers->go_get_carrier_list();
 		$data['carriers'] = $carriers['list'];
 		$data['pagelinks'] = $carriers['pagelinks'];
-	    $this->load->view('go_settings/go_carriers_list',$data);
+		$this->load->view('go_settings/go_carriers_list',$data);
 	}
 
 	function is_logged_in()
@@ -1286,36 +1288,35 @@ class Go_carriers_ce extends Controller {
 
 
         function go_copy_carrier(){
-
-             $this->go_carriers->db->where(array('active'=>'Y'));
-             $servers = $this->go_carriers->db->get('servers')->result();
-             if(!empty($servers)){
-                  foreach($servers as $server){
-                      $data['server']["$server->server_ip"] = "$server->server_ip - $server->server_description $server->external_server_ip";
-                  }
-             }
-
-             $this->go_carriers->db->where(array('active'=>'Y'));
-             $carriers = $this->go_carriers->db->get('vicidial_server_carriers')->result();
-             if(!empty($carriers)){
-                  foreach($carriers as $carrier){
-                      $data['carriers']["$carrier->carrier_id"] = "$carrier->carrier_id - $carrier->carrier_name - $carrier->server_ip";
-                  }
-             }            
-             $this->load->view('go_settings/go_carrier_wizard_copy',$data);
+		$this->go_carriers->db->where(array('active'=>'Y'));
+		$servers = $this->go_carriers->db->get('servers')->result();
+		if(!empty($servers)){
+			foreach($servers as $server){
+				$data['server']["$server->server_ip"] = "$server->server_ip - $server->server_description $server->external_server_ip";
+			}
+		}
+	
+		$this->go_carriers->db->where(array('active'=>'Y'));
+		$carriers = $this->go_carriers->db->get('vicidial_server_carriers')->result();
+		if(!empty($carriers)){
+			foreach($carriers as $carrier){
+				$data['carriers']["$carrier->carrier_id"] = "$carrier->carrier_id - $carrier->carrier_name - $carrier->server_ip";
+			}
+		}            
+		$this->load->view('go_settings/go_carrier_wizard_copy',$data);
         }
 
 
         function duplicate(){
-            if(!empty($_POST)){
-               $this->go_carriers->db->where(array('carrier_id'=>$_POST['carrier_id'],'server_ip'=>$_POST['server_ip']));
-               $result = $this->go_carriers->db->get('vicidial_server_carriers');
-               if($result->num_rows() > 0){
-                    echo "";
-               } else {
-                    echo "1";
-               }
-            }
+		if(!empty($_POST)){
+			$this->go_carriers->db->where(array('carrier_id'=>$_POST['carrier_id'],'server_ip'=>$_POST['server_ip']));
+			$result = $this->go_carriers->db->get('vicidial_server_carriers');
+			if($result->num_rows() > 0){
+				echo "";
+			} else {
+				echo "1";
+			}
+		}
         }
 
         function copycarrier(){
@@ -1325,7 +1326,7 @@ class Go_carriers_ce extends Controller {
                 $isSippy = $this->go_carriers->goautodialDB->get("justgovoip_sippy_info")->num_rows();
 
                 if($isSippy > 0){
-                     die("Error: Only one GoAutoDial-JustGoVoip is allowed per server ip");
+			die("Error: Only one GoAutoDial-JustGoVoip is allowed per server ip");
                 }
                 
                 #$this->go_carriers->db->where(array('carrier_id'=>$_POST['source_id'],'server_ip'=>$_POST['server_ip']));
@@ -1361,14 +1362,14 @@ class Go_carriers_ce extends Controller {
         }
 
         function sippywelcome(){
-              $this->load->view('go_settings/go_carrier_wizard_welcome');
+		$this->load->view('go_settings/go_carrier_wizard_welcome');
         } 
 
         function checksippyavailable(){
-                 $havesippy = $this->go_carriers->goautodialDB->get('justgovoip_sippy_info');
-                 if($havesippy->num_rows() > 0){
-                     die("Error: Multiple GoAutoDial carrier entries are not allowed");
-                 }
+		$havesippy = $this->go_carriers->goautodialDB->get('justgovoip_sippy_info');
+		if($havesippy->num_rows() > 0){
+			die("Error: Multiple GoAutoDial carrier entries are not allowed");
+		}
         }
 
         function singleSave($stringVar,$stringVal,$carrier_id){
@@ -1379,11 +1380,11 @@ class Go_carriers_ce extends Controller {
                 $query = $this->db->query("INSERT INTO vicidial_server_carriers $itemSQL;");
                 if ($this->db->affected_rows())
                 {
-                    $this->commonhelper->auditadmin('ADD',"Added New Carrier $carrier_id");
-                    $query = $this->db->query("UPDATE servers SET rebuild_conf_files='Y' where generate_vicidial_conf='Y' and active_asterisk_server='Y' and active='Y';");
-                    $return = "SUCCESS";
+			$this->commonhelper->auditadmin('ADD',"Added New Carrier $carrier_id");
+			$query = $this->db->query("UPDATE servers SET rebuild_conf_files='Y' where generate_vicidial_conf='Y' and active_asterisk_server='Y' and active='Y';");
+			$return = "SUCCESS";
                 }else{
-                    $return = "FAILED";
+			$return = "FAILED";
                 }
                 return $return;
         }

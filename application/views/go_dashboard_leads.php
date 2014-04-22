@@ -52,7 +52,7 @@ $(function()
 	</tr>
 	<tr>
 			<td class="c"><a class="cur_hand"><? echo $total_leads; ?></a></td>
-			<td class="r "><a class="cur_hand">Total Leads</a></td>
+			<td class="r "><a class="cur_hand">Total Active Leads</a></td>
 	</tr>
 	</tbody>
 </table>

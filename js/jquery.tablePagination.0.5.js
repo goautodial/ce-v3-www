@@ -30,10 +30,10 @@
 
 	$.fn.tablePagination = function(settings) {
 		var defaults = {  
-			firstArrow : (new Image()).src="../../../img/first.gif",  
-			prevArrow : (new Image()).src="../../../img/prev.gif",
-			lastArrow : (new Image()).src="../../../img/last.gif",
-			nextArrow : (new Image()).src="../../../img/next.gif",
+			firstArrow : (new Image()).src="/img/first.gif",  
+			prevArrow : (new Image()).src="/img/prev.gif",
+			lastArrow : (new Image()).src="/img/last.gif",
+			nextArrow : (new Image()).src="/img/next.gif",
 			rowsPerPage : 25,
 			currPage : 1,
 			optionsForRows : [25,50,100,"ALL"],

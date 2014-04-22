@@ -143,6 +143,23 @@ class Go_list extends Controller{
 	$data["pageinfo"]["lists"] = $pageinfo;
 	
 	
+        # global dispo
+        $all_dispos = array(""=>"--- SELECT A DISPOSITION ---");
+        $gl_dispos = $this->golist->asteriskDB->get('vicidial_statuses')->result();
+        foreach($gl_dispos as $dispo){
+            $all_dispos[$dispo->status] = "{$dispo->status} - {$dispo->status_name}";
+        }
+        $campaigns = $this->commonhelper->getallowablecampaign($this->session->userdata('user_group')); 
+        if(!empty($campaigns)){
+            $this->golist->asteriskDB->where_in("campaign_id",$campaigns);
+            $camp_dispos = $this->golist->asteriskDB->get('vicidial_campaign_statuses')->result();
+            if(!empty($camp_dispos)){
+                foreach($camp_dispos as $dispo){
+                   $all_dispos[$dispo->status] = "{$dispo->status} - {$dispo->status_name}";
+                }
+            }
+        }
+        $data['dispos'] = $all_dispos;
 	
         
 	/* end pagination */
@@ -167,10 +184,11 @@ class Go_list extends Controller{
 			//}
 
  	     	
-       	/*$genlist = $this->golist->autogenlist($accnt);
-       	$data['allmine'] = $genlist;*/
-       	//$this->load->view('go_list/go_db_query',$data);
-       	//$this->load->view('includes/go_dashboard_template.php',$data);
+	    /*$genlist = $this->golist->autogenlist($accnt);
+	    $data['allmine'] = $genlist;*/
+	    //$this->load->view('go_list/go_db_query',$data);
+	    //$this->load->view('includes/go_dashboard_template.php',$data);
+	    $vicidial_list_fields = "|list_id|vendor_lead_code|source_id|phone_code|phone_number|title|first_name|middle_initial|last_name|address1|address2|address3|city|state|province|postal_code|country_code|gender|date_of_birth|alt_phone|email|security_phrase|comments|rank|owner|status|";
 
 	     /* end auto create */
 
@@ -392,7 +410,7 @@ class Go_list extends Controller{
 
 								// Changed the $standard_SQL fields -- Chris Lomuntad <chris@goautodial.com>
                                 //$standard_SQL = "list_id, phone_code, phone_number, first_name, middle_initial, last_name, address1, city, state, postal_code, alt_phone, email, comments";
-								$standard_SQL = "list_id, vendor_lead_code, source_id, phone_code, phone_number, title, first_name, middle_initial, last_name, address1, address2, address3, city, state, province, postal_code, country_code, gender, date_of_birth, alt_phone, email, security_phrase, comments, rank, owner";
+				$standard_SQL = "list_id, vendor_lead_code, source_id, phone_code, phone_number, title, first_name, middle_initial, last_name, address1, address2, address3, city, state, province, postal_code, country_code, gender, date_of_birth, alt_phone, email, security_phrase, comments, rank, owner";
                                 $table_SQL = "vicidial_list";
 
                                 if ($custom_fields_enabled > 0)
@@ -414,7 +432,7 @@ class Go_list extends Controller{
                 
                                                                 if ( ($field_type[$i]!='DISPLAY') and ($field_type[$i]!='SCRIPT') )
                                                                 {
-                                                                        if (!preg_match("/\|$field_label[$i]\|/",$fields))
+                                                                        if (!preg_match("/\|$field_label[$i]\|/",$vicidial_list_fields))
                                                                         {
                                                                         $custom_SQL .= ",$field_label[$i]";
                                                                         }
@@ -2183,4 +2201,76 @@ class Go_list extends Controller{
                         #$this->load->view('go_login_form');
                 }
         }
+	
+    function update_lead()
+    {
+	if (!empty($_POST))
+	{
+	    $leadid = $this->input->post('leadid');
+	    foreach ($_POST as $key => $val)
+	    {
+		if ($key == "basic")
+		{
+		    $basic = explode("&",str_replace(";","",$val));
+		    foreach ($basic as $bas)
+		    {
+			list($baskey,$basval) = explode("=",$bas);
+			if (!empty($basval))
+			{
+			    $basval = str_replace("+"," ",$basval);
+			    $basic_SQL .= " `$baskey` = '".$this->asteriskDB->escape_str($basval)."',";
+			    $status = ($baskey=="status") ? "$basval" : "";
+			}
+		    }
+		} else if ($key == "advance") {
+		    $advance = explode("&",str_replace(";","",$val));
+		    foreach ($advance as $adv)
+		    {
+			list($advkey,$advval) = explode("=",$adv);
+			if (!empty($advval))
+			{
+			    if ($advkey=="status")
+			    {
+				$advance_SQL .= "`$advkey` = '".$this->asteriskDB->escape_str($advval)."'";
+			    } else {
+				if ($advkey=="modify_logs") { $modify_logs = $advval; }
+				if ($advkey=="modify_agent_logs") { $modify_agent_logs = $advval; }
+				if ($advkey=="modify_closer_logs") { $modify_closer_logs = $advval; }
+				if ($advkey=="add_closer_record") { $add_closer_record = $advval; }
+			    }
+			}
+		    }
+		}
+	    }
+	    
+	    if (empty($advance_SQL))
+	    {
+		$basic_SQL = rtrim($basic_SQL,',');
+	    }
+	    $query_SQL = "UPDATE vicidial_list SET $basic_SQL $advance_SQL WHERE lead_id='$leadid'";
+	    $query = $this->asteriskDB->query($query_SQL);
+	    
+	    if ($this->asteriskDB->affected_rows())
+	    {
+		if (!empty($status)) {
+		    if ($modify_logs) {
+			$logs_query = "UPDATE vicidial_log set status='" . $this->asteriskDB->escape_str($status) . "' where lead_id='" . $this->asteriskDB->escape_str($leadid) . "' order by call_date desc limit 1";
+		    }
+		    if ($modify_closer_logs) {
+			$closer_logs = "UPDATE vicidial_closer_log set status='" . $this->asteriskDB->escape_str($status) . "' where lead_id='" . $this->asteriskDB->escape_str($leadid) . "' order by call_date desc limit 1";
+		    }
+		    if ($modify_agent_logs) {
+			$agent_logs = "UPDATE vicidial_agent_log set status='" . $this->asteriskDB->escape_str($status) . "' where lead_id='" . $this->asteriskDB->escape_str($lead_id) . "' order by agent_log_id desc limit 1";
+		    }
+		//    if ($add_closer_record) {
+		//	$add_record = "INSERT INTO vicidial_closer_log (lead_id,list_id,campaign_id,call_date,start_epoch,end_epoch,length_in_sec,status,phone_code,phone_number,user,comments,processed) values('" . $this->asteriskDB->escape_str($lead_id) . "','" . $this->asteriskDB->escape_str($list_id) . "','" . $this->asteriskDB->escape_str($campaign_id) . "','" . $this->asteriskDB->escape_str($parked_time) . "','$NOW_TIME','$STARTtime','1','" . $this->asteriskDB->escape_str($status) . "','" . $this->asteriskDB->escape_str($phone_code) . "','" . $this->asteriskDB->escape_str($phone_number) . "','$PHP_AUTH_USER','" . $this->asteriskDB->escape_str($comments) . "','Y')";
+		//    }
+		}
+		return "Success: Lead ID $leadid updated.";
+		$this->commonhelper->auditadmin("UPDATE","Lead ID $leadid updated.",$query_SQL);
+	    } else {
+		return "Error: Lead ID $leadid not updated.";
+	    }
+	}
+    }
 }

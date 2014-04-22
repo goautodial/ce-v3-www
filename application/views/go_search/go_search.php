@@ -14,7 +14,7 @@
 <script src="<?=base_url()?>js/go_search/go_search_ce.js"></script>
 <script>
 $(function(){
-   $("#search-list").tablePagination();
+   //$("#search-list").tablePagination();
     $(".recordings").jmp3({
         showfilename: "false",
         backcolor: "00ff00",
@@ -71,18 +71,19 @@ $(function(){
 
              $ctr=0;
              foreach($users as $usersInfo){
+                  $disposition = (strlen($usersInfo->disposition) > 0) ? $usersInfo->disposition : $disposition;
+                  $disposition = (strlen($usersInfo->campaign_dispo) > 0) ? $usersInfo->campaign_dispo : $disposition;
                  #if($user_level < 9){
                       echo "<tr id='$usersInfo->lead_id' class='user-tbl-rows ".(($ctr%2==0)?'user-odd':'user-even')."'>";
 
                            echo "<td class='user-tbl-cols'><a class='search_leadinfo' id='".$ctr."'>$usersInfo->lead_id</a></td>";
                            echo "<td class='user-tbl-cols'>$usersInfo->phone</td>";
                            echo "<td class='user-tbl-cols'>$usersInfo->call_date</td>";
-                           echo "<td class='user-tbl-cols'>&nbsp;&nbsp;$usersInfo->duration</td>";
+                           echo "<td class='user-tbl-cols'>&nbsp;&nbsp;".(($usersInfo->duration>0)?$usersInfo->duration:0)."</td>";
 
                            echo "<td class='user-tbl-cols'>".(strlen($usersInfo->agent) > 20 ? substr($usersInfo->agent,0,20)."..." : $usersInfo->agent)."</td>";
                
-                           $dispo = (strlen($usersInfo->disposition) > 0) ? $usersInfo->disposition : $usersInfo->campaign_dispo;
-                           echo "<td class='user-tbl-cols search-tbl-name'>".((strlen($dispo) > 26)?substr($dispo,0,23)."...":$dispo)."</td>";
+                           echo "<td class='user-tbl-cols search-tbl-name'>".((strlen($disposition) > 26)?substr($disposition,0,23)."...":$disposition)."</td>";
                            echo "<td class='user-tbl-cols user-tbl-cols-centered search-tbl-recording'>".(!is_null($usersInfo->location)?img("img/g_status_ok.png"):img("img/g_status_no.png"))."</td>";
 
                          # echo "<div class='user-tbl-cols ".($user_level>8?"user-tbl-cols-centered":"")."'><a id='user-status-$usersInfo->user'>Status</a>".($user_level>8?" | <a id='user-adv-$usersInfo->user'>Advance</a>":"")."</div>";
@@ -96,7 +97,7 @@ $(function(){
                                             &nbsp;&nbsp;&nbsp;<input type='checkbox' id='user-action-chkbx-$usersInfo->lead_id' value='$usersInfo->user' rel='$usersInfo->lead_id' disabled='disabled'/>
                                         </div>
                                         <div class='user-actions-cols'>
-                                            <a id='user-action-info-$usersInfo->lead_id' href='{$usersInfo->location}' target='new' title='download' class='toolTip' style='display:none'>".img($image_properties)."</a>
+                                            <a id='user-action-info-$usersInfo->lead_id' href='".base_url()."index.php/go_search_ce/download/$usersInfo->lead_id/rec/$usersInfo->recording_id' target='new' title='download' class='toolTip'>".img("img/download.png")."</a>
                                         </div>
                                         <div class='user-actions-cols' style='width:48%'>
                                             <span class='recordings' style='color:".(($ctr%2==0)?'#E0F8E0':'#EFFBEF')."'>".str_replace('http:','http:',$usersInfo->location)."</span>
@@ -112,11 +113,14 @@ $(function(){
         ?>
         </tbody>
    </table>
+   <div style="padding-top:5px;">
+      <span style="float: right;"><?=$pagedisplay ?></span>
+      <span><?=$pagelinks ?></span>
+   </div>
     <div id="download"></div>
     <div class="user-batch-action user-cornerall">
        <a id="user-batch-activate">Active Selected</a><br class="clear"/>
        <a id="user-batch-deactivate">Deactive Selected</a><br class="clear"/>
        <a id="user-batch-delete">Delete Selected</a><br class="clear"/>
-    </div
-    <br class="clear"/>
+    </div>
 </div>

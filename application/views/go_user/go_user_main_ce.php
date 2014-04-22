@@ -120,7 +120,14 @@ $(function()
                         </div> -->
                        <!--  <div class="copy-user">&nbsp;Copy User</div> 
                         <div class="wizard-call-separator"><span>|</span></div> -->
-                        <div class="user-add rightdiv" id="call-user-wizard" style="color:#555555">
+			<?php
+			$hideWizard = "";
+			$permissions = $this->commonhelper->getPermissions("user",$this->session->userdata("user_group"));
+			if($permissions->user_create == "N"){
+			    $hideWizard = "display:none;";
+			}
+			?>
+                        <div class="user-add rightdiv" id="call-user-wizard" style="color:#555555;<?=$hideWizard?>">
                             Add New User<?#=img('img/cross.png')?>
                         </div>
                         <h3 class="hndle">
@@ -332,11 +339,26 @@ $(function()
             <div class="boxrightside boxrightside-modify">
                  <?=form_dropdown('hotkeys_active',array('1'=>'Yes','0'=>'No'),null,'id="hotkeys_active"')?>
             </div><br class="clear">
-            <div class="boxleftside boxleftside-modify">User Level:</div>
-            <div class="boxrightside boxrightside-modify">
-                 <?$levels = range(0,$user_level);unset($levels[0])?>
+	    <?php
+	    $max_level = $user_level;
+	    if ($user_level < 9) {
+	       $hideLevels = "style='display:none'";
+	    } else {
+	       $hideLevels = "";
+	//       if ($modify_same_level) {
+	//	   $max_level = $user_level;
+	//       } else {
+	//	   $max_level = $user_level - 1;
+	//       }
+	    }
+	    ?>
+            <div class="boxleftside boxleftside-modify" <?=$hideLevels?>>User Level:</div>
+            <div class="boxrightside boxrightside-modify" <?=$hideLevels?>>
+                 <?php
+		 $levels = range(0,$max_level);unset($levels[0]);
+		 ?>
                  <?=form_dropdown('user_level',$levels,null,'id="user_level"')?>
-            </div><br class="clear">
+            </div><br class="clear" <?=$hideLevels?>>
 	    <?php
 	    if ($user_group === "ADMIN") {
 	    ?>

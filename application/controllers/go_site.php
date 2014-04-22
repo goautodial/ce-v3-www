@@ -38,6 +38,7 @@ class Go_site extends Controller
 		$data['jsheaderloader'] = 'go_dashboard_header_jsloader.php';
 		$data['jsbodyloader'] = 'go_dashboard_body_jsloader.php';
 
+		$this->load->library('commonhelper');
 		$this->load->model('go_dashboard');
 		$callfunc = $this->go_dashboard->go_get_userfulname();
 		$data['bannertitle'] = $this->lang->line('go_dashboard_banner');
@@ -61,7 +62,30 @@ class Go_site extends Controller
 		$data['togglestatus'] = $togglestatus;
         	$data['account'] = $this->session->userdata('user_name');
 		$data['campperms'] = $this->commonhelper->getPermissions("campaign",$this->session->userdata("user_group"));
+		
+		#### Config Widget
+		$query = $this->go_dashboard->goautodial->query("SELECT user_id FROM go_widget_position WHERE user_id='".$this->session->userdata('user_name')."';");
+		if ($query->num_rows < 1)
+		{
+                        $permissions = $this->commonhelper->getPermissions("dashboard",$this->session->userdata("user_group"));
 
+			$dataconfig = array();
+			$dataconfig["user_id"] = $this->session->userdata('user_name');
+			$dataconfig["html_id"] = $this->session->userdata('user_group');
+			$dataconfig["left_html"] = "dashboard_todays_status,account_info_status,dashboard_analytics,dashboard_goautodial_forum";
+			$dataconfig["right_html"] = "dashboard_agents_status,dashboard_server_statistics,dashboard_controls,dashboard_goautodial_news,dashboard_plugins";
+			$dataconfig['today_status'] = $permissions->dashboard_todays_status === "N"? "PN" : $permissions->dashboard_todays_status;
+			$dataconfig['agent_status'] = $permissions->dashboard_agent_lead_status === "N"? "PN" : $permissions->dashboard_agent_lead_status;
+			$dataconfig['account_info'] = $permissions->dashboard_account_info === "N" ? "PN" : $permissions->dashboard_account_info;
+			$dataconfig['go_analytics'] = $permissions->dashboard_go_analytics === "N"? "PN" : $permissions->dashboard_go_analytics;
+			$dataconfig["dashboard_controls"] = $permissions->dashboard_system_service === "N" ? "PN" : $permissions->dashboard_system_service;
+			$dataconfig["server_statistics"] = $permissions->dashboard_server_settings === "N" ? "PN" : $permissions->dashboard_server_settings;
+			$dataconfig["dashboard_clusters"] = $permissions->dashboard_cluster_status === "N" ? "PN" : $permissions->dashboard_cluster_status;
+	
+			$this->go_dashboard->goautodial->trans_start();
+			   $this->go_dashboard->goautodial->insert('go_widget_position',$dataconfig);
+			$this->go_dashboard->goautodial->trans_complete();
+		}
 		
 		#### REALTIME MONITORING ####
 		$this->load->model('go_monitoring');
@@ -93,7 +117,7 @@ class Go_site extends Controller
 		
 		$sippyinfo = $this->go_dashboard->go_sippy_info($auth_accnt);
 		$carrierinfo = $this->go_dashboard->go_carrier_info();
-		$count_sippyinfo = count($sippyinfo);		
+		$count_sippyinfo = count($sippyinfo);
 		
 		//if($users_level=="9") {
 		//	
@@ -115,10 +139,10 @@ class Go_site extends Controller
 				$activecarrier = $carrieritem->active;
 			}
 		
-			$data['web_username'] = $web_username;	
-			$data['web_password'] = $web_password;	
-			$data['voip_authname'] = $voip_authname;	
-			$data['voip_password'] = $voip_password;	
+			$data['web_username'] = $web_username;
+			$data['web_password'] = $web_password;
+			$data['voip_authname'] = $voip_authname;
+			$data['voip_password'] = $voip_password;
 			$data['count_sippyinfo'] = $count_sippyinfo;
 			$data['idcarrier'] = $idcarrier;
 			$data['namecarrier'] = $namecarrier;
@@ -127,67 +151,68 @@ class Go_site extends Controller
 	
 		        			
 			$struct = $this->commonhelper->getAccountInfo("username",$auth_accnt);
-                        
-			$accval = $struct->structmem('username');
-                        $acc = $accval->getval();
-                        $data['acc'] = $acc;
-
-                        $companyval = $struct->structmem('company_name');
-                        $sippycompanies = $companyval->getval();
-                        $data['sippy_companies'] = $sippycompanies;
-
-                        $fnameval = $struct->structmem('first_name');
-                        $sippyfirstname = $fnameval->getval();
-                        $data['sippy_firstname'] = $sippyfirstname;
-
-                        $lnameval = $struct->structmem('last_name');
-                        $sippylastname = $lnameval->getval();
-                        $data['sippy_lastname'] = $sippylastname;
-
-                        $phoneval = $struct->structmem('phone');
-                        $sippyphone = $phoneval->getval();
-                        $data['sippy_phone'] = $sippyphone;
-
-                        $faxval = $struct->structmem('fax');
-                        $sippyfax = $faxval->getval();
-                        $data['sippy_fax'] = $sippyfax;
-
-                        $postalval = $struct->structmem('postal_code');
-                        $sippypostalcode = $postalval->getval();
-                        $data['sippy_postal_code'] = $sippypostalcode;
-
-                        $addval = $struct->structmem('street_addr');
-                        $sippyaddress = $addval->getval();
-                        $data['sippy_address'] = $sippyaddress;
-
-                        $cityval = $struct->structmem('city');
-                        $sippycity = $cityval->getval();
-                        $data['sippy_city'] = $sippycity;
-
-                        $stateval = $struct->structmem('state');
-                        $sippystate = $stateval->getval();
-                        $data['sippy_state'] = $sippystate;
-
-                        $countryval = $struct->structmem('country');
-                        $sippycountry = $countryval->getval();
-                        $data['sippy_country'] = $sippycountry;
-
-			$emailval = $struct->structmem('email');
-                        $sippyemail = $emailval->getval();
-                        $data['sippy_email'] = $sippyemail;
+                        if ($struct) {
+				$accval = $struct->structmem('username');
+				$acc = $accval->getval();
+				$data['acc'] = $acc;
 	
-			$sumval = $struct->structmem('balance');
-                        $totalbalance = $sumval->getval();
-			
-			$negative = "";
-			if ($totalbalance < 0) {
-                         	$totalbalance = abs($totalbalance);
-                        } else {
-                         	$negative = "-";
-                         	$data['negative'] = $negative;
-                        }
+				$companyval = $struct->structmem('company_name');
+				$sippycompanies = $companyval->getval();
+				$data['sippy_companies'] = $sippycompanies;
 	
-			$data['totalbalance'] = "{$negative}{$totalbalance}";
+				$fnameval = $struct->structmem('first_name');
+				$sippyfirstname = $fnameval->getval();
+				$data['sippy_firstname'] = $sippyfirstname;
+	
+				$lnameval = $struct->structmem('last_name');
+				$sippylastname = $lnameval->getval();
+				$data['sippy_lastname'] = $sippylastname;
+	
+				$phoneval = $struct->structmem('phone');
+				$sippyphone = $phoneval->getval();
+				$data['sippy_phone'] = $sippyphone;
+	
+				$faxval = $struct->structmem('fax');
+				$sippyfax = $faxval->getval();
+				$data['sippy_fax'] = $sippyfax;
+	
+				$postalval = $struct->structmem('postal_code');
+				$sippypostalcode = $postalval->getval();
+				$data['sippy_postal_code'] = $sippypostalcode;
+	
+				$addval = $struct->structmem('street_addr');
+				$sippyaddress = $addval->getval();
+				$data['sippy_address'] = $sippyaddress;
+	
+				$cityval = $struct->structmem('city');
+				$sippycity = $cityval->getval();
+				$data['sippy_city'] = $sippycity;
+	
+				$stateval = $struct->structmem('state');
+				$sippystate = $stateval->getval();
+				$data['sippy_state'] = $sippystate;
+	
+				$countryval = $struct->structmem('country');
+				$sippycountry = $countryval->getval();
+				$data['sippy_country'] = $sippycountry;
+	
+				$emailval = $struct->structmem('email');
+				$sippyemail = $emailval->getval();
+				$data['sippy_email'] = $sippyemail;
+		
+				$sumval = $struct->structmem('balance');
+				$totalbalance = $sumval->getval();
+				
+				$negative = "";
+				if ($totalbalance < 0) {
+					$totalbalance = abs($totalbalance);
+				} else {
+					$negative = "-";
+					$data['negative'] = $negative;
+				}
+		
+				$data['totalbalance'] = "{$negative}{$totalbalance}";
+			}
 
 			
 	
@@ -800,37 +825,32 @@ class Go_site extends Controller
 
 	function go_dashboard_search()
 	{
-
 	    	$queryString = $this->uri->segment(3);
 
 		if ($queryString != ''){
-
-
-		#DATABASE REPORTS
-		$this->load->model('go_dashboard');
-
-		#SEARCH IN USERS TABLE
-		$callfunc = $this->go_dashboard->go_search_user();
-		$data['go_user_datacount'] 	= $callfunc['datacount'];
-		$data['go_user_dataval'] 	= $callfunc['dataval'];
-
-		#SEARCH IN LIST - NAME TABLE
-		$callfunc = $this->go_dashboard->go_search_list();
-		$data['go_liname_datacount'] 	= $callfunc['datacount'];
-		$data['go_liname_dataval'] 	= $callfunc['dataval'];
-
-		#SEARCH IN LIST - PHONE TABLE
-		$callfunc = $this->go_dashboard->go_search_phone();
-		$data['go_liphone_datacount'] 	= $callfunc['datacount'];
-		$data['go_liphone_dataval'] 	= $callfunc['dataval'];
-
-		$this->load->view('go_dashboard_search', $data);
-
+			#DATABASE REPORTS
+			$this->load->model('go_dashboard');
+	
+			#SEARCH IN USERS TABLE
+			$callfunc = $this->go_dashboard->go_search_user();
+			$data['go_user_datacount'] 	= $callfunc['datacount'];
+			$data['go_user_dataval'] 	= $callfunc['dataval'];
+	
+			#SEARCH IN LIST - NAME TABLE
+			$callfunc = $this->go_dashboard->go_search_list();
+			$data['go_liname_datacount'] 	= $callfunc['datacount'];
+			$data['go_liname_dataval'] 	= $callfunc['dataval'];
+	
+			#SEARCH IN LIST - PHONE TABLE
+			$callfunc = $this->go_dashboard->go_search_phone();
+			$data['go_liphone_datacount'] 	= $callfunc['datacount'];
+			$data['go_liphone_dataval'] 	= $callfunc['dataval'];
+	
+			$this->load->view('go_dashboard_search', $data);
 		}
-
 		else
 		{
-		$callfunc = $this->go_dashboard->go_search_clear();
+			$callfunc = $this->go_dashboard->go_search_clear();
 		}
 
 	}

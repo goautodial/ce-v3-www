@@ -371,7 +371,7 @@ class Go_monitoring extends Model {
 					if ( eregi("DISPO",$status) ) 
 						{
 						$bgcolor="white";
-						$color="#333";
+						$color="black";
 						}
 	
 					if ( (eregi("INCALL",$status)) or (eregi("QUEUE",$status))  or (eregi("3-WAY",$status)) or (eregi("PARK",$status))) {$agent_incall++;  $agent_total++;}

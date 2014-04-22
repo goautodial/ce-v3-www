@@ -17,7 +17,7 @@
 			view: 'years'
 		});
 		var now = new Date();
-		now.addDays(-10);
+		now.addDays(-60);
 		var now2 = new Date();
 		now2.addDays(-5);
 		now2.setHours(0,0,0,0);
@@ -82,26 +82,44 @@
 				$('#selected_to_date').get(0).innerHTML = formated[1];
 			}
 		});
+		$('#widgetCalendarLeadInfo').DatePicker({
+			flat: true,
+			format: 'Y-m-d',
+			date: [new Date(now3), new Date(now4)],
+			calendars: 3,
+			mode: 'range',
+			starts: 0,
+			onChange: function(formated) {
+				$('#widgetDate span').get(0).innerHTML = formated.join(' to ');
+				$('#selected_from_date').get(0).innerHTML = formated[0];
+				$('#selected_to_date').get(0).innerHTML = formated[1];
+			},
+			onRender: function(date) {
+				return {
+					disabled: (date.valueOf() < now.valueOf())
+				}
+			},
+		});
 		var state = false;
 		$('#widgetField>a').bind('click', function(){
-			$('#widgetCalendar').stop().animate({height: state ? 0 : $('#widgetCalendar div.datepicker').get(0).offsetHeight}, 500);
+			$('#widgetCalendar,#widgetCalendarLeadInfo').stop().animate({height: state ? 0 : $('#widgetCalendar div.datepicker,#widgetCalendarLeadInfo div.datepicker').get(0).offsetHeight}, 500);
 			state = !state;
 			return false;
 		});
 
 		$('#selectDateOK').bind('click', function(){
-			$('#widgetCalendar').stop().animate({height: state ? 0 : $('#widgetCalendar div.datepicker').get(0).offsetHeight}, 500);
+			$('#widgetCalendar,#widgetCalendarLeadInfo').stop().animate({height: state ? 0 : $('#widgetCalendar div.datepicker,#widgetCalendarLeadInfo div.datepicker').get(0).offsetHeight}, 500);
 			state = !state;
 			return false;
 		});
 
 		$('#cancelDate').bind('click', function(){
-			$('#widgetCalendar').stop().animate({height: state ? 0 : $('#widgetCalendar div.datepicker').get(0).offsetHeight}, 500);
+			$('#widgetCalendar,#widgetCalendarLeadInfo').stop().animate({height: state ? 0 : $('#widgetCalendar div.datepicker,#widgetCalendarLeadInfo div.datepicker').get(0).offsetHeight}, 500);
 			state = !state;
 			return false;
 		});
 		
-		$('#widgetCalendar div.datepicker').css('position', 'absolute');
+		$('#widgetCalendar div.datepicker,#widgetCalendarLeadInfo div.datepicker').css('position', 'absolute');
 	};
 	
 	var showTab = function(e) {

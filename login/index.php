@@ -15,7 +15,7 @@ $firefox = strpos($_SERVER["HTTP_USER_AGENT"], 'Firefox') ? true : false;
 $safari = strpos($_SERVER["HTTP_USER_AGENT"], 'Safari') ? true : false;
 $chrome = strpos($_SERVER["HTTP_USER_AGENT"], 'Chrome') ? true : false;
 
-$myurl = "https://".$_SERVER['HTTP_HOST']."/login/ieview.php";
+$myurl = "https://".$_SERVER['SERVER_NAME']."/login/ieview.php";
 
 if(!$firefox && !$chrome) {
 	header("Location: $myurl") ;
@@ -38,9 +38,17 @@ if ( file_exists($conf_path) )
         $DBCagc = file($conf_path);
         foreach ($DBCagc as $DBCline)
                 {
-                $DBCline = preg_replace("/ |>|\n|\r|\t|\#.*|;.*/","",$DBCline);
+                $DBCline = preg_replace("/ |>|\n|\r|\t|\#.*|;.*|\[|\]/","",$DBCline);
                 if (ereg("^VARSERVTYPE", $DBCline))
                         {$VARSERVTYPE = $DBCline;   $VARSERVTYPE = preg_replace("/.*=/","",$VARSERVTYPE);}
+                if (ereg("goautodialdbhostname", $DBCline))
+                        {$GOdbHostname = $DBCline;   $GOdbHostname = preg_replace("/.*=/","",$GOdbHostname);}
+                if (ereg("goautodialdbusername", $DBCline))
+                        {$GOdbUsername = $DBCline;   $GOdbUsername = preg_replace("/.*=/","",$GOdbUsername);}
+                if (ereg("goautodialdbpassword", $DBCline))
+                        {$GOdbPassword = $DBCline;   $GOdbPassword = preg_replace("/.*=/","",$GOdbPassword);}
+                if (ereg("goautodialdbdatabase", $DBCline))
+                        {$GOdbDatabase = $DBCline;   $GOdbDatabase = preg_replace("/.*=/","",$GOdbDatabase);}
                 }
         }
 
@@ -80,10 +88,16 @@ if ( file_exists($conf_path) )
 $link=mysql_connect("$VARDB_server:$VARDB_port", "$VARDB_user", "$VARDB_pass");
 if (!$link)
         {
-    die('MySQL connect ERROR: ' . mysql_error());
+	die('MySQL connect ERROR: ' . mysql_error());
         }
 mysql_select_db("$VARDB_database");
 
+
+$golink=mysql_connect("$GOdbHostname:$VARDB_port", "$GOdbUsername", "$GOdbPassword");
+if (!$golink)
+        {
+	die('MySQL connect ERROR: ' . mysql_error());
+        }
 
 
 if (isset($_GET["forgotpass"])) {
@@ -129,6 +143,12 @@ if (isset($_GET["f_rtype_pass"])) {
 }
 
 
+$stmt = "SELECT company_name,company_logo,login_button FROM `$GOdbDatabase`.`go_server_settings`";
+$rslt = mysql_query($stmt, $golink);
+$row=mysql_fetch_row($rslt);
+$COMPANYNAME = $row[0];
+$COMPANYLOGO = $row[1];
+$LOGINBUTTON = $row[2];
 
 if($_SERVER['HTTPS']!='on')
 {
@@ -146,12 +166,12 @@ window.location = "https://"+window.location.host+"/login/"
 
 <html>
 <head>
-<title>GoAutoDial - Empowering the Next Generation Contact Centers</title>
+<title><? echo $COMPANYNAME; ?> - Empowering the Next Generation Contact Centers</title>
 <link rel="shortcut icon" href="../img/gologoico.ico" />
 <meta http-equiv="Content-Type"sdf content="text/html; charset=utf-8">
 
-<link rel="stylesheet" type="text/css" href="css/style.css">
-
+<!--<link rel="stylesheet" type="text/css" href="css/style.css">-->
+<link rel="stylesheet" type="text/css" media="screen" href="css/style.php">
 
 <script type="text/javascript">
 </script>
@@ -185,7 +205,7 @@ $(document).ready(function(){
 		
 		$.ajax({
   			type: "POST",  
-  			url: "https://<?=$_SERVER['HTTP_HOST'];?>/index.php/go_login/validate_credentials",  
+  			url: "https://<?=$_SERVER['SERVER_NAME'];?>/index.php/go_login/validate_credentials",  
   			data:  dataString,
     		
     		success: function(data){
@@ -193,7 +213,7 @@ $(document).ready(function(){
 	   			if (data=="Authenticated"){
 					$('#messageid').css("color","green");
 					$('#messageid').text('Redirecting...').fadeIn('fast');
-					window.location = "https://<?=$_SERVER['HTTP_HOST'];?>/dashboard";
+					window.location = "https://<?=$_SERVER['SERVER_NAME'];?>/dashboard";
 	   			} else {
 	   				$('#messageid').text(data).fadeIn('fast').fadeOut(3000);
 				}
@@ -233,7 +253,7 @@ $(document).ready(function(){
 <style>
 #signup{cursor:pointer;}
 #statusOverlay,#fileOverlay,#hopperOverlay{
-        background:transparent url(<?=$_SERVER['HTTP_HOST']?>/img/overlay.png) repeat top left;
+        background:transparent url(https://<?=$_SERVER['SERVER_NAME']?>/img/overlay.png) repeat top left;
         position:fixed;
         top:0px;
         bottom:0px;
@@ -243,7 +263,7 @@ $(document).ready(function(){
 }
 
 #signupOverlay{
-        background:transparent url(<?=$_SERVER['HTTP_HOST'] ?>/img/overlay.png) repeat top left;
+        background:transparent url(https://<?=$_SERVER['SERVER_NAME'] ?>/img/overlay.png) repeat top left;
         position:fixed;
         top:0px;
         bottom:0px;
@@ -283,7 +303,7 @@ $(document).ready(function(){
         float:right;
         width:26px;
         height:26px;
-        background:transparent url(<?=$_SERVER['HTTP_HOST']; ?>/img/cancel.png) repeat top left;
+        background:transparent url(https://<?=$_SERVER['SERVER_NAME']; ?>/img/cancel.png) repeat top left;
         margin-top:-30px;
         margin-right:-30px;
         cursor:pointer;
@@ -294,12 +314,12 @@ $(document).ready(function(){
 
 	<div class="bodyheader" style="line-height:16px;">
 		 <span style="margin-left: 1%;">
-			<a href="https://<?=$_SERVER['HTTP_HOST'];?>/" title="Home">
+			<a href="http://goautodial.com" title="GOautodial" taget="_new">
 				<img src="smalllogo.png" border="0" style="padding-top:2px">
 			</a>
 		 </span>
 		 <span style="margin-right: 1%; font-size: 13px; margin-top: 8px; float: right;">
-				<a href="http://<?=$_SERVER['HTTP_HOST']?>/agent/" class="go_menu_list" style="color:#FFFFFF;text-decoration:none;"><b>Agent Login</b></a>
+				<a href="http://<?=$_SERVER['SERVER_NAME']?>/agent/" class="go_menu_list" style="color:#FFFFFF;text-decoration:none;"><b>Agent Login</b></a>
 		 </span>
 	</div>
 <br><br><br><br>
@@ -309,7 +329,7 @@ if($forgotpass==1) {
 
 ?>
 
-<form name="forgot" id="forgot" method="POST" action="<?=$_SERVER['PHP_SELF']?>?forgotpass=1" class="curvebox" style="background-color: #59b42d;">
+<form name="forgot" id="forgot" method="POST" action="<?=$_SERVER['PHP_SELF']?>?forgotpass=1" class="curvebox">
 <input type="hidden" name="verifymail" id="verifymail" value="1">
 	<table align="center" border="0" cellpadding="0" cellspacing="0">
 		<tbody>
@@ -321,7 +341,7 @@ if($forgotpass==1) {
 							</tr>
 							<tr>
 								<td align="center" style="font-family: Arial, Helvetica, sans-serif; font-size: 20px; padding-right:0px;">
-									<img src="goautodial_logo.png" width="150px" >
+									<img src="<?=$COMPANYLOGO ?>" width="150px" >
 								</td>
 							</tr>
 							<tr>
@@ -381,8 +401,8 @@ if($verifymail=="1") {
                     $vtype = "string";
                     break;
           }
-          include '/var/www/cloudhv/sippysignup/html.php';
-          include '/var/www/cloudhv/sippysignup/xmlrpc/xmlrpc.inc';
+          include '/var/www/html/sippysignup/html.php';
+          include '/var/www/html/sippysignup/xmlrpc/xmlrpc.inc';
 
           $params = array(new xmlrpcval(array($type => new xmlrpcval($value, $vtype)), "struct"));
           $msg = new xmlrpcmsg('getAccountInfo', $params);
@@ -434,7 +454,7 @@ if($verifymail=="1") {
 
 	
 		#$tologinsippy = "https://dal.justgovoip.com/accounts.php";
-		$tologin = "https://".$_SERVER['HTTP_HOST']."/login/";
+		$tologin = "https://".$_SERVER['SERVER_NAME']."/login/";
                 $to = "$sippyemail";
                 $headers = "From: noreply@justgocloud.com";
                 $subject = "JustGoCloud Admin Password retrival.";
@@ -468,7 +488,7 @@ if($verifymail=="1") {
 <a id="signupClosebox" class="toolTip" title="CLOSE"></a>
 <div id="signupoverlayContent"></div>
 </div>
-<form name="form_login" id="form_login" method="POST" action="https://<?=$_SERVER['HTTP_HOST']?>/index.php" class="curvebox" style="background-color: white;">
+<form name="form_login" id="form_login" method="POST" action="https://<?=$_SERVER['SERVER_NAME']?>/index.php" class="curvebox">
 	<table align="center" border="0" cellpadding="0" cellspacing="0">
 		<tbody>
 			<tr>
@@ -480,7 +500,7 @@ if($verifymail=="1") {
 							</tr>
 							<tr>
 								<td align="center" style="font-family: Arial, Helvetica, sans-serif; font-size: 20px; padding-right:0px;">
-									<img src="goautodial_logo.png" width="150px" >
+									<img src="<?=$COMPANYLOGO?>" width="150px" >
 								</td>
 							</tr>
 							<tr><td>&nbsp;</td></tr>
@@ -508,10 +528,10 @@ if($verifymail=="1") {
 							<tr><td>&nbsp;</td></tr>
 							<tr> 
 								<td align="center">
-					<input src="portal-login-button.png" title="LOGIN" style="vertical-align: middle;width:130px;height:40px;" type="image">
+									<input src="<?=$LOGINBUTTON?>" title="LOGIN" style="vertical-align: middle;width:130px;height:40px;" type="image">
 								</td>
 							</tr>
-							<tr><td style="font-size:8px;">&nbsp;</td></tr>
+							<tr><td style="font-size:5px;">&nbsp;</td></tr>
 							<tr>
 								<td align="center">&nbsp;<span id='messageid' style="color: red;"></span>&nbsp;</td>							
 							</tr>

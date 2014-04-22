@@ -45,7 +45,8 @@ class Go_search_ce extends Controller{
             #$display = "go_search_result";
             $display = "go_search";
         }
-        $users = $this->gosearch->collectusers($account);
+	$page = (is_numeric($this->input->post('page'))) ? $this->input->post('page') : 1;
+	$result = $this->gosearch->collectusers($account,$page);
         #$usergroups = $this->gosearch->getallusergroup($account);
 
         $data['user_level'] = $this->session->userdata('users_level');
@@ -64,13 +65,14 @@ class Go_search_ce extends Controller{
 	$data['togglestatus'] = $togglestatus;		
 	
 	
-        $data['users'] = $users;
+        $data['users'] = $result['collected'];
+        $data['pagelinks'] = $result['links'];
+        $data['pagedisplay'] = $result['display'];
         $data['usergroups'] = $usergroups;
         $data['account'] = $account;
         $data['gowizard'] = "gowizard";
 
         $this->load->view("go_search/$display",$data);
-
     }
 
 
@@ -1989,6 +1991,165 @@ class Go_search_ce extends Controller{
                         #$this->load->view('go_login_form');
                 }
         }
+ 
+	
+    function search_lead()
+    {
+	$cnt = 0;
+	$select_SQL = "SELECT lead_id,status,user,list_id,phone_number,CONCAT(first_name,' ',last_name) AS full_name,last_local_call_time FROM vicidial_list";
+	foreach($_POST as $key => $val)
+	{
+	    if ($key == "phone_number") {$phone_number="$val";}
+	    if ($key == "advance")
+	    {
+		$advance = explode("&",str_replace(";","",$val));
+		foreach ($advance as $adv) {
+		    list($advkey,$advval) = explode("=",$adv);
+		    if (!empty($advval))
+		    {
+			if ($advkey == "from_date") {
+			    $search_from = "$advval";
+			} else if ($advkey == "to_date") {
+			    $search_to = "$advval";
+			} else if ($advkey == "alt_phone") {
+			    if ($advval == "Y") {
+				$advance_SQL .= " `$advkey` = '$phone_number' AND";
+			    }
+			} else if ($advkey == "status") {
+			    $advance_SQL .= " `$advkey` = '$advval' AND";
+			} else {
+			    $advance_SQL .= " `$advkey` RLIKE '$advval' AND";
+			}
+			$cnt++;
+		    }
+		}
+		if (!empty($search_from) && !empty($search_to)) {
+		    $advance_SQL .= " last_local_call_time BETWEEN '$search_from 00:00:00' AND '$search_to 23:59:59'";
+		}
+	    } else {
+		if ($key != "page")
+		{
+		    if (!empty($val))
+		    {
+			if ($key == "phone_number")
+			{
+			    $search_SQL .= " `$key` = '$val' AND";
+			} else if ($key == "address") {
+			    $search_SQL .= " (address1 RLIKE '$val' OR address2 RLIKE '$val' OR address3 RLIKE '$val') AND";
+			} else {
+			    $search_SQL .= " `$key` RLIKE '$val' AND";
+			}
+			$cnt++;
+		    }
+		}
+	    }
+	}
+	
+	$hasWHERE = ($cnt) ? "WHERE" : "";
+	if (empty($advance_SQL)) {
+	    $search_SQL = rtrim($search_SQL, " AND");
+	}
+	$advance_SQL = rtrim($advance_SQL, " AND");
+	
+	$usergroup = $this->session->userdata('user_group');
+	if ($this->commonhelper->checkIfTenant($usergroup)) {
+	    $query = $this->gosearch->asteriskDB->query("SELECT list_id FROM vicidial_lists vl,vicidial_campaigns vc WHERE vl.campaign_id=vc.campaign_id AND user_group='$usergroup';");
+	    $lcnt = 0;
+	    foreach ($query->result() as $list_id) {
+		$listids[$lcnt] = $list_id->list_id;
+		$lcnt++;
+	    }
+	    
+	    if ($query->num_rows()) {
+		$hasWHERE = "WHERE";
+		$hasAND = (!empty($search_SQL)) ? "AND" : "";
+		$listid_SQL = "list_id IN ('".implode("','",$listids)."') $hasAND";
+	    }
+	}
+	
+	
+	$page = (is_numeric($this->input->post('page'))) ? $this->input->post('page') : 1;
+	if (is_null($page) || !is_numeric($page) || $page < 1) { $page = 1; }
+	$searchSQL = rtrim(rtrim("$daterange $search",' '),'AND');
+
+	$query = $this->gosearch->asteriskDB->query("SELECT count(*) AS cnt FROM vicidial_list $hasWHERE $listid_SQL $search_SQL $advance_SQL;");
+	
+	$total	= $query->row()->cnt;
+	$rp	= 25;
+	$limit	= 5;
+	$pg 	= $this->commonhelper->paging($page,$rp,$total,$limit);
+	$start	= (($page-1) * $rp);
+	
+	$query = $this->gosearch->asteriskDB->query("$select_SQL $hasWHERE $listid_SQL $search_SQL $advance_SQL LIMIT $start,$rp");
+
+	$return  = "    <br />\n";
+	$return .= "    <table border=0 cellpadding=0 cellspacing=0 style=\"width:100%;margin-left:auto;margin-right:auto;\">\n";
+	$return .= "	<thead>\n";
+	$return .= "	    <tr style=\"text-align: left\">\n";
+	$return .= "		<th>&nbsp;LEAD ID</th>\n";
+	$return .= "		<th>&nbsp;LIST ID</th>\n";
+	$return .= "		<th>&nbsp;PHONE</th>\n";
+	$return .= "		<th>&nbsp;FULLNAME</th>\n";
+	$return .= "		<th>&nbsp;LAST CALL DATE</th>\n";
+	$return .= "		<th>&nbsp;STATUS</th>\n";
+	$return .= "		<th>&nbsp;LAST AGENT</th>\n";
+	$return .= "	    </tr>\n";
+	$return .= "	</thead>\n";
+	$return .= "	<tbody>\n";
+	
+	$key = 1;
+	if ($query->num_rows() > 0) {
+	    foreach ($query->result() as $line)
+	    {
+		$class = ($key % 2) ? "tr1" : "tr2";
+		$return .= "	    <tr class=\"$class\">\n";
+		$return .= "		<td>&nbsp;<a id='listidlink' onclick='get_leadInfo({$line->lead_id});' style='cursor:pointer;'>{$line->lead_id}</a></td>\n";
+		$return .= "		<td>&nbsp;{$line->list_id}</td>\n";
+		$return .= "		<td>&nbsp;{$line->phone_number}</td>\n";
+		$return .= "		<td>&nbsp;{$line->full_name}</td>\n";
+		$return .= "		<td>&nbsp;{$line->last_local_call_time}</td>\n";
+		$return .= "		<td>&nbsp;{$line->status}</td>\n";
+		$return .= "		<td>&nbsp;{$line->user}</td>\n";
+		$return .= "	    </tr>\n";
+		$key++;
+	    }
+	} else {
+	        $return .= "	    <tr class=\"tr2\">\n";
+		$return .= "		<td colspan=8 style=\"font-weight:bold;color:#F00;font-style:italic;\">&nbsp;No record(s) found.</td>\n";
+		$return .= "	    </tr>\n";
+	}
+	
+	$return .= "	</tbody>\n";
+	$return .= "    </table>\n";
+	
+	if ($pg['last'] > 1) {
+	    $pagelinks  = '<a title="Go to First Page" style="vertical-align:baseline;padding: 0px 2px;cursor:pointer;" onclick="gotopage('.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
+	    $pagelinks .= '<a title="Go to Previous Page" style="vertical-align:baseline;padding: 0px 2px;cursor:pointer;" onclick="gotopage('.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
+    
+	    for ($i=$pg['start'];$i<=$pg['end'];$i++) { 
+		if ($i==$pg['page']) $current = 'color: #F00;cursor: default;font-weight:bold;'; else $current="cursor:pointer;";
+	    
+		$pagelinks .= '<a title="Go to Page '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="gotopage('.$i.')"><span>'.$i.'</span></a>';
+	    }
+	    
+	    //$pagelinks .= '<a title="View All Pages" style="vertical-align:text-top;padding: 0px 2px;" onclick="gopage(\'ALL\')"><span>ALL</span></a>';
+	    $pagelinks .= '<a title="Go to Next Page" style="vertical-align:baseline;padding: 0px 2px;cursor:pointer;" onclick="gotopage('.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
+	    $pagelinks .= '<a title="Go to Last Page" style="vertical-align:baseline;padding: 0px 2px;cursor:pointer;" onclick="gotopage('.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
+	} else {
+	    if ($rp > 25) {
+		$pagelinks  = '<div style="cursor: pointer;font-weight: bold;">';
+		$pagelinks .= '<a title="Back to Paginated View" style="vertical-align:text-top;padding: 0px 2px;" onclick="gotopage(1)"><span>BACK</span></a>';
+		$pagelinks .= '</div>';
+	    } else {
+		$pagelinks = '';
+	    }
+	}
+	$pagedisplay = "Displaying {$pg['istart']} to {$pg['iend']} of {$pg['total']} leads";
+	$return .= "<div style=\"padding-top:5px;\"><span style=\"float: right;\">$pagedisplay</span><span>$pagelinks</span></div>";
+	
+	$row_count = $query->num_rows();
+	echo "$row_count|||$return";
+    }
 
 
 

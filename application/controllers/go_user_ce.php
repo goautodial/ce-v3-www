@@ -914,14 +914,18 @@ class Go_user_ce extends Controller{
         $query = $this->gouser->asteriskDB->query("SELECT modify_same_user_level FROM vicidial_users WHERE user='$username'");
 	$modify_same_level = $query->row()->modify_same_user_level;
 	if ($this->commonhelper->checkIfTenant($data['user_group']) && $this->session->userdata("users_level") < 9) {
-	    $addedSQL = "and user_group='{$data['user_group']}'";
-	}else{
-	    if ($modify_same_level) {
-		$addedSQL = "and user_level <= '{$data['user_level']}'";
-	    } else {
-		$addedSQL = "and user_level < '{$data['user_level']}'";
-	    }
-        }
+	    $userGroupSQL = "and user_group='{$data['user_group']}'";
+	}
+	
+	if ($modify_same_level) {
+	    $levelSQL = "and user_level <= '{$data['user_level']}'";
+	} else {
+	    $levelSQL = "and (user_level < '{$data['user_level']}' OR (user_level = '{$data['user_level']}' AND user = '$username'))";
+	}
+	
+	if ($account != 'ADMIN') {
+	    $notAdminSQL = "AND user_group != 'ADMIN'";
+	}
 
 
         if(!is_null($_POST)){
@@ -929,13 +933,14 @@ class Go_user_ce extends Controller{
 	    $search_list = $_POST['search_list'];
 	    $searchSQL = '';
 	    if (!is_null($search_list)) {
-		$searchSQL = "AND user RLIKE '$search_list' OR full_name RLIKE '$search_list'";
+		$searchSQL = "AND (user RLIKE '$search_list' OR full_name RLIKE '$search_list')";
 	    }
         } 
        	if (is_null($page) || $page < 1) { $page = 1; }
-	$data['query'] = $this->gouser->asteriskDB->query("SELECT count(*) as ucnt from vicidial_users where user_level != '4' and full_name NOT LIKE '%Survey%' and user NOT IN ('VDCL','VDAD') $addedSQL $searchSQL order by user;");
+	$data['query'] = $this->gouser->asteriskDB->query("SELECT count(*) AS ucnt FROM vicidial_users WHERE user NOT IN ('VDCL','VDAD') AND user_level != '4' $levelSQL $searchSQL $userGroupSQL $notAdminSQL ORDER BY user;");
         $data['page'] = $page;
 	$data['search_list'] = $search_list;
+	$data['modify_same_level'] = $modify_same_level;
 	
 
         $this->load->view('includes/go_dashboard_template.php',$data);

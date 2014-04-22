@@ -748,13 +748,30 @@ $(document).ready(function()
 			{
 				$('#activator').hide();
 				$('#submit_dnc').show();
+				$('#submit_search').hide();
                                 $('#newcustomfield').hide();
 				$('#singrp').hide();
 				$('#searchDNC').show();
+			} else if ($(this).attr('id') == 'atab7') {
+				$('#activator').hide();
+				$('#submit_dnc').hide();
+				$('#submit_search').show();
+                                $('#newcustomfield').hide();
+				$('#singrp').hide();
+				$('#searchDNC').hide();
+				
+				if ($("#search_count").val() < 1) {
+					$('#overlaySearch').fadeIn('fast');
+					$('#boxSearch').css({'width': '600px','margin-left': 'auto', 'margin-right': 'auto', 'padding-bottom': '10px'});
+					$('#boxSearch').animate({
+						top: "-70px"
+					}, 500);
+				}
 			} else {
 				$('#activator').show();
                                 $('#newcustomfield').show();
 				$('#submit_dnc').hide();
+				$('#submit_search').hide();
 				$('#singrp').show();
 				$('#searchDNC').hide();
 			}
@@ -768,6 +785,7 @@ $(document).ready(function()
                         {
                                $('#activator').hide();
                                $('#submit_dnc').hide();
+			       $('#submit_search').hide();
                                $('#newcustomfield').show();
 			       $('#typeofsearch').val('custom');
                         } else {
@@ -916,6 +934,18 @@ $(document).ready(function()
 			$('#phone_numbers').val('');
 		});
 		//DNC END
+		
+		$('#closeboxSearch').click(function()
+		{
+			$('#boxSearch').animate({'top':'-2550px'},500);
+			$('#overlaySearch').fadeOut('slow');
+		});
+		
+		$('#closeboxLeadInfo').click(function()
+		{
+			$('#boxLeadInfo').animate({'top':'-2550px'},500);
+			$('#overlayLeadInfo').fadeOut('slow');
+ 		});
 
         var bar = $('.bar');
         var percent = $('.percent');
@@ -1145,6 +1175,119 @@ $(document).ready(function()
 	} else {
                 $('#showAllLists').hide();
 	}
+	
+	$("#showAdvance").click(function() {
+		if ($(".adv").is(":hidden")) {
+			$(this).html("Basic");
+			$(".adv").show();
+			$("#widgetCalendarLeadInfo").css({"top":"135px","z-index":"999","left":"26.7%"});
+		} else {
+			$(this).html("Advance");
+			$(".adv").hide();
+			$("#widgetCalendarLeadInfo").css("top","170px");
+		}
+	});
+ 	
+	$("#showAdvanceLeadInfo").click(function() {
+		if ($(".advLeadInfo").is(":hidden")) {
+			$(this).html("Basic");
+			$(".advLeadInfo").show();
+		} else {
+			$(this).html("Advance");
+			$(".advLeadInfo").hide();
+		}
+	});
+	
+	$("#submitSearch").click(function() {
+		var search_phone = $("#search_phone").val();
+		var search_first = $("#search_first_name").val();
+		var search_lastn = $("#search_last_name").val();
+		var search_datef = $("#selected_from_date").text();
+		var search_datet = $("#selected_to_date").text();
+		var adv_settings = '';
+		var adv_daterang = '';
+		
+		if ($(".adv").is(":visible")) {
+			if ($("#searchByDate").is(":checked")) {
+				adv_daterang = "&from_date=" + search_datef + "&to_date=" + search_datet;
+			}
+			adv_settings = $(".advanceSearch").serialize() + adv_daterang;
+		}
+		
+		$("#lead_search_placeholder").empty().html("<center><br /><img src=\"<? echo $base; ?>img/goloading.gif\" /></center>");
+		$('#boxSearch').animate({'top':'-2550px'},500);
+		$('#overlaySearch').fadeOut('slow');
+		
+		$.post('<?=$base ?>/index.php/go_search_ce/search_lead/', { phone_number: search_phone, first_name: search_first, last_name: search_lastn, advance: adv_settings}, function(data) {
+			var string_array = data.split("|||");
+			$("#search_count").val(string_array[0]);
+			$("#lead_search_placeholder").empty().html(string_array[1]);
+		});
+	});
+	
+	$(".basicSearch,.advanceSearch").blur(function() {
+		var basicID = $(this).val();
+		var newVal = '';
+		if ($(this).attr("name") == "email") {
+			newVal = basicID.replace(/[^a-zA-Z 0-9\@\.]+/g,'');
+		} else {
+			newVal = basicID.replace(/[^a-zA-Z 0-9]+/g,'');
+		}
+		$(this).val(newVal);
+	});
+	
+	$("#search_phone,input[name=lead_id]").keydown(function(event) {
+		// Allow: backspace, delete, tab, escape, and enter
+		if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || 
+			// Allow: Ctrl+A
+		       (event.keyCode == 65 && event.ctrlKey === true) || 
+			// Allow: home, end, left, right
+		       (event.keyCode >= 35 && event.keyCode <= 39)) {
+				// let it happen, don't do anything
+				return;
+		}
+		else {
+			// Ensure that it is a number and stop the keypress
+			if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
+				event.preventDefault(); 
+			}   
+		}
+ 	});
+	
+	$("#submit_search").click(function() {
+		$('#overlaySearch').fadeIn('fast');
+		$('#boxSearch').css({'width': '600px','margin-left': 'auto', 'margin-right': 'auto', 'padding-bottom': '10px'});
+		$('#boxSearch').animate({
+			top: "-70px"
+		}, 500);
+	});
+	
+	//Clear Search Count
+	$("#search_count").val(0);
+	
+	$("#log-collapse").click(function() {
+		if ($("#collapsible").is(":hidden")) {
+			$("#collapsible").show();
+			$(this).html("Other Info [-]");
+		} else {
+			$("#collapsible").hide();
+			$(this).html("Other Info [+]");
+		}
+	});
+	
+	$("#submitLeadInfo").click(function() {
+		var leadid = $("#leadinfo_lead_id").text();
+		var basicLeadInfo = $(".basicLeadInfo").serialize();
+		var advanceLeadInfo = '';
+		if ($(".advLeadInfo").is(":visible")) {
+			advanceLeadInfo = $(".advanceLeadInfo").serialize();
+		}
+		
+		$.post('<?=$base ?>/index.php/go_list/update_lead', { leadid: leadid, basic: basicLeadInfo, advance: advanceLeadInfo }, function(data)
+		{
+			
+		});
+	});
         
     } 
 ); 
@@ -1182,16 +1325,109 @@ function checkmes(){
 }
 
 function uploadimg() {
-
-document.getElementById('loadings').innerHTML= "<img src=\"<? echo $base; ?>img/goloading.gif\" />";
+	document.getElementById('loadings').innerHTML= "<img src=\"<? echo $base; ?>img/goloading.gif\" />";	
+}
+ 
+function gotopage(page) {
+	var search_phone = $("#search_phone").val();
+	var search_first = $("#search_first_name").val();
+	var search_lastn = $("#search_last_name").val();
+	var search_datef = $("#selected_from_date").text();
+	var search_datet = $("#selected_to_date").text();
+	var adv_settings = '';
+		
+	if ($(".adv").is(":visible")) {
+		adv_settings = $(".advanceSearch").serialize() + "&from_date=" + search_datef + "&to_date=" + search_datet;
+	}
 	
+	$("#lead_search_placeholder").empty().html("<center><br /><img src=\"<? echo $base; ?>img/goloading.gif\" /></center>");
+	
+	$.post('<?=$base ?>/index.php/go_search_ce/search_lead/', { page: page, phone_number: search_phone, first_name: search_first, last_name: search_lastn, advance: adv_settings}, function(data) {
+		var string_array = data.split("|||");
+		$("#search_count").val(string_array[0]);
+		$("#lead_search_placeholder").empty().html(string_array[1]);
+	});
 }
 
+function get_leadInfo(leadid) {
+	$("#advLeadInfo").hide();
+	$("#collapsible").hide();
+	$("#log-collapse").html("Other Info [+]");
+	$('#overlayLeadInfo').fadeIn('fast');
+	$('#boxLeadInfo').css({'width': '1024px', 'left': '3%', 'right': '5%', 'margin-left': 'auto', 'margin-right': 'auto', 'padding-bottom': '10px'});
+	$('#boxLeadInfo').animate({
+		top: "-70px"
+	}, 500);
+	
+	//$("#overlayContentLeadInfo").empty().html("<center><br /><img src=\"<? echo $base; ?>img/goloading.gif\" /><br /><br /></center>");
+	$("#overlayLoadingLeadInfo").show();
+	$("#overlayContentLeadInfo").hide();
+	$.post('<?=$base ?>/index.php/go_search_ce/leadinfo/', { leadid: leadid}, function(data)
+	{
+		$("#overlayLoadingLeadInfo").hide();
+		$("#overlayContentLeadInfo").show();
+		if(data.indexOf("Error") === -1){
+			var $result = JSON.parse(data);
+	
+		$("#leadinfo_lead_id").empty().append($result[0].lead_id);
+			$("#leadinfo_list_id").empty().append($result[0].list_id);
+			//$("#leadinfo_status").empty().append($result.status);
+			$("#leadinfo_status").val($result[0].status).prop("selected",true);
+			$("#leadinfo_fullname").empty().append($result[0].first_name+" "+$result[0].last_name);
+			$("#leadinfo_first_name").empty().val($result[0].first_name);
+			$("#leadinfo_last_name").empty().val($result[0].last_name);
+			$("#leadinfo_phone_code").empty().val($result[0].phone_code);
+			$("#leadinfo_phone_number").empty().val($result[0].phone_number);
+			$("#leadinfo_address1").empty().val($result[0].address1);
+			$("#leadinfo_city").empty().val($result[0].city);
+			$("#leadinfo_state").empty().val($result[0].state);
+			$("#leadinfo_postal_code").empty().val($result[0].postal_code);
+			$("#leadinfo_comments").empty().val($result[0].comments);
+			$("#leadinfo_alt_phone").empty().val($result[0].alt_phone);
+			$("#leadinfo_email").empty().val($result[0].email);
+			$("#leadinfo_user").empty().append($result[0].user);
+			//$("#leadinfo_download").attr("href",protocol+'//'+host+'/index.php/go_search_ce/download/'+$result[0].lead_id+'/csv');
+			leadinfo(leadid);
+			//wizard($(".message-box2"));
+			//
+			//if($result[1]){
+			//	$("#leadinfo_user").val($result[1].user).prop("selected",true);
+			//	$schedDate = $result[1].callback_time.split(" ")[0].split("-");
+			//	$time = $result[1].callback_time.split(" ")[1].split(":");
+			//	$("#appointment_year").val($schedDate[0]).prop("selected",true);
+			//	$("#appointment_month").val($schedDate[1]).prop("selected",true);
+			//	$("#appointment_day").val($schedDate[2]).prop("selected",true);
+			//	$("#appointment_hour").val($time[0]).prop("selected",true);
+			//	$("#appointment_min").val($time[1]).prop("selected",true);
+			//	$("#callbackid").empty().val($result[1].callback_id);
+			//	if($result[1].recipient === "ANYONE"){
+			//		$("#touser").attr("value","anytouser");
+			//	}else{
+			//		$("#touser").attr("value","usertouser");
+			//	}
+			//} else {
+			//	$(".callback").css("display","none");
+			//}
+	
+		} else {
+		     alert(data);
+		     return false;
+		}
+	
+	});
+}
+ 
+function leadinfo(leadid){
+	$("#calls-to-this-lead").find("div.user-tbl-container").empty().load('<?=base_url() ?>index.php/go_search_ce/calls/'+leadid);
+	$("#closer-records").find("div.user-tbl-container").empty().load('<?=base_url() ?>index.php/go_search_ce/closerlog/'+leadid);
+	$("#agent-log").find("div.user-tbl-container").empty().load('<?=base_url() ?>index.php/go_search_ce/agentlog/'+leadid);
+	$("#recording").find("div.user-tbl-container").empty().load('<?=base_url() ?>index.php/go_search_ce/leadrecord/'+leadid);
+}
 </script>
 <!-- end Javascript section -->
 
 		<!-- CSS section -->
-<link href="<?=base_url()?>css/go_common_ce.css" rel="stylesheet" type="text/css">
+<link href="<?=base_url()?>css/go_search/go_search_ce.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 			
 			a.back{
@@ -1537,7 +1773,7 @@ img.desaturate{
     -webkit-filter: grayscale(1); /* Old WebKit */
 }
 
-#overlayDNC{
+#overlayDNC,#overlaySearch,#overlayLeadInfo{
 	background:transparent url(<?php echo $base; ?>img/images/go_list/overlay.png) repeat top left;
 	position:fixed;
 	top:0px;
@@ -1547,7 +1783,7 @@ img.desaturate{
 	z-index:100;
 }
 
-#boxDNC{
+#boxDNC,#boxSearch,#boxLeadInfo{
 	position:absolute;
 	top:-2550px;
 	left:14%;
@@ -1560,7 +1796,7 @@ img.desaturate{
 	z-index:101;
 }
 
-#closeboxDNC{
+#closeboxDNC,#closeboxSearch,#closeboxLeadInfo{
 	float:right;
 	width:26px;
 	height:26px;
@@ -1570,7 +1806,13 @@ img.desaturate{
 	cursor:pointer;
 }
 
-.go_dnc_menu{
+
+#overlayLoadingLeadInfo{
+	text-align:center;
+	display:none;
+}
+
+.go_dnc_menu,.go_lead_search_menu{
 	z-index:999;
 	position:absolute;
 	top:188px;
@@ -1580,7 +1822,7 @@ img.desaturate{
 	cursor:pointer;
 }
 
-#go_dnc_menu ul{
+#go_dnc_menu ul,#go_lead_search_menu ul{
 	list-style-type:none;
 	padding: 1px;
 	margin: 0px;
@@ -1592,7 +1834,7 @@ img.desaturate{
 	user-select: none;
 }
 
-.go_dnc_submenu{
+.go_dnc_submenu,.go_lead_search_submenu{
 	padding: 3px 10px 3px 5px;
 	margin: 0px;
 }
@@ -1630,8 +1872,36 @@ table.tablesorter .odd {
 	font-size: 10px;
 	cursor: pointer;
 }
-		</style>
-		<!-- end CSS section -->
+
+#widgetField {
+	width: 220px;
+	cursor: pointer;
+	height: 24px;
+	top: 1px;
+	right: -5px;
+}
+
+#widgetField span {
+	line-height: 20px;
+	position: relative;
+	left: 0px;
+}
+
+.buttons {
+	color: #7A9E22;
+	cursor: pointer;
+}
+
+.buttons:hover {
+	font-weight: bold;
+}
+
+.adv,.advLeadInfo {
+	display: none;
+	background-color: #E0F8E0;
+}
+</style>
+<!-- end CSS section -->
 <?php
 
 $countthis = count($lists);
@@ -1679,10 +1949,14 @@ echo "<body onload='genListID()'>";
                         <a id="submit_dnc" class="rightdiv toolTip" style="text-decoration: none; cursor:pointer;display: none;font-family: Verdana,Arial,Helvetica,sans-serif;" title="Add/Delete DNC Numbers"><b>Add/Delete DNC Numbers</b>  </a>
 			</span>
 						
+			<span>				
+                        <a id="submit_search" class="rightdiv toolTip" style="text-decoration: none; cursor:pointer;display: none;font-family: Verdana,Arial,Helvetica,sans-serif;" title="Search For A Lead"><b>Search For A Lead</b>  </a>
+			</span>
+						
                         </div>
-                        <h3 class="hndle" style="height:13px" onclick="return false;">
+                        <div class="hndle" style="height:13px" onclick="return false;">
                                    <!-- <span style="font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 13px; font-stretch: normal;">List Listings</span> -->
-	                    	</h3>
+	                    	</div>
                         <div class="inside inside-tab">
 
 <div id="tabs" class="tab-container" style="border: none;">
@@ -1692,6 +1966,7 @@ echo "<body onload='genListID()'>";
 		<li><a href="#tabs-3" id="atab3" title="Load Leads" class="tab" style="font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 13px; font-stretch: normal;">Load Leads</a></li>
 		<li><a href="#tabs-5" id="atab5" title="DNC Numbers" class="tab" style="font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 13px; font-stretch: normal;">DNC Numbers</a></li>
 		<!--<li><a href="#tabs-6" id="atab6" title="Custom Fields Settings" class="tab" style="font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 13px; font-stretch: normal;">Custom Fields Settings</a></li>-->
+		<li><a href="#tabs-7" id="atab7" title="Lead Search" class="tab" style="font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 13px; font-stretch: normal;">Lead Search</a></li>
 	</ul>
 	
 
@@ -1725,9 +2000,9 @@ echo "<body onload='genListID()'>";
 									<td>
         								<select name="source_list_id" id="source_list_id">
 									<?php
-										foreach($lists as $listsInfo){
-											echo "<option value='$listsInfo->list_id'>".$listsInfo->list_id." - ".$listsInfo->list_name."</option>";
-										}
+										//foreach($lists as $listsInfo){
+										//	echo "<option value='$listsInfo->list_id'>".$listsInfo->list_id." - ".$listsInfo->list_name."</option>";
+										//}
 									?>
         								</select>
 									</td>
@@ -1739,9 +2014,9 @@ echo "<body onload='genListID()'>";
 									<td>
         								<select name="to_list_id" id="to_list_id">
 									<?php
-										foreach($lists as $listsInfo){
-											echo "<option value='$listsInfo->list_id'>".$listsInfo->list_id." - ".$listsInfo->list_name."</option>";
-										}
+										//foreach($lists as $listsInfo){
+										//	echo "<option value='$listsInfo->list_id'>".$listsInfo->list_id." - ".$listsInfo->list_name."</option>";
+										//}
 									?>
         								</select>
 									</td>
@@ -2025,7 +2300,7 @@ echo "<body onload='genListID()'>";
 								</tr>
 	                  					<tr>
 									<td align="right"><label class="modify-value">List ID:&nbsp;&nbsp;&nbsp;</label> </td>
-									<td><input type="text" name="list_id" id="list_id" size="12" maxlength="7">
+									<td><input type="text" name="list_id" id="list_id" size="12" maxlength="15">
 									<label id="autogenlabel"><font size="1" color="red">(numeric only)</font></label> </td>
 								</tr>
 								<tr>
@@ -2963,6 +3238,320 @@ COUNTRY CODE FOR THIS FILE: <?=$phone_code_override?></b><br><br><br></td>
 	<div id="tabs-6">
 		
 	</div>
+		
+		
+	<!-- Lead Search -->
+        <div id="tabs-7">
+			<br style="font-size:8px;" />
+			<div class="table_lead_search" style="margin-top:-15px;">
+				<div id="lead_search_placeholder">
+					<br />
+					<table border=0 cellpadding=0 cellspacing=0 style="width:100%;margin-left:auto;margin-right:auto;">
+						<thead>
+							<tr style="text-align: left">
+								<th>&nbsp;LEAD ID</th>
+								<th>&nbsp;LIST ID</th>
+								<th>&nbsp;PHONE</th>
+								<th>&nbsp;FULLNAME</th>
+								<th>&nbsp;LAST CALL DATE</th>
+								<th>&nbsp;STATUS</th>
+								<th>&nbsp;LAST AGENT</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="tr2">
+								<td colspan=8 style="font-weight:bold;color:#F00;font-style:italic;">&nbsp;No record(s) found.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<input type="hidden" id="search_count" value="0" />
+		
+			<!-- Overlay1 -->
+			<div id="overlaySearch" style="display:none;"></div>
+			<div id="boxSearch">
+				<a id="closeboxSearch" class="toolTip" title="CLOSE"></a>
+				<div id="overlayContentSearch">
+					<table style="margin-left:auto;margin-right:auto;width:100%;">
+						<tr>
+							<td colspan=2 style="font-weight:bold;text-align:center;font-size:16px;">Lead Search Options</td>
+						</tr>
+						<tr>
+							<td colspan=2 style="font-weight:bold;text-align:center;font-size:10px;">&nbsp;</td>
+						</tr>
+						<tr>
+							<td style="text-align:right;width:40%;">Phone:&nbsp;</td>
+							<td style="width:60%;">&nbsp;<?=form_input('phone',null,'id="search_phone" maxlength="11" size="12" class="basicSearch"') ?></td>
+						</tr>
+						<tr class="adv">
+							<td style="text-align:right;width:40%;">Search Alt. Phone:&nbsp;</td>
+							<td style="width:60%;">&nbsp;<?=form_dropdown('alt_phone',array('N'=>'No','Y'=>'Yes'),null,'class="advanceSearch"') ?></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;">First Name:&nbsp;</td>
+							<td>&nbsp;<?=form_input('first_name',null,'id="search_first_name" maxlength="30" class="basicSearch"') ?></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;">Last Name:&nbsp;</td>
+							<td>&nbsp;<?=form_input('last_name',null,'id="search_last_name" maxlength="30" class="basicSearch"') ?></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;" class="adv"><span style="color:red">*</span> Last Call Date:&nbsp;</td>
+							<td style="white-space:nowrap;" class="adv">
+								<div style="display:table-cell;">
+									&nbsp;
+								</div>
+								<div id="widgetField" style="display:table-cell;">
+									<a href="javascript:void(0);" id="daterange" style="float:right; position: static;">Select date range</a>
+									<div style="margin-top:2px;" id="widgetDate"><span name="selected_from_date" id="selected_from_date" class="advanceSearch"><? echo date('Y-m-d'); ?></span> to <span name="selected_to_date" id="selected_to_date" class="advanceSearch"><? echo date('Y-m-d'); ?></span></div>
+								</div>
+								<div style="display:table-cell;">
+									<input type="checkbox" id="searchByDate" /> <small style="color:#F00">(search w/ date)</small>
+ 								</div>
+							</td>
+						</tr>
+						<tr class="adv">
+							<td style="text-align:right;">Lead ID:&nbsp;</td>
+							<td>&nbsp;<?=form_input('lead_id',null,'maxlength="10" size="10" class="advanceSearch"') ?></td>
+						</tr>
+						<tr class="adv">
+							<td style="text-align:right;">Disposition:&nbsp;</td>
+							<td>&nbsp;<?=form_dropdown('status',$dispos,null,'style="width:250px" class="advanceSearch"') ?></td>
+						</tr>
+						<tr class="adv">
+							<td style="text-align:right;">List ID:&nbsp;</td>
+							<td>&nbsp;<?=form_input('list_id',null,'maxlength="15" size="15" class="advanceSearch"') ?></td>
+						</tr>
+						<tr class="adv">
+							<td style="text-align:right;">Last Agent:&nbsp;</td>
+							<td>&nbsp;<?=form_input('user',null,'maxlength="20" class="advanceSearch"') ?></td>
+						</tr>
+						<tr class="adv">
+							<td style="text-align:right;">Address:&nbsp;</td>
+							<td>&nbsp;<?=form_input('address',null,'maxlength="100" size="35" class="advanceSearch"') ?></td>
+						</tr>
+						<tr class="adv">
+							<td style="text-align:right;">City:&nbsp;</td>
+							<td>&nbsp;<?=form_input('city',null,'maxlength="50" size="25" class="advanceSearch"') ?></td>
+						</tr>
+						<tr class="adv">
+							<td style="text-align:right;">State:&nbsp;</td>
+							<td>&nbsp;<?=form_input('state',null,'maxlength="2" size="3" class="advanceSearch"') ?></td>
+						</tr>
+						<tr class="adv">
+							<td style="text-align:right;">E-mail:&nbsp;</td>
+							<td>&nbsp;<?=form_input('email',null,'maxlength="70" size="30" class="advanceSearch"') ?></td>
+						</tr>
+						<tr class="adv">
+							<td style="text-align:right;">Comments:&nbsp;</td>
+							<td>&nbsp;<?=form_input('comments',null,'maxlength="100" size="40" class="advanceSearch"') ?></td>
+						</tr>
+						<tr class="adv">
+							<td colspan=2 style="text-align:left;font-size:10px;color:red;line-height:18px;padding-left:10px;">* Lead search by date range is limited to 60 days only.</td>
+						</tr>
+						<tr>
+							<td colspan=2 style="font-weight:bold;text-align:center;font-size:10px;">&nbsp;</td>
+						</tr>
+						<tr>
+							<td colspan=2 style="text-align:right;"><span id="showAdvance" class="buttons">Advance</span> | <span id="submitSearch" class="buttons">Search</span></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			
+			<div style="top:170px;left:14%;right:14%;margin-left:auto;margin-right:auto;" id="widgetCalendarLeadInfo"></div>
+			
+			<!-- Lead Info Overlay -->
+			<div id="overlayLeadInfo" style="display:none;"></div>
+			<div id="boxLeadInfo">
+				<a id="closeboxLeadInfo" class="toolTip" title="CLOSE"></a>
+				<div id="overlayLoadingLeadInfo"><center><br /><img src="<? echo $base; ?>img/goloading.gif" /><br /><br /></center></div>
+				<div id="overlayContentLeadInfo">
+					<table style="margin-left:auto;margin-right:auto;width:100%;">
+						<tr>
+							<td colspan=2 style="font-weight:bold;text-align:center;font-size:16px;">Lead Information</td>
+						</tr>
+						<tr>
+							<td colspan=2 style="font-weight:bold;text-align:center;font-size:10px;">&nbsp;</td>
+						</tr>
+						<tr>
+							<td style="text-align:right;width:40%;">Lead ID:&nbsp;</td>
+							<td style="width:60%;line-height:20px;">&nbsp;<span id="leadinfo_lead_id"></span></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;width:40%;">List ID:&nbsp;</td>
+							<td style="width:60%;line-height:20px;">&nbsp;<span id="leadinfo_list_id"></span></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;width:40%;">Fronter:&nbsp;</td>
+							<td style="width:60%;line-height:20px;">&nbsp;<span id="leadinfo_user"></span></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;width:40%;">First Name:&nbsp;</td>
+							<td style="width:60%;">&nbsp;<?=form_input('first_name',null,'id="leadinfo_first_name" maxlength="30" size="25" class="basicLeadInfo"') ?></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;width:40%;">Last Name:&nbsp;</td>
+							<td style="width:60%;">&nbsp;<?=form_input('last_name',null,'id="leadinfo_last_name" maxlength="30" size="25" class="basicLeadInfo"') ?></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;width:40%;">Address:&nbsp;</td>
+							<td style="width:60%;">&nbsp;<?=form_input('address1',null,'id="leadinfo_address1" maxlength="100" size="50" class="basicLeadInfo"') ?></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;width:40%;">City:&nbsp;</td>
+							<td style="width:60%;">&nbsp;<?=form_input('city',null,'id="leadinfo_city" maxlength="50" size="30" class="basicLeadInfo"') ?></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;width:40%;">State:&nbsp;</td>
+							<td style="width:60%;">&nbsp;<?=form_input('state',null,'id="leadinfo_state" maxlength="2" size="3" class="basicLeadInfo"') ?></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;width:40%;">Zip:&nbsp;</td>
+							<td style="width:60%;">&nbsp;<?=form_input('postal_code',null,'id="leadinfo_postal_code" maxlength="10" size="12" class="basicLeadInfo"') ?></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;width:40%;">Phone Code:&nbsp;</td>
+							<td style="width:60%;">&nbsp;<?=form_input('phone_code',null,'id="leadinfo_phone_code" maxlength="10" size="10" class="basicLeadInfo"') ?></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;width:40%;">Phone Number:&nbsp;</td>
+							<td style="width:60%;">&nbsp;<?=form_input('phone_number',null,'id="leadinfo_phone_number" maxlength="18" size="20" class="basicLeadInfo"') ?></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;width:40%;">Alt. Phone:&nbsp;</td>
+							<td style="width:60%;">&nbsp;<?=form_input('alt_phone',null,'id="leadinfo_alt_phone" maxlength="12" size="15" class="basicLeadInfo"') ?></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;width:40%;">Email:&nbsp;</td>
+							<td style="width:60%;">&nbsp;<?=form_input('email',null,'id="leadinfo_email" maxlength="70" size="30" class="basicLeadInfo"') ?></td>
+						</tr>
+						<tr>
+							<td style="text-align:right;width:40%;">Comments:&nbsp;</td>
+							<td style="width:60%;white-space:nowrap;">&nbsp;<?=form_textarea(array('name'=>'comments','value'=>null,'id'=>"leadinfo_comments",'cols'=>"50",'rows'=>"5",'style'=>"resize:none;",'class'=>"basicLeadInfo")) ?></td>
+						</tr>
+						<tr class="advLeadInfo">
+							<td style="text-align:right;">Disposition:&nbsp;</td>
+							<td>&nbsp;<?=form_dropdown('status',$dispos,null,'id="leadinfo_status" style="width:250px" class="advanceLeadInfo"') ?></td>
+						</tr>
+						<tr class="advLeadInfo">
+							<td style="text-align:right;">Modify Vicidial Logs:&nbsp;</td>
+							<td>&nbsp;<?=form_checkbox(array('id'=>'modify_logs','value'=>'1','name'=>'modify_logs','checked'=>true,'class'=>"advanceLeadInfo"))?></td>
+						</tr>
+						<tr class="advLeadInfo">
+							<td style="text-align:right;">Modify Agent Logs:&nbsp;</td>
+							<td>&nbsp;<?=form_checkbox(array('id'=>'modify_agent_logs','value'=>'1','name'=>'modify_agent_logs','checked'=>true,'class'=>"advanceLeadInfo"))?></td>
+						</tr>
+						<tr class="advLeadInfo">
+							<td style="text-align:right;">Modify Closer Logs:&nbsp;</td>
+							<td>&nbsp;<?=form_checkbox(array('id'=>'modify_closer_logs','value'=>'1','name'=>'modify_closer_logs','checked'=>false,'class'=>"advanceLeadInfo"))?></td>
+						</tr>
+						<tr style="display:none">
+							<td style="text-align:right;">Add Closer Log Record:&nbsp;</td>
+							<td>&nbsp;<?=form_checkbox(array('id'=>'add_closer_record','value'=>'1','name'=>'add_closer_record','checked'=>false,'class'=>"advanceLeadInfo"))?></td>
+						</tr>
+						<tr>
+							<td colspan=2 style="font-weight:bold;text-align:center;font-size:10px;">&nbsp;</td>
+						</tr>
+						<tr>
+							<td colspan=2 style="text-align:right;"><span id="showAdvanceLeadInfo" class="buttons">Advance</span> | <span id="submitLeadInfo" class="buttons">Submit</span></td>
+						</tr>
+					</table>
+					
+					<!-- S t a r t -->
+					<br class="clear"/>
+					<div class="collapse-anchor"><a id="log-collapse">Other Info [+]</a></div>
+					<div id="collapsible" class="invi-elem"> 
+						<div class="corner-all innerbox-tbl" id="calls-to-this-lead">
+							<div class="user-tbl">
+								<div class='innerbox-title'><strong>Calls to this Lead</strong></div>
+								<div class="user-hdr">
+									<div class="user-tbl-cols">Date / Time</div>
+									<div class="user-tbl-cols user-tbl-cols-centered">Length</div>
+									<div class="user-tbl-cols">Status</div>
+									<div class="user-tbl-cols">TSR</div>
+									<div class="user-tbl-cols">Campaign</div>
+									<div class="user-tbl-cols">List</div>
+									<div class="user-tbl-cols">Lead</div>
+									<div class="user-tbl-cols">Hangup Reason</div>
+									<div class="user-tbl-cols">Phone</div>
+									<br class="clear"/>
+								</div>
+								<div class="user-tbl-container">&nbsp;</div>
+							</div>
+						</div><br class="clear"/>
+						<br class="clear"/>
+						<div class="corner-all innerbox-tbl" id="closer-records">
+							<div class="user-tbl">
+								<div class='innerbox-title'><strong>Closer Records for this Lead</strong></div>
+								<div class="user-hdr">
+									<div class="user-tbl-cols">Date / Time</div>
+									<div class="user-tbl-cols user-tbl-cols-centered">Length</div>
+									<div class="user-tbl-cols">Status</div>
+									<div class="user-tbl-cols">TSR</div>
+									<div class="user-tbl-cols">Campaign</div>
+									<div class="user-tbl-cols">List</div>
+									<div class="user-tbl-cols">Lead</div>
+									<div class="user-tbl-cols">Wait</div>
+									<div class="user-tbl-cols">Hangup Reason</div>
+									<br class="clear"/>
+								</div>
+								<div class="user-tbl-container">&nbsp;</div>
+							</div>
+						</div><br class="clear"/>
+						<br class="clear"/>
+						<div class="corner-all innerbox-tbl" id="agent-log">
+							<div class="user-tbl">
+								<div class='innerbox-title'><strong>Agent Log Records for this Lead</strong></div>
+								<div class="user-hdr">
+									<div class="user-tbl-cols " style="width:18%">Date / Time</div>
+									<div class="user-tbl-cols user-normalcols">Campaign</div>
+									<div class="user-tbl-cols user-normalcols">TSR</div>
+									<div class="user-tbl-cols user-smallcols">Pause</div>
+									<div class="user-tbl-cols user-smallcols">Wait</div>
+									<div class="user-tbl-cols user-smallcols">Talk</div>
+									<div class="user-tbl-cols user-smallcols">Dispo</div>
+									<div class="user-tbl-cols user-smallcols">Status</div>
+									<div class="user-tbl-cols">Group</div>
+									<div class="user-tbl-cols">Sub</div> 
+									<br class="clear"/>
+								</div>
+								<div class="user-tbl-container">&nbsp;</div>
+							</div>
+						</div><br class="clear"/>
+						<br class="clear"/>
+						<div class="corner-all innerbox-tbl" id="recording">
+							<div class="user-tbl">
+								<div class='innerbox-title'><strong>Recordings for this Lead</strong></div>
+								<div class="user-hdr">
+									<div class="user-tbl-cols">Lead</div>
+									<div class="user-tbl-cols">Date / Time</div>
+									<div class="user-tbl-cols user-tbl-cols-centered">Seconds</div>
+									<div class="user-tbl-cols">RecId</div>
+									<div class="user-tbl-cols">Filename</div>
+									<div class="user-tbl-cols">Location</div>
+									<div class="user-tbl-cols">TSR</div>
+									<br class="clear"/>
+								</div>
+								<div class="user-tbl-container">&nbsp;</div>
+							</div>
+						</div><br class="clear"/>
+						<br class="clear"/>
+					</div>
+					<!-- E n d -->
+					<br class="clear"/><br class="clear"/>
+				</div>
+			</div>
+
+			<!-- Action Menu -->
+			<div id='go_lead_search_menu' class='go_lead_search_menu'>
+			<ul>
+			<li class="go_lead_search_submenu" title="Delete Selected" id="delete">Delete Selected</li>
+			</ul>
+			</div>
+        </div>
+	<!-- end tab7 -->
 
 				
 

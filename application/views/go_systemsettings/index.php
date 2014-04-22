@@ -33,7 +33,7 @@ $gmtArray = array(
              <div class="postbox-container" style="width:99%">
                   <form id="system-settings" method="post" >
                   <div class="corner-all server-settings" style="width:800px;">
-                        <div class="settings-label">Vicidial Version</div>
+                        <div class="settings-label">Version</div>
                         <div class="settings-value"><?=$settings[0]->version?></div>
                         <br class="clear"/>
                         <div class="settings-separator">&nbsp;</div>
@@ -52,43 +52,43 @@ $gmtArray = array(
                         <div class="settings-label">Install Date</div>
                         <div class="settings-value"><?=$settings[0]->install_date?></div>
                         <br class="clear"/>
-                        <div class="settings-separator">&nbsp;</div>
-                        <div class="settings-label">Use Non-Latin</div>
-                        <div class="settings-value"><?=form_dropdown('use_non_latin',array('No','Yes'),$settings[0]->use_non_latin,'id="use_non_latin"');?></div>
-                        <br class="clear"/>
-                        <div class="settings-separator">&nbsp;</div>
-                        <div class="settings-label">Webroot Writable</div>
-                        <div class="settings-value"><?=form_dropdown('webroot_writable',array('No','Yes'),$settings[0]->webroot_writable,'id="webroot_writable"')?></div>
-                        <br class="clear"/>
-                        <div class="settings-separator">&nbsp;</div>
-                        <div class="settings-label">VICIDIAL Agent Disable Display</div>
+                        <div class="settings-separator" style="display:none;">&nbsp;</div>
+                        <div class="settings-label" style="display:none;">Use Non-Latin</div>
+                        <div class="settings-value" style="display:none;"><?=form_dropdown('use_non_latin',array('No','Yes'),$settings[0]->use_non_latin,'id="use_non_latin"');?></div>
+                        <br class="clear" style="display:none;"/>
+                        <div class="settings-separator" style="display:none;">&nbsp;</div>
+                        <div class="settings-label" style="display:none;">Webroot Writable</div>
+                        <div class="settings-value" style="display:none;"><?=form_dropdown('webroot_writable',array('No','Yes'),$settings[0]->webroot_writable,'id="webroot_writable"')?></div>
+                        <br class="clear" style="display:none;"/>
+                        <div class="settings-separator" style="display:none;">&nbsp;</div>
+                        <div class="settings-label" style="display:none;">VICIDIAL Agent Disable Display</div>
                         <?$vicid_agent_disable = array('NOT_ACTIVE'=>'NOT ACTIVE','LIVE_AGENT'=>'LIVE AGENT','EXTERNAL'=>'EXTERNAL','ALL'=>'ALL')?>
-                        <div class="settings-value"><?=form_dropdown('vicidial_agent_disable',$vicid_agent_disable,$settings[0]->vicidial_agent_disable,'id="vicidial_agent_disable"')?></div>
-                        <br class="clear"/>
-                        <div class="settings-separator">&nbsp;</div>
-                        <div class="settings-label">Allow SIPSAK Messages</div>
-                        <div class="settings-value"><?=form_dropdown('allow_sipsak_messages',array('No','Yes'),$settings[0]->allow_sipsak_messages,'id="allow_sipsak_messages"')?></div>
-                        <br class="clear"/>
-                        <div class="settings-separator">&nbsp;</div>
-                        <div class="settings-label">Admin Home URL</div>
-                        <div class="settings-value"><?=form_input('admin_home_url',$settings[0]->admin_home_url,'id="admin_home_url"')?></div>
-                        <br class="clear">
-                        <div class="settings-separator">&nbsp;</div>
-                        <div class="settings-label">Admin Modify Refresh</div>
-                        <div class="settings-value"><?=form_input('admin_modify_refresh',$settings[0]->admin_modify_refresh,'id="admin_modify_refresh" size="5"')?></div>
-                        <br class="clear"/>
-                        <div class="settings-separator">&nbsp;</div>
-                        <div class="settings-label">Admin No-Cache</div>
-                        <div class="settings-value"><?=form_dropdown('nocache_admin',array('No','Yes'),$settings[0]->nocache_admin,'id="nocache_admin"')?></div>
-                        <br class="clear"/>
-                        <div class="settings-separator">&nbsp;</div>
-                        <div class="settings-label">Enable Agent Transfer Logfile</div>
-                        <div class="settings-value"><?=form_dropdown('enable_agc_xfer_log',array('No','Yes'),$settings[0]->enable_agc_xfer_log,'id="enable_agc_xfer_log"')?></div>
-                        <br class="clear"/>
-                        <div class="settings-separator">&nbsp;</div>
-                        <div class="settings-label">Enable Agent Disposition Logfile</div>
-                        <div class="settings-value"><?=form_dropdown('enable_agc_dispo_log',array('No','Yes'),$settings[0]->enable_agc_dispo_log,'id="enable_agc_dispo_log"')?></div>
-                        <br class="clear"/>
+                        <div class="settings-value" style="display:none;"><?=form_dropdown('vicidial_agent_disable',$vicid_agent_disable,$settings[0]->vicidial_agent_disable,'id="vicidial_agent_disable"')?></div>
+                        <br class="clear" style="display:none;"/>
+                        <div class="settings-separator" style="display:none;">&nbsp;</div>
+                        <div class="settings-label" style="display:none;">Allow SIPSAK Messages</div>
+                        <div class="settings-value" style="display:none;"><?=form_dropdown('allow_sipsak_messages',array('No','Yes'),$settings[0]->allow_sipsak_messages,'id="allow_sipsak_messages"')?></div>
+                        <br class="clear" style="display:none;"/>
+                        <div class="settings-separator" style="display:none;">&nbsp;</div>
+                        <div class="settings-label" style="display:none;">Admin Home URL</div>
+                        <div class="settings-value" style="display:none;"><?=form_input('admin_home_url',$settings[0]->admin_home_url,'id="admin_home_url"')?></div>
+                        <br class="clear" style="display:none;">
+                        <div class="settings-separator" style="display:none;">&nbsp;</div>
+                        <div class="settings-label" style="display:none;">Admin Modify Refresh</div>
+                        <div class="settings-value" style="display:none;"><?=form_input('admin_modify_refresh',$settings[0]->admin_modify_refresh,'id="admin_modify_refresh" size="5"')?></div>
+                        <br class="clear" style="display:none;"/>
+                        <div class="settings-separator" style="display:none;">&nbsp;</div>
+                        <div class="settings-label" style="display:none;">Admin No-Cache</div>
+                        <div class="settings-value" style="display:none;"><?=form_dropdown('nocache_admin',array('No','Yes'),$settings[0]->nocache_admin,'id="nocache_admin"')?></div>
+                        <br class="clear" style="display:none;"/>
+                        <div class="settings-separator" style="display:none;">&nbsp;</div>
+                        <div class="settings-label" style="display:none;">Enable Agent Transfer Logfile</div>
+                        <div class="settings-value" style="display:none;"><?=form_dropdown('enable_agc_xfer_log',array('No','Yes'),$settings[0]->enable_agc_xfer_log,'id="enable_agc_xfer_log"')?></div>
+                        <br class="clear" style="display:none;"/>
+                        <div class="settings-separator" style="display:none;">&nbsp;</div>
+                        <div class="settings-label" style="display:none;">Enable Agent Disposition Logfile</div>
+                        <div class="settings-value" style="display:none;"><?=form_dropdown('enable_agc_dispo_log',array('No','Yes'),$settings[0]->enable_agc_dispo_log,'id="enable_agc_dispo_log"')?></div>
+                        <br class="clear" style="display:none;"/>
                         <div class="settings-separator">&nbsp;</div>
                         <div class="settings-label">Timeclock End Of Day</div>
                         <div class="settings-value"><?=form_input('timeclock_end_of_day',$settings[0]->timeclock_end_of_day,'id="timeclock_end_of_day" size="5"')?></div>
@@ -144,18 +144,18 @@ $gmtArray = array(
                         <div class="settings-label">Central Sound Control Active</div>
                         <div class="settings-value"><?=form_dropdown('sounds_central_control_active',array('No','Yes'),$settings[0]->sounds_central_control_active,'id="sounds_central_control_active"')?></div>
                         <br class="clear"/>
-                        <div class="settings-separator">&nbsp;</div>
-                        <div class="settings-label">Sounds Web Server</div>
-                        <div class="settings-value"><?=form_input('sounds_web_server',$settings[0]->sounds_web_server,'id="sounds_web_server"')?></div>
-                        <br class="clear"/>
-                        <div class="settings-separator">&nbsp;</div>
-                        <div class="settings-label">Sounds Web Directory</div>
-                        <div class="settings-value"><?="<a href='http://{$settings[0]->sounds_web_server}/{$settings[0]->sounds_web_directory}'>{$settings[0]->sounds_web_directory}</a>"?></div>
-                        <br class="clear"/>
-                        <div class="settings-separator">&nbsp;</div>
-                        <div class="settings-label">Admin Web Directory</div>
-                        <div class="settings-value"><?=form_input('admin_web_directory',$settings[0]->admin_web_directory,'id="admin_web_directory"')?></div>
-                        <br class="clear"/>
+                        <div class="settings-separator" style="display:none;">&nbsp;</div>
+                        <div class="settings-label" style="display:none;">Sounds Web Server</div>
+                        <div class="settings-value" style="display:none;"><?=form_input('sounds_web_server',$settings[0]->sounds_web_server,'id="sounds_web_server"')?></div>
+                        <br class="clear" style="display:none;"/>
+                        <div class="settings-separator" style="display:none;">&nbsp;</div>
+                        <div class="settings-label" style="display:none;">Sounds Web Directory</div>
+                        <div class="settings-value" style="display:none;"><?="<a href='http://{$settings[0]->sounds_web_server}/{$settings[0]->sounds_web_directory}'>{$settings[0]->sounds_web_directory}</a>"?></div>
+                        <br class="clear" style="display:none;"/>
+                        <div class="settings-separator" style="display:none;">&nbsp;</div>
+                        <div class="settings-label" style="display:none;">Admin Web Directory</div>
+                        <div class="settings-value" style="display:none;"><?=form_input('admin_web_directory',$settings[0]->admin_web_directory,'id="admin_web_directory"')?></div>
+                        <br class="clear" style="display:none;"/>
                         <div class="settings-separator">&nbsp;</div>
                         <div class="settings-label">Active Voicemail Server</div>
                         <div class="settings-value"><?=form_dropdown('active_voicemail_server',$servers,$settings[0]->active_voicemail_server,'id="active_voicemail_server"')?></div>

@@ -235,7 +235,7 @@ td.datepickerSpecial.datepickerSelected a {
 	width: 25px;
 	text-align: center;
 }
-#widgetCalendar {
+#widgetCalendar,#widgetCalendarLeadInfo {
 	position: absolute;
 	top: 165px;
 	right: 25px;
@@ -244,7 +244,7 @@ td.datepickerSpecial.datepickerSelected a {
 	width: 588px;
 	background: #B9B9B9;
 }
-#widgetCalendar .datepicker {
+#widgetCalendar .datepicker,#widgetCalendarLeadInfo .datepicker {
 	position: absolute;
 	bottom: 0;
 	top: auto;

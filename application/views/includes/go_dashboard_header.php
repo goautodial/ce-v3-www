@@ -149,48 +149,52 @@ require_once($jsbodyloader);
 
                <script>
                $(function(){
+		    var timer, delay = 500;
                     $("#inputString").keyup(function(event){
+			var _this = $(this);
+			clearTimeout(timer);
 
-                        var keycode = (event.keyCode ? event.keyCode : event.which);
-                        var inputString = $(this).val();
-  	                var dataString =  '/' +  inputString;
-                        if(keycode === 13){
-
-                             if(inputString.length === 0){
-                                 inputString = 0;
-                             }
-                             //window.location.href="<?=$base?>index.php/search/"+inputString+"/2";
-
-                        } else {
-
-                            if(inputString.length > 0){
-                                $.post(
-                                       "<?=$base?>index.php/go_site/go_dashboard_search"+dataString,
-                                       function(data){
-
-                                             var status = data; 	
-		                             $("#suggestions").show();		
-		                             $("#autoSuggestionsList").fadeIn("fast").empty().html('<img src="<? echo $base; ?>img/loading.gif" />');	
-	
-		
-		                             if (data.length > 2)
-		                             {
-		                                 $('#autoSuggestionsList').load('<?=$base?>index.php/go_site/go_dashboard_search'+dataString).fadeIn("fast");	
-		                             }
-		                             else{
-		                                 $('#suggestions').hide();
-		                                 $('#autoSuggestionsList').html();
-		                             }
-
-                                       }
-                                );
-                            }
-							else{
-								$('#suggestions').hide();
-								$('#autoSuggestionsList').html();
-							}
-
-                         }
+			timer = setTimeout(function() {
+				//var keycode = (event.keyCode ? event.keyCode : event.which);
+				var inputString = _this.val();
+				var dataString =  '/' +  inputString;
+				//if(keycode === 13){
+				//
+				//     if(inputString.length === 0){
+				//	 inputString = 0;
+				//     }
+				//     //window.location.href="<?=$base?>index.php/search/"+inputString+"/2";
+				//
+				//} else {
+				
+				    if(inputString.length > 0){
+					$("#suggestions").show();
+					$("#autoSuggestionsList").fadeIn("fast").empty().html('<img src="<? echo $base; ?>img/loading.gif" />');
+					$.post(
+					       "<?=$base?>index.php/go_site/go_dashboard_search"+dataString,
+					       function(data){
+				
+						     var status = data; 	
+				
+				
+						     if (data.length > 2)
+						     {
+							 $('#autoSuggestionsList').load('<?=$base?>index.php/go_site/go_dashboard_search'+dataString).fadeIn("fast");	
+						     }
+						     else{
+							 $('#suggestions').hide();
+							 $('#autoSuggestionsList').html();
+						     }
+				
+					       }
+					);
+				    }
+				    else{
+					$('#suggestions').hide();
+					$('#autoSuggestionsList').html();
+				    }
+				//}
+			}, delay);
 
                     });
 

@@ -105,7 +105,7 @@ class Go_access extends Model{
                                  'modify_phones' => '0','modify_carriers' => '0','modify_labels' => '0',
                                  'modify_statuses' => '0','modify_voicemail' => '0','modify_audiostore' => '0',
                                  'modify_moh' => '0','modify_tts' => '0','preset_contact_search' => 'NOT_ACTIVE',
-                                 'modify_contacts' => '0','modify_same_user_level' => '1','admin_hide_lead_data' => '0',
+                                 'modify_contacts' => '0','modify_same_user_level' => '0','admin_hide_lead_data' => '0',
                                  'admin_hide_phone_data' => '0');
 
         if($group == "ADMIN"){
@@ -127,7 +127,7 @@ class Go_access extends Model{
                 $useTemplate["vdc_agent_api_access"]='1';$useTemplate["modify_inbound_dids"]='1';$useTemplate["delete_inbound_dids"]='1';
                 $useTemplate["download_lists"]='1';$useTemplate["manager_shift_enforcement_override"]='1';
                 $useTemplate["export_reports"]='1';$useTemplate["delete_from_dnc"]='1';$useTemplate["callcard_admin"]='1';
-                $useTemplate["custom_fields_modify"]='1';
+                $useTemplate["custom_fields_modify"]='1';$useTemplate["modify_same_user_level"]='1';
         }
 
 
@@ -136,13 +136,22 @@ class Go_access extends Model{
                 $useTemplate["user_level"]='8';
                 $useTemplate["load_leads"]='1';
                 $useTemplate["modify_leads"]='1';
+                $useTemplate["modify_users"]='1';
+                $useTemplate["delete_users"]='1';
                 $useTemplate["hotkeys_active"]='0';
                 $useTemplate["agent_choose_ingroups"]='1';
                 $useTemplate["closer_campaigns"]="";
                 $useTemplate["delete_call_times"]='0';
+                $useTemplate["campaign_detail"]='1';
                 $useTemplate["modify_campaigns"]='1';
+                $useTemplate["delete_campaigns"]='1';
                 $useTempalte["modify_lists"]='1';
+                $useTemplate["delete_lists"]='1';
+                $useTemplate["custom_fields_modify"]='1';
+                $useTemplate["modify_ingroups"]='1';
+                $useTemplate["delete_ingroups"]='1';
                 $useTemplate["modify_scripts"]='1';
+                $useTemplate["delete_scripts"]='1';
                 $useTemplate["view_reports"]='1';
                 $useTemplate["download_lists"]='1';
                 $useTemplate["export_reports"]='1';

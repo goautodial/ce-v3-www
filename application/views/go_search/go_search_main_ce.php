@@ -28,6 +28,16 @@ if ($permissions->recordings_display=="N") {
 <script type="text/javascript" src="<?=base_url()?>js/go_search/go_search_panel1_ce.js"></script>
 <script type="text/javascript" src="<?=base_url()?>js/tooltip/jquery.tipTip.js"></script>
 
+<script>
+function gopage(page) {
+    var search_query = '<?=$this->uri->segment(2) ?>';
+    $("#user-container").empty().html('<center><img src="<?=base_url() ?>img/goloading.gif" /></center>');
+    $.post('<?=base_url() ?>index.php/go_search_ce/index/<?=$user_group ?>/', { page: page, search: search_query }, function(data) {
+        $("#user-container").empty().html(data);
+    });
+}
+</script>
+
 <div id='outbody' class="wrap">
     <div id='<?=$icon_s?>' class="icon32"></div>
     <h2><?=$bannertitle?></h2>
@@ -39,7 +49,7 @@ if ($permissions->recordings_display=="N") {
                     <!-- List holder-->
                     <div class="postbox minimum">
                         <div class="user-add">
-                             <a id="advance-filter"><?=img("img/spotlight-black.png")?></a>
+                             <a id="advance-filter">Search <?=img("img/spotlight-black.png")?></a>
                         </div>
                         <div class="hndle">
                             <span>

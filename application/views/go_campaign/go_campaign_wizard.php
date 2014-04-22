@@ -194,6 +194,12 @@ $(function()
 			alert("DID/TFN Not Available.");
 			isEmpty = 1;
 		}
+		
+		if (step < 2 && $('#campaign_name').val().length < 6)
+		{
+			alert("Campaign Name should be at least 6 characters in length.");
+			isEmpty = 1;
+		}
 
 		if (!isEmpty)
 		{

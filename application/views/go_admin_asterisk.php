@@ -40,9 +40,9 @@ var userSettings = {
 	isRtl = 0;
 //]]>
 </script>
-<link rel="stylesheet" href="<? echo $base; ?>css/go_load_styles.css" type="text/css" media="all">
+<link rel="stylesheet" href="<? echo $base; ?>css/go_load_styles.php" type="text/css" media="all">
 <link rel="stylesheet" id="thickbox-css" href="<? echo $base; ?>css/go_thickbox.css" type="text/css" media="all">
-<link rel="stylesheet" id="colors-css" href="<? echo $base; ?>css/go_colors_fresh.css" type="text/css" media="all">
+<link rel="stylesheet" id="colors-css" href="<? echo $base; ?>css/go_colors_fresh.php" type="text/css" media="all">
 <!--[if lte IE 7]>
 <link rel='stylesheet' id='ie-css'  href='<? echo $base; ?>css/go_ie.css?ver=20100610' type='text/css' media='all' />
 <![endif]-->

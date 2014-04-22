@@ -13,7 +13,8 @@ $base = base_url();
 ?>
 
 <link type="text/css" rel="stylesheet" href="<?=base_url()?>css/go_common_ce.css">
-<link type="text/css" rel="stylesheet" href="<?=base_url()?>css/go_colors_fresh.css">
+<!--<link type="text/css" rel="stylesheet" href="<?=base_url()?>css/go_colors_fresh.css">-->
+<link rel="stylesheet" type="text/css" media="screen" href="<?=base_url()?>css/go_colors_fresh.php">
 <style>
   #adminmenu{display:none;} 
 </style>

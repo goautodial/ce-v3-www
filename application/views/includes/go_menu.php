@@ -14,6 +14,7 @@ $base = base_url();
 $users_level = $this->session->userdata('users_level');
 $hideMenu = ($this->config->item('VARSERVTYPE') == "private") ? "display:none;" : "";
 $menuLast = ($this->config->item('VARSERVTYPE') == "private") ? "menu-top-last" : "";
+$permissions = $this->commonhelper->getPermissions("multi-tenant",$this->session->userdata("user_group"));
 ?>
 <script>
 $(function()
@@ -342,11 +343,11 @@ $(function()
 <li class="go_header_submenu">Admin Settings</li>
 <li class="go_system_submenu" title="Admin Logs" id="logs">&raquo; Admin Logs</li>
 <li class="go_system_submenu" title="Call Times" id="calltimes">&raquo; Call Times</li>
-<?php if ($this->session->userdata('user_group') === "ADMIN") { ?>
+<?php if (!$this->commonhelper->checkIfTenant($this->session->userdata('user_group')) && $this->session->userdata('user_group') === "ADMIN") { ?>
 <li class="go_system_submenu" title="Carriers" id="carriers">&raquo; Carriers</li>
 <?php } ?>
 <li class="go_system_submenu" title="Phones" id="phones">&raquo; Phones</li>
-<?php if ($this->session->userdata('user_group') === "ADMIN") { ?>
+<?php if (!$this->commonhelper->checkIfTenant($this->session->userdata('user_group')) && $this->session->userdata('user_group') === "ADMIN") { ?>
 <li class="go_system_submenu" title="Servers" id="servers">&raquo; Servers</li>
 <li class="go_system_submenu" title="System Settings" id="settings">&raquo; System Settings</li>
 <li class="go_system_submenu" title="User Groups" id="usergroups">&raquo; User Groups</li>

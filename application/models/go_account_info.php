@@ -140,13 +140,13 @@ class Go_account_info extends Model {
         if (!$this->commonhelper->checkIfTenant($group))
             $ul = '';
         else
-            $ul = "AND vicidial_users.user_group='$group'";
+            $ul = "AND user_group='$group'";
             
 		$this->db->cache_on();
 		if ($queryString=='list_agents')
-			$query = $this->db->query("SELECT user,pass,full_name,active FROM vicidial_users WHERE user_level='1' $ul AND user NOT IN ('VDAD','VDCL') ORDER BY user");
+			$query = $this->db->query("SELECT user,pass,full_name,active FROM vicidial_users WHERE active='Y' AND (user_level<>'4' AND user_level < '7') $ul AND user NOT IN ('VDAD','VDCL') ORDER BY user");
 		else
-			$query = $this->db->query("SELECT login,phones.pass,vicidial_users.active FROM phones,vicidial_users WHERE login=REPLACE(vicidial_users.phone_login,'_','') AND login!='' $ul AND user_level='1' and vicidial_users.user NOT IN ('VDAD','VDCL') ORDER BY login");
+			$query = $this->db->query("SELECT extension,pass,active FROM phones WHERE active='Y' $ul ORDER BY login");
 
 		$datacount = $query->num_rows();
 		$dataval   = $query->result();

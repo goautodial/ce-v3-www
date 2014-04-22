@@ -73,8 +73,8 @@ $(document).ready(function (){
                  switch($elemId){
 
                     case "accountNum":
-                          $(this).rules("add",{required:true,minlength:10,allowToAccount:true,
-                                               messages:{required:"* req",minlength:10} });
+                          $(this).rules("add",{required:true,minlength:8,allowToAccount:true,
+                                               messages:{required:"* req",minlength:"* minimum of 8 digits"} });
                     break;
 
                     case "accntemail":

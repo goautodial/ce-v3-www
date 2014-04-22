@@ -112,6 +112,10 @@ class Go_dashboard extends Model {
 	}
 
 	function go_sippy_info($username) {
+	    if (!is_numeric($username)) {
+	       $query = $this->db->query("SELECT username FROM justgovoip_sippy_info sippy, vicidial_server_carriers vsc WHERE sippy.carrier_id=vsc.carrier_id;");
+	       $username = $query->row()->username;
+	    }
 	    $stmt = "SELECT carrier_id,username,web_password,authname,voip_password,vm_password,i_account FROM justgovoip_sippy_info WHERE username='$username';";
 	    $listresults = $this->goautodial->query($stmt);
               $ctr = 0;
@@ -868,7 +872,7 @@ class Go_dashboard extends Model {
 	   }
 	   #$query_date =  date('Y-m-d');
 	   $this->db->cache_on();
-	   $query = $this->db->query("SELECT user,full_name FROM vicidial_users_view WHERE user rlike '$queryString' $ul order by user asc LIMIT 10");
+	   $query = $this->db->query("SELECT user,full_name FROM vicidial_users_view WHERE (user rlike '$queryString' OR full_name rlike '$queryString') $ul order by user asc LIMIT 10");
 	   $datacount = $query->num_rows();
 	   $dataval   = $query->result();
 	   $return['datacount']=$datacount;
@@ -906,9 +910,8 @@ class Go_dashboard extends Model {
                         FROM
                            goautodial_recordings_views
                         WHERE
-			   fullname rlike '$queryString'
-
-			   AND call_date BETWEEN '$query_date 00:00:00' AND '$query_date 23:59:59'
+			   (fullname rlike '$queryString' OR lead_id rlike '$queryString')
+			   
 			   $ul
 
                         ORDER BY
@@ -1124,12 +1127,12 @@ class Go_dashboard extends Model {
 			if (!$this->commonhelper->checkIfTenant($tenantID))
 			   $ul = '';
 			else
-			   $ul = "AND vicidial_users.user_group='$tenantID'";
+			   $ul = "AND user_group='$tenantID'";
 				
 			$this->db->cache_on();
-			$query = $this->db->query("SELECT user,pass,full_name,active,user_group FROM vicidial_users WHERE user_level='1' $ul AND user NOT IN ('VDAD','VDCL') ORDER BY user");
+			$query = $this->db->query("SELECT user,pass,full_name,active,user_group FROM vicidial_users WHERE active='Y' AND (user_level<>'4' AND user_level < '7') $ul AND user NOT IN ('VDAD','VDCL') ORDER BY user");
 			$showResult['list']['users'] = $query->result();
-			$query = $this->db->query("SELECT login,phones.pass,vicidial_users.active,vicidial_users.user_group FROM phones,vicidial_users WHERE login=REPLACE(vicidial_users.phone_login,'_','') AND login!='' $ul AND user_level='1' and vicidial_users.user NOT IN ('VDAD','VDCL') ORDER BY login");
+			$query = $this->db->query("SELECT extension as login,pass,active,user_group FROM phones WHERE active='Y' $ul ORDER BY login");
 			$showResult['list']['phones'] = $query->result();
 		 }
 		 

@@ -103,7 +103,7 @@ class Go_campaign extends Model {
 									blind_monitor_filename,closer_campaigns,default_xfer_group,xfer_groups,survey_first_audio_file,survey_dtmf_digits,survey_ni_digit,
 									survey_opt_in_audio_file,survey_ni_audio_file,survey_method,survey_menu_id,survey_no_response_action,survey_response_digit_map,survey_third_status,
 									survey_third_audio_file,survey_third_digit,survey_third_exten,survey_fourth_audio_file,survey_fourth_digit,survey_fourth_status,
-									survey_fourth_exten,survey_xfer_exten,survey_camp_record_dir,survey_ni_status,survey_wait_sec
+									survey_fourth_exten,survey_xfer_exten,survey_camp_record_dir,survey_ni_status,survey_wait_sec,user_group
 									FROM vicidial_campaigns	WHERE campaign_id='$camp'");
 		$campinfo = $query->row();
 
@@ -609,17 +609,18 @@ class Go_campaign extends Model {
 			if ($campNum < 1)
 			{
 				$local_call_time = "9am-9pm";
+				$dial_prefix = "9";
 	
 				// Insert new Outbound campaign
 				$query = $this->db->query("INSERT INTO vicidial_campaigns (campaign_id,campaign_name,active,dial_method,dial_status_a,
 											dial_statuses,lead_order,allow_closers,hopper_level,auto_dial_level,
-											next_agent_call,local_call_time,get_call_launch,campaign_changedate,
+											next_agent_call,local_call_time,dial_prefix,get_call_launch,campaign_changedate,
 											campaign_stats_refresh,list_order_mix,dial_timeout,
 											campaign_vdad_exten,campaign_recording,campaign_rec_filename,scheduled_callbacks,
 											scheduled_callbacks_alert,no_hopper_leads_logins,use_internal_dnc,use_campaign_dnc,
 											available_only_ratio_tally,campaign_cid,manual_dial_filter,user_group,drop_call_seconds)
 											VALUES('$campaign_id','$campaign_desc','Y','MANUAL','NEW',' N NA A AA DROP B NEW -','DOWN','Y','100','0','oldest_call_finish',
-											'$local_call_time','NONE','$SQLdate','Y','DISABLED','30','8369','NEVER','FULLDATE_CUSTPHONE_CAMPAIGN_AGENT',
+											'$local_call_time','$dial_prefix','NONE','$SQLdate','Y','DISABLED','30','8369','NEVER','FULLDATE_CUSTPHONE_CAMPAIGN_AGENT',
 											'Y','BLINK_RED','Y','Y','Y','Y','5164536886','DNC_ONLY','$tenant_id','7')");
 				
 				$query = $this->db->query("INSERT INTO vicidial_campaign_stats (campaign_id) values('$campaign_id')");
@@ -727,6 +728,7 @@ class Go_campaign extends Model {
 					$manualDialPrefix = '';
 					$manualDialPrefixVal = '';
 					$local_call_time = "9am-9pm";
+					$dial_prefix = "9";
 		
 					if ($campType=='Inbound')
 					{
@@ -736,13 +738,13 @@ class Go_campaign extends Model {
 
 					$query = $this->db->query("INSERT INTO vicidial_campaigns (campaign_id,campaign_name,campaign_description,active,dial_method,dial_status_a,dial_statuses,
 												lead_order,park_ext,park_file_name,web_form_address,allow_closers,hopper_level,auto_dial_level,available_only_ratio_tally,
-												next_agent_call,local_call_time,voicemail_ext,campaign_script,get_call_launch,campaign_changedate,campaign_stats_refresh,
+												next_agent_call,local_call_time,dial_prefix,voicemail_ext,campaign_script,get_call_launch,campaign_changedate,campaign_stats_refresh,
 												list_order_mix,web_form_address_two,start_call_url,dispo_call_url,dial_timeout,campaign_vdad_exten,
 												campaign_recording,campaign_rec_filename,scheduled_callbacks,scheduled_callbacks_alert,
 												no_hopper_leads_logins,per_call_notes,agent_lead_search,campaign_allow_inbound,use_internal_dnc,use_campaign_dnc,campaign_cid,
 												manual_dial_filter,user_group,drop_call_seconds $manualDialPrefix)
 												VALUES ('$campaign_id','$campaign_desc','','Y','RATIO','NEW',' N NA A AA DROP B NEW -','DOWN','','','','Y','100','1.0','Y','oldest_call_finish',
-												'$local_call_time','','','','$SQLdate','Y','DISABLED','','','','30','8369','ALLFORCE','FULLDATE_CUSTPHONE_CAMPAIGN_AGENT',
+												'$local_call_time','$dial_prefix','','','','$SQLdate','Y','DISABLED','','','','30','8369','ALLFORCE','FULLDATE_CUSTPHONE_CAMPAIGN_AGENT',
 												'Y','BLINK_RED','Y','ENABLED','ENABLED','Y','Y','Y','5164536886','DNC_ONLY','$tenant_id','7' $manualDialPrefixVal)");
 		
 					$query = $this->db->query("INSERT INTO vicidial_campaign_stats (campaign_id) values('$campaign_id')");
@@ -934,11 +936,12 @@ class Go_campaign extends Model {
 				if ($campNum < 1)
 				{
 					$local_call_time = "9am-9pm";
+					$dial_prefix = "9";
 				
 					$query = $this->db->query("INSERT INTO vicidial_campaigns (campaign_id,campaign_name,campaign_description,active,dial_method,
 											dial_status_a,dial_statuses,lead_order,park_ext,park_file_name,
 											web_form_address,allow_closers,hopper_level,auto_dial_level,
-											available_only_ratio_tally,next_agent_call,local_call_time,voicemail_ext,
+											available_only_ratio_tally,next_agent_call,local_call_time,dial_prefix,voicemail_ext,
 											campaign_script,get_call_launch,campaign_changedate,campaign_stats_refresh,
 											list_order_mix,web_form_address_two,start_call_url,dispo_call_url,
 											dial_timeout,campaign_vdad_exten,campaign_recording,
@@ -947,7 +950,7 @@ class Go_campaign extends Model {
 											use_campaign_dnc,campaign_cid,user_group,drop_call_seconds,survey_opt_in_audio_file)
 											VALUES('$campaign_id','$campaign_desc','','N','RATIO','NEW',
 											' N NA A AA DROP B NEW -','DOWN','','','','Y','100','1.0',
-											'Y','random','$local_call_time','','','','$SQLdate','Y','DISABLED','','','',
+											'Y','random','$local_call_time','$dial_prefix','','','','$SQLdate','Y','DISABLED','','','',
 											'30','$routingExten','NEVER','FULLDATE_CUSTPHONE_CAMPAIGN_AGENT','Y',
 											'BLINK_RED','Y','ENABLED','ENABLED','Y','Y','5164536886','$tenant_id','7','')");
 				

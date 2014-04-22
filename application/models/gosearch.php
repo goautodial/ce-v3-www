@@ -41,7 +41,7 @@ class Gosearch extends Model {
       * @author : Franco Hora <info@goautodial.com>
       * @param : $account > use as filter if not null
       */
-     function collectusers($account=null){
+     function collectusers($account=null,$page=null){
 
        $level = $this->session->userdata('users_level');
    	$setable = $this->uri->segment(3);
@@ -66,15 +66,19 @@ class Gosearch extends Model {
                                   }*/
                                   $search .= "fullname like '%{$details[1]}%' AND ";
                               }else{
-                                  $search .= $details[0] . "='" . $details[1] . "' AND ";
+				  if ($details[0]=="disposition") {
+				      $search .= "(disposition='" . $details[1] . "' OR campaign_dispo='" . $details[1] . "') AND ";
+				  } else {
+				      $search .= $details[0] . "='" . $details[1] . "' AND ";
+				  }
                               }
                           } else {
                               switch($details[1]){
                                   case "yes":
-                                      $search .= "duration > '00:00:04' AND ";
+				      $search .= "duration > '0' AND ";
                                   break;
                                   case "no":
-                                      $search .= "duration = '00:00:00' AND ";
+				      $search .= "duration < '1' AND ";
                                   break;
                                   default:
                                   break;
@@ -176,96 +180,52 @@ class Gosearch extends Model {
 
 
           if(!is_null($account)){
+		if (is_null($page) || !is_numeric($page) || $page < 1) { $page = 1; }
+		$searchSQL = rtrim(rtrim("$daterange $search",' '),'AND');
             
-         	   /*$query = $this->asteriskDB->query("                  
-                        SELECT DISTINCT
-                            rec.lead_id as 'lead_id'
-                            ,vl.phone_number as 'phone'
-                            ,rec.start_time as 'call_date'
-                            ,SEC_TO_TIME(rec.length_in_sec) as 'duration'
-                            ,rec.user as 'agent'
-                            ,vs.status_name as 'disposition'
-                        FROM 
-                            recording_log as rec
-                            , vicidial_list as vl
-                            , vicidial_lists as vls
-                            , vicidial_statuses as vs
-                        WHERE 
-                            rec.lead_id=vl.lead_id
-                            AND  vl.status = vs.status
-                            AND rec.length_in_sec > 1
-                            AND (CONCAT_WS(' ', vl.first_name, vl.last_name) = '$sedata' || $search)
-                        ORDER BY
-                            rec.start_time DESC;
-                   ");*/
-			   
-			   $searchSQL = rtrim(rtrim("$daterange $search",' '),'AND');
+		$query = $this->asteriskDB->query("
+		    SELECT
+			count(*)
+		    FROM 
+			temp_recording_view
+		    WHERE 
+			$searchSQL
+			$ul
+		    GROUP BY
+			recording_id
+		");
+		
+		$total	= $query->num_rows();
+		$rp	= 25;
+		$limit	= 5;
+		$pg 	= $this->commonhelper->paging($page,$rp,$total,$limit);
+		$start	= (($page-1) * $rp);
 
-                  /*var_dump("                  
-                        SELECT
-                            lead_id                            
-                            ,phone
-                            ,call_date
-                            ,duration
-                            ,agent
-                            ,disposition
-                            ,location
-                            ,filename
-			    ,recording_id
-                        FROM 
-                            goautodial_recordings_view_all
-                        WHERE 
-                            $searchSQL
-			    $ul
-                   ");die('debug');*/
-         	  $query = $this->asteriskDB->query("                  
-                        SELECT
-                            lead_id                            
-                            ,phone
-                            ,call_date
-                            ,duration
-                            ,agent
-                            ,disposition
-                            ,campaign_dispo
-                            ,location
-                            ,filename
-			    ,recording_id
-                        FROM 
-                            temp_recording_view
-                        WHERE 
-                            $searchSQL
-			    $ul
-                   ");
-
-         	  /* $query = $this->asteriskDB->query("                  
-                        SELECT DISTINCT
-                            rec.lead_id as 'lead_id'
-                            ,vl.phone_number as 'phone'
-                            ,rec.start_time as 'call_date'
-                            ,SEC_TO_TIME(rec.length_in_sec) as 'duration'
-                            ,rec.user as 'agent'
-                            ,vs.status_name as 'disposition'
-			    ,rec.location as 'location'
-			     ,rec.filename as 'filename'
-                        FROM 
-                            recording_log as rec
-                            , vicidial_list as vl
-                            , vicidial_lists as vls
-                            , vicidial_statuses as vs
-                        WHERE 
-                            rec.lead_id=vl.lead_id
-                            AND  vl.status = vs.status
-                            AND rec.length_in_sec > 1
-                            $search
-                            $daterange
-                        ORDER BY
-                            rec.start_time DESC;
-                   ");*/
-
-	 
-#	   $users   = $query->result();
-           
-           
+		$query = $this->asteriskDB->query("                  
+		    SELECT
+			lead_id                            
+			,phone
+			,call_date
+			,duration
+			,agent
+			,disposition
+			,campaign_dispo
+			,location
+			,filename
+			,recording_id
+		    FROM 
+			temp_recording_view
+		    WHERE 
+			$searchSQL
+			$ul
+		    GROUP BY
+			recording_id
+		    ORDER BY
+			call_date DESC
+		    LIMIT
+			$start,$rp
+		");
+		
               #$users = $this->asteriskDB->get(); 
               $collectedusers = array(); 
               $ctr = 0;
@@ -274,6 +234,34 @@ class Gosearch extends Model {
                   $ctr++;
               }
               #$collectedusers = array();
+              
+              $return['collected'] = $collectedusers;
+	
+		if ($pg['last'] > 1) {
+		    $pagelinks  = '<a title="Go to First Page" style="vertical-align:baseline;padding: 0px 2px;cursor:pointer;" onclick="gopage('.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
+		    $pagelinks .= '<a title="Go to Previous Page" style="vertical-align:baseline;padding: 0px 2px;cursor:pointer;" onclick="gopage('.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
+	    
+		    for ($i=$pg['start'];$i<=$pg['end'];$i++) { 
+			if ($i==$pg['page']) $current = 'color: #F00;cursor: default;font-weight:bold;'; else $current="cursor:pointer;";
+		    
+			$pagelinks .= '<a title="Go to Page '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="gopage('.$i.')"><span>'.$i.'</span></a>';
+		    }
+		    
+		    //$pagelinks .= '<a title="View All Pages" style="vertical-align:text-top;padding: 0px 2px;" onclick="gopage(\'ALL\')"><span>ALL</span></a>';
+		    $pagelinks .= '<a title="Go to Next Page" style="vertical-align:baseline;padding: 0px 2px;cursor:pointer;" onclick="gopage('.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
+		    $pagelinks .= '<a title="Go to Last Page" style="vertical-align:baseline;padding: 0px 2px;cursor:pointer;" onclick="gopage('.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
+		} else {
+		    if ($rp > 25) {
+			$pagelinks  = '<div style="cursor: pointer;font-weight: bold;">';
+			$pagelinks .= '<a title="Back to Paginated View" style="vertical-align:text-top;padding: 0px 2px;" onclick="gopage(1)"><span>BACK</span></a>';
+			$pagelinks .= '</div>';
+		    } else {
+			$pagelinks = '';
+		    }
+		}
+		$pagedisplay = "Displaying {$pg['istart']} to {$pg['iend']} of {$pg['total']} recordings";
+		$return['links'] = $pagelinks;
+		$return['display'] = $pagedisplay;
           }else{
               //$groups = $this->asteriskDB->get('a2billing_wizard');
               $collectedusers = array(); 
@@ -285,9 +273,10 @@ class Gosearch extends Model {
                       $ctr++;
                   }
               }
+              $return['collected'] = $collectedusers;
           }
          
-          return $collectedusers;
+          return $return;
      }
 
 

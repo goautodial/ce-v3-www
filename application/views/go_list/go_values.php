@@ -36,6 +36,7 @@
 	$field_required = $this->input->post('field_required');
 	$field_id = $this->input->post('field_id');
 	$fakelblname = $this->input->post('fakelblname');
+	$webrootfolder = $this->config->item('VARWWWPATH');
 
 /* start lists */
 	if($action=="editlistfinal") {
@@ -78,9 +79,9 @@
 				
 				if ($showval=="active") {
 					if ($active_field == "Y") {
-						$result = exec("/usr/share/goautodial/go_list_archiver.pl --listid={$listid_data} --action=activate --quiet");
+						$result = exec("$webrootfolder/bin/go_list_archiver.pl --listid={$listid_data} --action=activate --dir={$webrootfolder} --quiet");
 					} else {
-						$result = exec("/usr/share/goautodial/go_list_archiver.pl --listid={$listid_data} --action=deactivate --quiet");
+						$result = exec("$webrootfolder/bin/go_list_archiver.pl --listid={$listid_data} --action=deactivate --dir={$webrootfolder} --quiet");
 					}
 				}
 				
@@ -159,7 +160,7 @@
 				echo "FAILED: List I.D. $listid_data not activated";
 				$sucesshint = "FAILED";
 			} else {
-				$result = exec("/usr/share/goautodial/go_list_archiver.pl --listid={$listiddel} --action=activate --quiet");
+				$result = exec("$webrootfolder/bin/go_list_archiver.pl --listid={$listiddel} --action=activate --dir={$webrootfolder} --quiet");
 				echo "SUCCESS: List I.D. $listid_data activated";
 				$sucesshint = "";
 			}
@@ -179,7 +180,7 @@
 				echo "FAILED: List I.D. $listid_data not deactivated";
 				$sucesshint = "FAILED";
 			} else {
-				$result = exec("/usr/share/goautodial/go_list_archiver.pl --listid={$listiddel} --action=deactivate --quiet");
+				$result = exec("$webrootfolder/bin/go_list_archiver.pl --listid={$listiddel} --action=deactivate --dir={$webrootfolder} --quiet");
 				echo "SUCCESS: List I.D. $listid_data deactivated";
 				$sucesshint = "";
 			}
@@ -921,9 +922,17 @@
 		}
 		
 		if($action=="customdelete") {
-			$stmtCUSTOM="ALTER TABLE custom_$list_id DROP $field_label;";
-			$rslt=$this->customdialerdb->query($stmtCUSTOM);
-			$stmt="DELETE FROM vicidial_lists_fields WHERE field_label='$field_label' and field_id='$field_id' and list_id='$list_id' LIMIT 1;";		$rslt=$this->customdialerdb->query($stmt);
+			$rslt=$this->customdialerdb->query($stmt);
+			$custquery = $this->customdialerdb->query("SHOW TABLES LIKE 'custom_$list_id'");
+			if ($custquery->num_rows() > 0) {
+				$custtabquery = $this->customdialerdb->query("SHOW COLUMNS FROM `custom_$list_id` LIKE '$field_label';");
+				if ($custtabquery->num_rows() > 0 && $field_label != "lead_id") {
+					$stmtCUSTOM="ALTER TABLE `custom_$list_id` DROP $field_label;";
+					$rslt=$this->customdialerdb->query($stmtCUSTOM);
+				}
+			}
+			$stmt="DELETE FROM vicidial_lists_fields WHERE field_label='$field_label' and field_id='$field_id' and list_id='$list_id' LIMIT 1;";
+			$rslt=$this->customdialerdb->query($stmt);
                         $this->commonhelper->auditadmin("DELETE","DELETE CUSTOM FIELD field_ld=$field_id and list_id=$list_id");
 			
 			echo "field deleted";
@@ -932,25 +941,31 @@
 		if($action=="custombatchdelete") {
 			
 			$stmt="SELECT list_id, field_label FROM vicidial_lists_fields where field_id='$field_id';";
-		                $rslt=$this->customdialerdb->query($stmt);
-				$fieldscount_to_print  = $rslt->num_rows();
+			$rslt=$this->customdialerdb->query($stmt);
+			$fieldscount_to_print  = $rslt->num_rows();
                 
-				 if ($fieldscount_to_print > 0) {
-                			foreach ($rslt->result() as $row) {
-                   				$clist_id = $row->list_id;
-						$cfield_label = $row->field_label;
-					}
-					
-					$stmtCUSTOM="ALTER TABLE custom_$clist_id DROP $cfield_label;";
-					$rslt=$this->customdialerdb->query($stmtCUSTOM);
-					
-					$stmtDEL="DELETE FROM vicidial_lists_fields WHERE field_label='$cfield_label' and field_id='$field_id' and list_id='$clist_id' LIMIT 1;";
-					$rslt=	$this->customdialerdb->query($stmtDEL);
-                        
-					$this->commonhelper->auditadmin("DELETE","DELETE CUSTOM FIELD field_ld=$field_id and list_id=$clist_id"); 
-			
-					echo "field deleted"; 
+			if ($fieldscount_to_print > 0) {
+				foreach ($rslt->result() as $row) {
+					$clist_id = $row->list_id;
+					$cfield_label = $row->field_label;
 				}
+				
+				$custquery = $this->customdialerdb->query("SHOW TABLES LIKE 'custom_$clist_id'");
+				if ($custquery->num_rows() > 0) {
+					$custtabquery = $this->customdialerdb->query("SHOW COLUMNS FROM `custom_$clist_id` LIKE '$cfield_label';");
+					if ($custtabquery->num_rows() > 0 && $cfield_label != "lead_id") {
+						$stmtCUSTOM="ALTER TABLE `custom_$clist_id` DROP $cfield_label;";
+						$rslt=$this->customdialerdb->query($stmtCUSTOM);
+					}
+				}
+					
+				$stmtDEL="DELETE FROM vicidial_lists_fields WHERE field_label='$cfield_label' and field_id='$field_id' and list_id='$clist_id' LIMIT 1;";
+				$rslt=	$this->customdialerdb->query($stmtDEL);
+                        
+				$this->commonhelper->auditadmin("DELETE","DELETE CUSTOM FIELD field_ld=$field_id and list_id=$clist_id"); 
+		
+				echo "field deleted"; 
+			}
 			
 		}
 		

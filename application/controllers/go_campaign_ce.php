@@ -171,7 +171,7 @@ class Go_campaign_ce extends Controller {
 	{
 		$update = $this->go_campaign->go_update_campaign_list();
 
-		$data['campaign'] = $this->go_campaign->go_get_campaigns();
+		$data['campaign'] = $this->go_campaign->go_get_campaigns(true);
 		$data['status_list'] = $this->go_campaign->go_get_campaign_statuses();
 
 		foreach($data['status_list'] as $status)
@@ -212,7 +212,7 @@ class Go_campaign_ce extends Controller {
 	{
 		$update = $this->go_campaign->go_delete_campaign_statuses_list();
 
-		$data['campaign'] = $this->go_campaign->go_get_campaigns(true);
+		$data['campaign'] = $this->go_campaign->go_get_campaigns();
 		$data['status_list'] = $this->go_campaign->go_get_campaign_statuses();
 
 		foreach($data['status_list'] as $status)
@@ -224,7 +224,7 @@ class Go_campaign_ce extends Controller {
 		$data['camp_status'] = $camp_status;
 		$data['camp_name'] = $camp_name;
 
-        $this->load->view('go_campaign/go_campaign_list',$data);
+		$this->load->view('go_campaign/go_campaign_list',$data);
 	}
 
 	function go_get_settings()
@@ -330,12 +330,6 @@ class Go_campaign_ce extends Controller {
 			$data['isAdvance'] = $this->uri->segment(7);
  		else
  			$data['isAdvance'] = $this->uri->segment(6);
-
-		$data['inbound_groups'] = $this->go_reports->go_get_inbound_groups();
-		$data['accountNum'] = $this->go_campaign->go_get_groupid();
-		$data['inbound_dids'] = $this->go_campaign->go_get_inbound_dids($data['campaign_id']);
-		$data['allowed_trans'] = $this->go_campaign->go_get_allowed_trans($data['campaign_id']);
-		$data['carrier_info'] = $this->go_campaign->go_get_carriers();
 		
 		$groupId = $this->go_campaign->go_get_groupid();
 		if (!$this->commonhelper->checkIfTenant($groupId))
@@ -354,7 +348,13 @@ class Go_campaign_ce extends Controller {
 		}
 		$data['lead_filters'] = $filters;
 
-        $this->load->view('go_campaign/go_campaign_settings',$data);
+		$data['inbound_groups'] = $this->go_reports->go_get_inbound_groups();
+		$data['accountNum'] = $this->go_campaign->go_get_groupid();
+		$data['inbound_dids'] = $this->go_campaign->go_get_inbound_dids($data['campaign_id']);
+		$data['allowed_trans'] = $this->go_campaign->go_get_allowed_trans($data['campaign_id']);
+		$data['carrier_info'] = $this->go_campaign->go_get_carriers();
+
+		$this->load->view('go_campaign/go_campaign_settings',$data);
 	}
 
 	function go_activate_list_ids()
@@ -365,7 +365,7 @@ class Go_campaign_ce extends Controller {
 		$data['accountNum'] = $this->go_campaign->go_get_groupid();
 		$data['inbound_dids'] = $this->go_campaign->go_get_inbound_dids($data['campaign_id']);
 
-        $this->load->view('go_campaign/go_campaign_settings',$data);
+		$this->load->view('go_campaign/go_campaign_settings',$data);
 	}
 
 	function go_get_listid()
@@ -399,7 +399,7 @@ class Go_campaign_ce extends Controller {
 		$data['listid'] = $query->row();
 		$data['list_id'] = $list_id;
 		$data['status_to_print'] = $statuses;
-        $this->load->view('go_campaign/go_campaign_listid',$data);
+		$this->load->view('go_campaign/go_campaign_listid',$data);
 	}
 
 	function go_campaign_wizard()

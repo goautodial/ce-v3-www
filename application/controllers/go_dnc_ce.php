@@ -30,9 +30,9 @@ class Go_dnc_ce extends Controller {
 
 	function index()
 	{
-        $data['cssloader'] = 'go_dashboard_cssloader.php';
-        $data['jsheaderloader'] = 'go_dashboard_header_jsloader.php';
-        $data['jsbodyloader'] = 'go_campaign_body_jsloader.php';
+		$data['cssloader'] = 'go_dashboard_cssloader.php';
+		$data['jsheaderloader'] = 'go_dashboard_header_jsloader.php';
+		$data['jsbodyloader'] = 'go_campaign_body_jsloader.php';
 
 		$data['theme'] = $this->session->userdata('go_theme');
 		$data['bannertitle'] = $this->lang->line('go_dnc_banner');

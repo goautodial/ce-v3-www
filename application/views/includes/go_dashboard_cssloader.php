@@ -11,8 +11,8 @@
 ########################################################################################################
 ?>
 
-<link rel="stylesheet" href="<? echo $base; ?>css/go_load_styles.css" type="text/css" media="all">
-<link rel="stylesheet" href="<? echo $base; ?>css/go_colors_fresh.css" type="text/css" media="all">
+<link rel="stylesheet" href="<? echo $base; ?>css/go_load_styles.php" type="text/css" media="all">
+<link rel="stylesheet" href="<? echo $base; ?>css/go_colors_fresh.php" type="text/css" media="all">
 <link rel="stylesheet" href="<? echo $base; ?>css/jquery_ui.css" type="text/css" media="all">
 <link rel="stylesheet" href="<? echo $base; ?>js/joyride/joyride-2.0.3.css" type="text/css" media="all">
 <!--[if lte IE 7]>

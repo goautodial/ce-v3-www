@@ -232,6 +232,11 @@ $(document).ready(function(){
                         return false;
                 }
 		
+                if(field_label == "list_id" || field_label == "lead_id") {
+                        alert('Label should not be equal to `'+field_label+'`.');
+                        return false;
+                }
+		
 				
 		$.post("<?=$base?>index.php/go_list/editcustomview", { action: "customadd", listid: hide_listid, field_label: field_label, field_rank: field_rank, field_order: field_order, field_name: field_name, name_position: name_position, field_description: field_description, field_type: field_type, field_options: field_options, multi_position: multi_position, field_size: field_size, field_max: field_max, field_default: field_default, field_required: field_required },
 					 

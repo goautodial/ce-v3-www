@@ -105,7 +105,7 @@ class Go_reports extends Model {
 	function go_get_campaigns()
 	{
 	    $groupId = $this->go_get_groupid();
-	    if ($this->commonhelper->checkIfTenant($groupId))
+	    if (!$this->commonhelper->checkIfTenant($groupId))
 	    {
 	       $ul='';
 	    }
@@ -1610,7 +1610,7 @@ class Go_reports extends Model {
 							and vl.phone_number=vlo.phone_number 
 							and vl.lead_id=vlo.lead_id 
 							and vlo.length_in_sec>'0' 
-							and vlo.status in ('SALE') 
+							and vlo.status in ('$statuses') 
 							and date_format(vlo.call_date, '%Y-%m-%d') BETWEEN '$fromDate' AND '$toDate'
 							and vlo.campaign_id='$campaignID' 
 							$list_id_query
@@ -1673,7 +1673,7 @@ class Go_reports extends Model {
 							and vlo.length_in_sec>'0' 
 							and date_format(vlo.call_date, '%Y-%m-%d') BETWEEN '$fromDate' AND '$toDate'
 							and $campaign_inb_query 
-							and vlo.status in ('SALE')
+							and vlo.status in ('$statuses')
 							order by vlo.call_date ASC limit 2000");
 					$TOPsorted_output = $query->result();
 					

@@ -198,7 +198,7 @@ if ($go_get_datacount>0) {
 			$isActiveAgent = '';
 		}
 
-		echo '		<td class="f disableLink"><a class="" style="cursor:pointer;'.$isActiveAgent.'">'.$item->login.'</a></td>';
+		echo '		<td class="f disableLink"><a class="" style="cursor:pointer;'.$isActiveAgent.'">'.$item->extension.'</a></td>';
 		echo '		<td class="f disableLink"><a class="" style="cursor:pointer;'.$isActiveAgent.'"><span class="hiddenPhonePass">**********</span><span class="showPhonePass" style="display:none;">'.$item->pass.'</span></a></td>';
 		echo '</tr>';
 				
