@@ -1,5 +1,83 @@
 Filename: changelog.txt
 
+1399521600 - Fixed an issue on the audiostore box appearing in call times page. (Issue #1241) -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/views/go_settings/go_calltimes.php
+           - * application/views/go_settings/go_calltimes_view.php
+
+1397620800 - Added List Archiver. When a list id is set to inactive, the leads associated with it will be moved to vicidial_list_archive table. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_list.php
+           - * application/views/go_list/go_list.php
+           - * application/views/go_list/go_values.php
+           - * Added File:
+           - * bin/go_list_archiver.pl
+
+           - Fixed the bug when searching recordings where it will not output the right data. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/views/go_search/go_search_main_ce.php
+           - * application/views/go_search/go_search.php
+
+           - Added a tab on Campaigns page for Lead Search. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_list.php
+           - * application/views/go_list/go_list.php
+           - * application/models/go_search.php
+           - * css/datepicker/datepicker.php
+           - * js/datepicker/layout.js
+
+           - Fixed a code when modifying user's level. If Modify Same User Level is set to No, the dropdown list for the user level will not show the same level as the user who is modifying. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_user_ce.php
+           - * application/views/go_user/go_user_main_ce.php
+
+           - Fixed an issue when uploading leads on a list id that has custom fields. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/controllers/go_list.php
+
+           - Added a SQL table `go_server_settings` to handle color thems for the login and headers of the GOadmin portal. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * login/index.php
+           - * Created File:
+           - * login/css/style.php
+
+           - Fixed some bugs and did some minor changes to the specific files to allow a data driven color scheme. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_campaign_ce.php
+           - * application/controllers/go_carriers_ce.php
+           - * application/controllers/go_dnc_ce.php
+           - * application/controllers/go_index.php
+           - * application/controllers/go_search_ce.php
+           - * application/controllers/go_site.php
+           - * application/controllers/go_user_ce.php
+           - * application/models/go_access.php
+           - * application/models/go_account_info.php
+           - * application/models/go_campaign.php
+           - * application/models/go_dashboard.php
+           - * application/models/go_monitoring.php
+           - * application/models/go_reports.php
+           - * application/views/credits.php
+           - * application/views/go_account_get_logins.php
+           - * application/views/go_admin_asterisk.php
+           - * application/views/go_campaign/go_campaign_settings.php
+           - * application/views/go_campaign/go_campaign_wizard.php
+           - * application/views/go_campaign/go_campaign_listid.php
+           - * application/views/go_dashboard_leads.php
+           - * application/views/go_list/go_customlist.php
+           - * application/views/go_systemsettings/index.php
+           - * application/views/go_user/go_user_main_ce.php
+           - * application/views/includes/go_admin_cssloader.php
+           - * application/views/includes/go_dashboard_cssloader.php
+           - * application/views/includes/go_dashboard_body_jsloader.php
+           - * application/views/includes/go_dashboard_header.php
+           - * application/views/includes/go_menu.php
+           - * application/views/license-agplv2.php
+           - * application/views/license-gplv2.php
+           - * css/go_load_styles.php
+           - * css/go_colors_fresh.php
+           - * js/go_support/go_support.js
+           - * js/jquery.tablePagination.0.5.js
+
 1395806400 - Fixed an issue on modifying list ids that when it gets a blank data, it replaces with a space which ruins the transfer presets on agent ui. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected File:
            - * application/views/go_list/go_list.php

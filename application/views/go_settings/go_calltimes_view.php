@@ -141,7 +141,8 @@ $(function()
 	$('.selectAudio').click(function()
 	{
 		$('#fileOverlay').fadeIn('fast');
-		$('#fileBox').css({'width': '600px','margin-left': 'auto', 'margin-right': 'auto', 'padding-bottom': '20px'});
+		$('#fileBox').css({'margin-left': 'auto', 'margin-right': 'auto', 'padding-bottom': '20px'});
+		$('#fileBox').show();
 		$('#fileBox').animate({
 			top: "80px"
 		}, 500);
@@ -151,13 +152,17 @@ $(function()
 
 	$('#fileClosebox').click(function()
 	{
-		$('#fileBox').animate({'top':'-2550px'},500);
+		$('#fileBox').animate({'top':'-2550px'},500,function() {
+		    $(this).hide();
+		});
 		$('#fileOverlay').fadeOut('slow');
 	});
 
 	$('#closebox').click(function()
 	{
-		$('#box').animate({'top':'-2550px'},500);
+		$('#box').animate({'top':'-2550px'},500,function() {
+		    $(this).hide();
+		});
 		$('#overlay').fadeOut('slow');
 	});
 });

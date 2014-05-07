@@ -829,7 +829,7 @@ class Go_carriers_ce extends Controller {
                                     "lifetime"          => new xmlrpcval('-1', "int"),
                                     "preferred_codec"   => new xmlrpcval('18', "int"),
                                     "use_preferred_codec_only"  => new xmlrpcval('0', "int"),
-                                    "reg_allowed"       => new xmlrpcval('0', "int"),
+                                    "reg_allowed"       => new xmlrpcval('1', "int"),
                                     "welcome_call_ivr"  => new xmlrpcval('', "int"),
                                     "on_payment_action" => new xmlrpcval('-1', "int"),
                                     "min_payment_amount"=> new xmlrpcval('0.00000', "double"),

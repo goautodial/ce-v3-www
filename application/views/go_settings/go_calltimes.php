@@ -287,7 +287,10 @@ $(function()
 
 	$('#closeboxCalltimes').click(function()
 	{
-		$('#boxCalltimes').animate({'top':'-2550px'},500);
+		$('#boxCalltimes').animate({'top':'-2550px'},500,function() {
+			$(this).hide();
+			$("#overlayContentCalltimes").empty();
+		});
 		$('#overlayCalltimes').fadeOut('slow');
 	});
 	
@@ -728,7 +731,7 @@ function closeme() {
 <!-- File Overlay -->
 <span id="audioButtonClicked" style="display:none;"></span>
 <div id="fileOverlay" style="display:none;"></div>
-<div id="fileBox">
+<div id="fileBox" style="display:none">
 <a id="fileClosebox" class="toolTip" title="CLOSE"></a>
 <div id="fileOverlayContent">
 <table style="width: 100%">
@@ -748,8 +751,8 @@ if(is_dir($WeBServeRRooT.'/'.$storage)){
 					$fname = str_replace(".wav","",$file);
 					if ($ctr % 2 == 0)
 						echo "<tr>";
-					
-					echo "<td style='white-space:nowrap;width:50%'>&raquo; <a id='$ctr' href='#'>$fname</a>\n";
+					$showfname = (strlen($fname) > 45) ? substr($fname,0,45)."..." : $fname;
+					echo "<td style='white-space:nowrap;width:50%'>&raquo; <a id='$ctr' href='#' title='$fname'>$showfname</a>\n";
 					echo "<script>
 							$('#$ctr').click(function (){
 								var input_id = $('#audioButtonClicked').text();
