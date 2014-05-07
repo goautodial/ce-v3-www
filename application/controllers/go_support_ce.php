@@ -27,15 +27,17 @@ class Go_support_ce extends Controller{
 
                  ini_set("display_error",1);
 
-                $username = $this->session->userdata('user_name');
+                $userlogin = $this->session->userdata('user_name');
                 $usergroup = $this->session->userdata('user_group');
                 #if(empty($username)){
                 #    $this->commonhelper->deletesession($_SERVER['REMOTE_ADDR']);
                 #}
 
                 #$cc_card_info = $this->go_support->get_info($username);
-         
-                if($usergroup !== "ADMIN"){
+	       
+	       $returnVal = $this->go_carriers->go_get_govoip();
+	       $username = $returnVal[0]->username;
+                if($userlogin !== "goautodial"){
                     #$justgovoipinfo = $this->go_carriers->get_sippy_info();
                     $account = $this->commonhelper->getAccountInfo('username',$username);
 

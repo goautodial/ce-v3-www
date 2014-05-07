@@ -10,6 +10,10 @@
 ####  License:          	AGPLv2                                                              ####
 ########################################################################################################
 
+session_start();
+$token = md5(rand(1000,9999)); //you can use any encryption
+$_SESSION['token'] = $token; //store it as session variable
+
 // /*echo "<div id='footertext'>\n";
 // echo "<p>" . $this->lang->line("ua_licence") . "</p>\n";
 // echo "<p>" . anchor('http://goautodial.com', '&copy; 2010 GoAutoDial, Inc.', array('title' => 'GoAutoDial Inc.- Empowering The Next Generation Contact Centers', 'target' => '_blank')) . " | " . anchor('termsofuse.php', 'Terms of Use', array('title' => 'GoAutoDial - Terms Of Use', 'target' => '_blank')) . "</p>\n";
