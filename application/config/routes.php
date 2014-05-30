@@ -57,7 +57,7 @@ $route['logout'] = "go_site/logout";
 $route['usergroups'] = "go_usergroup_ce";
 $route['phones'] = "go_phones_ce";
 $route['carriers'] = "go_carriers_ce";
-$route['settings'] = "go_systemsettings_ce";
+//$route['settings'] = "go_systemsettings_ce";
 $route['servers'] = "go_servers_ce";
 $route['telephony'] = "go_user_ce/go_users";
 $route['voicemails'] = "go_voicemail_ce";
@@ -71,6 +71,7 @@ $route['calltimes'] = "go_calltimes_ce";
 $route['logs'] = "go_logs_ce";
 $route['go_list/go_list'] = "go_list/go_list";
 $route['moh'] = "go_moh_ce";
+$route['settings'] = "go_settings_ce";
 
 /* End of file routes.php */
 /* Location: ./system/application/config/routes.php */

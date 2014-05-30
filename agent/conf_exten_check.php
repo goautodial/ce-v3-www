@@ -1,7 +1,7 @@
 <?php
-# conf_exten_check.php    version 2.4
+# conf_exten_check.php    version 2.6
 # 
-# Copyright (C) 2011  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 # This script is designed purely to send whether the meetme conference has live channels connected and which they are
 # This script depends on the server_ip being sent and also needs to have a valid user/pass from the vicidial_users table
@@ -55,12 +55,15 @@
 # 101123-1105 - Added api manual dial queue feature to external_dial function
 # 101208-0308 - Moved the Calls in Queue count and other counts outside of the autodial section (issue 406)
 # 110610-0059 - Small fix for manual dial calls lasting more than 100 minutes in real-time report
+# 120809-2353 - Added external_recording function
+# 121028-2305 - Added extra check on session_name to validate agent screen requests
+# 130328-0011 - Converted ereg to preg functions
 #
 
-$version = '2.4-30';
-$build = '110610-0059';
+$version = '2.6-33';
+$build = '130328-0011';
 $mel=1;					# Mysql Error Log enabled = 1
-$mysql_log_count=38;
+$mysql_log_count=39;
 $one_mysql_log=0;
 $DB=0;
 
@@ -114,13 +117,13 @@ if ($qm_conf_ct > 0)
 
 if ($non_latin < 1)
 	{
-	$user=ereg_replace("[^-_0-9a-zA-Z]","",$user);
-	$pass=ereg_replace("[^-_0-9a-zA-Z]","",$pass);
+	$user=preg_replace("/[^\-_0-9a-zA-Z]/i","",$user);
+	$pass=preg_replace("/[^\-_0-9a-zA-Z]/i","",$pass);
 	}
 else
 	{
-	$user = ereg_replace("'|\"|\\\\|;","",$user);
-	$pass = ereg_replace("'|\"|\\\\|;","",$pass);
+	$user = preg_replace("/\'|\"|\\\\|;/","",$user);
+	$pass = preg_replace("/\'|\"|\\\\|;/","",$pass);
 	}
 
 # default optional vars if not set
@@ -207,6 +210,7 @@ if ($ACTION == 'refresh')
 		if ($client == 'vdc')
 			{
 			$Acount=0;
+			$Scount=0;
 			$AexternalDEAD=0;
 			$Aagent_log_id='';
 			$Acallerid='';
@@ -221,6 +225,14 @@ if ($ACTION == 'refresh')
 			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'03003',$user,$server_ip,$session_name,$one_mysql_log);}
 			$row=mysql_fetch_row($rslt);
 			$Acount=$row[0];
+
+			### see if the agent has a record in the vicidial_session_data table
+			$stmt="SELECT count(*) from vicidial_session_data where user='$user' and server_ip='$server_ip' and session_name='$session_name';";
+			if ($DB) {echo "|$stmt|\n";}
+			$rslt=mysql_query($stmt, $link);
+			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'03039',$user,$server_ip,$session_name,$one_mysql_log);}
+			$row=mysql_fetch_row($rslt);
+			$Scount=$row[0];
 
 			if ($Acount > 0)
 				{
@@ -265,11 +277,11 @@ if ($ACTION == 'refresh')
 				$Alogin=$row[0];
 				$Acampaign=$row[1];
 				$AccampSQL=$row[2];
-				$AccampSQL = ereg_replace(' -','', $AccampSQL);
-				$AccampSQL = ereg_replace(' ',"','", $AccampSQL);
-				if (eregi('AGENTDIRECT', $AccampSQL))
+				$AccampSQL = preg_replace('/\s\-/','', $AccampSQL);
+				$AccampSQL = preg_replace('/\s/',"','", $AccampSQL);
+				if (preg_match('/AGENTDIRECT/i', $AccampSQL))
 					{
-					$AccampSQL = ereg_replace('AGENTDIRECT','', $AccampSQL);
+					$AccampSQL = preg_replace('/AGENTDIRECT/i','', $AccampSQL);
 					$ADsql = "or ( (campaign_id LIKE \"%AGENTDIRECT%\") and (agent_only='$user') )";
 					}
 
@@ -325,7 +337,7 @@ if ($ACTION == 'refresh')
 				$row=mysql_fetch_row($rslt);
 				$AcalleridCOUNT=$row[0];
 
-				if ( ($AcalleridCOUNT > 0) and (eregi("INCALL",$Astatus)) and (preg_match("/^M/",$Acallerid)) )
+				if ( ($AcalleridCOUNT > 0) and (preg_match("/INCALL/i",$Astatus)) and (preg_match("/^M/",$Acallerid)) )
 					{
 					$updateNOW_TIME = date("Y-m-d H:i:s");
 					$stmt="UPDATE vicidial_auto_calls set last_update_time='$updateNOW_TIME' where callerid='$Acallerid';";
@@ -334,7 +346,7 @@ if ($ACTION == 'refresh')
 						if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'03038',$user,$server_ip,$session_name,$one_mysql_log);}
 					}
 
-				if ( ($AcalleridCOUNT < 1) and (eregi("INCALL",$Astatus)) and (strlen($Aagent_log_id) > 0) )
+				if ( ($AcalleridCOUNT < 1) and (preg_match("/INCALL/i",$Astatus)) and (strlen($Aagent_log_id) > 0) )
 					{
 					$DEADcustomer++;
 					### find whether the agent log record has already logged DEAD
@@ -387,7 +399,7 @@ if ($ACTION == 'refresh')
 				$row=mysql_fetch_row($rslt);
 				$AcalleridCOUNT=$row[0];
 
-				if ( ($AcalleridCOUNT > 0) and (eregi("INCALL",$Astatus)) )
+				if ( ($AcalleridCOUNT > 0) and (preg_match("/INCALL/i",$Astatus)) )
 					{
 					$updateNOW_TIME = date("Y-m-d H:i:s");
 					$stmt="UPDATE vicidial_auto_calls set last_update_time='$updateNOW_TIME' where callerid='$Acallerid';";
@@ -396,7 +408,7 @@ if ($ACTION == 'refresh')
 						if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'03037',$user,$server_ip,$session_name,$one_mysql_log);}
 					}
 
-				if ( ($AcalleridCOUNT < 1) and (eregi("INCALL",$Astatus)) and (strlen($Aagent_log_id) > 0) )
+				if ( ($AcalleridCOUNT < 1) and (preg_match("/INCALL/i",$Astatus)) and (strlen($Aagent_log_id) > 0) )
 					{
 					$DEADcustomer++;
 					### find whether the agent log record has already logged DEAD
@@ -426,7 +438,7 @@ if ($ACTION == 'refresh')
 				}
 
 			### grab the API hangup and API dispo fields in vicidial_live_agents
-			$stmt="SELECT external_hangup,external_status,external_pause,external_dial,external_update_fields,external_update_fields_data,external_timer_action,external_timer_action_message,external_timer_action_seconds,external_dtmf,external_transferconf,external_park,external_timer_action_destination from vicidial_live_agents where user='$user' and server_ip='$server_ip';";
+			$stmt="SELECT external_hangup,external_status,external_pause,external_dial,external_update_fields,external_update_fields_data,external_timer_action,external_timer_action_message,external_timer_action_seconds,external_dtmf,external_transferconf,external_park,external_timer_action_destination,external_recording from vicidial_live_agents where user='$user' and server_ip='$server_ip';";
 			if ($DB) {echo "|$stmt|\n";}
 			$rslt=mysql_query($stmt, $link);
 			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'03010',$user,$server_ip,$session_name,$one_mysql_log);}
@@ -444,6 +456,7 @@ if ($ACTION == 'refresh')
 			$external_transferconf =		$row[10];
 			$external_park =				$row[11];
 			$timer_action_destination =		$row[12];
+			$external_recording =			$row[13];
 
 			$MDQ_count=0;
 			if ( ($api_manual_dial=='QUEUE') or ($api_manual_dial=='QUEUE_AND_AUTOCALL') )
@@ -585,13 +598,13 @@ if ($ACTION == 'refresh')
 				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'03016',$VD_login,$server_ip,$session_name,$one_mysql_log);}
 			$row=mysql_fetch_row($rslt);
 			$shift_enforcement =		$row[0];
-			$LOGgroup_shiftsSQL = eregi_replace('  ','',$row[1]);
-			$LOGgroup_shiftsSQL = eregi_replace(' ',"','",$LOGgroup_shiftsSQL);
+			$LOGgroup_shiftsSQL = preg_replace('/\s\s/','',$row[1]);
+			$LOGgroup_shiftsSQL = preg_replace('/\s/',"','",$LOGgroup_shiftsSQL);
 			$LOGgroup_shiftsSQL = "shift_id IN('$LOGgroup_shiftsSQL')";
 
 			### CHECK TO SEE IF AGENT IS WITHIN THEIR SHIFT IF RESTRICTED, IF NOT, OUTPUT ERROR
 			$Ashift_logout=0;
-			if ( ( (ereg("ALL",$shift_enforcement)) and (!ereg("OFF|START",$VU_agent_shift_enforcement_override)) ) or (ereg("ALL",$VU_agent_shift_enforcement_override)) )
+			if ( ( (preg_match("/ALL/",$shift_enforcement)) and (!preg_match("/OFF|START/",$VU_agent_shift_enforcement_override)) ) or (preg_match("/ALL/",$VU_agent_shift_enforcement_override)) )
 				{
 				$shift_ok=0;
 				if (strlen($LOGgroup_shiftsSQL) < 3)
@@ -615,7 +628,7 @@ if ($ACTION == 'refresh')
 						$shift_length =		$rowx[2];
 						$shift_weekdays =	$rowx[3];
 
-						if (eregi("$wday",$shift_weekdays))
+						if (preg_match("/$wday/i",$shift_weekdays))
 							{
 							$HHshift_length = substr($shift_length,0,2);
 							$MMshift_length = substr($shift_length,3,2);
@@ -650,9 +663,9 @@ if ($ACTION == 'refresh')
 				}
 
 
-			if ( ( ($time_diff > 8) or ($time_diff < -8) or ($web_diff > 8) or ($web_diff < -8) ) and (eregi("0$",$StarTtime)) ) 
+			if ( ( ($time_diff > 8) or ($time_diff < -8) or ($web_diff > 8) or ($web_diff < -8) ) and (preg_match("/0\$/i",$StarTtime)) ) 
 				{$Alogin='TIME_SYNC';}
-			if ($Acount < 1) 
+			if ( ($Acount < 1) or ($Scount < 1) )
 				{$Alogin='DEAD_VLA';}
 			if ($AexternalDEAD > 0) 
 				{$Alogin='DEAD_EXTERNAL';}
@@ -664,7 +677,7 @@ if ($ACTION == 'refresh')
 				$external_pause='';
 				}
 
-			echo 'DateTime: ' . $NOW_TIME . '|UnixTime: ' . $StarTtime . '|Logged-in: ' . $Alogin . '|CampCalls: ' . $RingCalls . '|Status: ' . $Astatus . '|DiaLCalls: ' . $DiaLCalls . '|APIHanguP: ' . $external_hangup . '|APIStatuS: ' . $external_status . '|APIPausE: ' . $external_pause . '|APIDiaL: ' . $external_dial . '|DEADcall: ' . $DEADcustomer . '|InGroupChange: ' . $InGroupChangeDetails . '|APIFields: ' . $external_update_fields . '|APIFieldsData: ' . $external_update_fields_data . '|APITimerAction: ' . $timer_action . '|APITimerMessage: ' . $timer_action_message . '|APITimerSeconds: ' . $timer_action_seconds . '|APIdtmf: ' . $external_dtmf . '|APItransferconf: ' . $external_transferconf . '|APIpark: ' . $external_park . '|APITimerDestination: ' . $timer_action_destination . '|APIManualDialQueue: ' . $MDQ_count . "\n";
+			echo 'DateTime: ' . $NOW_TIME . '|UnixTime: ' . $StarTtime . '|Logged-in: ' . $Alogin . '|CampCalls: ' . $RingCalls . '|Status: ' . $Astatus . '|DiaLCalls: ' . $DiaLCalls . '|APIHanguP: ' . $external_hangup . '|APIStatuS: ' . $external_status . '|APIPausE: ' . $external_pause . '|APIDiaL: ' . $external_dial . '|DEADcall: ' . $DEADcustomer . '|InGroupChange: ' . $InGroupChangeDetails . '|APIFields: ' . $external_update_fields . '|APIFieldsData: ' . $external_update_fields_data . '|APITimerAction: ' . $timer_action . '|APITimerMessage: ' . $timer_action_message . '|APITimerSeconds: ' . $timer_action_seconds . '|APIdtmf: ' . $external_dtmf . '|APItransferconf: ' . $external_transferconf . '|APIpark: ' . $external_park . '|APITimerDestination: ' . $timer_action_destination . '|APIManualDialQueue: ' . $MDQ_count . '|APIRecording: ' . $external_recording . "\n";
 
 			if (strlen($timer_action) > 3)
 				{

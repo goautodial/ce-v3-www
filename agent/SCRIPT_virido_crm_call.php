@@ -5,11 +5,12 @@
 #
 # <iframe src="/agc/SCRIPT_virido_crm_call.php?lead_id=--A--lead_id--B--&list_id=--A--list_id--B--&user=--A--user--B--&campaign_id=--A--campaign_id--B--&phone_number=--A--phone_number--B--&vendor_id=--A--vendor_lead_code--B--&user_custom_five=--A--user_custom_five--B--" style="width:600;height:400;background-color:transparent;" scrolling="no" frameborder="0" allowtransparency="true" id="popupFrame" name="popupFrame" width="600" height="400" STYLE="z-index:17"> </iframe>
 #
-# Copyright (C) 2012  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 # 
 # CHANGES:
 # 120223-1156 - First Build
+# 130328-0014 - Converted ereg to preg functions
 #
 
 if (isset($_GET["button_id"]))				{$button_id=$_GET["button_id"];}
@@ -34,19 +35,19 @@ if (isset($_GET["epoch"]))					{$epoch=$_GET["epoch"];}
 	elseif (isset($_POST["epoch"]))			{$epoch=$_POST["epoch"];}
 
 ### security strip all non-alphanumeric characters out of the variables ###
-$button_id=ereg_replace("[^0-9]","",$button_id);
-$lead_id=ereg_replace("[^0-9]","",$lead_id);
-$list_id=ereg_replace("[^0-9]","",$list_id);
-$phone_number=ereg_replace("[^0-9]","",$phone_number);
-$vendor_id = ereg_replace("[^- \:\/\_0-9a-zA-Z]","",$vendor_id);
-$user=ereg_replace("[^0-9a-zA-Z]","",$user);
-$campaign = ereg_replace("[^-\_0-9a-zA-Z]","",$campaign);
-$stage = ereg_replace("[^-\_0-9a-zA-Z]","",$stage);
-$epoch = ereg_replace("[^0-9]","",$epoch);
+$button_id=preg_replace("/[^0-9]/","",$button_id);
+$lead_id=preg_replace("/[^0-9]/","",$lead_id);
+$list_id=preg_replace("/[^0-9]/","",$list_id);
+$phone_number=preg_replace("/[^0-9]/","",$phone_number);
+$vendor_id = preg_replace("/[^- \:\/\_0-9a-zA-Z]/","",$vendor_id);
+$user=preg_replace("/[^0-9a-zA-Z]/","",$user);
+$campaign = preg_replace("/[^-\_0-9a-zA-Z]/","",$campaign);
+$stage = preg_replace("/[^-\_0-9a-zA-Z]/","",$stage);
+$epoch = preg_replace("/[^0-9]/","",$epoch);
 
 require("dbconnect.php");
 
-if (eregi("CLICK",$stage))
+if (preg_match("/CLICK/i",$stage))
 	{
 	$epochNOW = date("U");
 	$click_seconds = ($epochNOW - $epoch);
@@ -68,7 +69,7 @@ else
 	$script_name = getenv("SCRIPT_NAME");
 	$server_name = getenv("SERVER_NAME");
 	$server_port = getenv("SERVER_PORT");
-	if (eregi("443",$server_port)) {$HTTPprotocol = 'https://';}
+	if (preg_match("/443/i",$server_port)) {$HTTPprotocol = 'https://';}
 	  else {$HTTPprotocol = 'http://';}
 	if (($server_port == '80') or ($server_port == '443') ) {$server_port='';}
 	else {$server_port = "$CL$server_port";}

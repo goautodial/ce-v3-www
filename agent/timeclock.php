@@ -1,7 +1,7 @@
 <?php
 # timeclock.php - VICIDIAL system user timeclock
 # 
-# Copyright (C) 2009  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 # CHANGELOG
 # 80523-0134 - First Build 
@@ -10,10 +10,11 @@
 # 80602-0641 - Fixed status update bug
 # 90508-0727 - Changed to PHP long tags
 # 100621-1023 - Added admin_web_directory variable
+# 130328-0021 - Converted ereg to preg functions
 #
 
-$version = '2.2.0-6';
-$build = '100621-1023';
+$version = '2.6-7';
+$build = '130328-0021';
 
 $StarTtimE = date("U");
 $NOW_TIME = date("Y-m-d H:i:s");
@@ -29,12 +30,12 @@ $browser = getenv("HTTP_USER_AGENT");
 $script_name = getenv("SCRIPT_NAME");
 $server_name = getenv("SERVER_NAME");
 $server_port = getenv("SERVER_PORT");
-if (eregi("443",$server_port)) {$HTTPprotocol = 'https://';}
+if (preg_match("/443/i",$server_port)) {$HTTPprotocol = 'https://';}
   else {$HTTPprotocol = 'http://';}
 if (($server_port == '80') or ($server_port == '443') ) {$server_port='';}
 else {$server_port = "$CL$server_port";}
 $agcPAGE = "$HTTPprotocol$server_name$server_port$script_name";
-$agcDIR = eregi_replace('timeclock.php','',$agcPAGE);
+$agcDIR = preg_replace('/timeclock\.php/i','',$agcPAGE);
 
 
 if (isset($_GET["DB"]))							{$DB=$_GET["DB"];}
@@ -72,17 +73,17 @@ if (!isset($phone_pass))
 	}
 
 ### security strip all non-alphanumeric characters out of the variables ###
-	$DB=ereg_replace("[^0-9a-z]","",$DB);
-	$phone_login=ereg_replace("[^\,0-9a-zA-Z]","",$phone_login);
-	$phone_pass=ereg_replace("[^0-9a-zA-Z]","",$phone_pass);
-	$VD_login=ereg_replace("[^0-9a-zA-Z]","",$VD_login);
-	$VD_pass=ereg_replace("[^0-9a-zA-Z]","",$VD_pass);
-	$VD_campaign=ereg_replace("[^0-9a-zA-Z_]","",$VD_campaign);
-	$user=ereg_replace("[^0-9a-zA-Z]","",$user);
-	$pass=ereg_replace("[^0-9a-zA-Z]","",$pass);
-	$stage=ereg_replace("[^0-9a-zA-Z]","",$stage);
-	$commit=ereg_replace("[^0-9a-zA-Z]","",$commit);
-	$referrer=ereg_replace("[^0-9a-zA-Z]","",$referrer);
+	$DB=preg_replace("/[^0-9a-z]/","",$DB);
+	$phone_login=preg_replace("/[^\,0-9a-zA-Z]/","",$phone_login);
+	$phone_pass=preg_replace("/[^0-9a-zA-Z]/","",$phone_pass);
+	$VD_login=preg_replace("/[^0-9a-zA-Z]/","",$VD_login);
+	$VD_pass=preg_replace("/[^0-9a-zA-Z]/","",$VD_pass);
+	$VD_campaign=preg_replace("/[^0-9a-zA-Z_]/","",$VD_campaign);
+	$user=preg_replace("/[^0-9a-zA-Z]/","",$user);
+	$pass=preg_replace("/[^0-9a-zA-Z]/","",$pass);
+	$stage=preg_replace("/[^0-9a-zA-Z]/","",$stage);
+	$commit=preg_replace("/[^0-9a-zA-Z]/","",$commit);
+	$referrer=preg_replace("/[^0-9a-zA-Z]/","",$referrer);
 
 require("dbconnect.php");
 

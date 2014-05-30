@@ -1,7 +1,7 @@
 <?php
 # vdc_form_display.php
 # 
-# Copyright (C) 2012  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 # This script is designed display the contents of the FORM tab in the agent 
 # interface, as well as take submission of the form submission when the agent 
@@ -16,10 +16,12 @@
 # 110730-2335 - Added call_id variable
 # 111025-1433 - Fixed case sensitivity on list fields
 # 120315-1729 - Filtere out single quotes and backslashes from custom fields
+# 130328-0012 - Converted ereg to preg functions
+# 130402-2256 - Added user_group variable
 #
 
-$version = '2.4-8';
-$build = '120315-1729';
+$version = '2.6-10';
+$build = '130402-2256';
 
 require("dbconnect.php");
 require_once("functions.php");
@@ -144,6 +146,8 @@ if (isset($_GET["agent_log_id"]))			{$agent_log_id=$_GET["agent_log_id"];}
 	elseif (isset($_POST["agent_log_id"]))	{$agent_log_id=$_POST["agent_log_id"];}
 if (isset($_GET["call_id"]))			{$call_id=$_GET["call_id"];}
 	elseif (isset($_POST["call_id"]))	{$call_id=$_POST["call_id"];}
+if (isset($_GET["user_group"]))				{$user_group=$_GET["user_group"];}
+	elseif (isset($_POST["user_group"]))	{$user_group=$_POST["user_group"];}
 if (isset($_GET["web_vars"]))			{$web_vars=$_GET["web_vars"];}
 	elseif (isset($_POST["web_vars"]))	{$web_vars=$_POST["web_vars"];}
 
@@ -189,16 +193,16 @@ if ($qm_conf_ct > 0)
 
 if ($non_latin < 1)
 	{
-	$user=ereg_replace("[^-_0-9a-zA-Z]","",$user);
-	$pass=ereg_replace("[^-_0-9a-zA-Z]","",$pass);
-	$length_in_sec = ereg_replace("[^0-9]","",$length_in_sec);
-	$phone_code = ereg_replace("[^0-9]","",$phone_code);
-	$phone_number = ereg_replace("[^0-9]","",$phone_number);
+	$user=preg_replace("/[^-_0-9a-zA-Z]/","",$user);
+	$pass=preg_replace("/[^-_0-9a-zA-Z]/","",$pass);
+	$length_in_sec = preg_replace("/[^0-9]/","",$length_in_sec);
+	$phone_code = preg_replace("/[^0-9]/","",$phone_code);
+	$phone_number = preg_replace("/[^0-9]/","",$phone_number);
 	}
 else
 	{
-	$user = ereg_replace("'|\"|\\\\|;","",$user);
-	$pass = ereg_replace("'|\"|\\\\|;","",$pass);
+	$user = preg_replace("/\'|\"|\\\\|;/","",$user);
+	$pass = preg_replace("/\'|\"|\\\\|;/","",$pass);
 	}
 
 
@@ -393,7 +397,7 @@ if ($stage=='SUBMIT')
 			### LOG INSERTION Admin Log Table ###
 			$ip = getenv("REMOTE_ADDR");
 			$SQL_log = "$list_table_update_SQL|$custom_table_update_SQL|";
-			$SQL_log = ereg_replace(';','',$SQL_log);
+			$SQL_log = preg_replace('/;/','',$SQL_log);
 			$SQL_log = addslashes($SQL_log);
 			$stmt="INSERT INTO vicidial_admin_log set event_date='$NOW_TIME', user='$user', ip_address='$ip', event_section='LEADS', event_type='MODIFY', record_id='$lead_id', event_code='ADMIN MODIFY CUSTOM LEAD', event_sql=\"$SQL_log\", event_notes='$custom_update_count|$list_update_count';";
 			if ($DB) {echo "|$stmt|\n";}

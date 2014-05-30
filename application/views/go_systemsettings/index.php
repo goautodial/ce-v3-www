@@ -25,12 +25,13 @@ $gmtArray = array(
 <script type="text/javascript" src="<?=base_url()?>js/go_systemsettings/go_settings_ce.js"></script>
 
 
-<div id='outbody' class="wrap">
+<!--<div id='outbody' class="wrap">
     <div id="icon-settings" class="icon32"></div>
     <h2><?=$bannertitle?></h2>
     <div id="dashboard-widgets-wrap">
          <div id="dashboard-widgets" class="metabox-holder">
-             <div class="postbox-container" style="width:99%">
+             <div class="postbox-container" style="width:99%">-->
+                  <br>
                   <form id="system-settings" method="post" >
                   <div class="corner-all server-settings" style="width:800px;">
                         <div class="settings-label">Version</div>
@@ -344,10 +345,10 @@ $gmtArray = array(
                   </div>
                   </form>
                   <br/>
-                  <br/>
-                  <br/>
-             </div>
-        </div> <!-- dashboard-widgets  -->
-    </div> <!-- End dashboard-widget-wrap -->
-</div> <!-- End wrap -->
-</div>
+             <!--     <br/>-->
+             <!--     <br/>-->
+             <!--</div>-->
+        <!--</div>--> <!-- dashboard-widgets  -->
+    <!--</div>--> <!-- End dashboard-widget-wrap -->
+<!--</div>--> <!-- End wrap -->
+<!--</div>-->

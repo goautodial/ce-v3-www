@@ -1,7 +1,7 @@
 <?php
-# live_exten_check.php    version 2.2.0
+# live_exten_check.php    version 2.6
 # 
-# Copyright (C) 2009  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 # This script is designed purely to send whether the client channel is live and to what channel it is connected
 # This script depends on the server_ip being sent and also needs to have a valid user/pass from the vicidial_users table
@@ -30,6 +30,7 @@
 # 60619-1203 - Added variable filters to close security holes for login form
 # 60825-1029 - Fixed translation variable issue ChannelA
 # 90508-0727 - Changed to PHP long tags
+# 130328-0027 - Converted ereg to preg functions
 #
 
 require("dbconnect.php");
@@ -54,14 +55,14 @@ if (isset($_GET["favorites_count"]))				{$favorites_count=$_GET["favorites_count
 if (isset($_GET["favorites_list"]))				{$favorites_list=$_GET["favorites_list"];}
 	elseif (isset($_POST["favorites_list"]))		{$favorites_list=$_POST["favorites_list"];}
 
-$user=ereg_replace("[^0-9a-zA-Z]","",$user);
-$pass=ereg_replace("[^0-9a-zA-Z]","",$pass);
+$user=preg_replace("/[^0-9a-zA-Z]/","",$user);
+$pass=preg_replace("/[^0-9a-zA-Z]/","",$pass);
 
 # default optional vars if not set
 if (!isset($format))   {$format="text";}
 
-$version = '2.0.1';
-$build = '60825-1029';
+$version = '2.6-13';
+$build = '130328-0027';
 $StarTtime = date("U");
 $NOW_DATE = date("Y-m-d");
 $NOW_TIME = date("Y-m-d H:i:s");
@@ -73,14 +74,13 @@ if (!isset($query_date)) {$query_date = $NOW_DATE;}
 	$row=mysql_fetch_row($rslt);
 	$auth=$row[0];
 
-  if( (strlen($user)<2) or (strlen($pass)<2) or ($auth==0))
+if( (strlen($user)<2) or (strlen($pass)<2) or ($auth==0))
 	{
     echo "Invalid Username/Password: |$user|$pass|\n";
     exit;
 	}
-  else
+else
 	{
-
 	if( (strlen($server_ip)<6) or (!isset($server_ip)) or ( (strlen($session_name)<12) or (!isset($session_name)) ) )
 		{
 		echo "Invalid server_ip: |$server_ip|  or  Invalid session_name: |$session_name|\n";
@@ -93,12 +93,12 @@ if (!isset($query_date)) {$query_date = $NOW_DATE;}
 		$rslt=mysql_query($stmt, $link);
 		$row=mysql_fetch_row($rslt);
 		$SNauth=$row[0];
-		  if($SNauth==0)
+		if($SNauth==0)
 			{
 			echo "Invalid session_name: |$session_name|$server_ip|\n";
 			exit;
 			}
-		  else
+		else
 			{
 			# do nothing for now
 			}
@@ -106,15 +106,15 @@ if (!isset($query_date)) {$query_date = $NOW_DATE;}
 	}
 
 if ($format=='debug')
-{
-echo "<html>\n";
-echo "<head>\n";
-echo "<!-- VERSION: $version     BUILD: $build    EXTEN: $exten   server_ip: $server_ip-->\n";
-echo "<title>Live Extension Check";
-echo "</title>\n";
-echo "</head>\n";
-echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
-}
+	{
+	echo "<html>\n";
+	echo "<head>\n";
+	echo "<!-- VERSION: $version     BUILD: $build    EXTEN: $exten   server_ip: $server_ip-->\n";
+	echo "<title>Live Extension Check";
+	echo "</title>\n";
+	echo "</head>\n";
+	echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
+	}
 
 
 echo "DateTime: $NOW_TIME|";
@@ -126,16 +126,16 @@ $rslt=mysql_query($stmt, $link);
 $row=mysql_fetch_row($rslt);
 echo "$row[0]|";
 
-	$MT[0]='';
-	$row='';   $rowx='';
-	$channel_live=1;
-	if ( (strlen($exten)<1) or (strlen($protocol)<3) )
+$MT[0]='';
+$row='';   $rowx='';
+$channel_live=1;
+if ( (strlen($exten)<1) or (strlen($protocol)<3) )
 	{
 	$channel_live=0;
 	echo "Exten $exten is not valid or protocol $protocol is not valid\n";
 	exit;
 	}
-	else
+else
 	{
 	$stmt="SELECT channel,extension FROM live_sip_channels where server_ip = '$server_ip' and channel LIKE \"$protocol/$exten%\";";
 		if ($format=='debug') {echo "\n<!-- $stmt -->";}
@@ -143,7 +143,7 @@ echo "$row[0]|";
 	if ($rslt) {$channels_list = mysql_num_rows($rslt);}
 	echo "$channels_list|";
 	$loop_count=0;
-		while ($channels_list>$loop_count)
+	while ($channels_list>$loop_count)
 		{
 		$loop_count++;
 		$row=mysql_fetch_row($rslt);
@@ -153,15 +153,15 @@ echo "$row[0]|";
 		}
 	}
 
-	$counter=0;
-	while($loop_count > $counter)
+$counter=0;
+while($loop_count > $counter)
 	{
 		$counter++;
 	$stmt="SELECT channel FROM live_channels where server_ip = '$server_ip' and channel_data = '$ChanneLA[$counter]';";
 		if ($format=='debug') {echo "\n<!-- $stmt -->";}
 	$rslt=mysql_query($stmt, $link);
 	if ($rslt) {$trunk_count = mysql_num_rows($rslt);}
-		if ($trunk_count>0)
+	if ($trunk_count>0)
 		{
 		$row=mysql_fetch_row($rslt);
 		echo "Conversation: $counter ~";
@@ -169,13 +169,13 @@ echo "$row[0]|";
 		echo "ChannelB: $ChanneLB[$counter] ~";
 		echo "ChannelBtrunk: $row[0]|";
 		}
-		else
+	else
 		{
 		$stmt="SELECT channel FROM live_sip_channels where server_ip = '$server_ip' and channel_data = '$ChanneLA[$counter]';";
 			if ($format=='debug') {echo "\n<!-- $stmt -->";}
 		$rslt=mysql_query($stmt, $link);
 		if ($rslt) {$trunk_count = mysql_num_rows($rslt);}
-			if ($trunk_count>0)
+		if ($trunk_count>0)
 			{
 			$row=mysql_fetch_row($rslt);
 			echo "Conversation: $counter ~";
@@ -183,13 +183,13 @@ echo "$row[0]|";
 			echo "ChannelB: $ChanneLB[$counter] ~";
 			echo "ChannelBtrunk: $row[0]|";
 			}
-			else
+		else
 			{
 			$stmt="SELECT channel FROM live_sip_channels where server_ip = '$server_ip' and channel LIKE \"$ChanneLB[$counter]%\";";
 				if ($format=='debug') {echo "\n<!-- $stmt -->";}
 			$rslt=mysql_query($stmt, $link);
 			if ($rslt) {$trunk_count = mysql_num_rows($rslt);}
-				if ($trunk_count>0)
+			if ($trunk_count>0)
 				{
 				$row=mysql_fetch_row($rslt);
 				echo "Conversation: $counter ~";
@@ -197,13 +197,13 @@ echo "$row[0]|";
 				echo "ChannelB: $ChanneLB[$counter] ~";
 				echo "ChannelBtrunk: $row[0]|";
 				}
-				else
+			else
 				{
 				$stmt="SELECT channel FROM live_channels where server_ip = '$server_ip' and channel LIKE \"$ChanneLB[$counter]%\";";
 					if ($format=='debug') {echo "\n<!-- $stmt -->";}
 				$rslt=mysql_query($stmt, $link);
 				if ($rslt) {$trunk_count = mysql_num_rows($rslt);}
-					if ($trunk_count>0)
+				if ($trunk_count>0)
 					{
 					$row=mysql_fetch_row($rslt);
 					echo "Conversation: $counter ~";
@@ -211,7 +211,7 @@ echo "$row[0]|";
 					echo "ChannelB: $ChanneLB[$counter] ~";
 					echo "ChannelBtrunk: $row[0]|";
 					}
-					else
+				else
 					{
 					echo "Conversation: $counter ~";
 					echo "ChannelA: $ChanneLA[$counter] ~";
@@ -230,7 +230,7 @@ $stmt="select * from live_inbound where server_ip = '$server_ip' and phone_ext =
 	if ($format=='debug') {echo "\n<!-- $stmt -->";}
 $rslt=mysql_query($stmt, $link);
 if ($rslt) {$channels_list = mysql_num_rows($rslt);}
-	if ($channels_list>0)
+if ($channels_list>0)
 	{
 	$row=mysql_fetch_row($rslt);
 	$LIuniqueid = "$row[0]";

@@ -1,7 +1,7 @@
 <?php
 # dispo_move_list.php
 # 
-# Copyright (C) 2012  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 # This script is designed to be used in the "Dispo URL" field of a campaign
 # or in-group. It should take in the lead_id to check for the same lead_id
@@ -31,6 +31,7 @@
 # 110702-2020 - Added multiple sets of options
 # 111005-1102 - Added check and update for scheduled callback entry
 # 120223-2124 - Removed logging of good login passwords if webroot writable is enabled
+# 130328-0015 - Converted ereg to preg functions
 #
 
 $api_script = 'deactivate';
@@ -131,13 +132,13 @@ if ($match_found > 0)
 
 	if ($non_latin < 1)
 		{
-		$user=ereg_replace("[^-_0-9a-zA-Z]","",$user);
-		$pass=ereg_replace("[^-_0-9a-zA-Z]","",$pass);
+		$user=preg_replace("/[^-_0-9a-zA-Z]/","",$user);
+		$pass=preg_replace("/[^-_0-9a-zA-Z]/","",$pass);
 		}
 	else
 		{
-		$user = ereg_replace("'|\"|\\\\|;","",$user);
-		$pass = ereg_replace("'|\"|\\\\|;","",$pass);
+		$user = preg_replace("/\'|\"|\\\\|;/","",$user);
+		$pass = preg_replace("/\'|\"|\\\\|;/","",$pass);
 		}
 
 	$stmt="SELECT count(*) from vicidial_users where user='$user' and pass='$pass' and user_level > 0;";
@@ -198,7 +199,7 @@ if ($match_found > 0)
 			$CBaffected_rows = mysql_affected_rows($link);
 
 			$SQL_log = "$stmt|$stmtB|$CBaffected_rows|";
-			$SQL_log = ereg_replace(';','',$SQL_log);
+			$SQL_log = preg_replace('/;/','',$SQL_log);
 			$SQL_log = addslashes($SQL_log);
 			$stmt="INSERT INTO vicidial_api_log set user='$user',agent_user='$user',function='deactivate_lead',value='$lead_id',result='$affected_rows',result_reason='$lead_id',source='vdc',data='$SQL_log',api_date='$NOW_TIME',api_script='$api_script';";
 			$rslt=mysql_query($stmt, $link);

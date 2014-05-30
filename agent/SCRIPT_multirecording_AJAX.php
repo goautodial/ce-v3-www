@@ -1,13 +1,14 @@
-<?
+<?php
 # SCRIPT_multirecording_AJAX.php - script that stops/starts recordings being made over a forced-recording (ALLFORCE) call
 # 
-# Copyright (C) 2012  Joe Johnson <joej@vicidial.com>    LICENSE: AGPLv2
+# Copyright (C) 2013  Joe Johnson, Matt Florell <mattf@vicidial.com>    LICENSE: AGPLv2
 #
 # Other scripts that this application depends on:
 # - SCRIPT_multirecording.php: Gives agents ability to stop and start recordings over a forced-recording (ALLFORCE) call
 #
 # CHANGELOG
 # 120224-2240 - First Build
+# 130328-0009 - Converted ereg to preg functions
 #
 
 require("dbconnect.php");
@@ -44,14 +45,15 @@ $stmt="select campaign_rec_filename from vicidial_campaigns where campaign_id='$
 $rslt=mysql_query($stmt, $link);
 $row=mysql_fetch_array($rslt);
 $filename=$row["campaign_rec_filename"];
-$filename=eregi_replace("CAMPAIGN", $campaign, $filename);
-$filename=eregi_replace("CUSTPHONE", $phone_number, $filename);
-$filename=eregi_replace("FULLDATE", date("Ymd-His"), $filename);
-$filename=eregi_replace("TINYDATE", (date("Y")-2000).date("mdHis"), $filename);
-$filename=eregi_replace("AGENT", $user, $filename);
-$filename=eregi_replace("EPOCH", $StarTtime, $filename);
-$filename=eregi_replace("VENDORLEADCODE", $vendor_lead_code, $filename);
-$filename=eregi_replace("LEADID", $lead_id, $filename);
+$filename=preg_replace("/CAMPAIGN/i", $campaign, $filename);
+$filename=preg_replace("/INGROUP/i", $campaign, $filename);
+$filename=preg_replace("/CUSTPHONE/i", $phone_number, $filename);
+$filename=preg_replace("/FULLDATE/i", date("Ymd-His"), $filename);
+$filename=preg_replace("/TINYDATE/i", (date("Y")-2000).date("mdHis"), $filename);
+$filename=preg_replace("/AGENT/i", $user, $filename);
+$filename=preg_replace("/EPOCH/i", $StarTtime, $filename);
+$filename=preg_replace("/VENDORLEADCODE/i", $vendor_lead_code, $filename);
+$filename=preg_replace("/LEADID/i", $lead_id, $filename);
 
 $channel="Local/5".$session_id."@".$ext_context;
 $ext_priority=1;

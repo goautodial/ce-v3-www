@@ -1,7 +1,7 @@
 <?php
-# voicemail_check.php    version 2.2.0
+# voicemail_check.php    version 2.6
 # 
-# Copyright (C) 2009  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 # This script is designed purely to check whether the voicemail box on the server defined has new and old messages
 # This script depends on the server_ip being sent and also needs to have a valid user/pass from the vicidial_users table
@@ -23,6 +23,7 @@
 # 60421-1147 - check GET/POST vars lines with isset to not trigger PHP NOTICES
 # 60619-1204 - Added variable filters to close security holes for login form
 # 90508-0727 - Changed to PHP long tags
+# 130328-0025 - Converted ereg to preg functions
 #
 
 require("dbconnect.php");
@@ -41,33 +42,32 @@ if (isset($_GET["format"]))					{$format=$_GET["format"];}
 if (isset($_GET["vmail_box"]))				{$vmail_box=$_GET["vmail_box"];}
 	elseif (isset($_POST["vmail_box"]))		{$vmail_box=$_POST["vmail_box"];}
 
-$user=ereg_replace("[^0-9a-zA-Z]","",$user);
-$pass=ereg_replace("[^0-9a-zA-Z]","",$pass);
+$user=preg_replace("/[^0-9a-zA-Z]/","",$user);
+$pass=preg_replace("/[^0-9a-zA-Z]/","",$pass);
 
 # default optional vars if not set
 if (!isset($format))   {$format="text";}
 
-$version = '0.0.5';
-$build = '60619-1204';
+$version = '0.0.7';
+$build = '130328-0025';
 $StarTtime = date("U");
 $NOW_DATE = date("Y-m-d");
 $NOW_TIME = date("Y-m-d H:i:s");
 if (!isset($query_date)) {$query_date = $NOW_DATE;}
 
-	$stmt="SELECT count(*) from vicidial_users where user='$user' and pass='$pass' and user_level > 0;";
-	if ($DB) {echo "|$stmt|\n";}
-	$rslt=mysql_query($stmt, $link);
-	$row=mysql_fetch_row($rslt);
-	$auth=$row[0];
+$stmt="SELECT count(*) from vicidial_users where user='$user' and pass='$pass' and user_level > 0;";
+if ($DB) {echo "|$stmt|\n";}
+$rslt=mysql_query($stmt, $link);
+$row=mysql_fetch_row($rslt);
+$auth=$row[0];
 
-  if( (strlen($user)<2) or (strlen($pass)<2) or ($auth==0))
+if( (strlen($user)<2) or (strlen($pass)<2) or ($auth==0))
 	{
-    echo "Invalid Username/Password: |$user|$pass|\n";
-    exit;
+	echo "Invalid Username/Password: |$user|$pass|\n";
+	exit;
 	}
-  else
+else
 	{
-
 	if( (strlen($server_ip)<6) or (!isset($server_ip)) or ( (strlen($session_name)<12) or (!isset($session_name)) ) )
 		{
 		echo "Invalid server_ip: |$server_ip|  or  Invalid session_name: |$session_name|\n";
@@ -93,25 +93,25 @@ if (!isset($query_date)) {$query_date = $NOW_DATE;}
 	}
 
 if ($format=='debug')
-{
-echo "<html>\n";
-echo "<head>\n";
-echo "<!-- VERSION: $version     BUILD: $build    VMBOX: $vmail_box   server_ip: $server_ip-->\n";
-echo "<title>Voicemail Check";
-echo "</title>\n";
-echo "</head>\n";
-echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
-}
+	{
+	echo "<html>\n";
+	echo "<head>\n";
+	echo "<!-- VERSION: $version     BUILD: $build    VMBOX: $vmail_box   server_ip: $server_ip-->\n";
+	echo "<title>Voicemail Check";
+	echo "</title>\n";
+	echo "</head>\n";
+	echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
+	}
 
-	$MT[0]='';
-	$row='';   $rowx='';
-	if (strlen($vmail_box)<1)
+$MT[0]='';
+$row='';   $rowx='';
+if (strlen($vmail_box)<1)
 	{
 	$channel_live=0;
 	echo "voicemail box $vmail_box is not valid\n";
 	exit;
 	}
-	else
+else
 	{
 	$stmt="SELECT messages,old_messages FROM phones where server_ip='$server_ip' and voicemail_id='$vmail_box' limit 1;";
 		if ($format=='debug') {echo "\n<!-- $stmt -->";}

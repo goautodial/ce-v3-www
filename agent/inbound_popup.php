@@ -1,7 +1,7 @@
 <?php
-# inbound_popup.php    version 2.2.0
+# inbound_popup.php    version 2.6
 # 
-# Copyright (C) 2009  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 # This script is designed to open up when a live_inbound call comes in giving the user
 #   options of what to do with the call or options to lookup the callerID on various web sites
@@ -31,6 +31,7 @@
 # 60421-1043 - check GET/POST vars lines with isset to not trigger PHP NOTICES
 # 60619-1205 - Added variable filters to close security holes for login form
 # 90508-0727 - Changed to PHP long tags
+# 130328-0025 - Converted ereg to preg functions
 #
 
 require("dbconnect.php");
@@ -63,20 +64,20 @@ if (isset($_GET["local_web_callerID_URL_enc"]))			{$local_web_callerID_URL_enc=$
 if (isset($_GET["local_web_callerID_URL_enc"]))			{$local_web_callerID_URL = rawurldecode($local_web_callerID_URL_enc);}
 	else {$local_web_callerID_URL = '';}
 
-$user=ereg_replace("[^0-9a-zA-Z]","",$user);
-$pass=ereg_replace("[^0-9a-zA-Z]","",$pass);
+$user=preg_replace("/[^0-9a-zA-Z]/","",$user);
+$pass=preg_replace("/[^0-9a-zA-Z]/","",$pass);
 
 # default optional vars if not set
 if (!isset($format))   {$format="text";}
 
-$version = '0.0.6';
-$build = '60619-1205';
+$version = '0.0.7';
+$build = '130328-0025';
 $StarTtime = date("U");
 $NOW_DATE = date("Y-m-d");
 $NOW_TIME = date("Y-m-d H:i:s");
 if (!isset($query_date)) {$query_date = $NOW_DATE;}
 $DO = '-1';
-if ( (eregi("^Zap",$channel)) and (!eregi("-",$channel)) ) {$channel = "$channel$DO";}
+if ( (preg_match("/^Zap/i",$channel)) and (!preg_match("/-/i",$channel)) ) {$channel = "$channel$DO";}
 
 	$stmt="SELECT count(*) from vicidial_users where user='$user' and pass='$pass' and user_level > 0;";
 	if ($DB) {echo "|$stmt|\n";}
@@ -121,7 +122,7 @@ if ($format=='debug')
 $forever_stop=0;
 $user_abb = "$user$user$user$user";
 while ( (strlen($user_abb) > 4) and ($forever_stop < 200) )
-	{$user_abb = eregi_replace("^.","",$user_abb);   $forever_stop++;}
+	{$user_abb = preg_replace("/^./i","",$user_abb);   $forever_stop++;}
 
 echo "<html>\n";
 echo "<head>\n";
@@ -286,8 +287,8 @@ else
 		echo "<tr bgcolor=\"#DDDDFF\"><td>CallerID: </td><td align=left>$row[3]</td></tr>\n";
 		echo "<tr bgcolor=\"#DDDDFF\"><td colspan=2 align=center>\n";
 
-		$phone = eregi_replace(".*\<","",$row[3]);
-		$phone = eregi_replace("\>.*","",$phone);
+		$phone = preg_replace("/.*\</i","",$row[3]);
+		$phone = preg_replace("/\>.*/i","",$phone);
 		$NPA = substr($phone, 0, 3);
 		$NXX = substr($phone, 3, 3);
 		$XXXX = substr($phone, 6, 4);

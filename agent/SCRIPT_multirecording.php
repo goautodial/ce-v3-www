@@ -1,4 +1,4 @@
-<?
+<?php
 # SCRIPT_multirecording.php - script page that stops/starts recordings being made over a forced-recording (ALLFORCE) call
 # 
 # Copyright (C) 2012  Joe Johnson <joej@vicidial.com>    LICENSE: AGPLv2

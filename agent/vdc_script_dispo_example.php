@@ -1,7 +1,7 @@
 <?php
 # vdc_script_dispo_example.php
 # 
-# Copyright (C) 2011  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 # This script is designed to be used in the SCRIPT tab in an IFRAME and will not submit unless a specific field is filled in
 #
@@ -14,10 +14,11 @@
 # CHANGELOG:
 # 110208-1239 - First build of script based upon vdc_script_notes.php
 # 110221-1252 - Added missing variables, accounted for call notes on manual dial calls
+# 130328-0019 - Converted ereg to preg functions
 #
 
-$version = '2.4-2';
-$build = '110221-1252';
+$version = '2.6-3';
+$build = '130328-0019';
 
 require("dbconnect.php");
 
@@ -261,16 +262,16 @@ if ($qm_conf_ct > 0)
 
 if ($non_latin < 1)
 	{
-	$user=ereg_replace("[^-_0-9a-zA-Z]","",$user);
-	$pass=ereg_replace("[^-_0-9a-zA-Z]","",$pass);
-	$length_in_sec = ereg_replace("[^0-9]","",$length_in_sec);
-	$phone_code = ereg_replace("[^0-9]","",$phone_code);
-	$phone_number = ereg_replace("[^0-9]","",$phone_number);
+	$user=preg_replace("/[^-_0-9a-zA-Z]/","",$user);
+	$pass=preg_replace("/[^-_0-9a-zA-Z]/","",$pass);
+	$length_in_sec = preg_replace("/[^0-9]/","",$length_in_sec);
+	$phone_code = preg_replace("/[^0-9]/","",$phone_code);
+	$phone_number = preg_replace("/[^0-9]/","",$phone_number);
 	}
 else
 	{
-	$user = ereg_replace("'|\"|\\\\|;","",$user);
-	$pass = ereg_replace("'|\"|\\\\|;","",$pass);
+	$user = preg_replace("/\'|\"|\\\\|;/","",$user);
+	$pass = preg_replace("/\'|\"|\\\\|;/","",$pass);
 	}
 
 if ($DB > 0)
@@ -704,7 +705,7 @@ $DS=0;
 while ($statuses_to_print > $o) 
 	{
 	$rowx=mysql_fetch_row($rslt);
-	if ( (strlen($dispo) ==  strlen($rowx[0])) and (eregi($dispo,$rowx[0])) )
+	if ( (strlen($dispo) ==  strlen($rowx[0])) and (preg_match("/$dispo/i",$rowx[0])) )
 		{$statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n"; $DS++;}
 	else
 		{$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}
@@ -720,7 +721,7 @@ $CBhold_set=0;
 while ($CAMPstatuses_to_print > $o) 
 	{
 	$rowx=mysql_fetch_row($rslt);
-	if ( (strlen($dispo) ==  strlen($rowx[0])) and (eregi($dispo,$rowx[0])) )
+	if ( (strlen($dispo) ==  strlen($rowx[0])) and (preg_match("/$dispo/i",$rowx[0])) )
 		{$statuses_list .= "<option SELECTED value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n"; $DS++;}
 	else
 		{$statuses_list .= "<option value=\"$rowx[0]\">$rowx[0] - $rowx[1]</option>\n";}

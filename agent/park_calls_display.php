@@ -1,7 +1,7 @@
 <?php
-# park_calls_display.php    version 2.2.0
+# park_calls_display.php    version 2.6
 # 
-# Copyright (C) 2009  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 # This script is designed purely to send the details on the parked calls on the server
 # This script depends on the server_ip being sent and also needs to have a valid user/pass from the vicidial_users table
@@ -23,6 +23,7 @@
 # 60421-1111 - check GET/POST vars lines with isset to not trigger PHP NOTICES
 # 60619-1205 - Added variable filters to close security holes for login form
 # 90508-0727 - Changed to PHP long tags
+# 130328-0024 - Converted ereg to preg functions
 # 
 
 require("dbconnect.php");
@@ -43,8 +44,8 @@ if (isset($_GET["exten"]))					{$exten=$_GET["exten"];}
 if (isset($_GET["protocol"]))				{$protocol=$_GET["protocol"];}
 	elseif (isset($_POST["protocol"]))		{$protocol=$_POST["protocol"];}
 
-$user=ereg_replace("[^0-9a-zA-Z]","",$user);
-$pass=ereg_replace("[^0-9a-zA-Z]","",$pass);
+$user=preg_replace("/[^0-9a-zA-Z]/","",$user);
+$pass=preg_replace("/[^0-9a-zA-Z]/","",$pass);
 
 # default optional vars if not set
 if (!isset($format))		{$format="text";}

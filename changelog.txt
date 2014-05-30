@@ -1,5 +1,9 @@
 Filename: changelog.txt
 
+1401422400 - Updated the Agent UI from 2.4 to 2.7 version. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Folder:
+           - * agent/
+
 1399521600 - Fixed an issue on the audiostore box appearing in call times page. (Issue #1241) -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * application/views/go_settings/go_calltimes.php

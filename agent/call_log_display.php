@@ -1,7 +1,7 @@
 <?php
-# call_log_display.php    version 2.2.0
+# call_log_display.php    version 2.6
 # 
-# Copyright (C) 2009  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 # This script is designed purely to send the inbound and outbound calls for a specific phone
 # This script depends on the server_ip being sent and also needs to have a valid user/pass from the vicidial_users table
@@ -29,6 +29,7 @@
 # 60421-1401 - check GET/POST vars lines with isset to not trigger PHP NOTICES
 # 60619-1202 - Added variable filters to close security holes for login form
 # 90508-0727 - Changed to PHP long tags
+# 130328-0028 - Converted ereg to preg functions
 # 
 
 require("dbconnect.php");
@@ -49,8 +50,8 @@ if (isset($_GET["exten"]))				{$exten=$_GET["exten"];}
 if (isset($_GET["protocol"]))				{$protocol=$_GET["protocol"];}
 	elseif (isset($_POST["protocol"]))		{$protocol=$_POST["protocol"];}
 
-$user=ereg_replace("[^0-9a-zA-Z]","",$user);
-$pass=ereg_replace("[^0-9a-zA-Z]","",$pass);
+$user=preg_replace("/[^0-9a-zA-Z]/","",$user);
+$pass=preg_replace("/[^0-9a-zA-Z]/","",$pass);
 
 # default optional vars if not set
 if (!isset($format))   {$format="text";}
@@ -59,8 +60,8 @@ if (!isset($out_limit))   {$out_limit="100";}
 $number_dialed = 'number_dialed';
 #$number_dialed = 'extension';
 
-$version = '0.0.8';
-$build = '60619-1202';
+$version = '0.0.10';
+$build = '130328-0028';
 $StarTtime = date("U");
 $NOW_DATE = date("Y-m-d");
 $NOW_TIME = date("Y-m-d H:i:s");
@@ -72,14 +73,13 @@ if (!isset($query_date)) {$query_date = $NOW_DATE;}
 	$row=mysql_fetch_row($rslt);
 	$auth=$row[0];
 
-  if( (strlen($user)<2) or (strlen($pass)<2) or ($auth==0))
+if( (strlen($user)<2) or (strlen($pass)<2) or ($auth==0))
 	{
     echo "Invalid Username/Password: |$user|$pass|\n";
     exit;
 	}
-  else
+else
 	{
-
 	if( (strlen($server_ip)<6) or (!isset($server_ip)) or ( (strlen($session_name)<12) or (!isset($session_name)) ) )
 		{
 		echo "Invalid server_ip: |$server_ip|  or  Invalid session_name: |$session_name|\n";
@@ -92,12 +92,12 @@ if (!isset($query_date)) {$query_date = $NOW_DATE;}
 		$rslt=mysql_query($stmt, $link);
 		$row=mysql_fetch_row($rslt);
 		$SNauth=$row[0];
-		  if($SNauth==0)
+		if($SNauth==0)
 			{
 			echo "Invalid session_name: |$session_name|$server_ip|\n";
 			exit;
 			}
-		  else
+		else
 			{
 			# do nothing for now
 			}
@@ -105,26 +105,26 @@ if (!isset($query_date)) {$query_date = $NOW_DATE;}
 	}
 
 if ($format=='debug')
-{
-echo "<html>\n";
-echo "<head>\n";
-echo "<!-- VERSION: $version     BUILD: $build    EXTEN: $exten   server_ip: $server_ip-->\n";
-echo "<title>Call Log Display";
-echo "</title>\n";
-echo "</head>\n";
-echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
-}
+	{
+	echo "<html>\n";
+	echo "<head>\n";
+	echo "<!-- VERSION: $version     BUILD: $build    EXTEN: $exten   server_ip: $server_ip-->\n";
+	echo "<title>Call Log Display";
+	echo "</title>\n";
+	echo "</head>\n";
+	echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
+	}
 
 
 	$row='';   $rowx='';
 	$channel_live=1;
-	if ( (strlen($exten)<1) or (strlen($protocol)<3) )
+if ( (strlen($exten)<1) or (strlen($protocol)<3) )
 	{
 	$channel_live=0;
 	echo "Exten $exten is not valid or protocol $protocol is not valid\n";
 	exit;
 	}
-	else
+else
 	{
 	##### print outbound calls from the call_log table
 	$stmt="SELECT uniqueid,start_time,$number_dialed,length_in_sec FROM call_log where server_ip = '$server_ip' and channel LIKE \"$protocol/$exten%\" order by start_time desc limit $out_limit;";
@@ -133,7 +133,7 @@ echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>
 	if ($rslt) {$out_calls_count = mysql_num_rows($rslt);}
 	echo "$out_calls_count|";
 	$loop_count=0;
-		while ($out_calls_count>$loop_count)
+	while ($out_calls_count>$loop_count)
 		{
 		$loop_count++;
 		$row=mysql_fetch_row($rslt);
@@ -159,7 +159,7 @@ echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>
 	if ($rslt) {$in_calls_count = mysql_num_rows($rslt);}
 	echo "$in_calls_count|";
 	$loop_count=0;
-		while ($in_calls_count>$loop_count)
+	while ($in_calls_count>$loop_count)
 		{
 		$loop_count++;
 		$row=mysql_fetch_row($rslt);
@@ -179,7 +179,6 @@ echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>
 		echo "$row[0] ~$row[1] ~$row[2] ~$callerIDnum ~$callerIDname ~$call_time_MS|";
 		}
 	echo "\n";
-
 	}
 
 

@@ -1,7 +1,7 @@
 <?php
-# manager_send.php    version 2.4
+# manager_send.php    version 2.6
 # 
-# Copyright (C) 2011  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 # This script is designed purely to insert records into the vicidial_manager table to signal Actions to an asterisk server
 # This script depends on the server_ip being sent and also needs to have a valid user/pass from the vicidial_users table
@@ -109,15 +109,17 @@
 # 101125-1018 - Added call_variables Originate variables
 # 110224-1710 - Added compatibility with QM phone environment logging
 # 110626-2320 - Added qm_extension
-#
-# GoAutoDial
-# 130401-0543 - Added back the ACTION HangupRecordings
+# 120810-0030 - Added external_recording
+# 120831-1458 - Added vicidial_dial_log outbound call logging
+# 121120-0848 - Added QM socket-send functionality
+# 130108-1641 - Change for Asterisk 1.8 compatibility
+# 130328-0008 - Converted ereg to preg functions
 #
 
-$version = '2.4-56';
-$build = '130401-0543';
-$mel=1;					# Mysql Error Log enabled = 1
-$mysql_log_count=116;
+$version = '2.6-61';
+$build = '130328-0008';
+$mel=2;					# Mysql Error Log enabled = 1
+$mysql_log_count=119;
 $one_mysql_log=0;
 
 require("dbconnect.php");
@@ -236,14 +238,14 @@ if ($qm_conf_ct > 0)
 
 if ($non_latin < 1)
 	{
-	$user=ereg_replace("[^-_0-9a-zA-Z]","",$user);
-	$pass=ereg_replace("[^-_0-9a-zA-Z]","",$pass);
-	$secondS = ereg_replace("[^0-9]","",$secondS);
+	$user=preg_replace("/[^-_0-9a-zA-Z]/","",$user);
+	$pass=preg_replace("/[^-_0-9a-zA-Z]/","",$pass);
+	$secondS = preg_replace("/[^0-9]/","",$secondS);
 	}
 else
 	{
-	$user = ereg_replace("'|\"|\\\\|;","",$user);
-	$pass = ereg_replace("'|\"|\\\\|;","",$pass);
+	$user = preg_replace("/\'|\"|\\\\|;/","",$user);
+	$pass = preg_replace("/\'|\"|\\\\|;/","",$pass);
 	}
 
 
@@ -418,7 +420,7 @@ if ($ACTION=="OriginateNameVmail")
 
 if ($ACTION=="OriginateVDRelogin")
 	{
-	if ( ($enable_sipsak_messages > 0) and ($allow_sipsak_messages > 0) and (eregi("SIP",$protocol)) )
+	if ( ($enable_sipsak_messages > 0) and ($allow_sipsak_messages > 0) and (preg_match("/SIP/i",$protocol)) )
 		{
 		$CIDdate = date("ymdHis");
 		$DS='-';
@@ -439,7 +441,7 @@ if ($ACTION=="Originate")
 		}
 	else
 		{
-		if ( (eregi('MANUAL',$agent_dialed_type)) and ( (preg_match("/^\d860\d\d\d\d$/i",$exten)) or (preg_match("/^860\d\d\d\d$/i",$exten)) ) )
+		if ( (preg_match('/MANUAL/i',$agent_dialed_type)) and ( (preg_match("/^\d860\d\d\d\d$/i",$exten)) or (preg_match("/^860\d\d\d\d$/i",$exten)) ) )
 			{
 			echo "ERROR You are not allowed to dial into other agent sessions $exten\n";
 			exit;
@@ -464,6 +466,12 @@ if ($ACTION=="Originate")
 		$rslt=mysql_query($stmt, $link);
 				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'02007',$user,$server_ip,$session_name,$one_mysql_log);}
 		echo "Originate command sent for Exten $exten Channel $channel on $server_ip |$account|$variable|\n";
+
+		### log outbound call in the dial log
+		$stmt = "INSERT INTO vicidial_dial_log SET caller_code='$queryCID',lead_id='$lead_id',server_ip='$server_ip',call_date='$NOW_TIME',extension='$exten',channel='$channel',timeout='0',outbound_cid='$outCID',context='$ext_context';";
+		if ($DB) {echo "$stmt\n";}
+		$rslt=mysql_query($stmt, $link);
+				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'02119',$user,$server_ip,$session_name,$one_mysql_log);}
 
 		if ($agent_dialed_number > 0)
 			{
@@ -533,7 +541,7 @@ if ($ACTION=="HangupConfDial")
 			$rowx=mysql_fetch_row($rslt);
 			$channel=$rowx[0];
 			$ACTION="Hangup";
-			$queryCID = eregi_replace("^.","G",$queryCID);  # GTvdcW...
+			$queryCID = preg_replace("/^./i","G",$queryCID);  # GTvdcW...
 			}
 		}
 	}
@@ -641,7 +649,7 @@ if ($ACTION=="Hangup")
 					{
 					#############################################
 					##### START QUEUEMETRICS LOGGING LOOKUP #####
-					$stmt = "SELECT enable_queuemetrics_logging,queuemetrics_server_ip,queuemetrics_dbname,queuemetrics_login,queuemetrics_pass,queuemetrics_log_id,queuemetrics_pe_phone_append FROM system_settings;";
+					$stmt = "SELECT enable_queuemetrics_logging,queuemetrics_server_ip,queuemetrics_dbname,queuemetrics_login,queuemetrics_pass,queuemetrics_log_id,queuemetrics_pe_phone_append,queuemetrics_socket,queuemetrics_socket_url FROM system_settings;";
 					$rslt=mysql_query($stmt, $link);
 			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'02014',$user,$server_ip,$session_name,$one_mysql_log);}
 					if ($format=='debug') {echo "\n<!-- $rowx[0]|$stmt -->";}
@@ -657,6 +665,8 @@ if ($ACTION=="Hangup")
 						$queuemetrics_pass =			$row[4];
 						$queuemetrics_log_id =			$row[5];
 						$queuemetrics_pe_phone_append = $row[6];
+						$queuemetrics_socket =			$row[7];
+						$queuemetrics_socket_url =		$row[8];
 						$i++;
 						}
 					##### END QUEUEMETRICS LOGGING LOOKUP #####
@@ -732,6 +742,7 @@ if ($ACTION=="Hangup")
 									{$secondS = ($StarTtime - $time_id);}
 
 								$data4SQL='';
+								$data4SS='';
 								$stmt="SELECT queuemetrics_phone_environment FROM vicidial_campaigns where campaign_id='$log_campaign' and queuemetrics_phone_environment!='';";
 								$rslt=mysql_query($stmt, $link);
 			if ($mel > 0) {mysql_error_logging($NOW_TIME,$linkB,$mel,$stmt,'02116',$user,$server_ip,$session_name,$one_mysql_log);}
@@ -744,6 +755,7 @@ if ($ACTION=="Hangup")
 									if ( ($queuemetrics_pe_phone_append > 0) and (strlen($row[0])>0) )
 										{$pe_append = "-$qm_extension";}
 									$data4SQL = ",data4='$row[0]$pe_append'";
+									$data4SS = "&data4=$row[0]$pe_append";
 									}
 
 								if ($format=='debug') {echo "\n<!-- $caller_complete|$stmt -->";}
@@ -752,6 +764,18 @@ if ($ACTION=="Hangup")
 			if ($mel > 0) {mysql_error_logging($NOW_TIME,$linkB,$mel,$stmt,'02019',$user,$server_ip,$session_name,$one_mysql_log);}
 								$affected_rows = mysql_affected_rows($linkB);
 								if ($format=='debug') {echo "\n<!-- $affected_rows|$stmt -->";}
+
+								if ( ($queuemetrics_socket == 'CONNECT_COMPLETE') and (strlen($queuemetrics_socket_url) > 10) )
+									{
+									$socket_send_data_begin='?';
+									$socket_send_data = "time_id=$StarTtime&call_id=$CalLCID&queue=$CLcampaign_id&agent=Agent/$user&verb=COMPLETEAGENT&data1=$CLstage&data2=$secondS&data3=$CLqueue_position$data4SS";
+									if (preg_match("/\?/",$queuemetrics_socket_url))
+										{$socket_send_data_begin='&';}
+									### send queue_log data to the queuemetrics_socket_url ###
+									if ($DB > 0) {echo "$queuemetrics_socket_url$socket_send_data_begin$socket_send_data<BR>\n";}
+									$SCUfile = file("$queuemetrics_socket_url$socket_send_data_begin$socket_send_data");
+									if ($DB > 0) {echo "$SCUfile[0]<BR>\n";}
+									}
 								}
 							}
 						}
@@ -1308,7 +1332,7 @@ if ($ACTION=="RedirectXtraCXNeW")
 	$row='';   $rowx='';
 	$channel_liveX=1;
 	$channel_liveY=1;
-	if ( (strlen($channel)<3) or (strlen($queryCID)<15) or (strlen($ext_context)<1) or (strlen($ext_priority)<1) or (strlen($session_id)<3) or ( ( (strlen($extrachannel)<3) or (strlen($exten)<1) ) and (!ereg("NEXTAVAILABLE",$exten)) ) )
+	if ( (strlen($channel)<3) or (strlen($queryCID)<15) or (strlen($ext_context)<1) or (strlen($ext_priority)<1) or (strlen($session_id)<3) or ( ( (strlen($extrachannel)<3) or (strlen($exten)<1) ) and (!preg_match("/NEXTAVAILABLE/",$exten)) ) )
 		{
 		$channel_liveX=0;
 		$channel_liveY=0;
@@ -1320,7 +1344,7 @@ if ($ACTION=="RedirectXtraCXNeW")
 		echo "ext_context $ext_context must be set\n";
 		echo "ext_priority $ext_priority must be set\n";
 		echo "\nRedirect Action not sent\n";
-		if (ereg("SECOND|FIRST|DEBUG",$filename))
+		if (preg_match("/SECOND|FIRST|DEBUG/",$filename))
 			{
 			if ($WeBRooTWritablE > 0)
 				{
@@ -1332,7 +1356,7 @@ if ($ACTION=="RedirectXtraCXNeW")
 		}
 	else
 		{
-		if (ereg("NEXTAVAILABLE",$exten))
+		if (preg_match("/NEXTAVAILABLE/",$exten))
 			{
 			$stmtA="SELECT count(*) FROM vicidial_conferences where server_ip='$server_ip' and ((extension='') or (extension is null)) and conf_exten != '$session_id';";
 				if ($format=='debug') {echo "\n<!-- $stmtA -->";}
@@ -1353,7 +1377,7 @@ if ($ACTION=="RedirectXtraCXNeW")
 				$row=mysql_fetch_row($rslt);
 				$exten = $row[0];
 
-				if ( (ereg("^8300",$extension)) and ($protocol == 'Local') )
+				if ( (preg_match("/^8300/i",$extension)) and ($protocol == 'Local') )
 					{
 					$extension = "$extension$user";
 					}
@@ -1400,7 +1424,7 @@ if ($ACTION=="RedirectXtraCXNeW")
 				{
 				$channel_liveX=0;
 				echo "Cannot find empty vicidial_conference on $server_ip, Redirect command not inserted\n|$stmt|";
-				if (ereg("SECOND|FIRST|DEBUG",$filename)) {$DBout .= "Cannot find empty conference on $server_ip";}
+				if (preg_match("/SECOND|FIRST|DEBUG/",$filename)) {$DBout .= "Cannot find empty conference on $server_ip";}
 				}
 			}
 
@@ -1422,7 +1446,7 @@ if ($ACTION=="RedirectXtraCXNeW")
 				{
 				$channel_liveX=0;
 				echo "Channel $channel is not live on $call_server_ip, Redirect command not inserted\n";
-				if (ereg("SECOND|FIRST|DEBUG",$filename)) {$DBout .= "$channel is not live on $call_server_ip";}
+				if (preg_match("/SECOND|FIRST|DEBUG/",$filename)) {$DBout .= "$channel is not live on $call_server_ip";}
 				}	
 			}
 		$stmt="SELECT count(*) FROM live_channels where server_ip = '$server_ip' and channel='$extrachannel';";
@@ -1441,7 +1465,7 @@ if ($ACTION=="RedirectXtraCXNeW")
 				{
 				$channel_liveY=0;
 				echo "Channel $channel is not live on $server_ip, Redirect command not inserted\n";
-				if (ereg("SECOND|FIRST|DEBUG",$filename)) {$DBout .= "$channel is not live on $server_ip";}
+				if (preg_match("/SECOND|FIRST|DEBUG/",$filename)) {$DBout .= "$channel is not live on $server_ip";}
 				}	
 			}
 		if ( ($channel_liveX==1) and ($channel_liveY==1) )
@@ -1455,7 +1479,7 @@ if ($ACTION=="RedirectXtraCXNeW")
 				{
 				$channel_liveY=0;
 				echo "No Local agent to send call to, Redirect command not inserted\n";
-				if (ereg("SECOND|FIRST|DEBUG",$filename)) {$DBout .= "No Local agent to send call to";}
+				if (preg_match("/SECOND|FIRST|DEBUG/",$filename)) {$DBout .= "No Local agent to send call to";}
 				}	
 			else
 				{
@@ -1491,7 +1515,7 @@ if ($ACTION=="RedirectXtraCXNeW")
 			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'02044',$user,$server_ip,$session_name,$one_mysql_log);}
 
 				echo "RedirectXtraCX command sent for Channel $channel on $call_server_ip and \nHungup $extrachannel on $server_ip\n";
-				if (ereg("SECOND|FIRST|DEBUG",$filename)) {$DBout .= "$channel on $call_server_ip, Hungup $extrachannel on $server_ip";}
+				if (preg_match("/SECOND|FIRST|DEBUG/",$filename)) {$DBout .= "$channel on $call_server_ip, Hungup $extrachannel on $server_ip";}
 				}
 			}
 		else
@@ -1500,10 +1524,10 @@ if ($ACTION=="RedirectXtraCXNeW")
 			{$ACTION="Redirect";   $server_ip = $call_server_ip;}
 			if ($channel_liveY==1)
 			{$ACTION="Redirect";   $channel=$extrachannel;}
-			if (ereg("SECOND|FIRST|DEBUG",$filename)) {$DBout .= "Changed to Redirect: $channel on $server_ip";}
+			if (preg_match("/SECOND|FIRST|DEBUG/",$filename)) {$DBout .= "Changed to Redirect: $channel on $server_ip";}
 			}
 
-		if (ereg("SECOND|FIRST|DEBUG",$filename))
+		if (preg_match("/SECOND|FIRST|DEBUG/",$filename))
 			{
 			if ($WeBRooTWritablE > 0)
 				{
@@ -1533,7 +1557,7 @@ if ($ACTION=="RedirectXtraNeW")
 		$row='';   $rowx='';
 		$channel_liveX=1;
 		$channel_liveY=1;
-		if ( (strlen($channel)<3) or (strlen($queryCID)<15) or (strlen($ext_context)<1) or (strlen($ext_priority)<1) or (strlen($session_id)<3) or ( ( (strlen($extrachannel)<3) or (strlen($exten)<1) ) and (!ereg("NEXTAVAILABLE",$exten)) ) )
+		if ( (strlen($channel)<3) or (strlen($queryCID)<15) or (strlen($ext_context)<1) or (strlen($ext_priority)<1) or (strlen($session_id)<3) or ( ( (strlen($extrachannel)<3) or (strlen($exten)<1) ) and (!preg_match("/NEXTAVAILABLE/",$exten)) ) )
 			{
 			$channel_liveX=0;
 			$channel_liveY=0;
@@ -1546,7 +1570,7 @@ if ($ACTION=="RedirectXtraNeW")
 			echo "ext_priority $ext_priority must be set\n";
 			echo "session_id $session_id must be set\n";
 			echo "\nRedirect Action not sent\n";
-			if (ereg("SECOND|FIRST|DEBUG",$filename))
+			if (preg_match("/SECOND|FIRST|DEBUG/",$filename))
 				{
 				if ($WeBRooTWritablE > 0)
 					{
@@ -1558,7 +1582,7 @@ if ($ACTION=="RedirectXtraNeW")
 			}
 		else
 			{
-			if (ereg("NEXTAVAILABLE",$exten))
+			if (preg_match("/NEXTAVAILABLE/",$exten))
 				{
 				$stmt="SELECT count(*) FROM vicidial_conferences where server_ip='$server_ip' and ((extension='') or (extension is null)) and conf_exten != '$session_id';";
 					if ($format=='debug') {echo "\n<!-- $stmt -->";}
@@ -1617,7 +1641,7 @@ if ($ACTION=="RedirectXtraNeW")
 					{
 					$channel_liveX=0;
 					echo "Cannot find empty vicidial_conference on $server_ip, Redirect command not inserted\n|$stmt|";
-					if (ereg("SECOND|FIRST|DEBUG",$filename)) {$DBout .= "Cannot find empty conference on $server_ip";}
+					if (preg_match("/SECOND|FIRST|DEBUG/",$filename)) {$DBout .= "Cannot find empty conference on $server_ip";}
 					}
 				}
 
@@ -1628,7 +1652,7 @@ if ($ACTION=="RedirectXtraNeW")
 			$rslt=mysql_query($stmt, $link);
 			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'02053',$user,$server_ip,$session_name,$one_mysql_log);}
 			$row=mysql_fetch_row($rslt);
-			if ( ($row[0]==0) and (!ereg("SECOND",$filename)) )
+			if ( ($row[0]==0) and (!preg_match("/SECOND/",$filename)) )
 				{
 				$stmt="SELECT count(*) FROM live_sip_channels where server_ip = '$call_server_ip' and channel='$channel';";
 					if ($format=='debug') {echo "\n<!-- $stmt -->";}
@@ -1639,7 +1663,7 @@ if ($ACTION=="RedirectXtraNeW")
 					{
 					$channel_liveX=0;
 					echo "Channel $channel is not live on $call_server_ip, Redirect command not inserted\n";
-					if (ereg("SECOND|FIRST|DEBUG",$filename)) {$DBout .= "$channel is not live on $call_server_ip";}
+					if (preg_match("/SECOND|FIRST|DEBUG/",$filename)) {$DBout .= "$channel is not live on $call_server_ip";}
 					}	
 				}
 			$stmt="SELECT count(*) FROM live_channels where server_ip = '$server_ip' and channel='$extrachannel';";
@@ -1647,7 +1671,7 @@ if ($ACTION=="RedirectXtraNeW")
 			$rslt=mysql_query($stmt, $link);
 			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'02055',$user,$server_ip,$session_name,$one_mysql_log);}
 			$row=mysql_fetch_row($rslt);
-			if ( ($row[0]==0) and (!ereg("SECOND",$filename)) )
+			if ( ($row[0]==0) and (!preg_match("/SECOND/",$filename)) )
 				{
 				$stmt="SELECT count(*) FROM live_sip_channels where server_ip = '$server_ip' and channel='$extrachannel';";
 					if ($format=='debug') {echo "\n<!-- $stmt -->";}
@@ -1658,7 +1682,7 @@ if ($ACTION=="RedirectXtraNeW")
 					{
 					$channel_liveY=0;
 					echo "Channel $channel is not live on $server_ip, Redirect command not inserted\n";
-					if (ereg("SECOND|FIRST|DEBUG",$filename)) {$DBout .= "$channel is not live on $server_ip";}
+					if (preg_match("/SECOND|FIRST|DEBUG/",$filename)) {$DBout .= "$channel is not live on $server_ip";}
 					}	
 				}
 			if ( ($channel_liveX==1) and ($channel_liveY==1) )
@@ -1671,7 +1695,7 @@ if ($ACTION=="RedirectXtraNeW")
 			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'02057',$user,$server_ip,$session_name,$one_mysql_log);}
 
 					echo "RedirectXtra command sent for Channel $channel and \nExtraChannel $extrachannel\n to $exten on $server_ip\n";
-					if (ereg("SECOND|FIRST|DEBUG",$filename)) {$DBout .= "$channel and $extrachannel to $exten on $server_ip";}
+					if (preg_match("/SECOND|FIRST|DEBUG/",$filename)) {$DBout .= "$channel and $extrachannel to $exten on $server_ip";}
 					}
 				else
 					{
@@ -1698,7 +1722,7 @@ if ($ACTION=="RedirectXtraNeW")
 			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'02059',$user,$server_ip,$session_name,$one_mysql_log);}
 
 					echo "RedirectXtra command sent for Channel $channel on $call_server_ip and \nExtraChannel $extrachannel\n to $exten on $server_ip\n";
-					if (ereg("SECOND|FIRST|DEBUG",$filename)) {$DBout .= "$channel/$call_server_ip and $extrachannel/$server_ip to $exten";}
+					if (preg_match("/SECOND|FIRST|DEBUG/",$filename)) {$DBout .= "$channel/$call_server_ip and $extrachannel/$server_ip to $exten";}
 					}
 				}
 			else
@@ -1709,7 +1733,7 @@ if ($ACTION=="RedirectXtraNeW")
 				{$ACTION="Redirect";   $channel=$extrachannel;}
 				}
 
-			if (ereg("SECOND|FIRST|DEBUG",$filename))
+			if (preg_match("/SECOND|FIRST|DEBUG/",$filename))
 				{
 				if ($WeBRooTWritablE > 0)
 					{
@@ -1748,8 +1772,8 @@ if ($ACTION=="Redirect")
 			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'02061',$user,$server_ip,$session_name,$one_mysql_log);}
 			$rowx=mysql_fetch_row($rslt);
 			$channel=$rowx[0];
-			$channel = eregi_replace("1$","2",$channel);
-			$queryCID = eregi_replace("^.","Q",$queryCID);
+			$channel = preg_replace("/1$/i","2",$channel);
+			$queryCID = preg_replace("/^./i","Q",$queryCID);
 			}
 		}
 
@@ -1928,6 +1952,12 @@ if ( ($ACTION=="MonitorConf") || ($ACTION=="StopMonitorConf") )
 
 			if ($FROMvdc=='YES')
 				{
+				##### update vla record with recording_id
+				$stmt = "UPDATE vicidial_live_agents SET external_recording='$recording_id' where user='$user';";
+					if ($format=='debug') {echo "\n<!-- $stmt -->";}
+				$rslt=mysql_query($stmt, $link);
+				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'02117',$user,$server_ip,$session_name,$one_mysql_log);}
+
 				##### get call type from vicidial_live_agents table
 				$VLA_inOUT='NONE';
 				$stmt="SELECT comments FROM vicidial_live_agents where user='$user' order by last_update_time desc limit 1;";
@@ -1992,6 +2022,15 @@ if ( ($ACTION=="MonitorConf") || ($ACTION=="StopMonitorConf") )
 				if (strlen($uniqueid) > 8)
 					{$uniqueidSQL	= ",vicidial_id='$uniqueid'";}
 				}
+
+			if ($FROMvdc=='YES')
+				{
+				##### update vla recording record to blank
+				$stmt = "UPDATE vicidial_live_agents SET external_recording='' where user='$user';";
+					if ($format=='debug') {echo "\n<!-- $stmt -->";}
+				$rslt=mysql_query($stmt, $link);
+				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'02118',$user,$server_ip,$session_name,$one_mysql_log);}
+				}
 			
 			$stmt="SELECT recording_id,start_epoch FROM recording_log where filename='$filename'";
 			$rslt=mysql_query($stmt, $link);
@@ -2014,7 +2053,7 @@ if ( ($ACTION=="MonitorConf") || ($ACTION=="StopMonitorConf") )
 				}
 
 			# find and hang up all recordings going on in this conference # and extension = '$exten' 
-			$stmt="SELECT channel FROM live_sip_channels where server_ip = '$server_ip' and channel LIKE \"$channel%\" and channel LIKE \"%,1\";";
+			$stmt="SELECT channel FROM live_sip_channels where server_ip = '$server_ip' and channel LIKE \"$channel%\" and (channel LIKE \"%,1\" or channel LIKE \"%;1\");";
 				if ($format=='debug') {echo "\n<!-- $stmt -->";}
 			$rslt=mysql_query($stmt, $link);
 				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'02080',$user,$server_ip,$session_name,$one_mysql_log);}
@@ -2042,42 +2081,7 @@ if ( ($ACTION=="MonitorConf") || ($ACTION=="StopMonitorConf") )
 	}
 
 
-######################
-# ACTION=HangupRecordings - fix for the recording bug
-######################
-if ($ACTION=="HangupRecordings")
-	{
-	if ( (strlen($exten)<3) or (strlen($channel)<4) )
-		{
-		$channel_live=0;
-		echo "Channel $channel is not valid or exten $exten is not valid, $ACTION command not inserted\n";
-		}
-	else
-		{
-		$stmt="SELECT channel FROM live_sip_channels where server_ip = '$server_ip' and channel LIKE \"$channel%\" and channel LIKE \"%,2\";";
-			if ($format=='debug') {echo "\n<!-- $stmt -->";}
-		$rslt=mysql_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'02080',$user,$server_ip,$session_name,$one_mysql_log);}
-	#	$rec_count = intval(mysql_num_rows($rslt) / 2);
-		$rec_count = mysql_num_rows($rslt);
-		$h=0;
-			while ($rec_count>$h)
-			{
-			$rowx=mysql_fetch_row($rslt);
-			$HUchannel[$h] = $rowx[0];
-			$h++;
-			}
-		$i=0;
-			while ($h>$i)
-			{
-			$stmt="INSERT INTO vicidial_manager values('','','$NOW_TIME','NEW','N','$server_ip','','Hangup','RH12345$StarTtime$i','Channel: $HUchannel[$i]','','','','','','','','','');";
-				if ($format=='debug') {echo "\n<!-- $stmt -->";}
-			$rslt=mysql_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'02081',$user,$server_ip,$session_name,$one_mysql_log);}
-			$i++;
-			}
-		}
-	}
+
 
 
 ######################
@@ -2092,10 +2096,10 @@ if ($ACTION=="VolumeControl")
 	else
 		{
 		$participant_number='XXYYXXYYXXYYXX';
-		if (eregi('UP',$stage)) {$vol_prefix='4';}
-		if (eregi('DOWN',$stage)) {$vol_prefix='3';}
-		if (eregi('UNMUTE',$stage)) {$vol_prefix='2';}
-		if (eregi('MUTING',$stage)) {$vol_prefix='1';}
+		if (preg_match('/UP/i',$stage)) {$vol_prefix='4';}
+		if (preg_match('/DOWN/i',$stage)) {$vol_prefix='3';}
+		if (preg_match('/UNMUTE/i',$stage)) {$vol_prefix='2';}
+		if (preg_match('/MUTING/i',$stage)) {$vol_prefix='1';}
 		$local_DEF = 'Local/';
 		$local_AMP = '@';
 		$volume_local_channel = "$local_DEF$participant_number$vol_prefix$exten$local_AMP$ext_context";
