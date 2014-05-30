@@ -1,36 +1,32 @@
 <?php
 # 
-# dbconnect.php    version 2.6
+# dbconnect.php    version 2.2.0
 #
 # database connection settings and some global web settings
 #
-# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2010  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
-# CHANGES:
-# 130328-0022 - Converted ereg to preg functions
-#
-
-if ( file_exists("/var/www/cloudhv/astguiclient.conf") )
+if ( file_exists("/etc/astguiclient.conf") )
 	{
-	$DBCagc = file("/var/www/cloudhv/astguiclient.conf");
+	$DBCagc = file("/etc/astguiclient.conf");
 	foreach ($DBCagc as $DBCline) 
 		{
 		$DBCline = preg_replace("/ |>|\n|\r|\t|\#.*|;.*/","",$DBCline);
-		if (preg_match("/^PATHlogs/", $DBCline))
+		if (ereg("^PATHlogs", $DBCline))
 			{$PATHlogs = $DBCline;   $PATHlogs = preg_replace("/.*=/","",$PATHlogs);}
-		if (preg_match("/^PATHweb/", $DBCline))
+		if (ereg("^PATHweb", $DBCline))
 			{$WeBServeRRooT = $DBCline;   $WeBServeRRooT = preg_replace("/.*=/","",$WeBServeRRooT);}
-		if (preg_match("/^VARserver_ip/", $DBCline))
+		if (ereg("^VARserver_ip", $DBCline))
 			{$WEBserver_ip = $DBCline;   $WEBserver_ip = preg_replace("/.*=/","",$WEBserver_ip);}
-		if (preg_match("/^VARDB_server/", $DBCline))
+		if (ereg("^VARDB_server", $DBCline))
 			{$VARDB_server = $DBCline;   $VARDB_server = preg_replace("/.*=/","",$VARDB_server);}
-		if (preg_match("/^VARDB_database/", $DBCline))
+		if (ereg("^VARDB_database", $DBCline))
 			{$VARDB_database = $DBCline;   $VARDB_database = preg_replace("/.*=/","",$VARDB_database);}
-		if (preg_match("/^VARDB_user/", $DBCline))
+		if (ereg("^VARDB_user", $DBCline))
 			{$VARDB_user = $DBCline;   $VARDB_user = preg_replace("/.*=/","",$VARDB_user);}
-		if (preg_match("/^VARDB_pass/", $DBCline))
+		if (ereg("^VARDB_pass", $DBCline))
 			{$VARDB_pass = $DBCline;   $VARDB_pass = preg_replace("/.*=/","",$VARDB_pass);}
-		if (preg_match("/^VARDB_port/", $DBCline))
+		if (ereg("^VARDB_port", $DBCline))
 			{$VARDB_port = $DBCline;   $VARDB_port = preg_replace("/.*=/","",$VARDB_port);}
 		}
 	}

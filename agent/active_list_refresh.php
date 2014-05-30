@@ -1,7 +1,7 @@
 <?php
-# active_list_refresh.php    version 2.6
+# active_list_refresh.php    version 2.2.0
 # 
-# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2009  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 # This script is designed purely to serve updates of the live data to the display scripts
 # This script depends on the server_ip being sent and also needs to have a valid user/pass from the vicidial_users table
@@ -39,7 +39,6 @@
 # 60421-1155 - check GET/POST vars lines with isset to not trigger PHP NOTICES
 # 60619-1118 - Added variable filters to close security holes for login form
 # 90508-0727 - Changed to PHP long tags
-# 130328-0029 - Converted ereg to preg functions
 #
 
 require("dbconnect.php");
@@ -83,22 +82,22 @@ if (isset($_GET["field_name"]))				{$field_name=$_GET["field_name"];}
 	elseif (isset($_POST["field_name"]))	{$field_name=$_POST["field_name"];}
 
 ### security strip all non-alphanumeric characters out of the variables ###
-	$user=preg_replace("/[^0-9a-zA-Z]/","",$user);
-	$pass=preg_replace("/[^0-9a-zA-Z]/","",$pass);
-	$ADD=preg_replace("/[^0-9]/","",$ADD);
-	$order=preg_replace("/[^0-9a-zA-Z]/","",$order);
-	$format=preg_replace("/[^0-9a-zA-Z]/","",$format);
-	$bgcolor=preg_replace("/[^\#0-9a-zA-Z]/","",$bgcolor);
-	$txtcolor=preg_replace("/[^\#0-9a-zA-Z]/","",$txtcolor);
-	$txtsize=preg_replace("/[^0-9a-zA-Z]/","",$txtsize);
-	$selectsize=preg_replace("/[^0-9a-zA-Z]/","",$selectsize);
-	$selectfontsize=preg_replace("/[^0-9a-zA-Z]/","",$selectfontsize);
-	$selectedext=preg_replace("/[^ \#\*\:\/\@\.\-\_0-9a-zA-Z]/","",$selectedext);
-	$selectedtrunk=preg_replace("/[^ \#\*\:\/\@\.\-\_0-9a-zA-Z]/","",$selectedtrunk);
-	$selectedlocal=preg_replace("/[^ \#\*\:\/\@\.\-\_0-9a-zA-Z]/","",$selectedlocal);
-	$textareaheight=preg_replace("/[^0-9a-zA-Z]/","",$textareaheight);
-	$textareawidth=preg_replace("/[^0-9a-zA-Z]/","",$textareawidth);
-	$field_name=preg_replace("/[^ \#\*\:\/\@\.\-\_0-9a-zA-Z]/","",$field_name);
+	$user=ereg_replace("[^0-9a-zA-Z]","",$user);
+	$pass=ereg_replace("[^0-9a-zA-Z]","",$pass);
+	$ADD=ereg_replace("[^0-9]","",$ADD);
+	$order=ereg_replace("[^0-9a-zA-Z]","",$order);
+	$format=ereg_replace("[^0-9a-zA-Z]","",$format);
+	$bgcolor=ereg_replace("[^\#0-9a-zA-Z]","",$bgcolor);
+	$txtcolor=ereg_replace("[^\#0-9a-zA-Z]","",$txtcolor);
+	$txtsize=ereg_replace("[^0-9a-zA-Z]","",$txtsize);
+	$selectsize=ereg_replace("[^0-9a-zA-Z]","",$selectsize);
+	$selectfontsize=ereg_replace("[^0-9a-zA-Z]","",$selectfontsize);
+	$selectedext=ereg_replace("[^ \#\*\:\/\@\.\-\_0-9a-zA-Z]","",$selectedext);
+	$selectedtrunk=ereg_replace("[^ \#\*\:\/\@\.\-\_0-9a-zA-Z]","",$selectedtrunk);
+	$selectedlocal=ereg_replace("[^ \#\*\:\/\@\.\-\_0-9a-zA-Z]","",$selectedlocal);
+	$textareaheight=ereg_replace("[^0-9a-zA-Z]","",$textareaheight);
+	$textareawidth=ereg_replace("[^0-9a-zA-Z]","",$textareawidth);
+	$field_name=ereg_replace("[^ \#\*\:\/\@\.\-\_0-9a-zA-Z]","",$field_name);
 
 # default optional vars if not set
 if (!isset($ADD))				{$ADD="1";}
@@ -112,8 +111,8 @@ if (!isset($selectfontsize))	{$selectfontsize='10';}
 if (!isset($textareaheight))	{$textareaheight='10';}
 if (!isset($textareawidth))		{$textareawidth='20';}
 
-$version = '0.0.10';
-$build = '130328-0029';
+$version = '0.0.8';
+$build = '60619-1118';
 $StarTtime = date("U");
 $NOW_DATE = date("Y-m-d");
 $NOW_TIME = date("Y-m-d H:i:s");
@@ -125,13 +124,14 @@ if (!isset($query_date)) {$query_date = $NOW_DATE;}
 	$row=mysql_fetch_row($rslt);
 	$auth=$row[0];
 
-if( (strlen($user)<2) or (strlen($pass)<2) or ($auth==0))
+  if( (strlen($user)<2) or (strlen($pass)<2) or ($auth==0))
 	{
     echo "Invalid Username/Password: |$user|$pass|\n";
     exit;
 	}
-else
+  else
 	{
+
 	if( (strlen($server_ip)<6) or (!isset($server_ip)) or ( (strlen($session_name)<12) or (!isset($session_name)) ) )
 		{
 		echo "Invalid server_ip: |$server_ip|  or  Invalid session_name: |$session_name|\n";
@@ -144,12 +144,12 @@ else
 		$rslt=mysql_query($stmt, $link);
 		$row=mysql_fetch_row($rslt);
 		$SNauth=$row[0];
-		if($SNauth==0)
+		  if($SNauth==0)
 			{
 			echo "Invalid session_name: |$session_name|$server_ip|\n";
 			exit;
 			}
-		else
+		  else
 			{
 			# do nothing for now
 			}
@@ -157,21 +157,21 @@ else
 	}
 
 if ($format=='table')
-	{
-	echo "<html>\n";
-	echo "<head>\n";
-	echo "<!-- VERSION: $version     BUILD: $build    ADD: $ADD   server_ip: $server_ip-->\n";
-	echo "<title>List Display: ";
-	if ($ADD==1)		{echo "Live Extensions";}
-	if ($ADD==2)		{echo "Busy Extensions";}
-	if ($ADD==3)		{echo "Outside Lines";}
-	if ($ADD==4)		{echo "Local Extensions";}
-	if ($ADD==5)		{echo "Conferences";}
-	if ($ADD==99999)	{echo "HELP";}
-	echo "</title>\n";
-	echo "</head>\n";
-	echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
-	}
+{
+echo "<html>\n";
+echo "<head>\n";
+echo "<!-- VERSION: $version     BUILD: $build    ADD: $ADD   server_ip: $server_ip-->\n";
+echo "<title>List Display: ";
+if ($ADD==1)		{echo "Live Extensions";}
+if ($ADD==2)		{echo "Busy Extensions";}
+if ($ADD==3)		{echo "Outside Lines";}
+if ($ADD==4)		{echo "Local Extensions";}
+if ($ADD==5)		{echo "Conferences";}
+if ($ADD==99999)	{echo "HELP";}
+echo "</title>\n";
+echo "</head>\n";
+echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
+}
 
 
 
@@ -181,7 +181,7 @@ if ($format=='table')
 # ADD=1 display all live extensions on a server
 ######################
 if ($ADD==1)
-	{
+{
 	$pt='pt';
 	if (!$field_name) {$field_name = 'extension';}
 	if ($format=='table') {echo "<TABLE WIDTH=120 BGCOLOR=$bgcolor cellpadding=0 cellspacing=0>\n";}
@@ -200,8 +200,7 @@ if ($ADD==1)
 	$rslt=mysql_query($stmt, $link);
 	if ($rslt) {$phones_to_print = mysql_num_rows($rslt);}
 	$o=0;
-	while ($phones_to_print > $o) 
-		{
+	while ($phones_to_print > $o) {
 		$row=mysql_fetch_row($rslt);
 		if ($format=='table')
 			{
@@ -222,13 +221,13 @@ if ($ADD==1)
 			echo "</OPTION>\n";
 			}
 		$o++;
-		}
+	}
 
 	if ($format=='table') {echo "</TABLE>\n";}
 	if ($format=='menu') {echo "</SELECT>\n";}
 	if ($format=='selectlist') {echo "</SELECT>\n";}
 	if ($format=='textarea') {echo "</TEXTAREA>\n";}
-	}
+}
 
 
 
@@ -240,7 +239,7 @@ if ($ADD==1)
 # ADD=2 display all busy extensions on a server
 ######################
 if ($ADD==2)
-	{
+{
 	if (!$field_name) {$field_name = 'busyext';}
 	if ($format=='table') {echo "<TABLE WIDTH=120 BGCOLOR=$bgcolor cellpadding=0 cellspacing=0>\n";}
 	if ($format=='menu') {echo "<SELECT SIZE=1 name=\"$field_name\">\n";}
@@ -258,8 +257,7 @@ if ($ADD==2)
 	$rslt=mysql_query($stmt, $link);
 	if ($rslt) {$busys_to_print = mysql_num_rows($rslt);}
 	$o=0;
-	while ($busys_to_print > $o) 
-		{
+	while ($busys_to_print > $o) {
 		$row=mysql_fetch_row($rslt);
 		if ($format=='table')
 			{
@@ -280,13 +278,13 @@ if ($ADD==2)
 			echo "</OPTION>\n";
 			}
 		$o++;
-		}
+	}
 
 	if ($format=='table') {echo "</TABLE>\n";}
 	if ($format=='menu') {echo "</SELECT>\n";}
 	if ($format=='selectlist') {echo "</SELECT>\n";}
 	if ($format=='textarea') {echo "</TEXTAREA>\n";}
-	}
+}
 
 
 
@@ -297,7 +295,7 @@ if ($ADD==2)
 # ADD=3 display all busy outside lines(trunks) on a server
 ######################
 if ($ADD==3)
-	{
+{
 	if (!$field_name) {$field_name = 'trunk';}
 	if ($format=='table') {echo "<TABLE WIDTH=120 BGCOLOR=$bgcolor cellpadding=0 cellspacing=0>\n";}
 	if ($format=='menu') {echo "<SELECT SIZE=1 name=\"$field_name\">\n";}
@@ -315,8 +313,7 @@ if ($ADD==3)
 	$rslt=mysql_query($stmt, $link);
 	if ($rslt) {$busys_to_print = mysql_num_rows($rslt);}
 	$o=0;
-	while ($busys_to_print > $o) 
-		{
+	while ($busys_to_print > $o) {
 		$row=mysql_fetch_row($rslt);
 		if ($format=='table')
 			{
@@ -337,13 +334,13 @@ if ($ADD==3)
 			echo "</OPTION>\n";
 			}
 		$o++;
-		}
+	}
 
 	if ($format=='table') {echo "</TABLE>\n";}
 	if ($format=='menu') {echo "</SELECT>\n";}
 	if ($format=='selectlist') {echo "</SELECT>\n";}
 	if ($format=='textarea') {echo "</TEXTAREA>\n";}
-	}
+}
 
 
 
@@ -354,7 +351,7 @@ if ($ADD==3)
 # ADD=4 display all busy Local lines on a server
 ######################
 if ($ADD==4)
-	{
+{
 	if (!$field_name) {$field_name = 'local';}
 	if ($format=='table') {echo "<TABLE WIDTH=120 BGCOLOR=$bgcolor cellpadding=0 cellspacing=0>\n";}
 	if ($format=='menu') {echo "<SELECT SIZE=1 name=\"$field_name\">\n";}
@@ -372,8 +369,7 @@ if ($ADD==4)
 	$rslt=mysql_query($stmt, $link);
 	if ($rslt) {$busys_to_print = mysql_num_rows($rslt);}
 	$o=0;
-	while ($busys_to_print > $o) 
-		{
+	while ($busys_to_print > $o) {
 		$row=mysql_fetch_row($rslt);
 		if ($format=='table')
 			{
@@ -394,13 +390,13 @@ if ($ADD==4)
 			echo "</OPTION>\n";
 			}
 		$o++;
-		}
+	}
 
 	if ($format=='table') {echo "</TABLE>\n";}
 	if ($format=='menu') {echo "</SELECT>\n";}
 	if ($format=='selectlist') {echo "</SELECT>\n";}
 	if ($format=='textarea') {echo "</TEXTAREA>\n";}
-	}
+}
 
 
 
@@ -411,7 +407,7 @@ if ($ADD==4)
 # ADD=5 display all agc-usable conferences on a server
 ######################
 if ($ADD==5)
-	{
+{
 	$pt='pt';
 	if (!$field_name) {$field_name = 'conferences';}
 	if ($format=='table') {echo "<TABLE WIDTH=120 BGCOLOR=$bgcolor cellpadding=0 cellspacing=0>\n";}
@@ -430,8 +426,7 @@ if ($ADD==5)
 	$rslt=mysql_query($stmt, $link);
 	if ($rslt) {$phones_to_print = mysql_num_rows($rslt);}
 	$o=0;
-	while ($phones_to_print > $o) 
-		{
+	while ($phones_to_print > $o) {
 		$row=mysql_fetch_row($rslt);
 		if ($format=='table')
 			{
@@ -452,13 +447,21 @@ if ($ADD==5)
 			echo "</OPTION>\n";
 			}
 		$o++;
-		}
+	}
 
 	if ($format=='table') {echo "</TABLE>\n";}
 	if ($format=='menu') {echo "</SELECT>\n";}
 	if ($format=='selectlist') {echo "</SELECT>\n";}
 	if ($format=='textarea') {echo "</TEXTAREA>\n";}
-	}
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -473,4 +476,8 @@ if ($format=='table') {echo "\n</body>\n</html>\n";}
 exit; 
 
 ?>
+
+
+
+
 

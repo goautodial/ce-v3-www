@@ -1,7 +1,7 @@
 <?php
 # deactivate_lead.php
 # 
-# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2012  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 # This script is designed to be used in the "Dispo URL" field of a campaign
 # or in-group. It should take in the campaign_id to check for the same source_id
@@ -24,7 +24,6 @@
 # CHANGES
 # 100304-0354 - First Build
 # 120223-2124 - Removed logging of good login passwords if webroot writable is enabled
-# 130328-0016 - Converted ereg to preg functions
 #
 
 $api_script = 'deactivate';
@@ -91,13 +90,13 @@ if (preg_match("/$TD$dispo$TD/",$sale_status))
 
 	if ($non_latin < 1)
 		{
-		$user=preg_replace("/[^-_0-9a-zA-Z]/","",$user);
-		$pass=preg_replace("/[^-_0-9a-zA-Z]/","",$pass);
+		$user=ereg_replace("[^-_0-9a-zA-Z]","",$user);
+		$pass=ereg_replace("[^-_0-9a-zA-Z]","",$pass);
 		}
 	else
 		{
-		$user = preg_replace("/\'|\"|\\\\|;/","",$user);
-		$pass = preg_replace("/\'|\"|\\\\|;/","",$pass);
+		$user = ereg_replace("'|\"|\\\\|;","",$user);
+		$pass = ereg_replace("'|\"|\\\\|;","",$pass);
 		}
 
 	$stmt="SELECT count(*) from vicidial_users where user='$user' and pass='$pass' and user_level > 0;";
@@ -138,7 +137,7 @@ if (preg_match("/$TD$dispo$TD/",$sale_status))
 				$duplicate_lists .=	"'$row[0]',";
 				$L++;
 				}
-			$duplicate_lists = preg_replace('/,$/','',$duplicate_lists);
+			$duplicate_lists = eregi_replace(",$",'',$duplicate_lists);
 			if (strlen($duplicate_lists) < 2) {$duplicate_lists = "''";}
 			}
 
@@ -163,7 +162,7 @@ if (preg_match("/$TD$dispo$TD/",$sale_status))
 				$affected_rows = mysql_affected_rows($link);
 
 				$SQL_log = "$stmt|";
-				$SQL_log = preg_replace('/;/','',$SQL_log);
+				$SQL_log = ereg_replace(';','',$SQL_log);
 				$SQL_log = addslashes($SQL_log);
 				$stmt="INSERT INTO vicidial_api_log set user='$user',agent_user='$user',function='deactivate_lead',value='$lead_id',result='$affected_rows',result_reason='$search_field',source='vdc',data='$SQL_log',api_date='$NOW_TIME',api_script='$api_script';";
 				$rslt=mysql_query($stmt, $link);

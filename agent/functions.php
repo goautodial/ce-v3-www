@@ -1,10 +1,10 @@
 <?php
 # 
-# functions.php    version 2.6
+# functions.php    version 2.4
 #
 # functions for agent scripts
 #
-# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2012  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 #
 # CHANGES:
@@ -14,7 +14,6 @@
 # 110719-0858 - Added HIDEBLOB field type
 # 110730-2336 - Added call_id variable
 # 120213-1709 - Commented out default of READONLY fields since they cannot change
-# 130328-0018 - Converted ereg to preg functions
 #
 
 
@@ -357,7 +356,7 @@ function custom_list_fields_values($lead_id,$list_id,$uniqueid,$user)
 	##### BEGIN parsing for vicidial variables #####
 	if (preg_match("/--A--/",$CFoutput))
 		{
-		if ( (preg_match('/--A--user_custom_/i',$CFoutput)) or (preg_match('/--A--fullname/i',$CFoutput)) )
+		if ( (eregi('--A--user_custom_',$CFoutput)) or (eregi('--A--fullname',$CFoutput)) )
 			{
 			$stmt = "select custom_one,custom_two,custom_three,custom_four,custom_five,full_name from vicidial_users where user='$user';";
 			if ($DB) {echo "$stmt\n";}
@@ -376,7 +375,7 @@ function custom_list_fields_values($lead_id,$list_id,$uniqueid,$user)
 				}
 			}
 
-		if (preg_match('/--A--dialed_/i',$CFoutput))
+		if (eregi('--A--dialed_',$CFoutput))
 			{
 			$dialed_number =	$phone_number;
 			$dialed_label =		'NONE';
@@ -436,69 +435,69 @@ function custom_list_fields_values($lead_id,$list_id,$uniqueid,$user)
 			$owner				= trim($row[33]);
 			}
 
-		$CFoutput = preg_replace('/--A--lead_id--B--/i',"$lead_id",$CFoutput);
-		$CFoutput = preg_replace('/--A--vendor_id--B--/i',"$vendor_id",$CFoutput);
-		$CFoutput = preg_replace('/--A--vendor_lead_code--B--/i',"$vendor_lead_code",$CFoutput);
-		$CFoutput = preg_replace('/--A--list_id--B--/i',"$list_id",$CFoutput);
-		$CFoutput = preg_replace('/--A--gmt_offset_now--B--/i',"$gmt_offset_now",$CFoutput);
-		$CFoutput = preg_replace('/--A--phone_code--B--/i',"$phone_code",$CFoutput);
-		$CFoutput = preg_replace('/--A--phone_number--B--/i',"$phone_number",$CFoutput);
-		$CFoutput = preg_replace('/--A--title--B--/i',"$title",$CFoutput);
-		$CFoutput = preg_replace('/--A--first_name--B--/i',"$first_name",$CFoutput);
-		$CFoutput = preg_replace('/--A--middle_initial--B--/i',"$middle_initial",$CFoutput);
-		$CFoutput = preg_replace('/--A--last_name--B--/i',"$last_name",$CFoutput);
-		$CFoutput = preg_replace('/--A--address1--B--/i',"$address1",$CFoutput);
-		$CFoutput = preg_replace('/--A--address2--B--/i',"$address2",$CFoutput);
-		$CFoutput = preg_replace('/--A--address3--B--/i',"$address3",$CFoutput);
-		$CFoutput = preg_replace('/--A--city--B--/i',"$city",$CFoutput);
-		$CFoutput = preg_replace('/--A--state--B--/i',"$state",$CFoutput);
-		$CFoutput = preg_replace('/--A--province--B--/i',"$province",$CFoutput);
-		$CFoutput = preg_replace('/--A--postal_code--B--/i',"$postal_code",$CFoutput);
-		$CFoutput = preg_replace('/--A--country_code--B--/i',"$country_code",$CFoutput);
-		$CFoutput = preg_replace('/--A--gender--B--/i',"$gender",$CFoutput);
-		$CFoutput = preg_replace('/--A--date_of_birth--B--/i',"$date_of_birth",$CFoutput);
-		$CFoutput = preg_replace('/--A--alt_phone--B--/i',"$alt_phone",$CFoutput);
-		$CFoutput = preg_replace('/--A--email--B--/i',"$email",$CFoutput);
-		$CFoutput = preg_replace('/--A--security_phrase--B--/i',"$security_phrase",$CFoutput);
-		$CFoutput = preg_replace('/--A--comments--B--/i',"$comments",$CFoutput);
-		$CFoutput = preg_replace('/--A--user--B--/i',"$user",$CFoutput);
-		$CFoutput = preg_replace('/--A--pass--B--/i',"$pass",$CFoutput);
-		$CFoutput = preg_replace('/--A--campaign--B--/i',"$campaign",$CFoutput);
-		$CFoutput = preg_replace('/--A--server_ip--B--/i',"$server_ip",$CFoutput);
-		$CFoutput = preg_replace('/--A--session_id--B--/i',"$session_id",$CFoutput);
-		$CFoutput = preg_replace('/--A--dialed_number--B--/i',"$dialed_number",$CFoutput);
-		$CFoutput = preg_replace('/--A--dialed_label--B--/i',"$dialed_label",$CFoutput);
-		$CFoutput = preg_replace('/--A--source_id--B--/i',"$source_id",$CFoutput);
-		$CFoutput = preg_replace('/--A--rank--B--/i',"$rank",$CFoutput);
-		$CFoutput = preg_replace('/--A--owner--B--/i',"$owner",$CFoutput);
-		$CFoutput = preg_replace('/--A--fullname--B--/i',"$fullname",$CFoutput);
-		$CFoutput = preg_replace('/--A--uniqueid--B--/i',"$uniqueid",$CFoutput);
-		$CFoutput = preg_replace('/--A--user_custom_one--B--/i',"$user_custom_one",$CFoutput);
-		$CFoutput = preg_replace('/--A--user_custom_two--B--/i',"$user_custom_two",$CFoutput);
-		$CFoutput = preg_replace('/--A--user_custom_three--B--/i',"$user_custom_three",$CFoutput);
-		$CFoutput = preg_replace('/--A--user_custom_four--B--/i',"$user_custom_four",$CFoutput);
-		$CFoutput = preg_replace('/--A--user_custom_five--B--/i',"$user_custom_five",$CFoutput);
-		$CFoutput = preg_replace('/--A--preset_number_a--B--/i',"$preset_number_a",$CFoutput);
-		$CFoutput = preg_replace('/--A--preset_number_b--B--/i',"$preset_number_b",$CFoutput);
-		$CFoutput = preg_replace('/--A--preset_number_c--B--/i',"$preset_number_c",$CFoutput);
-		$CFoutput = preg_replace('/--A--preset_number_d--B--/i',"$preset_number_d",$CFoutput);
-		$CFoutput = preg_replace('/--A--preset_number_e--B--/i',"$preset_number_e",$CFoutput);
-		$CFoutput = preg_replace('/--A--preset_dtmf_a--B--/i',"$preset_dtmf_a",$CFoutput);
-		$CFoutput = preg_replace('/--A--preset_dtmf_b--B--/i',"$preset_dtmf_b",$CFoutput);
-		$CFoutput = preg_replace('/--A--did_id--B--/i',"$did_id",$CFoutput);
-		$CFoutput = preg_replace('/--A--did_extension--B--/i',"$did_extension",$CFoutput);
-		$CFoutput = preg_replace('/--A--did_pattern--B--/i',"$did_pattern",$CFoutput);
-		$CFoutput = preg_replace('/--A--did_description--B--/i',"$did_description",$CFoutput);
-		$CFoutput = preg_replace('/--A--closecallid--B--/i',"$closecallid",$CFoutput);
-		$CFoutput = preg_replace('/--A--xfercallid--B--/i',"$xfercallid",$CFoutput);
-		$CFoutput = preg_replace('/--A--agent_log_id--B--/i',"$agent_log_id",$CFoutput);
-		$CFoutput = preg_replace('/--A--call_id--B--/i',"$call_id",$CFoutput);
+		$CFoutput = eregi_replace('--A--lead_id--B--',"$lead_id",$CFoutput);
+		$CFoutput = eregi_replace('--A--vendor_id--B--',"$vendor_id",$CFoutput);
+		$CFoutput = eregi_replace('--A--vendor_lead_code--B--',"$vendor_lead_code",$CFoutput);
+		$CFoutput = eregi_replace('--A--list_id--B--',"$list_id",$CFoutput);
+		$CFoutput = eregi_replace('--A--gmt_offset_now--B--',"$gmt_offset_now",$CFoutput);
+		$CFoutput = eregi_replace('--A--phone_code--B--',"$phone_code",$CFoutput);
+		$CFoutput = eregi_replace('--A--phone_number--B--',"$phone_number",$CFoutput);
+		$CFoutput = eregi_replace('--A--title--B--',"$title",$CFoutput);
+		$CFoutput = eregi_replace('--A--first_name--B--',"$first_name",$CFoutput);
+		$CFoutput = eregi_replace('--A--middle_initial--B--',"$middle_initial",$CFoutput);
+		$CFoutput = eregi_replace('--A--last_name--B--',"$last_name",$CFoutput);
+		$CFoutput = eregi_replace('--A--address1--B--',"$address1",$CFoutput);
+		$CFoutput = eregi_replace('--A--address2--B--',"$address2",$CFoutput);
+		$CFoutput = eregi_replace('--A--address3--B--',"$address3",$CFoutput);
+		$CFoutput = eregi_replace('--A--city--B--',"$city",$CFoutput);
+		$CFoutput = eregi_replace('--A--state--B--',"$state",$CFoutput);
+		$CFoutput = eregi_replace('--A--province--B--',"$province",$CFoutput);
+		$CFoutput = eregi_replace('--A--postal_code--B--',"$postal_code",$CFoutput);
+		$CFoutput = eregi_replace('--A--country_code--B--',"$country_code",$CFoutput);
+		$CFoutput = eregi_replace('--A--gender--B--',"$gender",$CFoutput);
+		$CFoutput = eregi_replace('--A--date_of_birth--B--',"$date_of_birth",$CFoutput);
+		$CFoutput = eregi_replace('--A--alt_phone--B--',"$alt_phone",$CFoutput);
+		$CFoutput = eregi_replace('--A--email--B--',"$email",$CFoutput);
+		$CFoutput = eregi_replace('--A--security_phrase--B--',"$security_phrase",$CFoutput);
+		$CFoutput = eregi_replace('--A--comments--B--',"$comments",$CFoutput);
+		$CFoutput = eregi_replace('--A--user--B--',"$user",$CFoutput);
+		$CFoutput = eregi_replace('--A--pass--B--',"$pass",$CFoutput);
+		$CFoutput = eregi_replace('--A--campaign--B--',"$campaign",$CFoutput);
+		$CFoutput = eregi_replace('--A--server_ip--B--',"$server_ip",$CFoutput);
+		$CFoutput = eregi_replace('--A--session_id--B--',"$session_id",$CFoutput);
+		$CFoutput = eregi_replace('--A--dialed_number--B--',"$dialed_number",$CFoutput);
+		$CFoutput = eregi_replace('--A--dialed_label--B--',"$dialed_label",$CFoutput);
+		$CFoutput = eregi_replace('--A--source_id--B--',"$source_id",$CFoutput);
+		$CFoutput = eregi_replace('--A--rank--B--',"$rank",$CFoutput);
+		$CFoutput = eregi_replace('--A--owner--B--',"$owner",$CFoutput);
+		$CFoutput = eregi_replace('--A--fullname--B--',"$fullname",$CFoutput);
+		$CFoutput = eregi_replace('--A--uniqueid--B--',"$uniqueid",$CFoutput);
+		$CFoutput = eregi_replace('--A--user_custom_one--B--',"$user_custom_one",$CFoutput);
+		$CFoutput = eregi_replace('--A--user_custom_two--B--',"$user_custom_two",$CFoutput);
+		$CFoutput = eregi_replace('--A--user_custom_three--B--',"$user_custom_three",$CFoutput);
+		$CFoutput = eregi_replace('--A--user_custom_four--B--',"$user_custom_four",$CFoutput);
+		$CFoutput = eregi_replace('--A--user_custom_five--B--',"$user_custom_five",$CFoutput);
+		$CFoutput = eregi_replace('--A--preset_number_a--B--',"$preset_number_a",$CFoutput);
+		$CFoutput = eregi_replace('--A--preset_number_b--B--',"$preset_number_b",$CFoutput);
+		$CFoutput = eregi_replace('--A--preset_number_c--B--',"$preset_number_c",$CFoutput);
+		$CFoutput = eregi_replace('--A--preset_number_d--B--',"$preset_number_d",$CFoutput);
+		$CFoutput = eregi_replace('--A--preset_number_e--B--',"$preset_number_e",$CFoutput);
+		$CFoutput = eregi_replace('--A--preset_dtmf_a--B--',"$preset_dtmf_a",$CFoutput);
+		$CFoutput = eregi_replace('--A--preset_dtmf_b--B--',"$preset_dtmf_b",$CFoutput);
+		$CFoutput = eregi_replace('--A--did_id--B--',"$did_id",$CFoutput);
+		$CFoutput = eregi_replace('--A--did_extension--B--',"$did_extension",$CFoutput);
+		$CFoutput = eregi_replace('--A--did_pattern--B--',"$did_pattern",$CFoutput);
+		$CFoutput = eregi_replace('--A--did_description--B--',"$did_description",$CFoutput);
+		$CFoutput = eregi_replace('--A--closecallid--B--',"$closecallid",$CFoutput);
+		$CFoutput = eregi_replace('--A--xfercallid--B--',"$xfercallid",$CFoutput);
+		$CFoutput = eregi_replace('--A--agent_log_id--B--',"$agent_log_id",$CFoutput);
+		$CFoutput = eregi_replace('--A--call_id--B--',"$call_id",$CFoutput);
 
 		# custom fields replacement
 		$o=0;
 		while ($fields_to_print > $o) 
 			{
-			$CFoutput = preg_replace("/--A--$A_field_label[$o]--B--/i","$A_field_value[$o]",$CFoutput);
+			$CFoutput = eregi_replace("--A--$A_field_label[$o]--B--","$A_field_value[$o]",$CFoutput);
 			$o++;
 			}
 
@@ -521,7 +520,7 @@ function lookup_gmt($phone_code,$USarea,$state,$LOCAL_GMT_OFF_STD,$Shour,$Smin,$
 	require("dbconnect.php");
 
 	$postalgmt_found=0;
-	if ( (preg_match("/POSTAL/i",$postalgmt)) && (strlen($postal_code)>4) )
+	if ( (eregi("POSTAL",$postalgmt)) && (strlen($postal_code)>4) )
 		{
 		if (preg_match('/^1$/', $phone_code))
 			{
@@ -531,7 +530,7 @@ function lookup_gmt($phone_code,$USarea,$state,$LOCAL_GMT_OFF_STD,$Shour,$Smin,$
 			if ($pc_recs > 0)
 				{
 				$row=mysql_fetch_row($rslt);
-				$gmt_offset =	$row[2];	 $gmt_offset = preg_replace("/\+/i","",$gmt_offset);
+				$gmt_offset =	$row[2];	 $gmt_offset = eregi_replace("\+","",$gmt_offset);
 				$dst =			$row[3];
 				$dst_range =	$row[4];
 				$PC_processed++;
@@ -552,7 +551,7 @@ function lookup_gmt($phone_code,$USarea,$state,$LOCAL_GMT_OFF_STD,$Shour,$Smin,$
 			if ($pc_recs > 0)
 				{
 				$row=mysql_fetch_row($rslt);
-				$gmt_offset =	$row[4];	 $gmt_offset = preg_replace("/\+/i","",$gmt_offset);
+				$gmt_offset =	$row[4];	 $gmt_offset = eregi_replace("\+","",$gmt_offset);
 				$dst =			$row[5];
 				$dst_range =	$row[6];
 				$PC_processed++;
@@ -567,7 +566,7 @@ function lookup_gmt($phone_code,$USarea,$state,$LOCAL_GMT_OFF_STD,$Shour,$Smin,$
 			if ($pc_recs > 0)
 				{
 				$row=mysql_fetch_row($rslt);
-				$gmt_offset =	$row[4];	 $gmt_offset = preg_replace("/\+/i","",$gmt_offset);
+				$gmt_offset =	$row[4];	 $gmt_offset = eregi_replace("\+","",$gmt_offset);
 				$dst =			$row[5];
 				$dst_range =	$row[6];
 				$PC_processed++;
@@ -582,7 +581,7 @@ function lookup_gmt($phone_code,$USarea,$state,$LOCAL_GMT_OFF_STD,$Shour,$Smin,$
 			if ($pc_recs > 0)
 				{
 				$row=mysql_fetch_row($rslt);
-				$gmt_offset =	$row[4];	 $gmt_offset = preg_replace("/\+/i","",$gmt_offset);
+				$gmt_offset =	$row[4];	 $gmt_offset = eregi_replace("\+","",$gmt_offset);
 				$dst =			$row[5];
 				$dst_range =	$row[6];
 				$PC_processed++;
@@ -598,7 +597,7 @@ function lookup_gmt($phone_code,$USarea,$state,$LOCAL_GMT_OFF_STD,$Shour,$Smin,$
 			if ($pc_recs > 0)
 				{
 				$row=mysql_fetch_row($rslt);
-				$gmt_offset =	$row[4];	 $gmt_offset = preg_replace("/\+/i","",$gmt_offset);
+				$gmt_offset =	$row[4];	 $gmt_offset = eregi_replace("\+","",$gmt_offset);
 				$dst =			$row[5];
 				$dst_range =	$row[6];
 				$PC_processed++;

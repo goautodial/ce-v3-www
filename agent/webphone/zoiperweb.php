@@ -58,7 +58,6 @@ if ($b64_protocol != 'SIP')
 <title>Zoiper web</title>
 </head>
 <body onload="Init()" onunload="Quit()">
-<!-- <body BGCOLOR=WHITE MARGINHEIGHT=0 MARGINWIDTH=0 TOPMARGIN=0 LEFTMARGIN=0 onload="Init()" onunload="Quit()"> -->
 <script type="text/javascript">
 var Zoiper;
 var ActiveCall;

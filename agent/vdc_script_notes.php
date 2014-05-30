@@ -1,7 +1,7 @@
 <?php
 # vdc_script_notes.php
 # 
-# Copyright (C) 2013  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
+# Copyright (C) 2010  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 # This script is designed open in the SCRIPT tab in the agent interface through
 # an IFRAME. It will create a new record for every SUBMIT
@@ -12,11 +12,10 @@
 # CHANGELOG:
 # 100215-0744 - First build of script
 # 100622-2230 - Added field labels
-# 130328-0020 - Converted ereg to preg functions
 #
 
-$version = '2.6-3';
-$build = '130328-0020';
+$version = '2.4-2';
+$build = '100622-2230';
 
 require("dbconnect.php");
 
@@ -230,16 +229,16 @@ if ($qm_conf_ct > 0)
 
 if ($non_latin < 1)
 	{
-	$user=preg_replace("/[^-_0-9a-zA-Z]/","",$user);
-	$pass=preg_replace("/[^-_0-9a-zA-Z]/","",$pass);
-	$length_in_sec = preg_replace("/[^0-9]/","",$length_in_sec);
-	$phone_code = preg_replace("/[^0-9]/","",$phone_code);
-	$phone_number = preg_replace("/[^0-9]/","",$phone_number);
+	$user=ereg_replace("[^-_0-9a-zA-Z]","",$user);
+	$pass=ereg_replace("[^-_0-9a-zA-Z]","",$pass);
+	$length_in_sec = ereg_replace("[^0-9]","",$length_in_sec);
+	$phone_code = ereg_replace("[^0-9]","",$phone_code);
+	$phone_number = ereg_replace("[^0-9]","",$phone_number);
 	}
 else
 	{
-	$user = preg_replace("/\'|\"|\\\\|;/","",$user);
-	$pass = preg_replace("/\'|\"|\\\\|;/","",$pass);
+	$user = ereg_replace("'|\"|\\\\|;","",$user);
+	$pass = ereg_replace("'|\"|\\\\|;","",$pass);
 	}
 
 if ($DB > 0)

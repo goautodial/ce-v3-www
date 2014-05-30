@@ -18,10 +18,15 @@ class Go_systemsettings extends Model{
     function __construct(){
         parent::Model();
         $this->asteriskDB = $this->load->database('dialerdb',TRUE);
+        $this->goDB = $this->load->database('goautodialdb',TRUE);
     }
 
     function getsettings(){
         $this->result = $this->asteriskDB->get('system_settings');
+    }
+
+    function getserversettings(){
+        $this->result = $this->goDB->get('go_server_settings');
     }
 
     function getservers(){
