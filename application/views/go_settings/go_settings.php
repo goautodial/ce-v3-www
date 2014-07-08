@@ -258,7 +258,7 @@ $(function()
 						</div>
 						<div class="inside">
 
-                            <div style="margin:<?php echo (preg_match("/^Windows/",$userOS)) ? "-23px" : "-22px"; ?> 0px -2px -10px;" id="request_tab"><span id="showServer" class="tabtoggle menuOn">Server</span><span id="showTheme" class="tabtoggle menuOff">Theme</span><span id="request" style="display:none;">showList</span></div>
+                            <div style="margin:<?php echo (preg_match("/^Windows/",$userOS)) ? "-23px" : "-22px"; ?> 0px -2px -10px;" id="request_tab"><span id="showServer" class="tabtoggle menuOn">Server</span><span id="showTheme" class="tabtoggle hideSpan">Theme</span><span id="request" style="display:none;">showList</span></div>
 
 							<div id="showServer_div" class="table_container">
 							<?php
@@ -267,7 +267,7 @@ $(function()
 							?>
 							</div>
 							
-							<div id="showTheme_div" class="table_container" style="width:100%;">
+							<div id="showTheme_div" class="table_container hideSpan" style="width:100%;">
 								<br />
 								<table class="theme_settings">
 									<tr>
