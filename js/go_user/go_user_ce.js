@@ -244,7 +244,7 @@ $(function (){
                                       $("#phone_login-"+$user).val(this.phone_login);
                                       $("#phone_pass-"+$user).val(this.phone_pass);
                                       $("#active-"+$user+" option[value='"+this.active+"']").attr('selected','selected');
-                                      $("#hotkeys_active-"+$user+" option[value='"+this.active+"']").attr('selected','selected');
+                                      $("#hotkeys_active-"+$user+" option[value='"+this.hotkeys_active+"']").attr('selected','selected');
                                       $("#user_group-"+$user+" option[value='"+this.user_group+"']").attr('selected','selected');
                                       $("#modify_same_user_level-"+$user+" option[value='"+this.modify_same_user_level+"']").attr('selected','selected');
                                       $("#user_level-"+$user+" option[value='"+this.user_level+"']").attr('selected','selected');
