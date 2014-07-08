@@ -575,12 +575,12 @@ class Go_campaign_ce extends Controller {
 		$auth_user = str_replace(" ","",$auth_user);
 		
                 $VARSERVTYPE = $this->config->item('VARSERVTYPE');
+                $VARKAMAILIO = $this->config->item('VARKAMAILIO');
 
-                if($VARSERVTYPE == "public" && $auth_user != "admin") {
-		     
+                if($VARKAMAILIO == "Y" && $auth_user != "admin") {
                      $dial_prefix = "8888".$auth_user;
                 } else {
-                     $dial_prefix = "9";
+		     $dial_prefix = (strlen($dial_prefix) < 0) ? "9" : $dial_prefix;
                 }
 	
 		if ($campaign_type != 'Survey')
