@@ -1,5 +1,13 @@
 Filename: changelog.txt
 
+1404964800 - Fixed the issue where when enabling/disabling Hotkeys on user's setting. The settings doesn't reflect when viewed again. (Issue #1357) -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * js/go_user/go_user_ce.js
+
+           - Fixed the issue when adding new campaign where it doesn't save the selected value from 'Carrier to use for this Campaign'. (Issue #1359) -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/controllers/go_campaign_ce.php
+
 1401422400 - Updated the Agent UI from 2.4 to 2.7 version. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Folder:
            - * agent/
@@ -8,6 +16,10 @@ Filename: changelog.txt
            - * Affected Files:
            - * application/views/go_settings/go_calltimes.php
            - * application/views/go_settings/go_calltimes_view.php
+
+           - Changed the value of reg_allowed to 1 when registering a sippy account. (Issue #1239) -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_carriers_ce.php
 
 1397620800 - Added List Archiver. When a list id is set to inactive, the leads associated with it will be moved to vicidial_list_archive table. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
