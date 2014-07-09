@@ -224,7 +224,7 @@ class Go_reports extends Model {
 					$return['data_agents'] = $query->result();
 					
 					// Disposition of Calls
-					$query = $this->reportsdb->query("select status, sum(ccount) as ccount from (select status,count(*) as ccount from vicidial_log vl where length_in_sec>'0' and MONTH(call_date) between MONTH('$fromDate') and MONTH('$toDate') $ul group by status $DunionSQL) t group by status;");
+					//$query = $this->reportsdb->query("select status, sum(ccount) as ccount from (select status,count(*) as ccount from vicidial_log vl where length_in_sec>'0' and MONTH(call_date) between MONTH('$fromDate') and MONTH('$toDate') $ul group by status $DunionSQL) t group by status;");
 					$query = $this->reportsdb->query("select status, sum(ccount) as ccount from (select status,count(*) as ccount from vicidial_log vl where length_in_sec>'0' and date_format(call_date, '%Y-%m-%d') between '$fromDate' and '$toDate' $ul group by status $DunionSQL) t group by status;");
 					$return['total_status'] = $query->num_rows();
 					$return['data_status'] = $query->result();
@@ -1456,7 +1456,7 @@ class Go_reports extends Model {
 						and vl.phone_number=vlog.phone_number 
 						and vl.lead_id=vlog.lead_id 
 						and vlog.length_in_sec>'0'
-						and vlog.status in ('SALE') 
+						and vlog.status in ('$statuses') 
 						and date_format(vlog.call_date, '%Y-%m-%d') BETWEEN '$fromDate' AND '$toDate'
 						and vlog.campaign_id='$campaignID'
 						group by us.full_name");
@@ -1534,7 +1534,7 @@ class Go_reports extends Model {
 						and vl.phone_number=vlog.phone_number 
 						and vl.lead_id=vlog.lead_id 
 						and vlog.length_in_sec>'0' 
-						and vlog.status in ('SALE') 
+						and vlog.status in ('$statuses') 
 						and date_format(vlog.call_date, '%Y-%m-%d') BETWEEN '$fromDate' AND '$toDate'
 						and $campaign_inb_query
 						group by us.full_name");
@@ -2205,9 +2205,31 @@ class Go_reports extends Model {
 				
 				if (count($campaign_statuses) > 0)
 				{
-					$statuses_codes .= implode("','", $campaign_statuses);
+				        $separator = (strlen($statuses_codes) > 0) ? "','" : "";
+					$statuses_codes .= $separator . implode("','", $campaign_statuses);
 				}
 				
+				 //Sale statuses
+				 $query = $this->reportsdb->query("SELECT status FROM vicidial_statuses WHERE sale='Y'");
+				 foreach ($query->result() as $status)
+				 {
+				    $sstatuses[$status->status] = $status->status;
+				 }
+				 $sstatuses = implode("','",$sstatuses);
+				 
+				 $query = $this->reportsdb->query("SELECT status FROM vicidial_campaign_statuses WHERE sale='Y' AND campaign_id='$campaignID'");
+				 foreach ($query->result() as $status)
+				 {
+				    $cstatuses[$status->status] = $status->status;
+				 }
+				 $cstatuses = implode("','",$cstatuses);
+				 if (strlen($sstatuses) > 0 && strlen($cstatuses) > 0)
+				 {
+				    $statusesX = "{$sstatuses}','{$cstatuses}";
+				 } else {
+				    $statusesX = (strlen($sstatuses) > 0 && strlen($cstatuses) < 1) ? $sstatuses : $cstatuses;
+				 }
+				 
 				// TOTAL CALLS ====  AND (sub_status NOT LIKE 'LOGIN%' OR sub_status IS NULL)
 				$query = $this->reportsdb->query("SELECT * FROM vicidial_agent_log WHERE campaign_id='$campaignID' and date_format(event_time, '%Y-%m-%d') BETWEEN '$fromDate' AND '$toDate' AND status<>''");
 				$total_calls = $query->num_rows();
@@ -2221,7 +2243,7 @@ class Go_reports extends Model {
 				$total_noncontacts = $query->num_rows();
 	
 				// TOTAL SALES ====  AND (sub_status NOT LIKE 'LOGIN%' OR sub_status IS NULL)
-				$query = $this->reportsdb->query("SELECT * FROM vicidial_agent_log WHERE campaign_id='$campaignID' and date_format(event_time, '%Y-%m-%d') BETWEEN '$fromDate' AND '$toDate' AND status IN ('SALE','XFER')");
+				$query = $this->reportsdb->query("SELECT * FROM vicidial_agent_log WHERE campaign_id='$campaignID' and date_format(event_time, '%Y-%m-%d') BETWEEN '$fromDate' AND '$toDate' AND status IN ('$statusesX')");
 				$total_sales = $query->num_rows();
 			
 				// TOTAL XFER ====  AND (sub_status NOT LIKE 'LOGIN%' OR sub_status IS NULL)
