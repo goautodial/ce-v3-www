@@ -1,5 +1,9 @@
 Filename: changelog.txt
 
+1405051200 - Fixed some of the bugs on the Reports & Analytics page when you have custom sale dispositions. (Issue #1361) -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/models/go_reports.php
+
 1404964800 - Fixed the issue where when enabling/disabling Hotkeys on user's setting. The settings doesn't reflect when viewed again. (Issue #1357) -- Chris Lomuntad <chris@goautodial.com>
            - * Affected File:
            - * js/go_user/go_user_ce.js
