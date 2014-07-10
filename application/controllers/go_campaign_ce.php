@@ -556,7 +556,7 @@ class Go_campaign_ce extends Controller {
 		$manual_dial_prefix = $this->input->post('manual_dial_prefix');
 		
 		$dial_prefixARY = explode("_","{$dial_prefix}_{$custom_prefix}");
-		if (str_replace("-","",$dial_prefixARY[0]) != "CUSTOM")
+		if (str_replace("-","",$dial_prefix) != "CUSTOM")
 		{
 			$query = $this->db->query("SELECT dialplan_entry FROM vicidial_server_carriers WHERE carrier_id='{$dial_prefix}'");
 			if ($query->num_rows() > 0)
@@ -567,9 +567,9 @@ class Go_campaign_ce extends Controller {
 				$dial_prefix = str_replace("N","",str_replace("X","",$dial_prefix));
 			}
 		} else {
-			$dial_prefix = $dial_prefixARY[1];
+			$dial_prefix = $custom_prefix;
 		}
-	
+
 
                 $auth_user = $this->session->userdata('user_name');
 		$auth_user = str_replace(" ","",$auth_user);
