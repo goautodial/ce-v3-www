@@ -927,7 +927,8 @@ class Go_campaign extends Model {
 		// Create New Survey Campaign
 		if ($stepNum==2 && ($campaign_id!='undefined' && $campaign_id!=''))
 		{
-			$query = $this->db->query("SELECT server_ip FROM servers WHERE server_id RLIKE 'meetme01';");
+			//server_id RLIKE 'meetme01'
+			$query = $this->db->query("SELECT server_ip FROM servers WHERE active='Y' ORDER BY max_vicidial_trunks DESC LIMIT 1;");
 			$main_server_ip = $query->row()->server_ip;
 
 				$query = $this->db->query("SELECT campaign_id FROM vicidial_campaigns WHERE campaign_id = '$campaign_id'");
