@@ -1,6 +1,12 @@
 Filename: changelog.txt
 
-1405051200 - Fixed some of the bugs on the Reports & Analytics page when you have custom sale dispositions. (Issue #1361) -- Chris Lomuntad <chris@goautodial.com>
+1405051200 - Fixed an issue when creating Survey/Broadcast campaigns, there is no server ip set when creating a remote agent. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_campaign_ce.php
+           - * application/models/go_campaign.php
+           - * applicaiton/views/go_campaign/go_campaign_wizard_output.php
+
+1404964800 - Fixed some of the bugs on the Reports & Analytics page when you have custom sale dispositions. (Issue #1361) -- Chris Lomuntad <chris@goautodial.com>
            - * Affected File:
            - * application/models/go_reports.php
 
