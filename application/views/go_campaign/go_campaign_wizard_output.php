@@ -518,7 +518,7 @@ $(document).ready(function()
 			<table style="width:100%;">
             	<tr>
                 	<td class="label">Campaign ID:</td>
-                    <td><?php echo $campaign_id; ?></td>
+                    <td><?php echo $campaign_id; ?><input type="hidden" value="<?php echo $campaign_id; ?>" name="campaign_id" id="campaign_id" class="previewEdit" /></td>
                 </tr>
             	<tr>
                 	<td class="label">Campaign Name:</td>
