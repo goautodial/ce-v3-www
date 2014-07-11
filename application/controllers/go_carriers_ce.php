@@ -812,7 +812,7 @@ class Go_carriers_ce extends Controller {
 				    "credit_limit"      => new xmlrpcval('0.00000', "double"),                         /* set needed value */
 				    "i_tariff"          => new xmlrpcval('163', "int"),                             /* replace with your i_tariff */
 				    "i_billing_plan"	=> new xmlrpcval('106',"int"),
-				    "i_account_class"	=> new xmlrpcval('16',"int"),				   
+				    "i_account_class"	=> new xmlrpcval('14',"int"),				   
 				    "i_time_zone"	=> new xmlrpcval('331',"int"),
                                     "balance"           => new xmlrpcval('0.0', "double"),                         /* set needed value 0.50 */
                                     "cpe_number"        => new xmlrpcval('', "string"),	
