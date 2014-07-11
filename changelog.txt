@@ -4,7 +4,11 @@ Filename: changelog.txt
            - * Affected Files:
            - * application/controllers/go_campaign_ce.php
            - * application/models/go_campaign.php
-           - * applicaiton/views/go_campaign/go_campaign_wizard_output.php
+           - * application/views/go_campaign/go_campaign_wizard_output.php
+
+           - Changed the Account Class when signing up for a VoIP account from PaypalActivated to NoPaypal. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/controllers/go_carriers_ce.php
 
 1404964800 - Fixed some of the bugs on the Reports & Analytics page when you have custom sale dispositions. (Issue #1361) -- Chris Lomuntad <chris@goautodial.com>
            - * Affected File:
