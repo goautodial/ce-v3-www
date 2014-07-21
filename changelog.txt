@@ -1,5 +1,10 @@
 Filename: changelog.txt
 
+1405915200 - Fixed a bug when viewing user list that it doesn't show the pagination when the total number of agents is equal to 25. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_user_ce.php
+           - * application/models/gouser.php
+
 1405051200 - Fixed an issue when creating Survey/Broadcast campaigns, there is no server ip set when creating a remote agent. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * application/controllers/go_campaign_ce.php
