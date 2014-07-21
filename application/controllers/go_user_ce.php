@@ -923,7 +923,7 @@ class Go_user_ce extends Controller{
 	    $levelSQL = "and (user_level < '{$data['user_level']}' OR (user_level = '{$data['user_level']}' AND user = '$username'))";
 	}
 	
-	if ($account != 'ADMIN') {
+	if ($data['user_group'] != 'ADMIN') {
 	    $notAdminSQL = "AND user_group != 'ADMIN'";
 	}
 
