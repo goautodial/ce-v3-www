@@ -59,6 +59,10 @@ class Gouser extends Model {
               if ($account != 'ADMIN') {
                   $notAdminSQL = "AND user_group != 'ADMIN'";
               }
+
+              $xstmt = "SELECT * FROM vicidial_users WHERE user NOT IN ('VDAD','VDCL') AND user_level != '4' $levelSQL $searchSQL $userGroupSQL $notAdminSQL";
+              
+
               $stmt = "SELECT * FROM vicidial_users WHERE user NOT IN ('VDAD','VDCL') AND user_level != '4' $levelSQL $searchSQL $userGroupSQL $notAdminSQL ORDER BY user ASC LIMIT $offset,$limit";
               $users = $this->asteriskDB->query($stmt);
               $collectedusers = array(); 
