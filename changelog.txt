@@ -1,5 +1,9 @@
 Filename: changelog.txt
 
+1406088000 - Fixed a bug when viewing call monitoring when a user group's allowed campaign is set to ALLCAMPAIGNS. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/models/go_monitoring.php
+
 1405915200 - Fixed a bug when viewing user list that it doesn't show the pagination when the total number of agents is equal to 25. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * application/controllers/go_user_ce.php
