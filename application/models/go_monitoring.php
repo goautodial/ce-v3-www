@@ -481,7 +481,10 @@ class Go_monitoring extends Model {
 			// Current Active Calls / Calls Ringing / Waiting For Agents
 			$stringv = $this->go_get_allowed_campaigns($groupId);
 			//var_dump("$stringv");
-			if (isset($ul)) {$campSQL="and campaign_id IN ('$stringv')";}
+			if (isset($ul) && !preg_match("/ALLCAMPAIGNS/i",$stringv)) {
+				$campSQL="and campaign_id IN ('$stringv')";
+				$camp_SQL = "vac.campaign_id IN ('$stringv') AND";
+			}
 			$query = $this->db->query("select * from vicidial_campaigns where campaign_allow_inbound='Y' $campSQL;");
 			$campaign_allow_inbound = $query->num_rows();
 	
@@ -516,7 +519,7 @@ class Go_monitoring extends Model {
 			else
 				{
 	
-				$stmt="select status,phone_number,call_type,UNIX_TIMESTAMP(call_time) as 'call_time',vac.campaign_id{$isAdmin} from vicidial_auto_calls as vac, vicidial_campaigns as vc, vicidial_inbound_groups as vig where vac.campaign_id IN ('$stringv') AND (vac.campaign_id=vc.campaign_id OR vac.campaign_id=vig.group_id) GROUP BY status,call_type,phone_number ORDER BY $orderSQL LIMIT 2000;";
+				$stmt="select status,phone_number,call_type,UNIX_TIMESTAMP(call_time) as 'call_time',vac.campaign_id{$isAdmin} from vicidial_auto_calls as vac, vicidial_campaigns as vc, vicidial_inbound_groups as vig where $camp_SQL (vac.campaign_id=vc.campaign_id OR vac.campaign_id=vig.group_id) GROUP BY status,call_type,phone_number ORDER BY $orderSQL LIMIT 2000;";
 				//$stmt="select status,phone_number,call_type,UNIX_TIMESTAMP(call_time) as 'call_time',vac.campaign_id{$isAdmin} from vicidial_auto_calls as vac, vicidial_campaigns as vc where vac.campaign_id IN ('$stringv') AND vac.campaign_id=vc.campaign_id ORDER BY $orderSQL LIMIT 2000;";
 				}
 
