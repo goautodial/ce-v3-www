@@ -21,7 +21,7 @@ $version = file_get_contents($base.'version.txt');
 <div style="margin-left: 60px; position: fixed; bottom: 0px; background-color:  #fff; opacity: 1;">
 <p style="color: #6a6363; font-size: 10px;" >
 <b><a href='<? #echo $base; ?>index.php/go_site/credits'>GoAutoDial CE &reg; 3.0</a> Build.1366344000 | <a href='http://goautodial.com'>AGPLv2</a><br>
-&copy; <a href='http://goautodial.com'>GoAutoDial Inc.</a> 2010-2013 All Rights Reserved.</p>
+&copy; <a href='http://goautodial.com'>GoAutoDial Inc.</a> 2010-2014 All Rights Reserved.</p>
 </div>
 -->
 
@@ -121,7 +121,7 @@ img.grayscale:hover {
 <table width="100%" > 
 	
 			<tr><td align="left" style="color: #6a6363; font-size: 10px;"><b><a href='<? echo $base; ?>credits'>GoAdmin &reg; <?echo $version;?></a></b> | <a href='<? echo $base; ?>agplv2'>AGPLv2</a> | &copy; <a href='http://goautodial.com' target="_blank">GoAutoDial</a> 2010-<?=date("Y") ?> All Rights Reserved.</td></tr>
-            		<!-- <tr><td align="left" style="color: #6a6363; font-size: 10px;">&copy; <a href='http://goautodial.com'>GoAutoDial Inc.</a> 2010-2013 All Rights Reserved.</td></tr>-->
+            		<!-- <tr><td align="left" style="color: #6a6363; font-size: 10px;">&copy; <a href='http://goautodial.com'>GoAutoDial Inc.</a> 2010-2014 All Rights Reserved.</td></tr>-->
 	
 	
 	

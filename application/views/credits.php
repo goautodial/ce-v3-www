@@ -41,6 +41,7 @@ $base = base_url();
                                <div class="contributors">
                                     Demian Lizandro A. Biscocho<br />
                                     Christopher P. Lomuntad<br />
+				    Jerico James F. Milo <br />
                                     <br />
                                     <b>Architect and creator:</b> Demian Lizandro A. Biscocho<br />
                                     <br />
@@ -67,7 +68,6 @@ $base = base_url();
                                     Wittie H. Manansala<br />
                                     Erwin C. De Luna<br />
                                     Franco E. Hora<br />
-                                    Jerico James F. Milo<br />
                                 </div>
                             <br />
                             <br />
