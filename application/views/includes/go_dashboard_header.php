@@ -25,7 +25,7 @@ $pagetitle=$title;
 }
 else{
 $pagelogo="goadmin_logo.png";
-$pagetitle="GoAdmin &reg; 3.0";
+$pagetitle="GoAdmin &reg; 3.3";
 }
 
 
