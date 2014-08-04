@@ -44,7 +44,7 @@ echo "<head>\n";
 #### SET SITE TITLE
 #echo "<title>GoAutoDial - Administrator Application</title>\n";
 ?>
-<title>GoAdmin &reg; 3.0</title>
+<title>GoAdmin &reg; 3.3</title>
 <link rel="shortcut icon" href="<?php echo $base; ?>img/gologoico.ico" />
 <?
 #### SET META TAGS
