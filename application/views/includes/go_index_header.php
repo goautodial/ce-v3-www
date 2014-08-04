@@ -16,7 +16,7 @@
 <HTML>
 <head>
 
-<title>GoAdmin &reg; 3.0</title>
+<title>GoAdmin &reg; 3.3</title>
 <link rel="shortcut icon" href="<?php echo $base; ?>img/gologoico.ico" />
 		<meta name="google-site-verification" content="hN64gcgof2IPEGgqv7aQoE_68CbVe3JN18Y1QDCt7bo" />
 		<meta http-equiv="Content-type" content="application/xhtml+xml; charset=utf-8; charset=utf-8" />
