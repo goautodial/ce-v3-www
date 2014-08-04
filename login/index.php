@@ -4,7 +4,7 @@
 ####  Type:             	ci views - administrator                                            ####
 ####  Version:          	3.0                                                            	    ####
 ####  Build:            	1366344000                                                          ####
-####  Copyright:        	GOAutoDial Inc. (c) 2011-2013 - GoAutoDial Open Source Community    ####
+####  Copyright:        	GOAutoDial Inc. (c) 2011-2014 - GoAutoDial Open Source Community    ####
 ####			        <community@goautodial.com>            			   	    ####
 ####  Written by:	        Jerico James Milo	                                            ####
 ####  License:          	AGPLv2                                                              ####
@@ -565,7 +565,7 @@ if($verifymail=="1") {
    <table width="100%" >
 				<tr><td align="center" style="color: #6a6363; font-size: 10px;">GoAutoDial CE 3.0 comes with no guarantees or warranties of any sorts, either written or implied. The Distribution is released as <a href='../gplv2'>GPLv2</a>. Individual packages in the distribution come with their own licences.</td></tr>
 				<tr><td align="center" style="color: #6a6363; font-size: 10px;"><a href='http://goautodial.org'>GoAutoDial CE</a> &reg;, <a href='http://goautodial.com'>GoAutoDial</a> &reg;, <a href='http://justgocloud.com'>JustGoCloud</a> &reg; and <a href='http://justgovoip.com'>JustGoVoIP</a> &reg; are registered trademarks of GoAutoDial Inc.</td></tr>
-            			<tr><td align="center" style="color: #6a6363; font-size: 10px;">&copy; GoAutoDial Inc. 2010-2013 All Rights Reserved.</td></tr>
+            			<tr><td align="center" style="color: #6a6363; font-size: 10px;">&copy; GoAutoDial Inc. 2010-2014 All Rights Reserved.</td></tr>
     </table>
    
 </div>
