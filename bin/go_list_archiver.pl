@@ -79,7 +79,7 @@ else
 
 $secX=time();
 # default path to astguiclient configuration file:
-if ($CLIdir eq "")
+if ($CLIdir eq "" || ! -e "$CLIdir/astguiclient.conf")
 	{$CLIdir = "/etc";}
 $PATHconf =		"$CLIdir/astguiclient.conf";
 
