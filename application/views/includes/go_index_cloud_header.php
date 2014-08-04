@@ -178,7 +178,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>GoAdmin &reg; 3.0</title>
+<title>GoAdmin &reg; 3.3</title>
 <link rel="shortcut icon" href="<?php echo $base; ?>img/gologoico.ico" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
     <script type="text/javascript" src="js/yahoo-dom-event.js"></script> 
