@@ -1,5 +1,17 @@
 Filename: changelog.txt
 
+1407211200 - Fixed a bug on updating lists when activating/deactivating, it doesn't put the leads affected to 'vicidial_list_archive' table. (Issue #1391) -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * bin/go_list_archiver.pl
+
+           - Changed the version number from the <title> tag value from 3.0 to 3.3. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/views/includes/go_dashboard_header.php
+           - * application/views/includes/go_admin_header.php
+           - * application/views/includes/go_index_header.php
+           - * application/views/includes/go_index_cloud_header.php
+           - * application/views/includes/go_noadmin_header.php
+
 1406088000 - Fixed a bug when viewing call monitoring when a user group's allowed campaign is set to ALLCAMPAIGNS. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected File:
            - * application/models/go_monitoring.php
