@@ -233,7 +233,7 @@ $(function()
 	</li>
     <?php } ?>
 	
-	<li class="wp-has-submenu <? echo $rep; ?> menu-top menu-icon-reports" id="menu-reports">
+	<li class="wp-has-submenu <? echo $rep; ?> menu-top <?=$menuLast ?> menu-icon-reports" id="menu-reports">
 	<div class="wp-menu-image"><a href="<? echo $base; ?>reports"><br></a></div><div class="wp-menu-toggle"><br></div>
 	<a class="wp-has-submenu menu-top menu-icon-reports" tabindex="1">Reports & Analytics</a>
 	<div class="wp-submenu"><div class="wp-submenu-head">Reports & Analytics</div>
@@ -245,7 +245,7 @@ $(function()
 	</div>
 	</li>
 	
-	<li class="wp-has-submenu <? echo $rec; ?> menu-top <?=$menuLast ?> menu-icon-recordings" id="menu-links" title="Recordings">
+	<li class="wp-has-submenu <? echo $rec; ?> menu-top menu-icon-recordings" id="menu-links" style="display:none;" title="Recordings">
 	<div class="wp-menu-image"><a href="<?=$base?>search"><br></a></div><div class="wp-menu-toggle"><br></div>
 	<a href="" class="wp-has-submenu menu-top menu-icon-recordings" tabindex="1">Recordings</a>
 	<div class="wp-submenu"><div class="wp-submenu-head">Recordings </div>
