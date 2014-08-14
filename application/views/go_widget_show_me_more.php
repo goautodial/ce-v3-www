@@ -87,11 +87,11 @@ if ($show_me_more['type']=="campaign") {
 	$showHTML .="<table id='showCampTable' class='tablesorter' border='0' cellpadding='1' cellspacing='0' style='width:100%;'>";
 	$showHTML .="<thead>\n";
 	$showHTML .="	<tr style=\"font-weight:bold;text-align:left;\">\n";
-	$showHTML .="		<th style=\"width:12%;cursor:pointer;\">&nbsp;&nbsp;CAMPAIGN ID</th>\n";
+	$showHTML .="		<th style=\"width:12%;cursor:pointer;white-space:nowrap;\">&nbsp;&nbsp;CAMPAIGN ID</th>\n";
 	$showHTML .="		<th style=\"cursor:pointer;\">&nbsp;&nbsp;CAMPAIGN NAME</th>\n";
 	$showHTML .="		<th style=\"cursor:pointer;\">&nbsp;&nbsp;LEADS ON HOPPER</th>\n";
 	$showHTML .="		<th style=\"cursor:pointer;\">&nbsp;&nbsp;CALL TIMES</th>\n";
-	$showHTML .="		<th style=\"cursor:pointer;$hideThis\">&nbsp;&nbsp;TENANT ID</th>\n";
+	$showHTML .="		<th style=\"cursor:pointer;$hideThis\">&nbsp;&nbsp;USER GROUP</th>\n";
 	$showHTML .="	</tr>\n";
 	$showHTML .="</thead>\n";
 	$showHTML .="<tbody>\n";
@@ -131,7 +131,7 @@ if ($show_me_more['type']=="campaign") {
 	$showHTML .="		<th style=\"width:12%;cursor:pointer;\">&nbsp;&nbsp;NAME</th>\n";
 	$showHTML .="		<th style=\"cursor:pointer;white-space:nowrap;\">&nbsp;&nbsp;PASSWORD <span id='showUsersPass' class='toolTip' title='Show/Hide Users Passwords' style='cursor:pointer;font-size:10px;'>[+]</span></th>\n";
 	$showHTML .="		<th style=\"cursor:pointer;\">&nbsp;&nbsp;STATUS</th>\n";
-	$showHTML .="		<th style=\"cursor:pointer;$hideThis\">&nbsp;&nbsp;TENANT ID</th>\n";
+	$showHTML .="		<th style=\"cursor:pointer;$hideThis\">&nbsp;&nbsp;USER GROUP</th>\n";
 	$showHTML .="	</tr>\n";
 	$showHTML .="</thead>\n";
 	$showHTML .="<tbody>\n";
@@ -161,7 +161,7 @@ if ($show_me_more['type']=="campaign") {
 	$showHTML .="		<th style=\"width:12%;cursor:pointer;\">&nbsp;&nbsp;LOGIN</th>\n";
 	$showHTML .="		<th style=\"cursor:pointer;white-space:nowrap;\">&nbsp;&nbsp;PASSWORD <span id='showPhonesPass' class='toolTip' title='Show/Hide Phone Passwords' style='cursor:pointer;font-size:10px;'>[+]</span></th>\n";
 	$showHTML .="		<th style=\"cursor:pointer;\">&nbsp;&nbsp;STATUS</th>\n";
-	$showHTML .="		<th style=\"cursor:pointer;$hideThis\">&nbsp;&nbsp;TENANT ID</th>\n";
+	$showHTML .="		<th style=\"cursor:pointer;$hideThis\">&nbsp;&nbsp;USER GROUP</th>\n";
 	$showHTML .="	</tr>\n";
 	$showHTML .="</thead>\n";
 	$showHTML .="<tbody>\n";
