@@ -383,6 +383,7 @@
 # 130323-0217 - Changed the agent (GUI) interface the same as on our cloud server
 #               Copyright: GOAutoDial Inc. (c) 2011-2013 - GoAutoDial Open Source Community <community@goautodial.com>
 # 130401-0543 - Added back the function hangup_recordings
+# 140408-0228 - Added an option to convert Dial Code to Country Code. eg: 1 = US
 #
 
 #added ie check
@@ -554,6 +555,7 @@ $hide_timeclock_link	= '1';	# set to 1 to hide the timeclock link on the agent l
 $conf_check_attempts	= '3';	# number of attempts to try before loosing webserver connection, for bad network setups
 $focus_blur_enabled		= '0';	# set to 1 to enable the focus/blur enter key blocking(some IE instances have issues)
 $consult_custom_delay	= '2';	# number of seconds to delay consultative transfers when customfields are active
+$convert_dial_code              = '0';  # set to 1 to enable conversion of dial code to country code. eg: 1 = US
 
 $TEST_all_statuses		= '0';	# TEST variable allows all statuses in dispo screen, FOR DEBUG ONLY
 
@@ -4227,6 +4229,7 @@ if ($enable_fast_refresh < 1) {echo "\tvar refresh_interval = 1000;\n";}
 	var image_LB_customformtab_OFF = new Image();
 		image_LB_customformtab_OFF.src="./images/custom_form_tab_OFF.png";
 	var go_disposelectmax = 1;
+        var convert_dial_code = "<?php echo $convert_dial_code; ?>";
 
 
 
@@ -7084,7 +7087,13 @@ function set_length(SLnumber,SLlength_goal,SLdirection)
 							{document.vicidial_form.gmt_offset_now.value	= UDfieldsResponse_array[3];}
 						var regUDphone_code = new RegExp("phone_code,","ig");
 						if (fields_list.match(regUDphone_code))
-							{document.vicidial_form.phone_code.value		= UDfieldsResponse_array[4];}
+							{
+                                                            document.vicidial_form.phone_code.value		= UDfieldsResponse_array[4];
+                                                            
+                                                            //if (convert_dial_code) {
+                                                            //    document.getElementById("converted_dial_code").innerHTML = UDfieldsResponse_array[26];
+                                                            //}
+                                                        }
 						var regUDphone_number = new RegExp("phone_number,","ig");
 						if (fields_list.match(regUDphone_number))
 							{
@@ -7703,6 +7712,9 @@ function set_length(SLnumber,SLlength_goal,SLdirection)
 							document.vicidial_form.entry_list_id.value	='';
 							document.vicidial_form.gmt_offset_now.value	='';
 							document.vicidial_form.phone_code.value		='';
+                                                        //if (convert_dial_code) {
+                                                        //    document.getElementById("converted_dial_code").innerHTML	='';
+                                                        //}
 							if ( (disable_alter_custphone=='Y') || (disable_alter_custphone=='HIDE') )
 								{
 								var tmp_pn = document.getElementById("phone_numberDISP");
@@ -8406,6 +8418,9 @@ function set_length(SLnumber,SLlength_goal,SLdirection)
 							document.vicidial_form.list_id.value			= check_VDIC_array[9];
 							document.vicidial_form.gmt_offset_now.value		= check_VDIC_array[10];
 							document.vicidial_form.phone_code.value			= check_VDIC_array[11];
+                                                        //if (convert_dial_code) {
+                                                        //    document.getElementById("converted_dial_code").innerHTML = check_VDIC_array[52];
+                                                        //}
 							if ( (disable_alter_custphone=='Y') || (disable_alter_custphone=='HIDE') )
 								{
 								var tmp_pn = document.getElementById("phone_numberDISP");
@@ -9873,6 +9888,9 @@ function set_length(SLnumber,SLlength_goal,SLdirection)
 				document.vicidial_form.vendor_lead_code.value='';
 				document.vicidial_form.list_id.value		='';
 				document.vicidial_form.entry_list_id.value	='';
+                                //if (convert_dial_code) {
+                                //    document.getElementById("converted_dial_code").innerHTML    ='';
+                                //}
 				document.vicidial_form.gmt_offset_now.value	='';
 				document.vicidial_form.phone_code.value		='';
 				if ( (disable_alter_custphone=='Y') || (disable_alter_custphone=='HIDE') )
@@ -10058,6 +10076,9 @@ function set_length(SLnumber,SLlength_goal,SLdirection)
 					document.inert_form.inert_button.focus();
 					document.inert_form.inert_button.blur();
 					}
+                                
+                                // Chris ---
+	    			waiting_on_dispo=0;
 				}
 			// scroll back to the top of the page
 			scroll(0,0);
@@ -14161,10 +14182,17 @@ foreach ($label as $key => $value) {
 			    $size = "20";
 			    $maxlength = "30";
 		    }
-		    echo "<tr><td align=\"right\" width=\"100\" nowrap><font class=\"body_text\">&nbsp; &nbsp; &nbsp; &nbsp;$value: </font></td><td><input type=\"text\" size=\"$size\" maxlength=\"$maxlength\" id=\"$key\" name=\"$key\" class=\"cust_form\" value=\"\" /></td></tr>\n";
+                    
+                    if ($convert_dial_code && $key == "phone_code") {
+                        echo "<tr><td align=\"right\" width=\"100\" nowrap><font class=\"body_text\">&nbsp; &nbsp; &nbsp; &nbsp;$value: </font></td><td><font class=\"body_text\"><span id=\"converted_dial_code\"></span></font><input type=\"hidden\" size=\"$size\" maxlength=\"$maxlength\" id=\"$key\" name=\"$key\" class=\"cust_form\" value=\"\" /></td></tr>\n";
+                    } else {
+                        echo "<tr><td align=\"right\" width=\"100\" nowrap><font class=\"body_text\">&nbsp; &nbsp; &nbsp; &nbsp;$value: </font></td><td><span id=\"converted_dial_code\"></span><input type=\"text\" size=\"$size\" maxlength=\"$maxlength\" id=\"$key\" name=\"$key\" class=\"cust_form\" value=\"\" /></td></tr>\n";
+                    }
 		}
 	} else {
-		echo "<tr style=\"display:none;\" width=\"100\" nowrap><td align=\"right\"><font class=\"body_text\">&nbsp; &nbsp; &nbsp; &nbsp;$value: </font></td><td><input type=\"hidden\" id=\"$key\" name=\"$key\" value=\"\" />";
+                if ($key == "phone_number") { $additionalDISP = "<span id=\"phone_numberDISP\" style=\"display:none;\"></span>"; }
+                if ($key == "phone_code") { $additionalDISP = "<span id=\"converted_dial_code\" style=\"display:none;\"></span>"; }
+		echo "<tr style=\"display:none;\" width=\"100\" nowrap><td align=\"right\"><font class=\"body_text\">&nbsp; &nbsp; &nbsp; &nbsp;$value: </font></td><td>$additionalDISP<input type=\"hidden\" id=\"$key\" name=\"$key\" value=\"\" />";
 		if ($key == "gender_list")
 		    {echo "<span id=\"GENDERhideFORie\" style=\"display:none;\"><select size=\"1\" name=\"$key\" class=\"cust_form\" id=\"$key\"><option value=\"U\">U - Undefined</option><option value=\"M\">M - Male</option><option value=\"F\">F - Female</option></select></span>";}
 		echo "</td></tr>\n";
@@ -14481,9 +14509,12 @@ if ($is_webphone=='Y')
     <font class="body_text"><span style="vertical-align:middle;cursor:default;" title="Seconds">SECONDS:</span></font><input type="text" size="2" name="xferlength" id="xferlength" maxlength="4" class="cust_form" readonly="readonly" />
 	&nbsp;
     <img src="./images/vdc_XB_channel.gif" border="0" alt="channel" style="vertical-align:middle;display:none;" /><input type="text" size="12" name="xferchannel" id="xferchannel" maxlength="200" class="cust_form" readonly="readonly" style="display:none;" />
+        &nbsp;
+    <span id="consultative_checkbox"><input type="checkbox" name="consultativexfer" id="consultativexfer" size="1" value="0" onchange="document.getElementById('xferoverride').checked = this.checked;"><font class="body_tiny"> CONSULTATIVE &nbsp;</font></span>
+        &nbsp;
+    <span id="dialoverride_checkbox" style="display:none"><input type="checkbox" name="xferoverride" id="xferoverride" size="1" value="0"><font class="body_tiny" /> DIAL OVERRIDE</font></span>
  </td>
     <td align="left" style="display:none">
-    <span id="consultative_checkbox"><input type="checkbox" name="consultativexfer" id="consultativexfer" size="1" value="0"><font class="body_tiny"> CONSULTATIVE &nbsp;</font></span>
  </td>
     <td align="right">
 <!--    <a href="#" onclick="bothcall_send_hangup();return false;"><img src="./images/vdc_XB_hangupbothlines.gif" border="0" alt="Hangup Both Lines" style="vertical-align:middle" /></a>-->
@@ -14516,7 +14547,6 @@ if ($is_webphone=='Y')
     <input type="hidden" name="xfernumhidden" id="xfernumhidden" style="display:none;" />
  </td>
     <td align="left" style="display:none">
-    <span id="dialoverride_checkbox"><input type="checkbox" name="xferoverride" id="xferoverride" size="1" value="0"><font class="body_tiny" /> DIAL OVERRIDE</font></span>
  </td>
     <td align="right">
     <!--<a href="#" onclick="leave_3way_call('FIRST');return false;"><img src="./images/vdc_XB_leave3waycall.gif" border="0" alt="LEAVE 3-WAY CALL" style="vertical-align:middle" /></a>-->
@@ -14571,7 +14601,7 @@ if ($is_webphone=='Y')
     </tr></table>
 </span>
 
-<span style="position:absolute;left:0px;top:0px;width:<?php echo $JS_browser_width ?>px;height:<?php echo $JS_browser_height ?>px;overflow:scroll;z-index:<?php $zi++; echo $zi ?>;background-color:<?php echo $SIDEBAR_COLOR ?>;" id="AgentXferViewSpan"><center><font class="body_text">
+<span style="position:absolute;left:0px;top:30px;width:<?php echo $JS_browser_width ?>px;height:<?php echo $JS_browser_height ?>px;overflow:scroll;z-index:<?php $zi++; echo $zi ?>;background-color:<?php echo $SIDEBAR_COLOR ?>;" id="AgentXferViewSpan"><center><font class="body_text">
 Available Agents Transfer: <span id="AgentXferViewSelect"></span></center></font></span>
 
 
