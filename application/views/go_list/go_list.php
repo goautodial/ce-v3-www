@@ -75,9 +75,9 @@ echo $lead_file;
                                    });
 
 				$("#field_label").keydown(function(event) {
-    					if (event.keyCode == 32) {
-        				event.preventDefault();
-    				}
+    				//	if (event.keyCode == 32) {
+        			//	event.preventDefault();
+    				//}
 				
 });
 				
@@ -946,6 +946,12 @@ $(document).ready(function()
 			$('#boxLeadInfo').animate({'top':'-2550px'},500);
 			$('#overlayLeadInfo').fadeOut('slow');
  		});
+		
+		$('#closeboxRecordings').click(function()
+		{
+			$('#boxRecordings').animate({'top':'-2550px'},500);
+			$('#overlayRecordings').fadeOut('slow');
+ 		});
 
         var bar = $('.bar');
         var percent = $('.percent');
@@ -1416,6 +1422,25 @@ function get_leadInfo(leadid) {
 	
 	});
 }
+
+function view_recording(leadid) {
+	$('#overlayRecordings').fadeIn('fast');
+	$('#boxRecordings').css({'width': '1024px', 'left': '3%', 'right': '5%', 'margin-left': 'auto', 'margin-right': 'auto', 'padding-bottom': '10px'});
+	$('#boxRecordings').animate({
+		top: "-70px"
+	}, 500);
+	
+	$("html, body").animate({ scrollTop: 0 }, "slow");
+	$("#recording_output").empty();
+	$("#rec_lead_id").empty();
+	$("#overlayLoadingRecordings").show();
+	
+	$.post('<?=$base ?>index.php/go_search_ce/view_recordings/', { leadid: leadid }, function(data) {
+		$("#overlayLoadingRecordings").hide();
+		$("#recording_output").html(data);
+		$("#rec_lead_id").html("Recordings for this Lead ID: "+leadid);
+	});
+}
  
 function leadinfo(leadid){
 	$("#calls-to-this-lead").find("div.user-tbl-container").empty().load('<?=base_url() ?>index.php/go_search_ce/calls/'+leadid);
@@ -1773,7 +1798,7 @@ img.desaturate{
     -webkit-filter: grayscale(1); /* Old WebKit */
 }
 
-#overlayDNC,#overlaySearch,#overlayLeadInfo{
+#overlayDNC,#overlaySearch,#overlayLeadInfo,#overlayRecordings{
 	background:transparent url(<?php echo $base; ?>img/images/go_list/overlay.png) repeat top left;
 	position:fixed;
 	top:0px;
@@ -1783,7 +1808,7 @@ img.desaturate{
 	z-index:100;
 }
 
-#boxDNC,#boxSearch,#boxLeadInfo{
+#boxDNC,#boxSearch,#boxLeadInfo,#boxRecordings{
 	position:absolute;
 	top:-2550px;
 	left:14%;
@@ -1796,7 +1821,7 @@ img.desaturate{
 	z-index:101;
 }
 
-#closeboxDNC,#closeboxSearch,#closeboxLeadInfo{
+#closeboxDNC,#closeboxSearch,#closeboxLeadInfo,#closeboxRecordings{
 	float:right;
 	width:26px;
 	height:26px;
@@ -1807,7 +1832,7 @@ img.desaturate{
 }
 
 
-#overlayLoadingLeadInfo{
+#overlayLoadingLeadInfo,#overlayLoadingRecordings{
 	text-align:center;
 	display:none;
 }
@@ -2996,7 +3021,7 @@ echo "<body onload='genListID()'>";
 						<td align="right"><label class="modify-value">Phone Code: </label></td>
 						<td>
 								<select name="phone_code_override">
-                        	<option value='in_file'>Load from Lead File</option>
+                        	<option value=''>Load from Lead File</option>
                         	<?php
 						//echo '<option value="1" selected>1---USA</option>';
                         		foreach($phonedoces as $listcodes) {
@@ -3539,6 +3564,20 @@ COUNTRY CODE FOR THIS FILE: <?=$phone_code_override?></b><br><br><br></td>
 						</div><br class="clear"/>
 						<br class="clear"/>
 					</div>
+					<!-- E n d -->
+					<br class="clear"/><br class="clear"/>
+				</div>
+			</div>
+
+			<!-- Recordings Overlay -->
+			<div id="overlayRecordings" style="display:none;"></div>
+			<div id="boxRecordings">
+				<a id="closeboxRecordings" class="toolTip" title="CLOSE"></a>
+				<div id="overlayLoadingRecordings"><center><br /><img src="<? echo $base; ?>img/goloading.gif" /><br /><br /></center></div>
+				<div id="overlayContentRecordings">
+					<div style="font-size:20px;width:100%;text-align:center;color:#000;font-weight:bold;" id='rec_lead_id'></div>
+					<br />
+					<div id="recording_output"></div>
 					<!-- E n d -->
 					<br class="clear"/><br class="clear"/>
 				</div>
