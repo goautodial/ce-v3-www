@@ -1,5 +1,24 @@
 Filename: changelog.txt
 
+1407988800 - Removed the Recordings page from GOadmin and integrate it and added a column for recordings inside Telephony > Lists > Lead Search. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_search_ce.php
+           - * application/views/go_list/go_list.php
+           - * application/views/includes/go_menu.php
+
+           - Added the patch provided by Chen Cohen when uploading leads using 'in_file'. -- Chen Cohen
+           - * Affected Files:
+           - * application/controllers/go_list.php
+           - * application/views/go_list/go_list.php
+
+           - Fixed some typos on the Dashboard. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/views/go_widget_show_me_more.php
+
+1407816000 - Fixed an issue when using CONSULTATIVE on ageint UI that it doesn't show on the UI it self. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * agent/agent.php
+
 1407211200 - Fixed a bug on updating lists when activating/deactivating, it doesn't put the leads affected to 'vicidial_list_archive' table. (Issue #1391) -- Chris Lomuntad <chris@goautodial.com>
            - * Affected File:
            - * bin/go_list_archiver.pl
