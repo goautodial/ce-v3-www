@@ -783,7 +783,6 @@ class Go_list extends Controller{
 														
 												
 												if ( (strlen($phone_number)>6) and ($dup_lead<1) and ($list_id >= 100 )) {		
-														if (strlen($phone_code)<1) {$phone_code = '1';}
 														if (eregi("TITLEALTPHONE",$dupcheck)) {
 															$phone_list .= "$alt_phone$title$US$list_id|";
 														} else {
