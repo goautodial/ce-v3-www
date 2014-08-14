@@ -2093,6 +2093,7 @@ class Go_search_ce extends Controller{
 	$return .= "		<th>&nbsp;LAST CALL DATE</th>\n";
 	$return .= "		<th>&nbsp;STATUS</th>\n";
 	$return .= "		<th>&nbsp;LAST AGENT</th>\n";
+	$return .= "		<th>&nbsp;RECORDINGS</th>\n";
 	$return .= "	    </tr>\n";
 	$return .= "	</thead>\n";
 	$return .= "	<tbody>\n";
@@ -2110,6 +2111,7 @@ class Go_search_ce extends Controller{
 		$return .= "		<td>&nbsp;{$line->last_local_call_time}</td>\n";
 		$return .= "		<td>&nbsp;{$line->status}</td>\n";
 		$return .= "		<td>&nbsp;{$line->user}</td>\n";
+		$return .= "		<td>&nbsp;<span onclick='view_recording({$line->lead_id});' style='cursor:pointer;'>VIEW</span></td>\n";
 		$return .= "	    </tr>\n";
 		$key++;
 	    }
@@ -2149,6 +2151,65 @@ class Go_search_ce extends Controller{
 	
 	$row_count = $query->num_rows();
 	echo "$row_count|||$return";
+    }
+    
+    function view_recordings() {
+	if (!empty($_POST)) {
+	    $leadid = $_POST['leadid'];
+	    $query = $this->gosearch->asteriskDB->query("SELECT recording_id,start_time,length_in_sec,user,location,vicidial_id FROM recording_log WHERE lead_id='$leadid' ORDER BY start_time DESC;");
+	    //$isHTTPS = ($_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
+	    $isHTTPS = 'http://';
+	    
+	    if ($query->num_rows() > 0) {
+		$return  = "<span class='recordings' style='display: none'>sound.mp3</span>";
+		$return .= "<script>";
+		$return .= "\$(function() {\n";
+		$return .= "	\$('.recordings').jmp3({\n";
+		$return .= "	    showfilename: 'false',\n";
+		$return .= "	    backcolor: '00ff00',\n";
+		$return .= "	    forecolor: '000000',\n";
+		$return .= "	    showdownload: 'true',\n";
+		$return .= "	    volume: 100,\n";
+		$return .= "	    width: 80\n";
+		$return .= "	});\n";
+		$return .= "});\n";
+		$return .= "</script>";
+		$return .= "<table style='width:100%;'>\n";
+		$return .= "<tr>\n";
+		$return .= "<th style='white-space:nowrap;'>&nbsp;#&nbsp;</th>\n";
+		$return .= "<th style='white-space:nowrap;'>&nbsp;REC ID&nbsp;</th>\n";
+		$return .= "<th style='white-space:nowrap;'>&nbsp;CALL DATE&nbsp;</th>\n";
+		$return .= "<th style='white-space:nowrap;'>&nbsp;DURATION&nbsp;</th>\n";
+		$return .= "<th style='white-space:nowrap;'>&nbsp;AGENT&nbsp;</th>\n";
+		$return .= "<th style='white-space:nowrap;'>&nbsp;RECORDING&nbsp;</th>\n";
+		$return .= "</tr>\n";
+		$cnt = 1;
+		foreach ($query->result() as $rec) {
+		    $queryb = $this->gosearch->asteriskDB->query("SELECT full_name FROM vicidial_users WHERE user='{$rec->user}';");
+		    $row = $queryb->row(0);
+		    $usernm = $row->full_name;
+		    
+		    $location = str_replace("http://",$isHTTPS,$rec->location);
+		    $duration = ($rec->length_in_sec > 0) ? $rec->length_in_sec : '0';
+		    
+		    $class = ($cnt % 2) ? "tr1" : "tr2";
+		    $return .= "<tr class=\"$class\">\n";
+		    $return .= "<td style='white-space:nowrap;'>&nbsp;{$cnt}&nbsp;</td>\n";
+		    $return .= "<td style='white-space:nowrap;'>&nbsp;{$rec->recording_id}&nbsp;</td>\n";
+		    $return .= "<td style='white-space:nowrap;'>&nbsp;{$rec->start_time}&nbsp;</td>\n";
+		    $return .= "<td style='white-space:nowrap;'>&nbsp;{$duration}&nbsp;</td>\n";
+		    $return .= "<td style='white-space:nowrap;'>&nbsp;{$usernm}&nbsp;</td>\n";
+		    $return .= "<td style='white-space:nowrap;'>&nbsp;<span class='recordings'>{$location}</span>&nbsp;</td>\n";
+		    $return .= "</tr>\n";
+		    $cnt++;
+		}
+		$return .= "</table>\n";
+	    } else {
+		$return = "<br /><div style='width:100%;text-align:center;color:#f00;font-weight:bold;'>No recordings found.</div>";
+	    }
+	}
+	
+	echo "$return";
     }
 
 
