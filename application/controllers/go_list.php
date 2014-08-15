@@ -1019,7 +1019,7 @@ class Go_list extends Controller{
         $data['gouser'] = $this->session->userdata('user_name');
         $data['gopass'] = $this->session->userdata('user_pass');
         $data['theme'] = $this->session->userdata('go_theme');
-        $data['rep']= 'wp-has-current-submenu';
+        $data['adm']= 'wp-has-current-submenu';
         $data['hostp'] = $_SERVER['SERVER_ADDR'];
         $data['foldlink'] = '';
         $data['cssloader'] = 'go_dashboard_cssloader.php';
