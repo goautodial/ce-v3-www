@@ -462,7 +462,7 @@
 								$viewall .= "<B>$A_field_name</B>";
 								
 								if ($A_name_position=='TOP') {
-										$helpHTML .= "help+";
+										//$helpHTML .= "help+";
 									if (strlen($A_field_help)<1){
 										$helpHTML .= '';
 									}
@@ -632,7 +632,7 @@
 									}
 										$viewall .= " $field_HTML <span style=\"position:static;\" id=P_HELP_$A_field_label></span><span style=\"position:static;background:white;\" id=HELP_$A_field_label> &nbsp; $helpHTML</span>";
 								} else {
-									echo " $field_HTML\n";
+									$viewall .= "$field_HTML\n";
 								}								
 								$last_field_rank=$A_field_rank;
 								$o++;							
