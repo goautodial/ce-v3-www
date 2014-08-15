@@ -31,9 +31,9 @@ $(document).ready(function(){
 	});
 	
 	$("#field_options").keydown(function(event) {
-    					if (event.keyCode == 32) {
-        				event.preventDefault();
-    				}
+    	//				if (event.keyCode == 32) {
+        //				event.preventDefault();
+    	//			}
 				});
 				
 				
