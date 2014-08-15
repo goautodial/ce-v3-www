@@ -1,5 +1,12 @@
 Filename: changelog.txt
 
+1408075200 - Fixed a bug when creating Custom Fields and previewing the created fields. -- Jin Kevin Dionisio <jinkevin@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_list.php
+           - * application/views/go_list/go_customlist.php
+           - * application/views/go_list/go_list.php
+           - * application/views/go_list/go_values.php
+
 1407988800 - Removed the Recordings page from GOadmin and integrate it and added a column for recordings inside Telephony > Lists > Lead Search. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * application/controllers/go_search_ce.php
