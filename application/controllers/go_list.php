@@ -429,17 +429,20 @@ class Go_list extends Controller{
                                                         {
                                                                 $field_label[$i]        = $row->field_label;
                                                                 $field_type[$i]         = $row->field_type;
+								$field_match		= strtolower($row->field_label);
                 
                                                                 if ( ($field_type[$i]!='DISPLAY') and ($field_type[$i]!='SCRIPT') )
                                                                 {
-                                                                        if (!preg_match("/\|$field_label[$i]\|/",$vicidial_list_fields))
+                                                                        if (!preg_match("/\|$field_match\|/",$vicidial_list_fields))
                                                                         {
                                                                         $custom_SQL .= ",$field_label[$i]";
                                                                         }
                                                                 }
                                                         }
                                                 }
-                                                $table_SQL = "vicidial_list, custom_".$list_id_override;
+						if (!empty($custom_SQL)) {
+						    $table_SQL = "vicidial_list, custom_".$list_id_override;
+						}
                                         }
                                 }
                                 $query = $this->asteriskDB->query("SELECT $standard_SQL $custom_SQL FROM $table_SQL limit 1");
