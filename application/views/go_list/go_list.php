@@ -1781,7 +1781,7 @@ function leadinfo(leadid){
         margin: 0px;
 }
 
-
+html {overflow-y: scroll;}
 			
 			.button:hover{
 	font-weight:bold;
