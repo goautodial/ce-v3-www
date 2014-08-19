@@ -415,12 +415,12 @@
 	if($action=="customview") {
 		
 			$listid = $this->input->post('list_id');
-			
+		  	$helpcount=1;	
 			$customlistvalues = $this->golist->customviewmodel($listid);
 		
 			$countme = count($customlistvalues);
 			
-			$viewall .= "<label class=\"modify-value\" style=\"margin-left: -50%; color: black; font-weight: bold;\"><b>Example custom form</b></lable>\n";
+			$viewall .= "<br/><br/><label class=\"modify-value\" style=\"margin-left: -50%; color: black; font-weight: bold;\"><b>Example custom form</b></lable>\n";
 			if($countme > 0) {
 					$viewall .= "<form action=$PHP_SELF method=POST name=form_custom_$listid id=form_custom_$listid>\n";
 					
@@ -450,7 +450,7 @@
 									$viewall .= " &nbsp; &nbsp; &nbsp; &nbsp; ";
 								} else {
 									$viewall .= "</td></tr>\n";
-									$viewall .= "<tr bgcolor=white><td align=";
+									$viewall .= "<tr style='background-color:#FBFBFB; font-weight:normal; padding:1%;'><td align=";
 								
 									if ($A_name_position=='TOP') {
 										$viewall .= "left colspan=2";
@@ -461,17 +461,17 @@
 								}	
 								$viewall .= "<B>$A_field_name</B>";
 								
-								if ($A_name_position=='TOP') {
+								if ($A_name_position=='TOP'  && $helpcount>0) {
 										//$helpHTML .= "help+";
 									if (strlen($A_field_help)<1){
 										$helpHTML .= '';
 									}
-									$viewall .= " &nbsp; <span style=\"position:static;\" id=P_HELP_$A_field_label></span><span style=\"position:static;background:white;\" id=HELP_$A_field_label> &nbsp; $helpHTML</span><BR>";
+									$viewall .= " &nbsp; <span style='position:static; font-weight:normal;'  id=P_HELP_$A_field_label></span><span  style=\"position:static;background-color:#FBFBFB;\" id=HELP_$A_field_label> &nbsp; $helpHTML</span><BR>";
 								} else {
 									if ($last_field_rank=="$A_field_rank") { 
 										$viewall .= " &nbsp;";
 									} else {
-										$viewall .= "</td><td align=left><font size=2>";
+										$viewall .= "</td><td  style='background-color:#FBFBFB; padding:1%; ' align=left><font size=2>";
 									}
 								}
 								
