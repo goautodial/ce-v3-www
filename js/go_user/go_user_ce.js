@@ -318,13 +318,13 @@ $(function (){
                                         $(this).attr("id","hotkeys_active-"+$user);
                                         $(this).attr("name","hotkeys_active-"+$user);
                                    }
+                                   if($currId.indexOf('user_level') !== -1){
+                                        $(this).attr("id","user_level-"+$user);
+                                        $(this).attr("name","user_level-"+$user);
+                                   }
                                    if($currId.indexOf('modify_same_user_level') !== -1){
                                         $(this).attr("id","modify_same_user_level-"+$user);
                                         $(this).attr("name","modify_same_user_level-"+$user);
-                                   }
-                                    if($currId.indexOf('user_level') !== -1){
-                                        $(this).attr("id","user_level-"+$user);
-                                        $(this).attr("name","user_level-"+$user);
                                    }
                                    /*if($currId.indexOf('user_group') !== -1){
                                         console.log($currId);
