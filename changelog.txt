@@ -1,5 +1,9 @@
 Filename: changelog.txt
 
+1408593600 - Fixed the bug when changing admin password that it resets to level 1. (Issue #1401) -- fred flint
+           - * Affected File:
+           - * js/go_user/go_user_ce.js
+
 1408075200 - Fixed a bug when creating Custom Fields and previewing the created fields. -- Jin Kevin Dionisio <jinkevin@goautodial.com>
            - * Affected Files:
            - * application/controllers/go_list.php
