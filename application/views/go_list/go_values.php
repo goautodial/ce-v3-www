@@ -21,7 +21,7 @@
 	$itemsumit = $this->input->post('itemsumit');
 	$action = $this->input->post('action');
 	$list_id = $this->input->post('listid');
-	$field_label = $this->input->post('field_label');
+	$field_label = str_replace(" ","_",trim($this->input->post('field_label')));
 	$field_rank = $this->input->post('field_rank');
 	$field_order = $this->input->post('field_order');
 	$field_name = $this->input->post('field_name');
@@ -420,7 +420,7 @@
 		
 			$countme = count($customlistvalues);
 			
-			$viewall .= "<br/><br/><label class=\"modify-value\" style=\"margin-left: -50%; color: black; font-weight: bold;\"><b>Example custom form</b></lable>\n";
+			$viewall .= "<br/><br/> <label class=\"modify-value\" style=\"margin-left: -50%; color: black; font-weight: bold;\"><b>Example custom form</b></lable>\n";
 			if($countme > 0) {
 					$viewall .= "<form action=$PHP_SELF method=POST name=form_custom_$listid id=form_custom_$listid>\n";
 					
@@ -461,12 +461,12 @@
 								}	
 								$viewall .= "<B>$A_field_name</B>";
 								
-								if ($A_name_position=='TOP'  && $helpcount>0) {
-										//$helpHTML .= "help+";
+								if ($A_name_position=='TOP' && $helpcount>0) {
+										$helpHTML .= "help+";
 									if (strlen($A_field_help)<1){
 										$helpHTML .= '';
 									}
-									$viewall .= " &nbsp; <span style='position:static; font-weight:normal;'  id=P_HELP_$A_field_label></span><span  style=\"position:static;background-color:#FBFBFB;\" id=HELP_$A_field_label> &nbsp; $helpHTML</span><BR>";
+									$viewall .= " &nbsp; <span style='position:static; font-weight:normal;'  id=P_HELP_$A_field_label></span><span style=\"position:static;background-color:#FBFBFB;\" id=HELP_$A_field_label> &nbsp; $helpHTML</span><BR>";
 								} else {
 									if ($last_field_rank=="$A_field_rank") { 
 										$viewall .= " &nbsp;";
@@ -632,7 +632,7 @@
 									}
 										$viewall .= " $field_HTML <span style=\"position:static;\" id=P_HELP_$A_field_label></span><span style=\"position:static;background:white;\" id=HELP_$A_field_label> &nbsp; $helpHTML</span>";
 								} else {
-									$viewall .= "$field_HTML\n";
+									$viewall .= " $field_HTML\n";
 								}								
 								$last_field_rank=$A_field_rank;
 								$o++;							
@@ -922,7 +922,7 @@
 		}
 		
 		if($action=="customdelete") {
-			$rslt=$this->customdialerdb->query($stmt);
+			//$rslt=$this->customdialerdb->query($stmt);
 			$custquery = $this->customdialerdb->query("SHOW TABLES LIKE 'custom_$list_id'");
 			if ($custquery->num_rows() > 0) {
 				$custtabquery = $this->customdialerdb->query("SHOW COLUMNS FROM `custom_$list_id` LIKE '$field_label';");
