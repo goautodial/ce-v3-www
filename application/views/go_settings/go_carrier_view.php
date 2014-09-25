@@ -178,7 +178,14 @@ $(function()
 		if(!isEmpty)
 		{
 
-                        $("#box").append("<div class='processing'><img src='<?=$base?>img/goloading.gif' ></divv>");
+			var count = 0;
+			if(count=0)
+			{
+				$("#box").append("<div class='processing'><img src='<?=$base?>img/goloading.gif' ></divv>");
+				count = 1;
+			} else {
+				location.reload();
+			}
 			var items = $('#modifyCarrier').serialize();
 			$.post("<?=$base?>index.php/go_carriers_ce/go_carrier_wizard", { items: items, action: "modify_carrier" },
 				function(data){
@@ -617,7 +624,7 @@ switch ($type)
 <div align="center" style="font-weight:bold; color:#333; font-size:16px;">MODIFY CARRIER: <?php echo "{$carrier_info->carrier_id}"; ?></div>
 <br />
 <form id="modifyCarrier" method="POST">
-<table id="test" border=0 cellpadding="3" cellspacing="3" style="width:95%; color:#000; margin-left:auto; margin-right:auto;">
+<table id="test" border=0 align="center" cellpadding="3" cellspacing="3" style="width:95%; color:#000; margin-left:15%; margin-right:auto;">
 	<tr>
 		<td style="text-align:right;width:25%;height:10px;font-weight:bold;">
 		Carrier ID:
@@ -866,7 +873,7 @@ switch ($type)
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
-    	<td><span id="showAdvanceConfig" style="float: left;white-space: nowrap;font-size:11px;color: #7A9E22;cursor: pointer;"><pre style="display: inline;">[+]</pre> ADVANCE CONFIGURATION</span><span id="advance_link" style="cursor:pointer;font-size:9px;display: none;">[ + ADVANCE SETTINGS ]</span><input type="hidden" id="isAdvance" value="0" /></td><td style="text-align:right;"><span id="saveSettings" class="buttons">SAVE SETTINGS</span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
+    	<td><span id="showAdvanceConfig" style="float: left;white-space: nowrap; margin-left:-50%; font-size:11px;color: #7A9E22;cursor: pointer;"><pre style="display: inline;">[+]</pre> ADVANCE CONFIGURATION</span><span id="advance_link" style="cursor:pointer;font-size:9px;display: none;">[ + ADVANCE SETTINGS ]</span><input type="hidden" id="isAdvance" value="0" /></td><td style="text-align:right;"><span style="margin-right:17%;" id="saveSettings" class="buttons">SAVE SETTINGS</span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
     </tr>
 </table>
 </form>
