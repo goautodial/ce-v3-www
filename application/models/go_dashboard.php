@@ -42,7 +42,7 @@ class Go_dashboard extends Model {
 	    }
 	    $sstatuses = implode("','",$sstatuses);
 	    
-	    $query = $this->db->query("SELECT status FROM vicidial_campaign_statuses WHERE sale='Y' $ul");
+	    $query = $this->db->query("SELECT status FROM vicidial_campaign_statuses vl WHERE sale='Y' $ul");
 	    foreach ($query->result() as $status)
 	    {
 	       $cstatuses[$status->status] = $status->status;
@@ -88,7 +88,7 @@ class Go_dashboard extends Model {
 	    }
 	    $sstatuses = implode("','",$sstatuses);
 	    
-	    $query = $this->db->query("SELECT status FROM vicidial_campaign_statuses WHERE sale='Y' $ul");
+	    $query = $this->db->query("SELECT status FROM vicidial_campaign_statuses vcl WHERE sale='Y' $ul");
 	    foreach ($query->result() as $status)
 	    {
 	       $cstatuses[$status->status] = $status->status;
@@ -159,7 +159,7 @@ class Go_dashboard extends Model {
 	    }
 	    $sstatuses = implode("','",$sstatuses);
 	    
-	    $query = $this->db->query("SELECT status FROM vicidial_campaign_statuses WHERE sale='Y' $ul");
+	    $query = $this->db->query("SELECT status FROM vicidial_campaign_statuses vcl WHERE sale='Y' $ul");
 	    foreach ($query->result() as $status)
 	    {
 	       $cstatuses[$status->status] = $status->status;
@@ -201,7 +201,7 @@ class Go_dashboard extends Model {
 	    }
 	    $sstatuses = implode("','",$sstatuses);
 	    
-	    $query = $this->db->query("SELECT status FROM vicidial_campaign_statuses WHERE sale='Y' $ul");
+	    $query = $this->db->query("SELECT status FROM vicidial_campaign_statuses vl WHERE sale='Y' $ul");
 	    foreach ($query->result() as $status)
 	    {
 	       $cstatuses[$status->status] = $status->status;
