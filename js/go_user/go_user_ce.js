@@ -103,6 +103,7 @@ $(function (){
                            $("#phone_login-"+$userid).val(data[0].phone_login);
                            $("#phone_pass-"+$userid).val(data[0].phone_pass);
                            $("#active-"+$userid+" option[value='"+data[0].active+"']").attr('selected','selected');
+                           $("#hotkeys_active-"+$userid+" option[value='"+data[0].hotkeys_active+"']").attr('selected','selected');
                            $("#user_group-"+$userid+" option[value='"+data[0].user_group+"']").attr('selected','selected');
                            $("body").animate({scrollTop: 0},1000); 
                        }
