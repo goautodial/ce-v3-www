@@ -75,16 +75,15 @@ echo $lead_file;
                                    });
 
 				$("#field_label").keydown(function(event) {
-    				//	if (event.keyCode == 32) {
-        			//	event.preventDefault();
-    				//}
-				
-});
+    			//		if (event.keyCode == 32) {
+			//			event.preventDefault();
+			//		}				
+				});
 				
 				$("#field_options").keydown(function(event) {
-    				//	if (event.keyCode == 32) {
-        			//	event.preventDefault();
-    				//}
+    			//		if (event.keyCode == 32) {
+			//			event.preventDefault();
+			//		}
 				});
 
 		
@@ -99,6 +98,38 @@ echo $lead_file;
 				$(this).html("[ + SHOW ADVANCE FIELDS ]");
 			}
 		});
+		
+	$( "#uploadform2" ).submit(function( event ) {
+		// Stop form from submitting normally
+		event.preventDefault();
+		
+		var $showResult = $( "#show_results" ).is(':checked');
+		if ($showResult) {
+			$( ".hideThisOne" ).hide();
+			$( ".showResults" ).show();
+		}
+		$( ".hideLoading" ).show();
+	       
+		// Get some values from elements on the page:
+		var $form = $( this ),
+			term = $form.find( "input[name='s']" ).val(),
+			url = $form.attr( "action" );
+	       
+		// Send the data using post
+		var posting = $.post( url, $form.serialize() );
+	       
+		// Put the results in a div
+		posting.done(function( data ) {
+			$( ".hideLoading" ).hide();
+			$( "#show_result" ).empty().append( data );
+			if ($showResult) {
+				$( ".showResults" ).show();
+			} else {
+				$( ".showResults" ).hide();
+				window.location.href = '<?=base_url() ?>go_list';
+			}
+		});
+	});
     });  
 </script>
 
@@ -258,7 +289,7 @@ $(document).ready(function()
                                 echo "return false;";
                              }
                 ?>
-																document.getElementById('hide_listid').value= "";
+		document.getElementById('hide_listid').value= "";
                 document.getElementById('field_label').value= "";
                 document.getElementById('field_rank').value= "";
                 document.getElementById('field_order').value= "";
@@ -432,7 +463,7 @@ $(document).ready(function()
 				if(listID2=="createcustomselect") {
 							$('#spancopycustom').hide("fast");
 							$('#spanaddcustom').show("fast");
-							$('#tbloverlaycopy').css("width", "112%");
+							$('#tbloverlaycopy').css("width", "105%");
 							
 		}
 	}
@@ -472,7 +503,7 @@ $(document).ready(function()
 						}
 		
 						for (i=0;i<count_listid;i++) {
-											
+											 											
  										document.getElementById('listname_edit').value=datas[2];
  										document.getElementById('listdesc_edit').value=datas[5];
  										document.getElementById('campid_edit').value=datas[3];
@@ -600,7 +631,7 @@ $(document).ready(function()
 			}
 			
 			if(count_listid == i) {
-				setTimeout(alertBlah,i+"000");
+				setTimeout(alertBlah,(i + 3)+"000");
 			}
 				
 	}
@@ -783,14 +814,14 @@ $(document).ready(function()
 
                         if ($(this).attr('id') == 'atab2')
                         {
-                               $('#activator').hide();
-                               $('#submit_dnc').hide();
-			       $('#submit_search').hide();
-                               $('#newcustomfield').show();
-			       $('#typeofsearch').val('custom');
+				$('#activator').hide();
+				$('#submit_dnc').hide();
+				$('#submit_search').hide();
+				$('#newcustomfield').show();
+				$('#typeofsearch').val('custom');
                         } else {
-                               $('#newcustomfield').hide();
-			       $('#typeofsearch').val('lists');
+				$('#newcustomfield').hide();
+				$('#typeofsearch').val('lists');
 			}
 
 
@@ -995,7 +1026,7 @@ $(document).ready(function()
                 }
         });
         
-                $(document).mouseup(function (e)
+        $(document).mouseup(function (e)
         {
                 var content = $('#go_action_menu, #go_status_menu, #go_camp_status_menu');
                 if (content.has(e.target).length === 0 && (e.target.id != 'selectAction' && e.target.id != 'selectStatusAction'))
@@ -1028,7 +1059,7 @@ $(document).ready(function()
                 }
         });
 
-		  $('li.go_action_submenu,li.go_status_submenu,li.go_camp_status_submenu').hover(function()
+	$('li.go_action_submenu,li.go_status_submenu,li.go_camp_status_submenu').hover(function()
         {
                 $(this).css('background-color','#ccc');
         },function()
@@ -1036,7 +1067,7 @@ $(document).ready(function()
                 $(this).css('background-color','#fff');
         });
         
-                   $('#selectAll').click(function()
+        $('#selectAll').click(function()
         {
                 if ($(this).is(':checked'))
                 {
@@ -1055,7 +1086,7 @@ $(document).ready(function()
         });
         
         
-               $('li.go_action_submenu').click(function () {
+        $('li.go_action_submenu').click(function () {
                 var selectedlists = [];
                 $('input:checkbox[id="delselectlist[]"]:checked').each(function()
                 {
@@ -1375,7 +1406,7 @@ function get_leadInfo(leadid) {
 		if(data.indexOf("Error") === -1){
 			var $result = JSON.parse(data);
 	
-		$("#leadinfo_lead_id").empty().append($result[0].lead_id);
+			$("#leadinfo_lead_id").empty().append($result[0].lead_id);
 			$("#leadinfo_list_id").empty().append($result[0].list_id);
 			//$("#leadinfo_status").empty().append($result.status);
 			$("#leadinfo_status").val($result[0].status).prop("selected",true);
@@ -1603,7 +1634,7 @@ function leadinfo(leadid){
 	        }
 
                 .boxview{
-                    position: absolute;
+                    position:absolute;
                     top:-550px;
 /*                  top:-200px;*/
                     left:10%;
@@ -1831,7 +1862,6 @@ img.desaturate{
 	cursor:pointer;
 }
 
-
 #overlayLoadingLeadInfo,#overlayLoadingRecordings{
 	text-align:center;
 	display:none;
@@ -1940,9 +1970,9 @@ echo "<body onload='genListID()'>";
 ?>
 
 <!-- begin body -->
-<div id='outbody' class="wrap">
-    <div id="icon-list" class="icon32"></div>
-    <h2 style="font-family: Verdana,Arial,Helvetica,sans-serif; ">Lists</h2>
+<div id='outbody' class="wrap toolTip">
+    <div id="icon-list" class="icon32 toolTip"></div>
+    <h2 title="Did you know? Campaigns can use multiple list. This allows you greater freedom to choose the phone numbers to call based on the list you want active on the campaign.">Lists  <img class="toolTip" title="Did you know? Campaigns can use multiple list. This allows you greater freedom to choose the phone numbers to call based on the list you want active on the campaign." style="cursor:default; width:15px;" src="https://chicboy.goautodial.com/img/status_display_i.png"></h2>
     <!-- search -->
     <div id="singrp" align="right" style="position: absolute; float: left; width: 94%; margin-top: -35px; display: block;">
 	<form  method="POST" id="go_search_list" name="go_search_list">
@@ -1973,11 +2003,11 @@ echo "<body onload='genListID()'>";
 			<span>				
                         <a id="submit_dnc" class="rightdiv toolTip" style="text-decoration: none; cursor:pointer;display: none;font-family: Verdana,Arial,Helvetica,sans-serif;" title="Add/Delete DNC Numbers"><b>Add/Delete DNC Numbers</b>  </a>
 			</span>
-						
+			
 			<span>				
                         <a id="submit_search" class="rightdiv toolTip" style="text-decoration: none; cursor:pointer;display: none;font-family: Verdana,Arial,Helvetica,sans-serif;" title="Search For A Lead"><b>Search For A Lead</b>  </a>
 			</span>
-						
+			
                         </div>
                         <div class="hndle" style="height:13px" onclick="return false;">
                                    <!-- <span style="font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 13px; font-stretch: normal;">List Listings</span> -->
@@ -1986,8 +2016,8 @@ echo "<body onload='genListID()'>";
 
 <div id="tabs" class="tab-container" style="border: none;">
 <ul style="background: transparent; border: none;">
-		<li><a href="#tabs-1" id="atab1" title="Show Lists" class="tab" style="font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 13px; font-stretch: normal;">Show Lists</a></li>
-		<li><a href="#tabs-2" id="atab2" title="Custom Fields" class="tab" style="font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 13px; font-stretch: normal;">Custom Fields</a></li>
+		<li><a href="#tabs-1" id="atab1" title="Show Lists tab -- displays all list ID's created on the account along with relevant information regarding each list ID."  class="tab toolTip" style="font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 13px; font-stretch: normal;">Show Lists</a></li>
+		<li><a href="#tabs-2" id="atab2" title="Custom Fields tab -- allow admin to add a field on their lead file. This field will show on the agent webpages during a live call giving them additional data on the phone number being called. Agents will need to press the Custom Form button to view these information." class="tab toolTip" style="font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 13px; font-stretch: normal;">Custom Fields</a></li>
 		<li><a href="#tabs-3" id="atab3" title="Load Leads" class="tab" style="font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 13px; font-stretch: normal;">Load Leads</a></li>
 		<li><a href="#tabs-5" id="atab5" title="DNC Numbers" class="tab" style="font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 13px; font-stretch: normal;">DNC Numbers</a></li>
 		<!--<li><a href="#tabs-6" id="atab6" title="Custom Fields Settings" class="tab" style="font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 13px; font-stretch: normal;">Custom Fields Settings</a></li>-->
@@ -2120,9 +2150,9 @@ echo "<body onload='genListID()'>";
 							    																																													</td>
 							    																																									</tr>
 																																																				<tr>
-																																																								<td><label class="modify-value">List ID to Copy Fields From:</label></td>
+																																																								<td style="white-space:nowrap;"><label class="modify-value">List ID to Copy Fields From:</label></td>
 																																																								<td>
-        																																																				<select name="source_list_id" id="source_list_id">
+        																																																				<select name="source_list_id" id="source_list_id" style="width: 250px">
 																																																												<?php
 																																																												foreach($dropactivecustom as $droplistsInfo){
 										                                                  	echo "<option value='$droplistsInfo->listids'>".$droplistsInfo->listids." - ".$droplistsInfo->list_name."</option>";
@@ -2136,7 +2166,7 @@ echo "<body onload='genListID()'>";
         																																																				<label class="modify-value">Copy Fields to Another List:</label>
 																																																								</td>
 																																																							<td>
-        								<select name="to_list_id" id="to_list_id">
+        								<select name="to_list_id" id="to_list_id" style="width: 250px">
 									<?php
 										foreach($listIDs as $listsInfo){
 											echo "<option value='$listsInfo->list_id'>".$listsInfo->list_id." - ".$listsInfo->list_name."</option>";
@@ -2202,7 +2232,7 @@ echo "<body onload='genListID()'>";
                                                 <table class="tablenodouble" width="100%">
                                                         <tr><td> <label class="modify-value">List I.D.:</label></td>
 							    <td> 
-								<select name="hide_listid" id="hide_listid" Onchange="selectlistid();">
+								<select title="List ID -- defines the list ID that will contain the lead file."  name="hide_listid" id="hide_listid" Onchange="selectlistid();">
 								 <option value="" selected></option>
 									<option value="copycustomselect">Copy Custom Field</option>
 									<?php
@@ -2234,7 +2264,7 @@ echo "<body onload='genListID()'>";
                                                                                                         </select>
                                                         </td></tr>
                                                         <tr><td> <label class="modify-value">Description:</label> </td><td><input type="text" name="field_description" id="field_description"> </td></tr>
-                                                        <tr><td> <label class="modify-value">Type</label></td><td> <select name="field_type" id="field_type">
+                                                        <tr><td> <label title="Type -- Defines the type of data to be displayed on the custom form."  class="modify-value">Type</label></td><td> <select title="Type -- Defines the type of data to be displayed on the custom form."  name="field_type" id="field_type">
                                                                                 <option value="TEXT">TEXT</option>
                                                                                 <option value="AREA">AREA</option>
                                                                                 <option value="SELECT">SELECT</option>
@@ -2254,8 +2284,8 @@ echo "<body onload='genListID()'>";
                                                                                 <option value="VERTICAL">VERTICAL</option>
                                                                                 </select>
                                                         </td></tr>
-                                                        <tr><td><label class="modify-value">Field Size:</label></td><td> <input type="text" name="field_size" id="field_size"> </td></tr>
-                                                        <tr><td><label class="modify-value">Field Max:</label></td><td> <input type="text" name="field_max" id="field_max"> </td></tr>
+                                                        <tr><td><label title="Field Size -- alows admin so the size of the field that will appear on the agent webpage. Value is based on th number of characters (i.e. 8=8 characters in lenght)."  class="modify-value">Field Size:</label></td><td> <input title="Field Size -- alows admin so the size of the field that will appear on the agent webpage. Value is based on th number of characters (i.e. 8=8 characters in lenght)."  type="text" name="field_size" id="field_size"> </td></tr>
+                                                        <tr><td><label title="Field Max -- allows admin to set the maximum number of characters for a field. If Field Max is greater than Field Size the extra characters will be seen outside the Field box on the agent webpage."  class="modify-value">Field Max:</label></td><td> <input title="Field Max -- allows admin to set the maximum number of characters for a field. If Field Max is greater than Field Size the extra characters will be seen outside the Field box on the agent webpage."  type="text" name="field_max" id="field_max"> </td></tr>
                                                         <tr><td><label class="modify-value">Field Default:</label></td><td> <input type="text" name="field_default" id="field_default"> </td></tr>
                                                         <tr><td><label class="modify-value">Field Required:</label></td><td> <select name="field_required" id="field_required">
                                                                                         <option value="Y">YES</option>
@@ -2420,7 +2450,7 @@ echo "<body onload='genListID()'>";
                                                                 <td><label class="">Campaign:</label></td>
                                                                 <td>
                                                                         <select size="1" name="campaign_id" id="campid_edit" style="width:300px;">
-                                                                                <option value="">--- Select Campaign ---</option>
+                                                                                <option disabled>--- Select Campaign ---</option>
                                                                                 <?php
                                                         foreach($campaigns as $campaignInfo){
                                                                                                 $cid = $campaignInfo->campaign_id;
@@ -2563,13 +2593,13 @@ echo "<body onload='genListID()'>";
 					<thead>
 					<tr align="left" class="nowrap">
 						<th class="thheader" style="padding-bottom:-1px;">&nbsp;&nbsp;<b>LIST ID</b> </th>
-						<th colspan="" class="thheader" style="padding-bottom:-1px;"><b>NAME</b> </th>
+						<th title="Name -- Can be edited to allow admin to give a brief description of the list."  colspan="" class="thheader" style="padding-bottom:-1px;"><b>NAME</b> </th>
 						<th class="thheader" align="left" style="padding-bottom:-1px;"><b>STATUS</b> </th>
 						<th class="thheader" style="padding-bottom:-1px;"><b>LAST CALL DATE</b> </th>
-						<th class="thheader" style="padding-bottom:-1px;"><b>LEADS COUNT</b> </th>
+						<th title="Leads Count Column -- displays the total number of phone numbers that can be dialed on the list."  class="thheader" style="padding-bottom:-1px;"><b>LEADS COUNT</b> </th>
 						<th class="thheader" style="padding-bottom:-1px;"><b>CAMPAIGN</b> </th>
 						<th colspan="3" class="thheader" style="width:7%;white-space: nowrap;padding-bottom:-1px;" align="right">
-						<span style="cursor:pointer;" id="selectAction">&nbsp;ACTION &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span>
+						<span title="Action Column -- provides additional admin opt     ions such as edit, get more info, delete and and download the list."  style="cursor:pointer;" id="selectAction">&nbsp;ACTION &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span>
 
 
 
@@ -2985,17 +3015,17 @@ echo "<body onload='genListID()'>";
                                                    $countthis = 0;
                                                    $justpermission = true;
 						   exit;
-                                                 } 
+                                                }
 
-						
+					if($fields==null) {
 				?>	
 			
-					<tr>
+					<tr class="hideThisOne">
 						<td colspan="2">&nbsp;&nbsp;</td>
 					</tr>
-		  			<tr>
+		  			<tr class="hideThisOne">
 						<td align="right"><label class="modify-value">Leads file:</label></td>
-						<td><input type="file" name="leadfile" id="leadfile" value="<?php echo $leadfile ?>">
+						<td><input title="Browse Button -- allows admin to load a lead file located on your local drive or network."  type="file" name="leadfile" id="leadfile" value="<?php echo $leadfile ?>">
 						<div class="progress">
                             <div class="bar"></div >
                             <div class="percent">0%</div >
@@ -3003,10 +3033,10 @@ echo "<body onload='genListID()'>";
                         <div id="customsd"></div>
 					</td>
 		  			</tr>
-					<tr>
+					<tr class="hideThisOne">
 						<td align="right"><label class="modify-value">List ID:</label></td>
 						<td>
-							<select name="list_id_override">
+							<select title="List ID -- defines the list ID that will contain the lead file."  name="list_id_override">
 								<?php
 									foreach($listIDs as $listsInfo){
 											$load_list_id = $listsInfo->list_id;
@@ -3017,10 +3047,10 @@ echo "<body onload='genListID()'>";
 							</select>
 						</td>
 					</tr>
-					<tr>
+					<tr class="hideThisOne">
 						<td align="right"><label class="modify-value">Phone Code: </label></td>
 						<td>
-								<select name="phone_code_override">
+								<select name="phone_code_override" title="Phone Code -- specifies the country where the  phone numbers on your lead file are located.">
                         	<option value=''>Load from Lead File</option>
                         	<?php
 						//echo '<option value="1" selected>1---USA</option>';
@@ -3041,10 +3071,10 @@ echo "<body onload='genListID()'>";
 						<td><B><font face="arial, helvetica" size="2">File layout to use:</font></B></td>
 						<td><font face="arial, helvetica" size="2"><input type="radio" name="file_layout" value="standard">Standard Format&nbsp;&nbsp;&nbsp;&nbsp;<input type=radio name="file_layout" value="custom" checked>Custom layout</td>
                 </tr>-->
-                <tr>
+                <tr class="hideThisOne">
 						<td align="right"><label class="modify-value">Duplicate Check: </label></td>
 						<td>
-							<select size="1" name="dupcheck">
+							<select size="1" name="dupcheck" title="Duplicate Check -- Will check the phone numbers on the lead file and cross reference it with all phone numbers on a specific campaign or in all list ID.">
 								<option value="NONE">NO DUPLICATE CHECK</option>
 								<option value="DUPLIST">CHECK FOR DUPLICATES BY PHONE IN LIST ID*</option>
 								<option value="DUPCAMP">CHECK FOR DUPLICATES BY PHONE IN ALL CAMPAIGN LISTS</option>
@@ -3055,18 +3085,18 @@ echo "<body onload='genListID()'>";
 							</select>
 						</td>
 		  			 </tr>
-		  			 <tr>
+		  			 <tr class="hideThisOne">
 		  			 <td align="right"><label class="modify-value">Time Zone: </label></td>
 						<td>
-							<select size="1" name="postalgmt">
+							<select size="1" name="postalgmt" title="Time Zone -- Will affect the call time settings of your campaign. Selecting Country Code and Area Code Only will set the call time settings based on the country and area code of the phone number. Postal Code First will based it on the zip code of the phone number (Zip Code Field is required), Owner Time Code First will based it on the time zone set on the field of the load file.">
 								<option value="AREA" selected>COUNTRY CODE AND AREA CODE ONLY</option>
 								<option value="POSTAL">POSTAL CODE FIRST</option>
 								<option value="TZCODE">OWNER TIME ZONE CODE FIRST</option>
 							</select>
 						</td>
 					 </tr>
-					 <tr>
-					 	<tr><td colspan="2">&nbsp;&nbsp;</td></tr>
+					 <tr class="hideThisOne"><td colspan="2">&nbsp;&nbsp;</td></tr>
+					 <tr class="hideThisOne">
 					 	<td colspan="2">
 					 		<center>
 					 			<input type="submit" value="UPLOAD LEADS" name="submit_file" id="submit_file" style="cursor:pointer;" onclick="return checkmes();">
@@ -3075,11 +3105,14 @@ echo "<body onload='genListID()'>";
 					 	</td>
 					 	
 					 </tr>
+					 <?php
+					}
+					 ?>
 					 </form>
 					 <?php
 					 if($fields!=null) {
 					 ?>
-					<form action="go_list" name="uploadform2" id="uploadform2" method="post" onSubmit="ParseFileName()" enctype="multipart/form-data">
+					<form action="go_list" name="uploadform2" id="uploadform2" onSubmit="ParseFileName()" enctype="multipart/form-data">
 					<input type="hidden" name="leadsload" value="okfinal">
 					<input type="hidden" name="lead_file" id="lead_file" value="<?=$lead_file?>">
 					<input type="hidden" name="leadfile" id="leadfile" value="<?=$leadfile?>">
@@ -3090,11 +3123,11 @@ echo "<body onload='genListID()'>";
 					<input type="hidden" name="superfinal" id="superfinal">
 					
 
-					 <tr>
+					 <tr class="hideThisOne">
 					 	
 					 	<td colspan="2" align="center">
 					 			
-					 			<br><br><br><br>
+					 			<!--<br><br><br><br>-->
 					 			<table>
 					 			<tr bgcolor="#efefef">
 					 			<td align="center" colspan="2"><b>Processing <?=$delim_name ?> file...<br>
@@ -3148,18 +3181,23 @@ COUNTRY CODE FOR THIS FILE: <?=$phone_code_override?></b><br><br><br></td>
 					 		</table>
 					 	</td>
 					 </tr>
-					 <tr>
+					 <tr class="hideLoading">
 						<td colspan="4" align="center">	
 							<div id="loadings"></div>					 
 					 	</td>
 					 </tr>
+					 <tr class="showResults" style="display:none;">
+						<td colspan="4" align="center">	
+							<div id="show_result"></div>
+					 	</td>
+					 </tr>
 					 
 					 <tr>
-				    	<td colspan="4" align="center">
+				    	 <td class="hideThisOne" colspan="4" align="center">
 				    		<br><br><br>
-				    		<input type="submit" name="OK_to_process" value="OK TO PROCESS" onclick="uploadimg();">
+				    		<input type="submit" name="OK_to_process" value="OK TO PROCESS" onclick="uploadimg();" style="cursor: pointer;"><br />
 				    		<!--<input type="button" onClick="javascript:document.location='go_list/#tabs-3'" value="BACK" name="reload_page">-->
-				    		
+				    		<input type="checkbox" id="show_results" /> <span style="color: red; font-size: 10px;">Check this box if you want to show the result.</span>
 						</td>
 					 <?php
 					 	}
@@ -3167,6 +3205,7 @@ COUNTRY CODE FOR THIS FILE: <?=$phone_code_override?></b><br><br><br></td>
 					 </tr>
 					 </form>
 		  		</table>
+				<br />
 		  		</center>
 				</div>
 	</div><!-- end tab3 -->
@@ -3239,8 +3278,9 @@ COUNTRY CODE FOR THIS FILE: <?=$phone_code_override?></b><br><br><br></td>
 			<br style="font-size:8px;" />
 			<div class="table_dnc" style="margin-top:-15px;">
 				<div id="dnc_placeholder">
-					<br />
-					<p style="text-align:center;font-weight:bold;color:#f00;">Type the number at the top right search box.</p>
+
+				<br />
+				<p style="text-align:center;font-weight:bold;color:#f00;">Type the number at the top right search box.</p>
 				</div>
 			</div>
 		
