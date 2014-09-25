@@ -83,7 +83,7 @@ class Golist extends Model {
 	  if ($custom_fields_enabled)
 	  {
 	       $custom_table = "custom_$listid";
-	       $stmt = "SHOW TABLES WHERE Tables_in_".$this->asteriskDB->database." = '$custom_table';";
+	       $stmt = "SHOW TABLES WHERE `Tables_in_".$this->asteriskDB->database."` = '$custom_table';";
 	       $rslt = $this->asteriskDB->query($stmt);
 	       if ($rslt->num_rows() > 0) 
 	       {
@@ -469,17 +469,23 @@ class Golist extends Model {
 	      return $inboundgrps;
      }
 
-					function getactivecustom() {
-					  $stmt = "SELECT DISTINCT (vlf.list_id) as listids, vl.list_name FROM  `vicidial_lists` vl,  `vicidial_lists_fields` vlf WHERE vl.list_id = vlf.list_id";	
-					  	      $inboundgrp = $this->asteriskDB->query($stmt);
-              $ctr = 0;
-              foreach($inboundgrp->result() as $info){
-                  $inboundgrps[$ctr] = $info;
-                  $ctr++;
-              }
+     function getactivecustom($whereLOGallowed_campaignsSQL,$limit=null,$start=null) {
+          // Added error catcher when $start and $limit variables are null -- Chris
+          if (strlen($whereLOGallowed_campaignsSQL) < 1) {
+               $joinSQLcompare = "WHERE vl.list_id=vlf.list_id";
+          } else {
+               $joinSQLcompare = "and vl.list_id=vlf.list_id";
+          }
+          $stmt="SELECT vl.list_id as listids,list_name from vicidial_lists as vl,vicidial_lists_fields as vlf $whereLOGallowed_campaignsSQL $joinSQLcompare group by vl.list_id order by vl.list_id;";					 
+	  $inboundgrp = $this->asteriskDB->query($stmt);
+	  $ctr = 0;
+	  foreach($inboundgrp->result() as $info){
+	      $inboundgrps[$ctr] = $info;
+	      $ctr++;
+	  }
 
-	      return $inboundgrps;
-					}
+	  return $inboundgrps;
+     }
 
      
      function getcustomlist($whereLOGallowed_campaignsSQL,$limit=null,$start=null){
