@@ -1999,7 +1999,7 @@ class Go_search_ce extends Controller{
 	$select_SQL = "SELECT lead_id,status,user,list_id,phone_number,CONCAT(first_name,' ',last_name) AS full_name,last_local_call_time FROM vicidial_list";
 	foreach($_POST as $key => $val)
 	{
-	    if ($key == "phone_number") {$phone_number="$val";}
+	    if ($key == "phone_number" && !empty($val)) {$phone_number="$val";}
 	    if ($key == "advance")
 	    {
 		$advance = explode("&",str_replace(";","",$val));
@@ -2054,7 +2054,8 @@ class Go_search_ce extends Controller{
 	$usergroup = $this->session->userdata('user_group');
 	if ($this->commonhelper->checkIfTenant($usergroup)) {
 	    $query = $this->gosearch->asteriskDB->query("SELECT list_id FROM vicidial_lists vl,vicidial_campaigns vc WHERE vl.campaign_id=vc.campaign_id AND user_group='$usergroup';");
-	    $lcnt = 0;
+	    $listids[0] = "{$usergroup}0";
+	    $lcnt = 1;
 	    foreach ($query->result() as $list_id) {
 		$listids[$lcnt] = $list_id->list_id;
 		$lcnt++;
@@ -2062,7 +2063,7 @@ class Go_search_ce extends Controller{
 	    
 	    if ($query->num_rows()) {
 		$hasWHERE = "WHERE";
-		$hasAND = (!empty($search_SQL)) ? "AND" : "";
+		$hasAND = (!empty($search_SQL) || !empty($advance_SQL)) ? "AND" : "";
 		$listid_SQL = "list_id IN ('".implode("','",$listids)."') $hasAND";
 	    }
 	}
@@ -2161,8 +2162,8 @@ class Go_search_ce extends Controller{
 	    $isHTTPS = 'http://';
 	    
 	    if ($query->num_rows() > 0) {
-		$return  = "<span class='recordings' style='display: none'>sound.mp3</span>";
-		$return .= "<script>";
+		$return  = "<span class='recordings' style='display: none'>sound.mp3</span>\n";
+		$return .= "<script>\n";
 		$return .= "\$(function() {\n";
 		$return .= "	\$('.recordings').jmp3({\n";
 		$return .= "	    showfilename: 'false',\n";
