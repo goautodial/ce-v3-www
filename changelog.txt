@@ -1,5 +1,40 @@
 Filename: changelog.txt
 
+1411617600 - Fixing minor bugs like aligning contents to center
+           - * Affected Files:
+           - * application/models/go_dashboard.php
+           - * application/views/go_campaign/go_campaign_settings.php
+           - * application/views/go_settings/go_carrier_view.php
+
+           - Added the result of checking for duplicate when loading leads -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/views/go_list/go_list.php
+           - * application/models/golist.php
+
+           - Fixed a bug to activate hotkeys when modifying users -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * js/go_user/go_user_ce.js
+
+           - Added tooltips on some pages -- Warren Briones <warren@goautodial.com>
+           - * Affected Files:
+           - * application/views/go_reports/go_reports.php
+           - * application/views/includes/go_reports_body_jsloader.php
+           - * application/views/go_campaign/go_campaign_settings.php
+
+           - Fixed an issue when searching for leads when you use only the advance portion of the search fields -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/controllers/go_search_ce.php
+
+           - Fixed a bug when creating/copying custom fields where you can see other list ids not assigned to your user group -- Warren Briones <warren@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_list.php
+           - * application/models/golist.php
+           - * application/views/go_list/go_values.php
+
+           - Fixed a bug on Export Call Reports where the downloaded files doesn't include the custom fields created -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/models/go_reports.php
+
 1408593600 - Fixed the bug when changing admin password that it resets to level 1. (Issue #1401) -- fred flint
            - * Affected File:
            - * js/go_user/go_user_ce.js
