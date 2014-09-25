@@ -954,7 +954,7 @@ class Go_list extends Controller{
 					
 							$clist = $this->golist->getcustomlist($addedSQLcustom,$rp2,$start2);
 							$data['clist'] = $clist;
-							$dropactivecustom = $this->golist->getactivecustom();
+							$dropactivecustom = $this->golist->getactivecustom($addedSQLcustom,$rp2,$start2);
 							$data['dropactivecustom'] = $dropactivecustom;
 				        	$this->load->view('includes/go_dashboard_template.php',$data);
 				        	
