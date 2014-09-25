@@ -142,6 +142,9 @@ $(document).ready(function()
 			$('#daily').css('visibility','visible');
 			$('#weekly').css('visibility','visible');
 			$('#monthly').css('visibility','visible');
+			$('#daily').show();
+			$('#weekly').show();
+			$('#monthly').show();
 			$('#weekly').removeClass('menuOn');
 			$('#weekly').addClass('menuOff');
 			$('#request').empty().html('daily');
@@ -158,6 +161,8 @@ $(document).ready(function()
 			$('#daily').css('visibility','hidden');
 			$('#outbound').css('visibility','visible');
 			$('#inbound').css('visibility','visible');
+			$('#outbound').show();
+			$('#inbound').show();
 			$('#request').empty().html('outbound');
 			$('#outbound').removeClass('menuOff');
 			$('#outbound').addClass('menuOn');
@@ -180,7 +185,7 @@ $(document).ready(function()
 			   $("#select_campaign").css('visibility','hidden');
 		}
 
-		$('#pagetitle').html($(this).attr('title'));
+		$('#pagetitle').html($(this).attr('rel'));
 		$('#pagetitle').attr('title',$(this).attr('id'));
 		$('#go_reports_menu').slideUp('slow');
 		//$('#export').css('visibility','hidden');
