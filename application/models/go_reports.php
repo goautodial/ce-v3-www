@@ -1718,8 +1718,10 @@ class Go_reports extends Model {
 			    $groupId = $this->go_get_groupid();
 				if (!$this->commonhelper->checkIfTenant($groupId)) {
 				  $ul = '';
+				  $user_group_SQL = '';
 				} else {
 				  $ul = "WHERE user_group='".$this->session->userdata('user_group')."'";
+				  $user_group_SQL = "and vl.user_group = '".$this->session->userdata('user_group')."'";
 				}
 				$query = $this->reportsdb->query("SELECT campaign_id FROM vicidial_campaigns $ul");
 				foreach ($query->result() as $campid)
@@ -1764,14 +1766,17 @@ class Go_reports extends Model {
 					$i=0;
 					while($i < $campaign_ct)
 						{
-						$campaign_string .= "$campaign[$i]|";
-						$campaign_SQL .= "'$campaign[$i]',";
+						   if (strlen($campaign[$i]) > 0) {
+						      $campaign_string .= "$campaign[$i]|";
+						      $campaign_SQL .= "'$campaign[$i]',";
+						   }
 						$i++;
 						}
-					if ( (ereg("--NONE--",$campaign_string) ) or ($campaign_ct < 1) )
+					if ( (ereg("--NONE--",$campaign_string) ) or (strlen($campaign_SQL) < 1) )
 						{
-						$campaign_SQL = "campaign_id IN('')";
-						$RUNcampaign=0;
+						//$campaign_SQL = "campaign_id IN('')";
+						$campaign_SQL = "";
+						$RUNcampaign=1;
 						}
 					else
 						{
@@ -1783,13 +1788,16 @@ class Go_reports extends Model {
 					$i=0;
 					while($i < $group_ct)
 						{
-						$group_string .= "$group[$i]|";
-						$group_SQL .= "'$group[$i]',";
+						   if (strlen($group[$i]) > 0) {
+						      $group_string .= "$group[$i]|";
+						      $group_SQL .= "'$group[$i]',";
+						   }
 						$i++;
 						}
 					if ( (ereg("--NONE--",$group_string) ) or ($group_ct < 1) )
 						{
-						$group_SQL = "campaign_id IN('')";
+						//$group_SQL = "campaign_id IN('')";
+						$group_SQL = "";
 						$RUNgroup=0;
 						}
 					else
@@ -1800,7 +1808,7 @@ class Go_reports extends Model {
 						}
 						
 					//$user_group_SQL = "and vl.user_group = '".$return['groupId']."'";
-					$user_group_SQL = '';
+					//$user_group_SQL = '';
 					
 					$i=0;
 					while($i < $list_ct)
@@ -1896,28 +1904,34 @@ class Go_reports extends Model {
 						//	{$CFheader = ",custom_fields";}
 						if ( ($custom_fields_enabled > 0) and ($custom_fields=='YES') )
 						   {
-						   $CF_list_id = $export_list_id[$i];
-						   if ($export_entry_list_id[$i] > 99)
-							   {$CF_list_id = $export_entry_list_id[$i];}
-						   $stmt="SHOW TABLES LIKE \"custom_$CF_list_id\";";
-						   $query=$this->reportsdb->query($stmt);
-						   $tablecount_to_print = $query->num_rows();
-						   if ($tablecount_to_print > 0) 
-							  {
-							  $stmt = "describe custom_$CF_list_id;";
-							  $query=$this->reportsdb->query($stmt);
-							  foreach ($query->result() as $row)
-								 {
-								 if ($row->Field != "lead_id")
-									$CFheader .= ",".$row->Field;
-								 }
-							  }         
+						      $x = 1;
+						      while ($k > $x) {
+							 $CF_list_id = $export_list_id[$x];
+							 if ($export_entry_list_id[$x] > 99)
+								 {$CF_list_id = $export_entry_list_id[$x];}
+							 $stmt="SHOW TABLES LIKE \"custom_$CF_list_id\";";
+							 $query=$this->reportsdb->query($stmt);
+							 $tablecount_to_print = $query->num_rows();
+							 if ($tablecount_to_print > 0) 
+								{
+								$stmt = "describe custom_$CF_list_id;";
+								$query=$this->reportsdb->query($stmt);
+								foreach ($query->result() as $row)
+								       {
+									   if ($row->Field != "lead_id" && !in_array($row->Field,explode(",",$CFheader))) {
+									      $CFheader .= ",".$row->Field;
+									      $CFdata[$row->Field] = '';
+									   }
+								       }
+								}
+							 $x++;
+						      }
 						   }
 			
 						$export_rows[0] = "call_date,phone_number,status,user,full_name,campaign_id,vendor_lead_code,source_id,list_id,gmt_offset_now,phone_code,phone_number,title,first_name,middle_initial,last_name,address1,address2,address3,city,state,province,postal_code,country_code,gender,date_of_birth,alt_phone,email,security_phrase,comments,length_in_sec,user_group,alt_dial,rank,owner,lead_id$EFheader,list_name,list_description,status_name$RFheader$EXheader$NFheader$CFheader";
 						}
 						
-						if ($RUNgroup > 0)
+					  if ($RUNgroup > 0)
 						{
 						$query = $this->reportsdb->query("SELECT vl.call_date,vl.phone_number,vl.status,vl.user,vu.full_name,vl.campaign_id,vi.vendor_lead_code,vi.source_id,vi.list_id,vi.gmt_offset_now,vi.phone_code,vi.phone_number,vi.title,vi.first_name,vi.middle_initial,vi.last_name,vi.address1,vi.address2,vi.address3,vi.city,vi.state,vi.province,vi.postal_code,vi.country_code,vi.gender,vi.date_of_birth,vi.alt_phone,vi.email,vi.security_phrase,vi.comments,vl.length_in_sec,vl.user_group,vl.queue_seconds,vi.rank,vi.owner,vi.lead_id,vl.closecallid,vi.entry_list_id,vl.uniqueid$export_fields_SQL from vicidial_users vu,vicidial_closer_log vl,vicidial_list vi where date_format(vl.call_date, '%Y-%m-%d') BETWEEN '$fromDate' AND '$toDate' and vu.user=vl.user and vi.lead_id=vl.lead_id $list_SQL $group_SQL $user_group_SQL $status_SQL order by vl.call_date limit 100000");
 						$inbound_to_print = $query->num_rows();
@@ -2103,13 +2117,17 @@ class Go_reports extends Model {
 										$t=1;
 										while ($columns_ct > $t) 
 											{
-											$custom_data .= ",\"".$row[$column[$t]]."\"";
+											//$custom_data .= ",\"".$row[$column[$t]]."\"";
+											$CFdata[$column[$t]] = $row[$column[$t]];
 											$t++;
 											}
 										}
 									}
+							        $custom_data = ",\"".implode('","',$CFdata)."\"";
 								$custom_data = preg_replace("/\r\n/",'!N',$custom_data);
 								$custom_data = preg_replace("/\n/",'!N',$custom_data);
+								
+								$CFdata = array_fill_keys(array_keys($CFdata), '');
 								}
 							}
 
