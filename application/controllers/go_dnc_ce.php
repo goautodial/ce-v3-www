@@ -205,6 +205,7 @@ class Go_dnc_ce extends Controller {
 	{
 		$number = ($number==null) ? $this->uri->segment(4) : $number;
 		$limit	= 5;
+		$page_load = ($page=="start") ? true : false;
 
 		if (strlen($number) > 0)
 		{
@@ -236,9 +237,13 @@ class Go_dnc_ce extends Controller {
 			$filter_camp_SQL = "$andWhere vicidial_campaign_dnc.campaign_id IN ('$allowed_campaigns')";
 		}
 
-		//$query = $this->db->query("SELECT phone_number,vicidial_campaign_dnc.campaign_id,campaign_name FROM vicidial_campaign_dnc,vicidial_campaigns WHERE $filter_camp_SQL vicidial_campaigns.campaign_id=vicidial_campaign_dnc.campaign_id AND phone_number LIKE '$number%' ORDER BY phone_number LIMIT $start,$limit");
-		$query = $this->db->query("SELECT vicidial_dnc.phone_number AS phone_number,'' AS campaign_id,'' AS campaign_name FROM vicidial_dnc LEFT JOIN vicidial_campaign_dnc ON vicidial_dnc.phone_number=vicidial_campaign_dnc.phone_number WHERE vicidial_dnc.phone_number LIKE '$number%' UNION ALL SELECT vicidial_campaign_dnc.phone_number,vicidial_campaign_dnc.campaign_id,campaign_name FROM vicidial_dnc RIGHT JOIN vicidial_campaign_dnc ON vicidial_dnc.phone_number=vicidial_campaign_dnc.phone_number LEFT JOIN vicidial_campaigns ON vicidial_campaign_dnc.campaign_id=vicidial_campaigns.campaign_id $addedSQLx $filter_camp_SQL LIMIT $start,$rp");
-		$data['dnc_list'] = $query->result();
+		if (!$page_load) {
+			//$query = $this->db->query("SELECT phone_number,vicidial_campaign_dnc.campaign_id,campaign_name FROM vicidial_campaign_dnc,vicidial_campaigns WHERE $filter_camp_SQL vicidial_campaigns.campaign_id=vicidial_campaign_dnc.campaign_id AND phone_number LIKE '$number%' ORDER BY phone_number LIMIT $start,$limit");
+			$query = $this->db->query("SELECT vicidial_dnc.phone_number AS phone_number,'' AS campaign_id,'' AS campaign_name FROM vicidial_dnc LEFT JOIN vicidial_campaign_dnc ON vicidial_dnc.phone_number=vicidial_campaign_dnc.phone_number WHERE vicidial_dnc.phone_number LIKE '$number%' UNION ALL SELECT vicidial_campaign_dnc.phone_number,vicidial_campaign_dnc.campaign_id,campaign_name FROM vicidial_dnc RIGHT JOIN vicidial_campaign_dnc ON vicidial_dnc.phone_number=vicidial_campaign_dnc.phone_number LEFT JOIN vicidial_campaigns ON vicidial_campaign_dnc.campaign_id=vicidial_campaigns.campaign_id $addedSQLx $filter_camp_SQL LIMIT $start,$rp");
+			$data['dnc_list'] = $query->result();
+		} else {
+			$data['dnc_list'] = array('start' => 'true');
+		}
 		
 		$data['paginate'] = $this->pagelinks($page,$rp,$total,$limit);
 
