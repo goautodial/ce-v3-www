@@ -105,32 +105,37 @@ function changePage(pagenum)
 	<?php
 	if (count($dnc_list) > 0)
 	{
-		foreach ($dnc_list as $dnc)
+		if (!$dnc_list['start'])
 		{
- 			if ($x==0) {
- 				$bgcolor = "#E0F8E0";
- 				$x=1;
- 			} else {
- 				$bgcolor = "#EFFBEF";
- 				$x=0;
- 			}
-			
-			if (strlen($dnc->campaign_id)>0)
-				$camp_desc = "{$dnc->campaign_id} - {$dnc->campaign_name}";
-			else
-				$camp_desc = "INTERNAL DNC LIST";
-		?>
- 			<tr style="background-color:<?php echo $bgcolor; ?>;"> 
-			<!--<tr>-->
-				<td style="border-top:#D0D0D0 dashed 1px;">&nbsp;&nbsp;<?php echo $dnc->phone_number; ?></td>
-				<td style="border-top:#D0D0D0 dashed 1px;">&nbsp;&nbsp;<?php echo $camp_desc; ?></td>
-				<td style="border-top:#D0D0D0 dashed 1px;text-align:center;"><img src="<? echo $base; ?>img/edit.png" style="cursor:default;width:12px;" class="desaturate" /></td><td style="border-top:#D0D0D0 dashed 1px;text-align:center;"><span onclick="delDNC('<?php echo "{$dnc->phone_number}-{$dnc->campaign_id}"; ?>')" style="cursor:pointer;" class="toolTip" title="DELETE DNC NUMBER <?php echo "\n{$dnc->phone_number}"; ?>"><img src="<? echo $base; ?>img/delete.png" style="cursor:pointer;width:12px;" /></span></td><td style="border-top:#D0D0D0 dashed 1px;text-align:center;"><img src="<? echo $base; ?>img/status_display_i.png" style="cursor:default;width:12px;" class="desaturate" /></td>
-				<td style="border-top:#D0D0D0 dashed 1px;width:35px;text-align:center;"><input type="checkbox" id="delDNC[]" value="<?php echo "{$dnc->phone_number}-{$dnc->campaign_id}"; ?>" /></td>
-			</tr>
-		<?php
+			foreach ($dnc_list as $dnc)
+			{
+				if ($x==0) {
+					$bgcolor = "#E0F8E0";
+					$x=1;
+				} else {
+					$bgcolor = "#EFFBEF";
+					$x=0;
+				}
+				
+				if (strlen($dnc->campaign_id)>0)
+					$camp_desc = "{$dnc->campaign_id} - {$dnc->campaign_name}";
+				else
+					$camp_desc = "INTERNAL DNC LIST";
+			?>
+				<tr style="background-color:<?php echo $bgcolor; ?>;"> 
+				<!--<tr>-->
+					<td style="border-top:#D0D0D0 dashed 1px;">&nbsp;&nbsp;<?php echo $dnc->phone_number; ?></td>
+					<td style="border-top:#D0D0D0 dashed 1px;">&nbsp;&nbsp;<?php echo $camp_desc; ?></td>
+					<td style="border-top:#D0D0D0 dashed 1px;text-align:center;"><img src="<? echo $base; ?>img/edit.png" style="cursor:default;width:12px;" class="desaturate" /></td><td style="border-top:#D0D0D0 dashed 1px;text-align:center;"><span onclick="delDNC('<?php echo "{$dnc->phone_number}-{$dnc->campaign_id}"; ?>')" style="cursor:pointer;" class="toolTip" title="DELETE DNC NUMBER <?php echo "\n{$dnc->phone_number}"; ?>"><img src="<? echo $base; ?>img/delete.png" style="cursor:pointer;width:12px;" /></span></td><td style="border-top:#D0D0D0 dashed 1px;text-align:center;"><img src="<? echo $base; ?>img/status_display_i.png" style="cursor:default;width:12px;" class="desaturate" /></td>
+					<td style="border-top:#D0D0D0 dashed 1px;width:35px;text-align:center;"><input type="checkbox" id="delDNC[]" value="<?php echo "{$dnc->phone_number}-{$dnc->campaign_id}"; ?>" /></td>
+				</tr>
+			<?php
+			}
+		} else {
+			echo "<tr style=\"background-color:#E0F8E0\"><td colspan=\"6\" style=\"border-top:#D0D0D0 dashed 1px;text-align:center;font-weight:bold;color:#f00;\">Type the number at the top right search box.</td></tr>";
 		}
 	} else {
-		echo "<tr><td colspan=\"6\" style=\"text-align:center;font-weight:bold;color:#f00;\">No record(s) found.</td></tr>";
+		echo "<tr style=\"background-color:#E0F8E0\"><td colspan=\"6\" style=\"border-top:#D0D0D0 dashed 1px;text-align:center;font-weight:bold;color:#f00;\">No record(s) found.</td></tr>";
 	}
 	?>
 	</tbody>
