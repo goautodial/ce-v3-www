@@ -747,7 +747,7 @@ function delDNC(dnc_num)
 		{
 			var pnum = dnc_num.split('-');
 			$("#dnc_placeholder").empty().html('<center><img src="<? echo $base; ?>img/goloading.gif" /></center>');
-			$('#dnc_placeholder').load('<? echo $base; ?>index.php/go_dnc_ce/go_search_dnc/');
+			$('#dnc_placeholder').load('<? echo $base; ?>index.php/go_dnc_ce/go_search_dnc/start');
 
 			if (data)
 			{
@@ -770,7 +770,7 @@ $(document).ready(function()
 		//DNC START
 		$('#search_dnc').val('');
 		$("#dnc_placeholder").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
-		$("#dnc_placeholder").load("<?php echo $base;?>index.php/go_dnc_ce/go_search_dnc/");
+		$("#dnc_placeholder").load("<?php echo $base;?>index.php/go_dnc_ce/go_search_dnc/start");
 		
 		$('.tab').click(function()
 		{
@@ -865,7 +865,7 @@ $(document).ready(function()
 					$.post('<? echo $base; ?>index.php/go_dnc_ce/go_delete_mass_dnc_number/'+selectedNumber+'/', function(data)
 					{
 						$("#dnc_placeholder").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
-						$('#dnc_placeholder').load('<? echo $base; ?>index.php/go_dnc_ce/go_search_dnc/');
+						$('#dnc_placeholder').load('<? echo $base; ?>index.php/go_dnc_ce/go_search_dnc/start');
 
 						if (data)
 						{
@@ -895,7 +895,7 @@ $(document).ready(function()
 		$(this).hide();
 		$("#search_dnc").val('');
                 $("#dnc_placeholder").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
-                $('#dnc_placeholder').load('<? echo $base; ?>index.php/go_dnc_ce/go_search_dnc/');
+                $('#dnc_placeholder').load('<? echo $base; ?>index.php/go_dnc_ce/go_search_dnc/start');
 	});
 	
 	$("#submit_search_dnc").click(function()
