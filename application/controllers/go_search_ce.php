@@ -2103,6 +2103,8 @@ class Go_search_ce extends Controller{
 	if ($query->num_rows() > 0) {
 	    foreach ($query->result() as $line)
 	    {
+		$sQuery = $this->gosearch->asteriskDB->query("SELECT count(*) AS `cnt` FROM recording_log WHERE lead_id='{$line->lead_id}';");
+		$recCnt = $sQuery->row()->cnt;
 		$class = ($key % 2) ? "tr1" : "tr2";
 		$return .= "	    <tr class=\"$class\">\n";
 		$return .= "		<td>&nbsp;<a id='listidlink' onclick='get_leadInfo({$line->lead_id});' style='cursor:pointer;'>{$line->lead_id}</a></td>\n";
@@ -2112,7 +2114,11 @@ class Go_search_ce extends Controller{
 		$return .= "		<td>&nbsp;{$line->last_local_call_time}</td>\n";
 		$return .= "		<td>&nbsp;{$line->status}</td>\n";
 		$return .= "		<td>&nbsp;{$line->user}</td>\n";
-		$return .= "		<td>&nbsp;<span onclick='view_recording({$line->lead_id});' style='cursor:pointer;'>VIEW</span></td>\n";
+		if ($recCnt) {
+		    $return .= "		<td>&nbsp;<span onclick='view_recording({$line->lead_id});' style='cursor:pointer;'>VIEW</span></td>\n";
+		} else {
+		    $return .= "		<td>&nbsp;</td>\n";
+		}
 		$return .= "	    </tr>\n";
 		$key++;
 	    }
