@@ -2190,7 +2190,10 @@ class Go_search_ce extends Controller{
 		    $row = $queryb->row(0);
 		    $usernm = $row->full_name;
 		    
-		    $location = str_replace("http://",$isHTTPS,$rec->location);
+		    $remoteURL   = ($this->config->item('VARREMOTEFTP') == "Y") ? $this->config->item('VARREMOTEFTPURL') : "http://{$_SERVER['HTTP_HOST']}";
+		    $loc_domain  = parse_url($rec->location);
+		    $remoteURL  .= $loc_domain['path'];
+		    $location = str_replace("http://",$isHTTPS,$remoteURL);
 		    $duration = ($rec->length_in_sec > 0) ? $rec->length_in_sec : '0';
 		    
 		    $class = ($cnt % 2) ? "tr1" : "tr2";
