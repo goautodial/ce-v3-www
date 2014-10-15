@@ -1,5 +1,9 @@
 Filename: changelog.txt
 
+1413345600 - Make the recording URL set to the listening IP/host if the VARREMOTEFTP's value is set to N else it will set to VARREMOTEFTPURL's value. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/controllers/go_search_ce.php
+
 1413172800 - Fixed a bug when viewing DNC list with more than a million entries on the database that the query locks up the database. (Issue #1535) -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * application/controllers/go_dnc_ce.php
