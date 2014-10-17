@@ -758,7 +758,7 @@ class Go_carriers_ce extends Controller {
 									      mysql_real_escape_string("username={$a['authname']}")."\n".mysql_real_escape_string("secret={$a['voip_password']}").
 									      "\n".mysql_real_escape_string("host=dal.justgovoip.com")."\n".mysql_real_escape_string("dtmfmode=rfc2833").
 									      "\n".mysql_real_escape_string("context=trunkinbound")."\n".mysql_real_escape_string("qualify=yes").
-									      "\n".mysql_real_escape_string("insecure=very").
+									      "\n".mysql_real_escape_string("insecure=invite,port").
 									      "\n".mysql_real_escape_string("nat=yes");
 			$data['vicidial_server_carriers']['dialplan_entry'] = mysql_real_escape_string("exten => _".$a['authname'].".,1,AGI(agi://127.0.0.1:4577/call_log)")."\n";
 			$data['vicidial_server_carriers']['dialplan_entry'] .= mysql_real_escape_string('exten => _'.$a['authname'].'.,2,Dial(SIP/${EXTEN:'.strlen($a['authname']).'}@'.$data['vicidial_server_carriers']['carrier_id'].",,tTo)")."\n";
@@ -1011,7 +1011,7 @@ class Go_carriers_ce extends Controller {
 				{
 					if ($reg_string=="dal.justgovoip.com" || $reg_string=="208.43.27.84")
 					{
-						$r = $this->commonhelper->getAccountInfo("username",substr($reg_string_orig,strrpos($reg_string_orig,"/") + 1));
+			/*			$r = $this->commonhelper->getAccountInfo("username",substr($reg_string_orig,strrpos($reg_string_orig,"/") + 1));
 						$data['carrier_id']		= $carrier_id;
 						$data['username']		= $r->structmem('username')->getval();
 						$data['web_password']		= "Check your email for your web password.";
@@ -1024,7 +1024,7 @@ class Go_carriers_ce extends Controller {
 						
 						$this->go_carriers->goautodialDB->insert('justgovoip_sippy_info',$data);
 						$this->go_carriers->db->insert('justgovoip_sippy_info',$data);
-					}
+			*/		}
 					$varSQL = rtrim($varSQL,",");
 					$valSQL = rtrim($valSQL,",");
 					$itemSQL = "($varSQL) VALUES ($valSQL)";
