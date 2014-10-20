@@ -134,7 +134,7 @@ function voipsignup() {
 <div class="table table_balance" id="table_balance">
 								<p class="sub" style="margin-left: -20px;"><a id="payWithPayPal" class="rightdiv toolTip" style="text-decoration: none; cursor:pointer; font-weight:normal; font-size: 13px; color: #777777;" title="">Balance</a></p>
 									<?php
-                                                                        $rate = 0.016;	
+                                                                        $rate = 0.0129;	
 									$mins_remain = ($totalbalance > 0) ? $totalbalance / $rate : 0;
 										
                                                                         if ($mins_remain < 500) {
