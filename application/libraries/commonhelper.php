@@ -280,7 +280,7 @@ Class Commonhelper{
         if(!is_null($table) && !empty($table)){
             $this->asteriskDB->trans_start();
                  if(!empty($fields) && !is_null($fields)){
-                      $this->asteriskDB->select($fields);
+                      $this->asteriskDB->select($fields, FALSE);
                  }
                  if(!empty($join) && !is_null($join)){
                      if(is_array($join)){
