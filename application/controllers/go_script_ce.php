@@ -693,7 +693,7 @@ class Go_script_ce extends Controller{
                                            $campaigns = array();
                                        }
                                        $script = $this->commonhelper->simpleretrievedata('go_scripts',
-                                                                                         "script_id,account_num,REPLACE(script_id,'script','') AS scriptid",
+                                                                                         "script_id,account_num,REPLACE(script_id,'lime','') AS scriptid",
                                                                                          null,
                                                                                          array(array('account_num'=>$account_group)),
                                                                                          array(array('CAST(scriptid AS unsigned)','desc')),
