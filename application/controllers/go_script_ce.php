@@ -474,11 +474,11 @@ class Go_script_ce extends Controller{
                                            $campaigns = array();
                                       }
                                       $script = $this->commonhelper->simpleretrievedata('go_scripts',
-                                                                                        'script_id,account_num',
+                                                                                        "script_id,account_num,REPLACE(script_id,'script','') AS scriptid",
                                                                                         null,
                                                                                         array(array('account_num'=>$account_group)),
-                                                                                        array(array('script_id','desc')),
-                                                                                        1 
+                                                                                        array(array('CAST(scriptid AS unsigned)','desc')),
+                                                                                        1
                                                                                        );
                                       $scriptId_elem = $this->scriptid($script,$_POST['script_type']);
                                       #$scriptId_elem
@@ -693,10 +693,10 @@ class Go_script_ce extends Controller{
                                            $campaigns = array();
                                        }
                                        $script = $this->commonhelper->simpleretrievedata('go_scripts',
-                                                                                         'script_id,account_num',
+                                                                                         "script_id,account_num,REPLACE(script_id,'script','') AS scriptid",
                                                                                          null,
                                                                                          array(array('account_num'=>$account_group)),
-                                                                                         array(array('script_id','desc')),
+                                                                                         array(array('CAST(scriptid AS unsigned)','desc')),
                                                                                          1 
                                                                                         );
                                        $scriptId_elem = $this->scriptid($script,$_POST['script_type']);
