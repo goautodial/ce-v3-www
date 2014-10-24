@@ -1,5 +1,10 @@
 Filename: changelog.txt
 
+1414123200 - Fixed a bug when adding new scripts when you already have 10 existing scripts. (Issue #1523) -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_script_ce.php
+           - * application/libraries/commonhelper.php
+
 1413345600 - Make the recording URL set to the listening IP/host if the VARREMOTEFTP's value is set to N else it will set to VARREMOTEFTPURL's value. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected File:
            - * application/controllers/go_search_ce.php
