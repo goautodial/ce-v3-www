@@ -333,8 +333,12 @@ class Go_site extends Controller
 			$callfunc = $this->go_reports->go_get_reports();
 
                 if($data['pagetitle'] == 'cdr'){
-
-                    $sippyinfo = $this->go_carriers->get_sippy_info($this->session->userdata('user_name'))->result();
+		    $userName = $this->session->userdata('user_name');
+		    if (!$this->commonhelper->checkIfTenant($userName)) {
+			$query = $this->go_carriers->db->query("SELECT username FROM justgovoip_sippy_info jsi, vicidial_server_carriers vsc WHERE jsi.carrier_id=vsc.carrier_id AND active='Y' LIMIT 1;");
+			$userName = $query->row()->username;
+		    }
+                    $sippyinfo = $this->go_carriers->get_sippy_info($userName)->result();
                     $data['i_account'] = $sippyinfo[0]->i_account; 
 
                 }
