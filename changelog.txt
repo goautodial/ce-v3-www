@@ -1,5 +1,9 @@
 Filename: changelog.txt
 
+1414382400 - Fixed an issue when viewing the Call History (CDRs) using admin account where it doesn't show anything. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/controllers/go_site.php
+
 1414123200 - Fixed a bug when adding new scripts when you already have 10 existing scripts. (Issue #1523) -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * application/controllers/go_script_ce.php
