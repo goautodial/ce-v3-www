@@ -24,12 +24,21 @@ else
 <br />
 <div align="center" style="font-wieght:bold;font-size:16px;">Lead File Successfully Loaded.</div>
 <br />
-<table border=0 width=100% cellpadding=10 cellspacing=0 valign=top><tr><th colspan=2><font face="arial, helvetica" size=3>Current file status:</font></th></tr><tr><td align=right width="50%"><font face="arial, helvetica" size=2><B>Good:</B></font></td><td align=left width="50%"><font face="arial, helvetica" size=2><B><?php echo $good; ?></B></font></td></tr><tr><td align=right><font face="arial, helvetica" size=2><B>Bad:</B></font></td><td align=left><font face="arial, helvetica" size=2><B><?php echo $bad; ?></B></font></td></tr><tr><td align=right><font face="arial, helvetica" size=2><B>Total:</B></font></td><td align=left><font face="arial, helvetica" size=2><B><?php echo $total; ?></B></font></td></tr><tr><td align=right><font face="arial, helvetica" size=2><B> &nbsp; </B></font></td><td align=left><font face="arial, helvetica" size=2><B> &nbsp; </B></font></td></tr><tr><td align=right><font face="arial, helvetica" size=2><B>Duplicate:</B></font></td><td align=left><font face="arial, helvetica" size=2><B><?php echo $dup; ?></B></font></td></tr><tr><td align=right><font face="arial, helvetica" size=2><B>Postal Match:</B></font></td><td align=left><font face="arial, helvetica" size=2><B><?php echo $post; ?></B></font></td></tr></table> 
+<table border=0 width=100% cellpadding=10 cellspacing=0 valign=top><tr><th colspan=2><font face="arial, helvetica" size=3>Current file status:</font></th></tr><tr><td align=right width="50%"><font face="arial, helvetica" size=2><B>Good:</B></font></td><td align=left width="50%"><font face="arial, helvetica" size=2><B><?php echo $good; ?></B></font></td></tr><tr><td align=right><font face="arial, helvetica" size=2><B>Bad:</B></font></td><td align=left><font face="arial, helvetica" size=2><B><?php echo $bad; ?></B></font></td></tr><tr><td align=right><font face="arial, helvetica" size=2><B>Total:</B></font></td><td align=left><font face="arial, helvetica" size=2><B><?php echo $total; ?></B></font></td></tr><tr><td align=right><font face="arial, helvetica" size=2><B> &nbsp; </B></font></td><td align=left><font face="arial, helvetica" size=2><B> &nbsp; </B></font></td></tr><tr><td align=right><font face="arial, helvetica" size=2><B>Duplicate:</B></font></td><td align=left><font face="arial, helvetica" size=2><B><?php echo $dup; ?></B></font></td></tr><tr style="display: none;"><td align=right><font face="arial, helvetica" size=2><B>Postal Match:</B></font></td><td align=left><font face="arial, helvetica" size=2><B><?php echo $post; ?></B></font></td></tr></table>
+
+<table border=0 width=100% cellpadding=10 cellspacing=0 valign=top><tr><td style="text-align:center;width:50%;"><span id="showDivResult" style="display:none;"><br /><?=form_checkbox('showResult','show',FALSE,'id="showResult"'); ?> <small style="color: #ff0000;">Check this box if you want to show the result</small></span></td></tr></table>
+
+<table border=0 width=100% cellpadding=10 cellspacing=0 valign=top id="resultHTML" style="display:none;"><tr><td style="text-align:center;"><?=$resultHTML?></td></tr></table>
 
 <script>
 $(function()
 {
 	$('#processLeads').hide();
+	$('#showDivResult').show();
+	$('#showResult').prop('checked', false);
+	$('#showResult').click(function() {
+		$('#resultHTML').toggle(this.checked);
+	});
 });
 </script>
 <?php
