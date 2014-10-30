@@ -1,5 +1,12 @@
 Filename: changelog.txt
 
+1414641600 - Added a duplicate result checkbox just below the loading file status when loading leads using the campaign wizard. (Issue #1513) -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_campaign_ce.php
+           - * application/views/go_campaign/go_campaign.php
+           - * application/views/go_campaign/go_campaign_wizard_fields.php
+           - * application/views/go_campaign/go_campaign_wizard_output.php
+
 1414382400 - Fixed an issue when viewing the Call History (CDRs) using admin account where it doesn't show anything. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected File:
            - * application/controllers/go_site.php
