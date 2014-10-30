@@ -762,7 +762,7 @@ $(function()
 		if (camp_create!='N')
 		{
 			$('#overlay').fadeIn('fast');
-			$('#box').css({'width': '760px','margin-left': 'auto', 'margin-right': 'auto', 'padding-bottom': '10px', 'position': 'fixed'});
+			$('#box').css({'width': '760px','margin-left': 'auto', 'margin-right': 'auto', 'padding-bottom': '10px'});
 			$('#box').animate({
 				top: "70px"
 			}, 500);
@@ -952,7 +952,7 @@ function addNewCampaign()
 	if ('<?php echo $permissions->campaign_create; ?>'!='N')
 	{
 		$('#overlay').fadeIn('fast');
-		$('#box').css({'width': '760px','margin-left': 'auto', 'margin-right': 'auto', 'padding-bottom': '10px', 'position': 'fixed'});
+		$('#box').css({'width': '760px','margin-left': 'auto', 'margin-right': 'auto', 'padding-bottom': '10px'});
 		$('#box').animate({
 			top: "70px"
 		}, 500);
