@@ -1002,6 +1002,7 @@ class Go_campaign_ce extends Controller {
 													$dup_lead=1;
 													$row = $rslt->row();
 													$dup_lead_list = $row->list_id;
+													$dup++;
 
 												}
 												if ($dup_lead < 1) {
@@ -1033,7 +1034,7 @@ class Go_campaign_ce extends Controller {
 									}
 
 									##### Check for duplicate phone numbers in vicidial_list table for one list_id #####
-									if (eregi("DUPLIST",$dupcheck)) {
+									if ($dupcheck == "DUPLIST") {
 										$dup_lead=0;
 										$stmt="select count(*) from vicidial_list where phone_number='$phone_number' and list_id='$list_id';";
 										$rslt = $this->db->query($stmt);
@@ -1043,6 +1044,7 @@ class Go_campaign_ce extends Controller {
 											$row = $rslt->row();
 											$dup_lead = $row->list_id;
 											$dup_lead_list =	$list_id;
+											$dup++;
 											//die($dup_lead_list);
 										}
 
@@ -1055,7 +1057,7 @@ class Go_campaign_ce extends Controller {
 									}
 
 									##### Check for duplicate title and alt-phone in vicidial_list table for one list_id #####
-									if (eregi("DUPTITLEALTPHONELIST",$dupcheck))
+									if ($dupcheck == "DUPTITLEALTPHONELIST")
 										{
 										$dup_lead=0;
 										$stmt="select count(*) from vicidial_list where title='$title' and alt_phone='$alt_phone' and list_id='$list_id';";
@@ -1073,7 +1075,7 @@ class Go_campaign_ce extends Controller {
 										}
 
 										##### Check for duplicate phone numbers in vicidial_list table entire database #####
-										if (eregi("DUPTITLEALTPHONESYS",$dupcheck)) {
+										if ($dupcheck == "DUPTITLEALTPHONESYS") {
 											$dup_lead=0;
 											$stmt="select list_id from vicidial_list where title='$title' and alt_phone='$alt_phone';";
 											$rslt = $this->db->query($stmt);
@@ -1082,6 +1084,7 @@ class Go_campaign_ce extends Controller {
 												$dup_lead=1;
 												$row = $rslt->row();
 												$dup_lead_list = $row->list_id;
+												$dup++;
 											}
 											if ($dup_lead < 1) {
 												if (eregi("$alt_phone$title$US$list_id",$phone_list))
@@ -1139,12 +1142,16 @@ class Go_campaign_ce extends Controller {
 
 										if ($bad < 1000000)	{
 											if ( $list_id < 100 ) {
-												$resultHTML .= "<BR></b><font size=1 color=red>record $total BAD- PHONE : $phone_number ROW: |$lrow[0]| INVALID LIST ID</font><b>\n";
+												$resultHTML .= "<BR></b><font size=1 color=red>record $total BAD- PHONE: $phone_number ROW: |$lrow[0]| INVALID LIST ID</font><b>\n";
 											} else {
 												$resultHTML .= "<BR></b><font size=1 color=red>record $total BAD- PHONE: $phone_number ROW: |$lrow[0]| DUP: $dup_lead  $dup_lead_list</font><b>\n";
 											}
 										}
 										$bad++;
+									}
+									
+									if ($bad < 1) {
+										$resultHTML = "<font size=1 color=red>No duplicate number found.</font>";
 									}
 
 									$total++;
@@ -1189,6 +1196,7 @@ class Go_campaign_ce extends Controller {
 			$data['total'] = $total;
 			$data['dup'] = $dup;
 			$data['post'] = $post;
+			$data['resultHTML'] = $resultHTML;
 			$this->load->view('go_campaign/go_campaign_wizard_fields', $data);
 		}
 	}
