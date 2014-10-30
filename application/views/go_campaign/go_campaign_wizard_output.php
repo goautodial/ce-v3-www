@@ -97,6 +97,7 @@ $(document).ready(function()
 				$('.progressBar').show();
 				$('#uploadleads').submit();
 				$('#processLeads').show();
+				$('#showDivResult').hide();
 				$('#box').css('position','absolute');
 			}
 			else
@@ -223,7 +224,8 @@ $(document).ready(function()
 
 				$('#next').text('Next');
 				$('#processLeads').hide();
-				$('#box').css('position','fixed');
+				$('#showDivResult').show();
+				$('#box').css('position','absolute');
 				
 				$("#custom_forms").empty().html('<center><img src="<? echo $base; ?>img/goloading.gif" /></center>');
 				$('#custom_forms').load('<?php echo $base; ?>index.php/go_campaign_ce/go_upload_leads/final/'+dupcheck+'/'+list_id+'/'+phone_code+'/'+leadArray+'/'+file_name+'/'+file_ext);
@@ -325,7 +327,7 @@ $(document).ready(function()
                  <tr>
                     <td class="label">Check for Duplicates:</td>
                     <td>
-                        <select size="1" name="checkDuplicates" id="checkDuplicates">
+                        <select size="1" name="checkDuplicates" id="checkDuplicates" style="width: 350px;">
                             <option value="NONE">NO DUPLICATE CHECK</option>
                             <option value="CHECKLIST">CHECK FOR DUPLICATES BY PHONE IN LIST ID</option>
                             <option value="CHECKCAMP">CHECK FOR DUPLICATES BY PHONE IN ALL CAMPAIGN LISTS</option>
