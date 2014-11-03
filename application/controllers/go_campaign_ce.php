@@ -843,7 +843,7 @@ class Go_campaign_ce extends Controller {
 							$buffer=stripslashes($buffer);
 
 							if (strlen($buffer)>0) {
-								$row=explode($delimiter, eregi_replace("[\'\"]", "", $buffer));
+								$row=explode($delimiter, preg_replace("/[\'\"]/", "", $buffer));
 								$lrow=$row;
 
 									$pulldate=date("Y-m-d H:i:s");
@@ -857,8 +857,8 @@ class Go_campaign_ce extends Controller {
 									$list_id =				$row[$list_id_field];
 									$gmt_offset =			'0';
 									$called_since_last_reset='N';
-									$phone_code =			eregi_replace("[^0-9]", "", $row[$phone_code_field]);
-									$phone_number =			eregi_replace("[^0-9]", "", $row[$phone_number_field]);
+									$phone_code =			preg_replace("/[^0-9]/", "", $row[$phone_code_field]);
+									$phone_number =			preg_replace("/[^0-9]/", "", $row[$phone_number_field]);
 									$title =				$row[$title_field];
 									$first_name =			$row[$first_name_field];
 									$middle_initial =		$row[$middle_initial_field];
@@ -873,7 +873,7 @@ class Go_campaign_ce extends Controller {
 									$country_code =			$row[$country_code_field];
 									$gender =				$row[$gender_field];
 									$date_of_birth =		$row[$date_of_birth_field];
-									$alt_phone =			eregi_replace("[^0-9]", "", $row[$alt_phone_field]);
+									$alt_phone =			preg_replace("/[^0-9]/", "", $row[$alt_phone_field]);
 									$email =				$row[$email_field];
 									$security_phrase =		$row[$security_phrase_field];
 									$comments =				trim($row[$comments_field]);
@@ -881,37 +881,37 @@ class Go_campaign_ce extends Controller {
 									$owner =				$row[$owner_field];
 
 									### REGEX to prevent weird characters from ending up in the fields
-									$field_regx = "['\"`\\;]";
+									$field_regx = "/['\"`\\;]/";
 
 
 
 									# replace ' " ` \ ; with nothing
-									$vendor_lead_code =		eregi_replace($field_regx, "", $vendor_lead_code);
-									$source_code =			eregi_replace($field_regx, "", $source_code);
-									$source_id = 			eregi_replace($field_regx, "", $source_id);
-									$list_id =				eregi_replace($field_regx, "", $list_id);
-									$phone_code =			eregi_replace($field_regx, "", $phone_code);
-									$phone_number =			eregi_replace($field_regx, "", $phone_number);
-									$title =				eregi_replace($field_regx, "", $title);
-									$first_name =			eregi_replace($field_regx, "", $first_name);
-									$middle_initial =		eregi_replace($field_regx, "", $middle_initial);
-									$last_name =			eregi_replace($field_regx, "", $last_name);
-									$address1 =				eregi_replace($field_regx, "", $address1);
-									$address2 =				eregi_replace($field_regx, "", $address2);
-									$address3 =				eregi_replace($field_regx, "", $address3);
-									$city =					eregi_replace($field_regx, "", $city);
-									$state =				eregi_replace($field_regx, "", $state);
-									$province =				eregi_replace($field_regx, "", $province);
-									$postal_code =			eregi_replace($field_regx, "", $postal_code);
-									$country_code =			eregi_replace($field_regx, "", $country_code);
-									$gender =				eregi_replace($field_regx, "", $gender);
-									$date_of_birth =		eregi_replace($field_regx, "", $date_of_birth);
-									$alt_phone =			eregi_replace($field_regx, "", $alt_phone);
-									$email =				eregi_replace($field_regx, "", $email);
-									$security_phrase =		eregi_replace($field_regx, "", $security_phrase);
-									$comments =				eregi_replace($field_regx, "", $comments);
-									$rank =					eregi_replace($field_regx, "", $rank);
-									$owner =				eregi_replace($field_regx, "", $owner);
+									$vendor_lead_code =		preg_replace($field_regx, "", $vendor_lead_code);
+									$source_code =			preg_replace($field_regx, "", $source_code);
+									$source_id = 			preg_replace($field_regx, "", $source_id);
+									$list_id =				preg_replace($field_regx, "", $list_id);
+									$phone_code =			preg_replace($field_regx, "", $phone_code);
+									$phone_number =			preg_replace($field_regx, "", $phone_number);
+									$title =				preg_replace($field_regx, "", $title);
+									$first_name =			preg_replace($field_regx, "", $first_name);
+									$middle_initial =		preg_replace($field_regx, "", $middle_initial);
+									$last_name =			preg_replace($field_regx, "", $last_name);
+									$address1 =				preg_replace($field_regx, "", $address1);
+									$address2 =				preg_replace($field_regx, "", $address2);
+									$address3 =				preg_replace($field_regx, "", $address3);
+									$city =					preg_replace($field_regx, "", $city);
+									$state =				preg_replace($field_regx, "", $state);
+									$province =				preg_replace($field_regx, "", $province);
+									$postal_code =			preg_replace($field_regx, "", $postal_code);
+									$country_code =			preg_replace($field_regx, "", $country_code);
+									$gender =				preg_replace($field_regx, "", $gender);
+									$date_of_birth =		preg_replace($field_regx, "", $date_of_birth);
+									$alt_phone =			preg_replace($field_regx, "", $alt_phone);
+									$email =				preg_replace($field_regx, "", $email);
+									$security_phrase =		preg_replace($field_regx, "", $security_phrase);
+									$comments =				preg_replace($field_regx, "", $comments);
+									$rank =					preg_replace($field_regx, "", $rank);
+									$owner =				preg_replace($field_regx, "", $owner);
 
 									$USarea = 			substr($phone_number, 0, 3);
 
@@ -950,7 +950,7 @@ class Go_campaign_ce extends Controller {
 																	{
 																	$A_field_value[$o] =	$row[$form_field_value];
 																	# replace ' " ` \ ; with nothing
-																	$A_field_value[$o] =	eregi_replace($field_regx, "", $A_field_value[$o]);
+																	$A_field_value[$o] =	preg_replace($field_regx, "", $A_field_value[$o]);
 
 																	$custom_SQL .= "$A_field_label[$o]='$A_field_value[$o]',";
 																	}
@@ -992,7 +992,7 @@ class Go_campaign_ce extends Controller {
 													$dup_lists .=	"'$row->list_id',";
 													$L++;
 												}
-												$dup_lists = eregi_replace(",$",'',$dup_lists);
+												$dup_lists = preg_replace("/,$/",'',$dup_lists);
 
 												$stmt="select list_id from vicidial_list where phone_number='$phone_number' and list_id IN($dup_lists) limit 1;";
 												$rslt = $this->db->query($stmt);
@@ -1015,7 +1015,7 @@ class Go_campaign_ce extends Controller {
 
 
 									##### Check for duplicate phone numbers in vicidial_list table entire database #####
-									if (eregi("DUPSYS",$dupcheck)) {
+									if ($dupcheck == "DUPSYS") {
 										$dup_lead=0;
 										$stmt="select list_id from vicidial_list where phone_number='$phone_number';";
 										$rslt = $this->db->query($stmt);
@@ -1025,6 +1025,7 @@ class Go_campaign_ce extends Controller {
 											$dup_lead=1;
 											$row = $rslt->row();
 											$dup_lead_list = $row->list_id;
+											$dup++;
 										}
 
 										if ($dup_lead < 1) {
@@ -1036,13 +1037,13 @@ class Go_campaign_ce extends Controller {
 									##### Check for duplicate phone numbers in vicidial_list table for one list_id #####
 									if ($dupcheck == "DUPLIST") {
 										$dup_lead=0;
-										$stmt="select count(*) from vicidial_list where phone_number='$phone_number' and list_id='$list_id';";
+										$stmt="select count(*) as cnt from vicidial_list where phone_number='$phone_number' and list_id='$list_id';";
 										$rslt = $this->db->query($stmt);
 										$pc_recs = $rslt->num_rows;
 
 										if ($pc_recs > 0) {
 											$row = $rslt->row();
-											$dup_lead = $row->list_id;
+											$dup_lead = $row->cnt;
 											$dup_lead_list =	$list_id;
 											$dup++;
 											//die($dup_lead_list);
@@ -1060,13 +1061,14 @@ class Go_campaign_ce extends Controller {
 									if ($dupcheck == "DUPTITLEALTPHONELIST")
 										{
 										$dup_lead=0;
-										$stmt="select count(*) from vicidial_list where title='$title' and alt_phone='$alt_phone' and list_id='$list_id';";
+										$stmt="select count(*) as cnt from vicidial_list where title='$title' and alt_phone='$alt_phone' and list_id='$list_id';";
 										$rslt = $this->db->query($stmt);
 										$pc_recs = $rslt->num_rows;
 										if ($pc_recs > 0) {
 											$row = $rslt->row();
-											$dup_lead = $row->list_id;
+											$dup_lead = $row->cnt;
 											$dup_lead_list =	$list_id;
+											$dup++;
 										}
 										if ($dup_lead < 1) {
 											if (eregi("$alt_phone$title$US$list_id",$phone_list))
@@ -1097,7 +1099,7 @@ class Go_campaign_ce extends Controller {
 								if ( (strlen($phone_number)>6 && strlen($phone_number) < 11) and ($dup_lead<1) and ($list_id >= 100 )) {
 
 										if (strlen($phone_code)<1) {$phone_code = '1';}
-										if (eregi("TITLEALTPHONE",$dupcheck)) {
+										if ($dupcheck == "TITLEALTPHONE") {
 											$phone_list .= "$alt_phone$title$US$list_id|";
 										} else {
 											$phone_list .= "$phone_number$US$list_id|";
@@ -1144,14 +1146,14 @@ class Go_campaign_ce extends Controller {
 											if ( $list_id < 100 ) {
 												$resultHTML .= "<BR></b><font size=1 color=red>record $total BAD- PHONE: $phone_number ROW: |$lrow[0]| INVALID LIST ID</font><b>\n";
 											} else {
-												$resultHTML .= "<BR></b><font size=1 color=red>record $total BAD- PHONE: $phone_number ROW: |$lrow[0]| DUP: $dup_lead  $dup_lead_list</font><b>\n";
+												$resultHTML .= "<BR></b><font size=1 color=red>record $total BAD- PHONE: $phone_number ROW: |$lrow[0]| DUP: $dup_lead LIST ID: $dup_lead_list</font><b>\n";
 											}
 										}
 										$bad++;
 									}
 									
 									if ($bad < 1) {
-										$resultHTML = "<font size=1 color=red>No duplicate number found.</font>";
+										$resultHTML = "<br /><font size=1 color=red>No duplicate numbers found.</font>";
 									}
 
 									$total++;
@@ -1947,7 +1949,7 @@ class Go_campaign_ce extends Controller {
 				{
 				$row = $rslt->row();
 				$gmt_offset = $row->GMT_offset;
-				$gmt_offset = eregi_replace("\+","",$gmt_offset);
+				$gmt_offset = preg_replace("/\+/","",$gmt_offset);
 				$dst = $row->DST;
 				$dst_range = $row->DST_range;
 			
@@ -1975,7 +1977,7 @@ class Go_campaign_ce extends Controller {
 			{
 			$row = $rslt->row();
 			$gmt_offset =	$row->GMT_offset;	 
-			$gmt_offset = eregi_replace("\+","",$gmt_offset);
+			$gmt_offset = preg_replace("/\+/","",$gmt_offset);
 			$PC_processed++;
 			$postalgmt_found++;
 			$post++;
@@ -2010,7 +2012,7 @@ class Go_campaign_ce extends Controller {
 			if ($pc_recs > 0)
 				{
 			$row = $rslt->row();
-				$gmt_offset =	$row->GMT_offset;	 $gmt_offset = eregi_replace("\+","",$gmt_offset);
+				$gmt_offset =	$row->GMT_offset;	 $gmt_offset = preg_replace("/\+/","",$gmt_offset);
 				$dst =			$row->DST;
 				$dst_range =	$row->DST_range;
 				$PC_processed++;
@@ -2027,7 +2029,7 @@ class Go_campaign_ce extends Controller {
 			if ($pc_recs > 0)
 				{
 			$row = $rslt->row();
-				$gmt_offset =	$row->GMT_offset;	 $gmt_offset = eregi_replace("\+","",$gmt_offset);
+				$gmt_offset =	$row->GMT_offset;	 $gmt_offset = preg_replace("/\+/","",$gmt_offset);
 				$dst =			$row->DST;
 				$dst_range =	$row->DST_range;
 				$PC_processed++;
@@ -2044,7 +2046,7 @@ class Go_campaign_ce extends Controller {
 			if ($pc_recs > 0)
 				{
 			$row = $rslt->row();
-				$gmt_offset =	$row->GMT_offset;	 $gmt_offset = eregi_replace("\+","",$gmt_offset);
+				$gmt_offset =	$row->GMT_offset;	 $gmt_offset = preg_replace("/\+/","",$gmt_offset);
 				$dst =			$row->DST;
 				$dst_range =	$row->DST_range;
 				$PC_processed++;
@@ -2062,7 +2064,7 @@ class Go_campaign_ce extends Controller {
 			if ($pc_recs > 0)
 				{
 			$row = $rslt->row();
-				$gmt_offset =	$row->GMT_offset;	 $gmt_offset = eregi_replace("\+","",$gmt_offset);
+				$gmt_offset =	$row->GMT_offset;	 $gmt_offset = preg_replace("/\+/","",$gmt_offset);
 				$dst =			$row->DST;
 				$dst_range =	$row->DST_range;
 				$PC_processed++;
