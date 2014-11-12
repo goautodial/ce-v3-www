@@ -1372,9 +1372,13 @@ function gotopage(page) {
 	var search_datef = $("#selected_from_date").text();
 	var search_datet = $("#selected_to_date").text();
 	var adv_settings = '';
+	var adv_daterang = '';
 		
 	if ($(".adv").is(":visible")) {
-		adv_settings = $(".advanceSearch").serialize() + "&from_date=" + search_datef + "&to_date=" + search_datet;
+		if ($("#searchByDate").is(":checked")) {
+			adv_daterang = "&from_date=" + search_datef + "&to_date=" + search_datet;
+		}
+		adv_settings = $(".advanceSearch").serialize() + adv_daterang;
 	}
 	
 	$("#lead_search_placeholder").empty().html("<center><br /><img src=\"<? echo $base; ?>img/goloading.gif\" /></center>");
