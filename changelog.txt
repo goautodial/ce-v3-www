@@ -1,5 +1,9 @@
 Filename: changelog.txt
 
+1415854800 - Fixed a bug reported by Paulo Genuino. The bug where when you searched leads using the Advanced Search, the pagination doesn't work well. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/views/go_list/go_list.php
+
 1414641600 - Added a duplicate result checkbox just below the loading file status when loading leads using the campaign wizard. (Issue #1513) -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * application/controllers/go_campaign_ce.php
