@@ -117,7 +117,7 @@ class Go_audiostore extends Controller{
 			
 			$prefix = ($this->commonhelper->checkIfTenant($this->session->userdata('user_group'))) ? "go_".$this->session->userdata('user_group')."_" : "go_";
      		
-        	if ($explodefile[1] == "wav") {
+        	if (preg_match("/\.wav$/i",$audiofile_orig)) {
         		
     		$audiofile_dir = preg_replace("/ /",'\ ',$audiofile_dir);
                 $audiofile_dir = preg_replace("/@/",'\@',$audiofile_dir);
