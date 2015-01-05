@@ -29,11 +29,11 @@ function validate()
 			
 			$this->adb = $this->load->database('dialerdb', true);
 		
-			$this->adb->where('user', $uname);
+			$this->adb->where('user', $this->adb->escape_str($uname));
 			#$this->adb->where('pass', $upass);
-			$this->adb->where("pass like binary '%$upass%'");
-			$this->adb->where('user_level > 7');		
-                        $this->adb->where('active',"Y");	
+			$this->adb->where('pass', $this->adb->escape_str($upass));
+			$this->adb->where('user_level > 7');
+                        $this->adb->where('active',"Y");
 			$query = $this->adb->get('vicidial_users');
 
                         
