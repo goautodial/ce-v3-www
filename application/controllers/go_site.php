@@ -888,7 +888,7 @@ class Go_site extends Controller
 	{
 		$userID = $this->uri->segment(3);
 	    $this->db = $this->load->database('dialerdb', true);
-		$query = $this->db->query("SELECT user,pass,full_name,phone_login,phone_pass,active FROM vicidial_users WHERE user='$userID'");
+		$query = $this->db->query("SELECT user,pass,full_name,phone_login,phone_pass,active FROM vicidial_users WHERE user='".$this->db->escape_str($userID)."'");
 		$user = $query->row()->user;
 		$pass = $query->row()->pass;
 		$fname = $query->row()->full_name;
@@ -1347,25 +1347,29 @@ class Go_site extends Controller
         function cpanel(){
              $type = $this->uri->segment(3);
              $action = $this->uri->segment(4);
-             if($type=='nic'){
-                  $type = "network";
-             }elseif($type=="asterisk"){
-                 # exclusive start/reload for asterisk
-                 if($action != "Reload"){
-                     $result = shell_exec("/usr/share/goautodial/goautodialc.pl 'screen -ls'");
-                     if(preg_match('/asterisk/',$result)){
-                        exec("/usr/share/goautodial/goautodialc.pl \"kill -9 `ps aux | grep asterisk | grep -v -e grep | awk '{print $2}'`\"");
-                        exec("/usr/share/goautodial/goautodialc.pl \"kill -9 `ps aux | grep astshell | grep -v -e grep | awk '{print $2}'`\"");
-                        exec("/usr/share/goautodial/goautodialc.pl \"screen -wipe\"");
-                     }
-                     exec("/usr/share/goautodial/goautodialc.pl \"/usr/share/astguiclient/start_asterisk_boot.pl\"");
-                 }else{
-                        exec("/usr/share/goautodial/goautodialc.pl 'asterisk -rx \"reload\"'");
-                 }
-                 die("Success: $type {$action}ed");
-             }
-             exec("/usr/share/goautodial/goautodialc.pl '/sbin/service $type ".strtolower($action)."'");
-             die("Success: $type {$action}ed");
+	     if (! preg_match("/^(Reload|Start)$/i",$action)) {
+		die("Warning: $action is not valid.");
+	     } else {
+		if($type=='nic'){
+		     $type = "network";
+		}elseif($type=="asterisk"){
+		    # exclusive start/reload for asterisk
+		    if($action != "Reload"){
+			$result = shell_exec("/usr/share/goautodial/goautodialc.pl 'screen -ls'");
+			if(preg_match('/asterisk/',$result)){
+			   exec("/usr/share/goautodial/goautodialc.pl \"kill -9 `ps aux | grep asterisk | grep -v -e grep | awk '{print $2}'`\"");
+			   exec("/usr/share/goautodial/goautodialc.pl \"kill -9 `ps aux | grep astshell | grep -v -e grep | awk '{print $2}'`\"");
+			   exec("/usr/share/goautodial/goautodialc.pl \"screen -wipe\"");
+			}
+			exec("/usr/share/goautodial/goautodialc.pl \"/usr/share/astguiclient/start_asterisk_boot.pl\"");
+		    }else{
+			   exec("/usr/share/goautodial/goautodialc.pl 'asterisk -rx \"reload\"'");
+		    }
+		    die("Success: $type {$action}ed");
+		}
+		exec("/usr/share/goautodial/goautodialc.pl '/sbin/service $type ".strtolower($action)."'");
+		die("Success: $type {$action}ed");
+	     }
         }
 
         function walk(){
