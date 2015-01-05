@@ -348,7 +348,7 @@ $_F=__FILE__;$_X='Pz48P3BocA0KJGMybmY0Z1snZnI1c2hkNXNrX3MzYl8zcmwnXSA9ICJodHRwcz
 |
 | Put your direct path of your limesurvey here
 */
-$config['lime_path'] = "/var/www/html";
+$config['lime_path'] = $_SERVER['DOCUMENT_ROOT'];
 
 /*
 |--------------------------------------------------------------------------
