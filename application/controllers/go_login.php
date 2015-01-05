@@ -50,15 +50,15 @@ class Go_login extends Controller {
 
 			
 			$data = array (
-					'user_name' => $uname,
-					'user_pass' => md5($upass),
+					'user_name' => $this->db->escape_str($uname),
+					'user_pass' => md5($this->db->escape_str($upass)),
 					'is_logged_in' => true,
 					'remember_me' => $this->input->post('remember_me')
 				    );
 			
 			############ added information by franco ################
 			$asteriskDB = $this->load->database('dialerdb',true);
-			$asteriskDB->where(array('user'=>$uname));
+			$asteriskDB->where(array('user'=>$this->db->escape_str($uname)));
 			$userinfo = $asteriskDB->get('vicidial_users')->result();
 			$access = $asteriskDB->get('go_useraccess')->result();
 			if(!empty($userinfo)){
