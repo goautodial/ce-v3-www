@@ -1,5 +1,17 @@
 Filename: changelog.txt
 
+1420434000 - Fixed the vulnerabilities reported by Chris McCurley via email. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * application/controllers/go_audiostore.php
+           - * application/controllers/go_site.php
+           - * application/controllers/go_login.php
+           - * application/models/go_auth.php
+
+           - Fixed the gathering of settings from .conf file when the document root is not /var/www/html -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * agent/dbconnect.php
+           - * vicidial/dbconnect.php
+
 1415854800 - Fixed a bug reported by Paulo Genuino. The bug where when you searched leads using the Advanced Search, the pagination doesn't work well. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected File:
            - * application/views/go_list/go_list.php
