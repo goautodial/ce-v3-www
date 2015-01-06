@@ -1347,6 +1347,7 @@ class Go_site extends Controller
         function cpanel(){
              $type = $this->uri->segment(3);
              $action = $this->uri->segment(4);
+	     if (! preg_match("/^(asterisk|mysql|httpd|nic|ftp|sshd)$/i",$type)) { die("Error: Unknown service: $type"); }
 	     if (! preg_match("/^(Reload|Start)$/i",$action)) {
 		die("Warning: $action is not valid.");
 	     } else {
