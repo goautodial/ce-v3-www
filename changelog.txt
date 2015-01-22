@@ -1,5 +1,11 @@
 Filename: changelog.txt
 
+1421902800 - Fixed the bug on dbconnect.php files and added some .conf securities on .htaccess. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected Files:
+           - * agent/dbconnect.php
+           - * vicidial/dbconnect.php
+           - * .htaccess
+
 1420434000 - Fixed the vulnerabilities reported by Chris McCurley via email. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * application/controllers/go_audiostore.php
