@@ -9,11 +9,18 @@
 # CHANGES
 # 100712-1430 - Added slave server option for connection
 #
-$confpath = $_SERVER["DOCUMENT_ROOT"];
 
-if ( file_exists("{$confpath}/astguiclient.conf") )
+if (file_exists("/etc/astguiclient.conf")) {
+        $confpath = "/etc/astguiclient.conf";
+} elseif (file_exists("{$_SERVER['DOCUMENT_ROOT']}/astguiclient.conf")) {
+        $confpath = "{$_SERVER['DOCUMENT_ROOT']}/astguiclient.conf";
+} else {
+        die ("ERROR: 'astguiclient.conf' file not found.");
+}
+
+if ( file_exists($confpath) )
 	{
-	$DBCagc = file("{$confpath}/astguiclient.conf");
+	$DBCagc = file($confpath);
 	foreach ($DBCagc as $DBCline) 
 		{
 		$DBCline = preg_replace("/ |>|\n|\r|\t|\#.*|;.*/","",$DBCline);
