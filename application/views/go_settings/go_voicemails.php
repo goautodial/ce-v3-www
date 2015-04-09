@@ -277,7 +277,7 @@ $(function()
 			$("#table_container").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
 			$('#table_container').load('<? echo $base; ?>index.php/go_voicemail_ce/go_update_voicemail_list/search/1/'+search);
 		} else {
-			alert("Please enter at least 3 characters to search.");
+			alert("<? echo $this->lang->line('go_entry_3_char_search'); ?>.");
 		}
 	});
 	
@@ -310,7 +310,7 @@ $(function()
 				$("#table_container").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
 				$('#table_container').load('<? echo $base; ?>index.php/go_voicemail_ce/go_update_voicemail_list/search/1/'+search);
 			} else {
-				alert("Please enter at least 3 characters to search.");
+				alert("<? echo $this->lang->line('go_entry_3_char_search'); ?>.");
 			}
 		}
 	});
@@ -350,7 +350,7 @@ function modify(voicemail)
 
 function delVoicemail(voicemail)
 {
-	var answer = confirm("Are you sure you want to delete "+voicemail+"?");
+	var answer = confirm("<? echo $this->lang->line("go_del_con"); ?> "+voicemail+"?");
 	
 	if (answer)
 	{
@@ -358,7 +358,7 @@ function delVoicemail(voicemail)
 		function(data){
 			if (data=="DELETED")
 			{
-				alert("VOICEMAIL ENTRY "+data);
+				alert("<? echo $this->lang->line('go_vm_entry_del'); ?> "+data);
 				location.reload();
 			}
 		});
@@ -368,7 +368,7 @@ function delVoicemail(voicemail)
 <div id='outbody' class="wrap">
 <div id="icon-voicefile" class="icon32">
 </div>
-<div style="float: right;margin-top:15px;margin-right:25px;"><span id="showAllLists" style="display: none">[Clear Search]</span>&nbsp;<?=form_input('search_list',null,'id="search_list" maxlength="100" placeholder="Search '.$bannertitle.'"') ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_list_button" style="cursor: pointer;" /></div>
+<div style="float: right;margin-top:15px;margin-right:25px;"><span id="showAllLists" style="display: none">[<? echo $this->lang->line("go_clear_search"); ?>]</span>&nbsp;<?=form_input('search_list',null,'id="search_list" maxlength="100" placeholder="'.$this->lang->line("go_search").' '.$bannertitle.'"') ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_list_button" style="cursor: pointer;" /></div>
 <h2><? echo $bannertitle; ?></h2>
 
 	<div id="dashboard-widgets-wrap">
@@ -380,8 +380,8 @@ function delVoicemail(voicemail)
 
 					<!-- GO WIDGET -->
 					<div id="account_info_status" class="postbox">
-						<div class="rightdiv toolTip" id="add_voicemail" title="Add New Voicemail">
-                        	Add New Voicemail <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
+						<div class="rightdiv toolTip" id="add_voicemail" title="<? echo $this->lang->line(go_add_new_voicemail); ?>">
+                        	<? echo $this->lang->line(go_add_new_voicemail); ?> <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
 						</div>
 						<div class="hndle">
 							<span><span id="title_bar" />&nbsp;</span><!-- Title Bar -->
@@ -390,7 +390,7 @@ function delVoicemail(voicemail)
 						</div>
 						<div class="inside">
 
-                            <div style="margin:<?php echo (preg_match("/^Windows/",$userOS)) ? "-23px" : "-22px"; ?> 0px -2px -10px;" id="request_tab"><span id="showList" class="tabtoggle menuOn">Voicemails Boxes</span><span id="request" style="display:none;">showList</span></div>
+                            <div style="margin:<?php echo (preg_match("/^Windows/",$userOS)) ? "-23px" : "-22px"; ?> 0px -2px -10px;" id="request_tab"><span id="showList" class="tabtoggle menuOn"><? echo $this->lang->line("go_voicemails_boxes"); ?></span><span id="request" style="display:none;"><? echo $this->lang->line("go_show_list"); ?></span></div>
 
 							<div id="table_container" class="table_container">
                             </div>
@@ -459,16 +459,16 @@ echo "</div>\n";
 <!-- Overlay1 -->
 <div id="overlay" style="display:none;"></div>
 <div id="box">
-<a id="closebox" class="toolTip" title="CLOSE"></a>
+<a id="closebox" class="toolTip" title="<? echo strtoupper($this->lang->line("go_close")); ?>"></a>
 <div id="overlayContent"></div>
 </div>
 
 <!-- Action Menu -->
 <div id='go_action_menu' class='go_action_menu'>
 <ul>
-<li class="go_action_submenu" title="Activate Selected" id="activate">Activate Selected</li>
-<li class="go_action_submenu" title="Deactivate Selected" id="deactivate">Deactivate Selected</li>
-<li class="go_action_submenu" title="Delete Selected" id="delete">Delete Selected</li>
+<li class="go_action_submenu" title="<? echo $this->lang->line("go_activate_selected"); ?>" id="activate"><? echo $this->lang->line("go_activate_selected"); ?></li>
+<li class="go_action_submenu" title="<? echo $this->lang->line("go_deactivate_selected"); ?>" id="deactivate"><? echo $this->lang->line("go_deactivate_selected"); ?></li>
+<li class="go_action_submenu" title="<? echo $this->lang->line("go_del_selected"); ?>" id="delete"><? echo $this->lang->line("go_del_selected"); ?></li>
 </ul>
 </div>
 

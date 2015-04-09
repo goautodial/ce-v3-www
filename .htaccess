@@ -13,7 +13,7 @@
     RewriteCond %{REQUEST_FILENAME} !-d
 
     #This last condition enables access to the images and css folders, and the robots.txt file
-    RewriteCond $1 !^(index\.php|login|images|img|js|css|public|data|simplepie|application|system|cache)
+    RewriteCond $1 !^(index\.php|login|images|img|js|css|public|data|simplepie|application|system|cache|lang)
     RewriteRule ^(.*)$ index.php/$1 [L]
 </IfModule>
 
@@ -32,3 +32,4 @@ Deny from all
 Order allow,deny
 Deny from all
 </FilesMatch>
+

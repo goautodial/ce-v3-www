@@ -148,7 +148,7 @@ $NOW = date('Y-m-d');
 </script>
 
 <div style="float:right;" id="small_step_number"><img src="<?php echo $base; ?>img/step1of2-navigation-small.png" /></div>
-<div style="font-weight:bold;font-size:16px;color:#333;">Phone Wizard &raquo; Add New Phone</div>
+<div style="font-weight:bold;font-size:16px;color:#333;"><? echo $this->lang->line("go_phone_wizard"); ?> &raquo;<? echo $this->lang->line("go_add_new_phone"); ?> </div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
 
@@ -165,17 +165,17 @@ $NOW = date('Y-m-d');
 					<?=form_hidden('conf_secret',$system_settings->default_phone_registration_password,'id="conf_secret"');?>
                      <table>
                          <tr>
-                           <td style="text-align:right;"><strong>Additional Phone(s):</strong></td><td><?=form_dropdown('addcountXXX',$phoneCount,null,'id="addcountXXX"');?><?=form_input('addcount','1','id="addcount" size="3" maxlength="3" style="display:none"');?></td>
+                           <td style="text-align:right;"><strong><? echo $this->lang->line("go_additional_phone"); ?>:</strong></td><td><?=form_dropdown('addcountXXX',$phoneCount,null,'id="addcountXXX"');?><?=form_input('addcount','1','id="addcount" size="3" maxlength="3" style="display:none"');?></td>
                          </tr>
                          <tr style="display:none" class="hideThis">
-                           <td style="text-align:right;"><strong>Default Password:</strong></td><td><?=form_input('password',$system_settings->default_phone_login_password,'id="password" maxlength="10" size="12"');?></td>
+                           <td style="text-align:right;"><strong><? echo $this->lang->line("go_default_pass"); ?>:</strong></td><td><?=form_input('password',$system_settings->default_phone_login_password,'id="password" maxlength="10" size="12"');?></td>
                          </tr>
                          <tr>
-                           <td style="text-align:right;"><strong>Starting Extension:</strong></td><td><?=form_input('start_exten',null,"id='start_exten' size='5'")?> <i style="font-size:8px;">e.g. 8001</i></td>
+                           <td style="text-align:right;"><strong><? echo $this->lang->line("go_starting_exten"); ?>:</strong></td><td><?=form_input('start_exten',null,"id='start_exten' size='5'")?> <i style="font-size:8px;">e.g. 8001</i></td>
                          </tr>
 						<tr style="display:none" class="hideThis">
 							<td style="text-align:right;font-weight:bold;">
-							Server IP:
+							<? echo $this->lang->line("go_server_ip"); ?>:
 							</td>
 							<td>
 							<?php
@@ -190,7 +190,7 @@ $NOW = date('Y-m-d');
 							</td>
 						</tr>
                          <tr>
-                            <td style="text-align:right;"><strong>Client Protocol:</strong></td>
+                            <td style="text-align:right;"><strong><? echo $this->lang->line("go_client_protocol"); ?>:</strong></td>
                             <td>
                               <?php
 			   	$protocolArray = array('SIP'=>'SIP','IAX2'=>'IAX2','EXTERNAL'=>'EXTERNAL');
@@ -200,19 +200,19 @@ $NOW = date('Y-m-d');
                          </tr>
 						<tr style="display:none" class="hideThis hidePrefix">
 							<td style="text-align:right;font-weight:bold;">
-							Dial Prefix:
+							<? echo $this->lang->line("go_dial_prefix"); ?>:
 							</td>
 							<td>
-							<?=form_input('dial_prefix','9999','id="dial_prefix" maxlength="10" size="10"') ?>&nbsp;<font size="1" color="red">(numeric only)</font>&nbsp;
+							<?=form_input('dial_prefix','9999','id="dial_prefix" maxlength="10" size="10"') ?>&nbsp;<font size="1" color="red">(<? echo $this->lang->line("go_num_only"); ?>)</font>&nbsp;
 							</td>
 						</tr>
 						<tr style="display:none" class="hideThis">
 							<td style="text-align:right;font-weight:bold;">
-							User Group:
+							<? echo $this->lang->line("go_user_group"); ?>:
 							</td>
 							<td>
 							<?php
-							$groupArray = array("---ALL---"=>"ALL USER GROUPS");
+							$groupArray = array("---{$this->lang->line('go_all')}---"=> strtoupper($this->lang->line("go_all_user_groups")));
 							foreach ($user_groups as $group)
 							{
 								$groupArray["{$group->user_group}"] = "{$group->user_group} - {$group->group_name}";
@@ -226,4 +226,4 @@ $NOW = date('Y-m-d');
 	</tr>
 </table>
 <hr style="border:#DFDFDF 1px solid;" />
-<span id="saveButtons"><span id="submit" style="white-space: nowrap;">Next</span></span>
+<span id="saveButtons"><span id="submit" style="white-space: nowrap;"><? echo $this->lang->line("go_next"); ?></span></span>

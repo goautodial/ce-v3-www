@@ -21,7 +21,7 @@ $(document).ready(function()
 	var date_range = $('#widgetDate span').html().split(' to ');
 	var from_date = date_range[0];
 	var to_date = date_range[1];
-	if (campaign_id == 'Select a Campaign') {
+	if (campaign_id == '<? echo $this->lang->line("go_sel_camp"); ?>') {
 		campaign_id = null;
 	}
 	$('#reports_output_table').fadeOut("slow").load('<? echo $base; ?>index.php/go_site/go_reports_output/<? echo $pagetitle; ?>/' + from_date + '/' + to_date + '/' + campaign_id + '/<? echo $request; ?>/').fadeIn("slow");

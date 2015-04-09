@@ -102,7 +102,7 @@ $(function()
 		var action = $(this).attr('id');
 		if (selectedCarriers.length<1)
 		{
-			alert('Please select a Carrier.');
+			alert('<? echo $this->lang->line("go_pls_sel_carrier"); ?>');
 		}
 		else
 		{
@@ -112,7 +112,7 @@ $(function()
 
 			if (action == 'delete')
 			{
-				var what = confirm('Are you sure you want to delete the selected Carrier'+s+'?');
+				var what = confirm('<? echo $this->lang->line("go_del_sel_carrier"); ?>'+s+'?');
 				if (what)
 				{
 					$('#table_container').load('<? echo $base; ?>index.php/go_carriers_ce/go_update_carrier_list/'+action+'/'+selectedCarriers+'/');
@@ -160,14 +160,14 @@ $(".sippy-info").animate({top:60});
 <table id="mainTable" class="tablesorter" style="width:100%;" cellpadding=0 cellspacing=0>
 	<thead>
 		<tr style="font-weight:bold;">
-			<th style="white-space:nowrap">&nbsp;CARRIER ID</th>
-			<th style="white-space:nowrap">&nbsp;CARRIER NAME</th>
-			<th style="white-space:nowrap">&nbsp;SERVER IP</th>
-			<th>&nbsp;PROTOCOL</th>
-			<th>&nbsp;REGISTRATION</th>
-			<th>&nbsp;STATUS</th>
-			<th>&nbsp;GROUP</th>
-			<th style="width:6%;text-align:center;" nowrap><span style="cursor:pointer;" id="selectAction">&nbsp;ACTION &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
+			<th style="white-space:nowrap">&nbsp;<? echo strtoupper($this->lang->line("go_carrier_id")); ?></th>
+			<th style="white-space:nowrap">&nbsp;<? echo strtoupper($this->lang->line("go_carrier_name")); ?></th>
+			<th style="white-space:nowrap">&nbsp;<? echo strtoupper($this->lang->line("go_server_ip")); ?></th>
+			<th>&nbsp;<? echo strtoupper($this->lang->line("go_protocol")); ?></th>
+			<th>&nbsp;<? echo strtoupper($this->lang->line("go_registration")); ?></th>
+			<th>&nbsp;<? echo strtoupper($this->lang->line("go_status")); ?></th>
+			<th>&nbsp;<? echo strtoupper($this->lang->line("go_group")); ?></th>
+			<th style="width:6%;text-align:center;" nowrap><span style="cursor:pointer;" id="selectAction">&nbsp;<? echo strtoupper($this->lang->line("go_action")); ?> &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
 			<th style="width:2%;text-align:center;"><input type="checkbox" id="selectAll" /></th>
 		</tr>
 	</thead>
@@ -185,9 +185,9 @@ if (count($carriers) > 0) {
 		   $x=0;
 	   }
 	   
-	   $status = ($list->active=="Y") ? "ACTIVE" : "INACTIVE";
-	   $acolor = ($status=="ACTIVE") ? "green" : "#F00";
-	   $ugroup = ($list->user_group=="---ALL---") ? "ALL USER GROUPS" : $list->user_group;
+	   $status = ($list->active=="Y") ? "{$this->lang->line("go_active")}" : "{$this->lang->line("go_inactive")}";
+	   $acolor = ($status=="{$this->lang->line("go_active")}") ? "green" : "#F00";
+	   $ugroup = ($list->user_group=="---{$this->lang->line("go_all")}---") ? "{$this->lang->line("go_all_user_groups_caps")}" : $list->user_group;
 	   
 	   if (strlen($list->registration_string) > 40)
 	   {
@@ -204,14 +204,14 @@ if (count($carriers) > 0) {
 	   echo "<td style='border-top:#D0D0D0 dashed 1px;cursor:pointer;' class='toolTip' title='{$list->registration_string}'>&nbsp;$registration</td>";
 	   echo "<td style='border-top:#D0D0D0 dashed 1px;color:$acolor;font-weight:bold;width:10%;'>&nbsp;$status</td>";
 	   echo "<td style='border-top:#D0D0D0 dashed 1px;white-space:nowrap;width:6%;'>&nbsp;$ugroup&nbsp;&nbsp;&nbsp;</td>";
-	   echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><span onclick=\"modify('{$list->carrier_id}')\" style='cursor:pointer;margin:5px;' class='toolTip' title='MODIFY CARRIER<br />{$list->carrier_id}'><img src='{$base}img/edit.png' style='cursor:pointer;width:12px;' /></span>
-		 <span onclick=\"delCarrier('{$list->carrier_id}')\" style='cursor:pointer;margin:5px;' class='toolTip' title='DELETE CARRIER<br />{$list->carrier_id}'><img src='{$base}img/delete.png' style='cursor:pointer;width:12px;' /></span>
+	   echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><span onclick=\"modify('{$list->carrier_id}')\" style='cursor:pointer;margin:5px;' class='toolTip' title='{$this->lang->line("go_modify_carrier")}<br />{$list->carrier_id}'><img src='{$base}img/edit.png' style='cursor:pointer;width:12px;' /></span>
+		 <span onclick=\"delCarrier('{$list->carrier_id}')\" style='cursor:pointer;margin:5px;' class='toolTip' title='{$this->lang->line("go_del_carrier")}<br />{$list->carrier_id}'><img src='{$base}img/delete.png' style='cursor:pointer;width:12px;' /></span>
 		 <span style='margin:5px;'><img src='".(preg_match('/'.$goautodial[0]->carrier_id.'/',$list->carrier_id)?"{$base}img/status_display_i.png":"{$base}img/status_display_i_grayed.png")."' style='width:12px;cursor:pointer;' ".(preg_match('/'.$goautodial[0]->carrier_id.'/',$list->carrier_id)?"onclick='sippyInfo();'":"")." /></span></td>\n";
 	   echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><input type='checkbox' id='delCarrier[]' value='{$list->carrier_id}' /></td>\n";
 	   echo "</tr>";
    }
 } else {
-	echo "<tr style=\"background-color:#E0F8E0;\"><td style=\"border-top:#D0D0D0 dashed 1px;font-weight:bold;color:#FF0000;text-align:center;\" colspan=\"8\">No record(s) found.</td></tr>\n";
+	echo "<tr style=\"background-color:#E0F8E0;\"><td style=\"border-top:#D0D0D0 dashed 1px;font-weight:bold;color:#FF0000;text-align:center;\" colspan=\"8\">{$this->lang->line("go_no_records_found")}</td></tr>\n";
 }
 ?>
 	</tbody>
@@ -219,22 +219,22 @@ if (count($carriers) > 0) {
 <?=$pagelinks['info'] ?>
 <?=$pagelinks['links'] ?>
 <div class="sippy-info">
-    <a id="closebox" class="toolTip" title="CLOSE"></a>
+    <a id="closebox" class="toolTip" title="<? echo strtoupper($this->lang->line("go_close")); ?>"></a>
     <table width="100%">
         <tr>
-           <td style="width:40%;text-align:center;">Web Login:</td><td><?=$goautodial[0]->username?></td>
+           <td style="width:40%;text-align:center;"><? echo $this->lang->line("go_web_login"); ?>:</td><td><?=$goautodial[0]->username?></td>
         </tr>
         <tr>
-           <td style="width:40%;text-align:center;">Web password:</td><td><?=$goautodial[0]->web_password?></td>
+           <td style="width:40%;text-align:center;"><? echo $this->lang->line("go_web_pass"); ?>:</td><td><?=$goautodial[0]->web_password?></td>
         </tr>
         <tr>
-           <td style="width:40%;text-align:center;">SIP Login:</td><td><?=$goautodial[0]->authname?></td>
+           <td style="width:40%;text-align:center;"><? echo $this->lang->line("go_sip_login"); ?>:</td><td><?=$goautodial[0]->authname?></td>
         </tr>
         <tr>
-           <td style="width:40%;text-align:center;">SIP Password:</td><td><?=$goautodial[0]->voip_password?></td>
+           <td style="width:40%;text-align:center;"><? echo $this->lang->line("go_sip_pass"); ?>:</td><td><?=$goautodial[0]->voip_password?></td>
         </tr>
         <tr>
-           <td style="width:40%;text-align:center;">VoIP Portal:</td><td><a href="https://dal.justgovoip.com/account.php" target="new" style="color:#7A9E22;">Login Here</a></td>
+           <td style="width:40%;text-align:center;"><? echo $this->lang->line("go_voip_portal"); ?>:</td><td><a href="https://dal.justgovoip.com/account.php" target="new" style="color:#7A9E22;"><? echo $this->lang->line("go_login_here"); ?></a></td>
         </tr>
     </table>
 </div>

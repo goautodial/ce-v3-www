@@ -111,22 +111,22 @@ span{padding:3px;
                            phone: {required: true,number:true,maxlength:12}
                     },
                     messages : {
-                                 company_name: {required:"* Required"},
-                                 email: {required:"* Required",email:"Enter valid email"},
-                                 first_name: {required:"* Required"},
-                                 last_name: {required:"* Required"},
-                                 street_addr: {required:"* Required"},
-                                 city: {required:"* Required"},
-                                 state: {required:"* Required"},
-                                 postal_code: {required:"* Required"},
-                                 phone: {required:"* Required",maxlength:"Maximum of 12 character"}
+                                 company_name: {required:"* <? echo $this->lang->line("go_required"); ?>"},
+                                 email: {required:"* <? echo $this->lang->line("go_required"); ?>",email:"<? echo $this->lang->line("go_valid_email"); ?>"},
+                                 first_name: {required:"* <? echo $this->lang->line("go_required"); ?>"},
+                                 last_name: {required:"* <? echo $this->lang->line("go_required"); ?>"},
+                                 street_addr: {required:"* <? echo $this->lang->line("go_required"); ?>"},
+                                 city: {required:"* <? echo $this->lang->line("go_required"); ?>"},
+                                 state: {required:"* <? echo $this->lang->line("go_required"); ?>"},
+                                 postal_code: {required:"* <? echo $this->lang->line("go_required"); ?>"},
+                                 phone: {required:"* <? echo $this->lang->line("go_required"); ?>",maxlength:"<? echo $this->lang->line("go_max_12_char"); ?>"}
                     },
                     submitHandler: function(form){
                        if(this.valid()){
                            $("#box").append("<div class='processing'><img src='<?=$base?>img/goloading.gif'></div>"); 
                            $("#signupBox").append("<div class='processing'><img src='<?=$base?>img/goloading.gif'></div>"); 
                            if(window.location.pathname.substr(1).split("/")[0] === "carriers"){
-                               setTimeout('$(".processing").remove();alert("Error: Sippy registration too long");location.reload();',180000);
+                               setTimeout('$(".processing").remove();alert("<? echo $this->lang->line('go_err_long'); ?>");location.reload();',180000);
                            }
                            $.post(
                                   "<?=$base?>index.php/go_carriers_ce/sippy_register",
@@ -164,7 +164,7 @@ span{padding:3px;
                 
    	        //$("#overlayContent").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
            } else {
-                alert("You must accept the terms and conditions");
+                alert("<? echo $this->lang->line("go_accept_tc"); ?>");
            }
        });
  
@@ -181,7 +181,7 @@ span{padding:3px;
 </script>
 
 <div style="float:right;" id="small_step_number"><!-- <img src="<?php echo $base; ?>img/step3-navigation-small.png" />--></div>
-<div style="font-weight:bold;font-size:16px;color:#333;">Signup</div>
+<div style="font-weight:bold;font-size:16px;color:#333;"><? echo $this->lang->line("go_sign_up"); ?></div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
 
@@ -194,24 +194,24 @@ span{padding:3px;
 		<td valign="top" style="padding-left:100px;">
                     <form id="sippy-signup">
                     <table id="signup-table" width="100%">
-			  <tr><td colspan="2" align="center" style="">Please fill out the information below:</td></tr>
+			  <tr><td colspan="2" align="center" style=""><? echo $this->lang->line("go_fill_out"); ?>:</td></tr>
 			  <tr><td colspan="2">&nbsp;&nbsp;</td></tr>
-                          <tr><td><strong>* Company:</strong></td><td><?=form_input('company_name',null,'id="company_name"')?></td></tr>
-                          <tr><td><strong>* First Name:</strong></td><td><?=form_input('first_name',null,'id="first_name"')?></td></tr>
-                          <tr><td><strong>* Last Name:</strong></td><td><?=form_input('last_name',null,'id="last_name"')?></td></tr>
-                          <tr><td><strong>* Address:</strong></td><td><?=form_input('street_addr',null,'id="street_addr"')?></td></tr>
-                          <tr><td><strong>* City:</strong></td><td><?=form_input('city',null,'id="city"')?></td></tr>
-                          <tr><td><strong>* State:</strong></td><td><?=form_input('state',null,'id="state"')?></td></tr>
-                          <tr><td><strong>* Postal Code:</strong></td><td><?=form_input('postal_code',null,'id="postal_code"')?></td></tr>
-                          <tr><td><strong>* Country:</strong></td><td><?=form_dropdown('country',$country,'USA','id="country"')?></td></tr>
-                          <tr><td><strong>* Time Zone:</strong></td><td><?=form_dropdown('i_time_zone',$tzs,331,'id="i_time_zone"')?></td></tr>
-                          <tr><td><strong>* Phone:</strong></td><td><?=form_input('phone',null,'id="phone"')?></td></tr>
-                          <tr><td>&nbsp;&nbsp;<strong>Mobile Phone:</strong></td><td><?=form_input('alt_phone',null,'id="alt_phone"')?></td></tr>
-                          <tr><td><strong>* Email:</strong></td><td><?=form_input('email',null,'id="email"')?></td></tr>
+                          <tr><td><strong>* <? echo $this->lang->line("go_company"); ?>:</strong></td><td><?=form_input('company_name',null,'id="company_name"')?></td></tr>
+                          <tr><td><strong>* <? echo $this->lang->line("go_first_name"); ?>:</strong></td><td><?=form_input('first_name',null,'id="first_name"')?></td></tr>
+                          <tr><td><strong>* <? echo $this->lang->line("go_last_name"); ?>:</strong></td><td><?=form_input('last_name',null,'id="last_name"')?></td></tr>
+                          <tr><td><strong>* <? echo $this->lang->line("go_address"); ?>:</strong></td><td><?=form_input('street_addr',null,'id="street_addr"')?></td></tr>
+                          <tr><td><strong>* <? echo $this->lang->line("go_city"); ?>:</strong></td><td><?=form_input('city',null,'id="city"')?></td></tr>
+                          <tr><td><strong>* <? echo $this->lang->line("go_state"); ?>:</strong></td><td><?=form_input('state',null,'id="state"')?></td></tr>
+                          <tr><td><strong>* <? echo $this->lang->line("go_postal_code"); ?>:</strong></td><td><?=form_input('postal_code',null,'id="postal_code"')?></td></tr>
+                          <tr><td><strong>* <? echo $this->lang->line("go_country"); ?>:</strong></td><td><?=form_dropdown('country',$country,'USA','id="country"')?></td></tr>
+                          <tr><td><strong>* <? echo $this->lang->line("go_time_zone"); ?>:</strong></td><td><?=form_dropdown('i_time_zone',$tzs,331,'id="i_time_zone"')?></td></tr>
+                          <tr><td><strong>* <? echo $this->lang->line("go_phone"); ?>:</strong></td><td><?=form_input('phone',null,'id="phone"')?></td></tr>
+                          <tr><td>&nbsp;&nbsp;<strong><? echo $this->lang->line("go_mobile_phone"); ?>:</strong></td><td><?=form_input('alt_phone',null,'id="alt_phone"')?></td></tr>
+                          <tr><td><strong>* <? echo $this->lang->line("go_email"); ?>:</strong></td><td><?=form_input('email',null,'id="email"')?></td></tr>
                           <tr><td>&nbsp;</td></tr>
-                          <tr><td style="color:red;font-size:9px;font-style:italic">* Required</td></tr>
+                          <tr><td style="color:red;font-size:9px;font-style:italic">* <? echo $this->lang->line("go_required"); ?></td></tr>
                           <tr><td>&nbsp;</td></tr>
-                          <tr><td colspan="2"><strong>Terms and Condition:</strong></td></tr>
+                          <tr><td colspan="2"><strong><? echo $this->lang->line("go_terms_and_condition"); ?>:</strong></td></tr>
                           <tr>
                               <td colspan="2">
                                   <br>
@@ -220,23 +220,78 @@ span{padding:3px;
                                       <table cellpadding="0" cellspacing="0">
 					<tr>
 						<td><p style="font-size: 14px;">
-						    This site is owned and operated by Goautodial, Inc. ("we", "us", "our" or "GOautodial").
+						    <!--This site is owned and operated by Goautodial, Inc. ("we", "us", "our" or "GOautodial").
                                                     Goautodial, Inc. provides its services to you ("Customer", "you" or "end user")
-                                                    subject to the following conditions:<br>
+                                                    subject to the following conditions:-->
+						    <? echo $this->lang->line("go_tc1"); ?> <?=$VARCOMPANYSEC;?> <? echo $this->lang->line("go_tc2"); ?> "<?=$VARCOMPANYNAME;?>").
+                                                    <?=$VARCOMPANYSEC;?><? echo $this->lang->line("go_tc3"); ?>
+						    <br>
 
-                                                    If you visit or shop at our website or any other affiliated 
-                                                    <a href="http://reversephonelookuppages.com/" class="faqlinka" style="color: green;">reverse phone lookup</a> websites,
-                                                    you affirmatively accept the following conditions.
+                                                    <? echo $this->lang->line("go_tc4"); ?>
+                                                    <a href="http://reversephonelookuppages.com/" class="faqlinka" style="color: green;"><? echo $this->lang->line("go_tc5"); ?></a> <? echo $this->lang->line("go_tc6"); ?>,
+<!--                                                    you affirmatively accept the following conditions.
                                                     Continued use of the site and any of Goautodial's services constitutes
                                                     the affirmative agreement to these terms and conditions.<br>
 
                                                     Goautodial reserves the right to change the terms, conditions and notices under which the
                                                     Goautodial sites and services are offered,
                                                     including but not limited to the charges associated with the use of the Goautodial sites and services.
+-->
+                                                    <?=$VARCOMPANYNAME;?>'s <? echo $this->lang->line("go_tc7"); ?>
+                                                    <br>
+                                                    <?=$VARCOMPANYNAME;?> <? echo $this->lang->line("go_tc8"); ?>
+                                                    <?=$VARCOMPANYNAME;?> <? echo $this->lang->line("go_tc9"); ?>
+                                                    <?=$VARCOMPANYNAME;?><? echo $this->lang->line("go_tc10"); ?>
 						    </p>
 						</td>
 					</tr>
-					<tr><td><br><p style="font-size: 14px;"><b>1. Electronic Communications</b></p></td></tr>
+					<tr><td><br><p style="font-size: 14px;"><b><? echo $this->lang->line("go_tc11"); ?></b></p></td></tr>
+                                        <tr><td><p style="font-size: 14px;"><? echo $this->lang->line("go_tc12"); ?> <?=$VARCOMPANYNAME;?>'s <? echo $this->lang->line("go_tc13"); ?></p></td></tr>
+                                        <tr><td><br><p style="font-size: 14px;"><b><? echo $this->lang->line("go_tc14"); ?></b></p></td></tr>
+                                        <tr><td><p style="font-size: 14px;"><? echo $this->lang->line("go_tc144"); ?></p></td></tr>
+                                        <tr><td><br><p style="font-size: 14px;"><b><? echo $this->lang->line("go_tc15"); ?></b></p></td></tr>
+                                        <tr><td><p style="font-size: 14px;">3.1. <?=$VARCOMPANYNAME;?> <? echo $this->lang->line("go_tc16"); ?> <?=$VARCOMPANYNAME;?>, <? echo $this->lang->line("go_tc17"); ?> <?=$VARCOMPANYNAME;?> <? echo $this->lang->line("go_tc18"); ?></p></td></tr>
+                                        <tr><td><p style="font-size: 14px;">3.2. <?=$VARCOMPANYNAME;?> <? echo $this->lang->line("go_tc19"); ?></p></td></tr>
+                                        <tr><td><p style="font-size: 14px;">3.3. <?=$VARCOMPANYNAME;?><? echo $this->lang->line("go_tc200"); ?> <?=$VARCOMPANYNAME;?>.<? echo $this->lang->line("go_tc20"); ?> <?=$VARCOMPANYNAME;?>'s <? echo $this->lang->line("go_tc21"); ?></p></td></tr>
+                                        <tr><td><p style="font-size: 14px;">3.4. <?=$VARCOMPANYNAME;?>'s<? echo $this->lang->line("go_tc22"); ?>  <?=$VARCOMPANYNAME;?><? echo $this->lang->line("go_tc23"); ?> </p></td></tr>
+                                        <tr><td><p style="font-size: 14px;">3.5. <? echo $this->lang->line("go_tc24"); ?> <?=$VARCOMPANYNAME;?>'s <? echo $this->lang->line("go_tc255"); ?></p></td></tr>
+                                        <tr><td><p style="font-size: 14px;">3.6. <? echo $this->lang->line("go_tc25"); ?></p></td></tr>
+                                        <tr><td><p style="font-size: 14px;">3.7. <? echo $this->lang->line("go_tc26"); ?></p></td></tr>
+                                        <tr><td><p style="font-size: 14px;">3.8. <?=$VARCOMPANYNAME;?> <? echo $this->lang->line("go_tc27"); ?><?=$VARCOMPANYNAME;?>'s<? echo $this->lang->line("go_tc28"); ?>  <?=$VARCOMPANYNAME;?> <? echo $this->lang->line("go_tc29"); ?></p></td></tr>
+                                        <tr><td><p style="font-size: 14px;">3.9.<? echo $this->lang->line("go_tc29"); ?>  <?=$VARCOMPANYNAME;?> <? echo $this->lang->line("go_tc30"); ?></p></td>
+                                        <tr><td><p style="font-size: 14px;">3.10 <? echo $this->lang->line("go_tc31"); ?></p></td>
+                                        <tr><td><p style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.10.1 <? echo $this->lang->line("go_tc32"); ?></p></td>
+                                        <tr><td><p style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.10.2 <? echo $this->lang->line("go_tc33"); ?> </p></td>
+                                        <tr><td><p style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.10.3 <? echo $this->lang->line("go_tc34"); ?></p></td>
+                                        <tr><td><p style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.10.4 <? echo $this->lang->line("go_tc35"); ?> </p></td></tr>
+                                        <tr><td><br><p style="font-size: 14px;"><b>4. <? echo $this->lang->line("go_tc36"); ?></b></p></td></tr>
+                                        <tr><td><p style="font-size: 14px;">4.1. <?=$VARCOMPANYNAME;?> <? echo $this->lang->line("go_tc37"); ?> <?=$VARCOMPANYNAME;?>'s <? echo $this->lang->line("go_tc38"); ?> <a href="<?=$VARCLOUDSUPPORTURL;?>" class="faqlinka" style="color: green;"><?=$VARCLOUDSUPPORTURL;?></a>.</p></td></tr>
+                                        <tr><td><br><p style="font-size: 14px;"><b>4.2. <? echo $this->lang->line("go_tc39"); ?></b></p></td></tr>
+                                        <tr><td><p style="font-size: 14px;">4.2.1. <?=$VARCOMPANYNAME;?>'s<? echo $this->lang->line("go_tc40"); ?> </p><td></tr>
+                                        <tr><td><p style="font-size: 14px; margin-left: 20px;"><? echo $this->lang->line("go_tc41"); ?>
+                                                                            </p></td></tr>^M
+                                        <tr><td><br><p style="font-size: 14px;">4.2.2.<? echo $this->lang->line("go_tc42"); ?> </p></td></tr>
+                                        <tr><td><br><p style="font-size: 14px;">4.2.3.<? echo $this->lang->line("go_tc43"); ?> <?=$VARCOMPANYNAME;?>'s<? echo $this->lang->line("go_tc44"); ?> </p></td></tr>
+                                        <tr><td><br><p style="font-size: 14px;">4.2.4. <? echo $this->lang->line("go_tc45"); ?></p></td></tr>
+                                        <tr><td><br><b><p style="font-size: 14px;">4.3. <? echo $this->lang->line("go_tc46"); ?></p></b></td></tr>
+                                        <tr><td><p style="font-size: 14px;">4.3.1. <? echo $this->lang->line("go_tc47"); ?></p></td></tr>
+                                        <tr><td><br><p style="font-size: 14px;">4.3.2. <? echo $this->lang->line("go_tc48"); ?></p></td></tr>
+                                        <tr><td><br><b><p style="font-size: 14px;">5. <? echo $this->lang->line("go_tc49"); ?></p></b></td></tr>
+                                        <tr><td><p style="font-size: 14px;">5.1. <? echo $this->lang->line("go_tc50"); ?></p></td></tr>
+                                        <tr><td><br><p style="font-size: 14px;">5.2. <? echo $this->lang->line("go_tc51"); ?></p></td></tr>
+                                        <tr><td><br><p style="font-size: 14px;">5.3. <? echo $this->lang->line("go_tc52"); ?></p></td></tr>
+                                        <tr><td><br><p style="font-size: 14px;">5.4. <? echo $this->lang->line("go_tc53"); ?></p></td></tr>
+                                        <tr><td><br><b><p style="font-size: 14px;">6. <? echo $this->lang->line("go_tc54"); ?></p></b></td></tr>
+                                        <tr><td><p style="font-size: 14px;">6.1. <? echo $this->lang->line("go_tc55"); ?></p></td></tr>
+                                        <tr><td><br><p style="font-size: 14px;"><b>7. <? echo $this->lang->line("go_tc56"); ?></b></p></td></tr>
+                                        <tr><td><p style="font-size: 14px;">7.1. <? echo $this->lang->line("go_tc57"); ?> <a href="mailto:<?=$VARCLOUDVIOLATEEMAIL;?>"><?=$VARCLOUDVIOLATEEMAIL;?></a>. <?=$VARCOMPANYNAME;?> <? echo $this->lang->line("go_tc58"); ?> <?=$VARCOMPANYNAME;?> <? echo $this->lang->line("go_tc59"); ?></p></td></tr>
+                                        <tr><td><br><b><p style="font-size: 14px;">8. <? echo $this->lang->line("go_tc60"); ?></p></b></td></tr>
+                                        <tr><td><p style="font-size: 14px;">8.1 <? echo $this->lang->line("go_tc61"); ?> <?=$VARCOMPANYNAME;?><? echo $this->lang->line("go_tc62"); ?>  <?=$VARCOMPANYNAME;?>’s<? echo $this->lang->line("go_tc63"); ?> </p></td></tr>
+                                        <tr><td><br><b><p style="font-size: 14px;">9. <? echo $this->lang->line("go_tc64"); ?></p></b></td></tr>
+                                        <tr><td><p style="font-size: 14px;">9.1. <? echo $this->lang->line("go_tc65"); ?> <?=$VARCOMPANYSEC;?><? echo $this->lang->line("go_tc66"); ?>  <?=$VARCOMPANYSEC;?><? echo $this->lang->line("go_tc67"); ?> </p></td></tr>
+                                        <tr><td><br><b><p style="font-size: 14px;">10. <? echo $this->lang->line("go_tc68"); ?></p></b></td></tr>
+                                        <tr><td><p style="font-size: 14px;">10.1. <?=$VARCOMPANYNAME;?> <? echo $this->lang->line("go_tc69"); ?></p></td></tr>
+<!--
 					<tr><td><p style="font-size: 14px;">1.1. When you visit Goautodial's websites or send Email to us, you are communicating with us electronically. You consent to receive communications from us electronically. We will communicate with you by Email or by posting notices on this site. You agree that all agreements, notices, disclosures and other communications that we provide to you electronically satisfy any legal requirement that such communications be in writing.</p></td></tr>
 					<tr><td><br><p style="font-size: 14px;"><b>2. Trademarks and Copyright</b></p></td></tr>
 					<tr><td><p style="font-size: 14px;">2.1. All content on this site, such as text, graphics, logos, button icons, images, trademarks or copyrights are the property of their respective owners. Nothing in this site should be construed as granting any right or license to use any Trademark without the written permission of its owner.</p></td></tr>
@@ -286,12 +341,12 @@ span{padding:3px;
 					<tr><td><p style="font-size: 14px;">9.1. In no event shall GoAutoDial Inc be liable to any party for any direct, indirect, incidental, special, exemplary or consequential damages of any type whatsoever related to or arising from this website or any use of this website, or any site or resource linked to, referenced, or access throught this website, or for the use or downloading of, or access to, any materials, information, products, or services, including withouth limitation, any lost profits, business interruption, lost savings or loss of programs or other data, even if GoAutoDial INc. is expressly advised of the possiblity of such damages.</p></td></tr>
 					<tr><td><br><b><p style="font-size: 14px;">10. Call Compliance</p></b></td></tr>
 					<tr><td><p style="font-size: 14px;">10.1. GOautodial has full USA, UK and Canada regulatory compliance. Customer fully understands that it is their responsibility to follow these regulations. Failure to do so may result in immediate account suspension and/or disconnection.</p></td></tr>
-
+-->
                                       </table>
                                   </div>
                               </td>
                           </tr>
-                          <tr><td colspan="2"><input type="checkbox" value="1" id="agree" name="agree"> I agree to the JustGoVoIP's Terms and Conditions</td></tr>
+                          <tr><td colspan="2"><input type="checkbox" value="1" id="agree" name="agree"> <? echo $this->lang->line("go_tc70"); ?> <?=$VARCLOUDCOMPANY;?>'s <? echo $this->lang->line("go_terms_and_condition"); ?></td></tr>
                           <tr>
                               <td colspan="2" style="text-align:center;">
                                                                         <form method="GET">
@@ -302,10 +357,10 @@ span{padding:3px;
                                                                             document.getElementById('captcha').src='../sippysignup/captcha.php?'+Math.random();
                                                                             document.getElementById('captcha-form').focus();"
                                                                             id="change-image"><br><br>
-                                                                        <font color="blue" size="1px">Not readable? Change text.</font></a>
+                                                                        <font color="blue" size="1px"><? echo $this->lang->line("go_tc71"); ?></font></a>
                                                                         <br>
                                                                         &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="captcha" id="captcha-form" size="10" autocomplete="off" />
-                                                                        <font size="1px">Enter code from above picture here.</font> 
+                                                                        <font size="1px"><? echo $this->lang->line("go_tc72"); ?></font> 
                                                                         </form>
                               </td>
                           </tr>
@@ -315,4 +370,4 @@ span{padding:3px;
 	</tr>
 </table>
 <hr style="border:#DFDFDF 1px solid;" />
-<span id="saveButtons"><span id="cancel" style="white-space: nowrap;">Back</span> | <span id="submit" style="white-space: nowrap;">Submit</span></span>
+<span id="saveButtons"><span id="cancel" style="white-space: nowrap;"><? echo $this->lang->line("go_back"); ?></span> | <span id="submit" style="white-space: nowrap;"><? echo $this->lang->line("go_submit"); ?></span></span>

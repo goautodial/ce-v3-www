@@ -131,7 +131,7 @@ li{
 <table border=0 cellpadding=0 cellspacing=0 style="font-family:Verdana, Arial, Helvetica, sans-serif;" align=center>
 <tr>
 <td style="width:7px;height:50px;"></td>
-<td style="width:100px;font-size:30px;white-space:nowrap;" align=center> &nbsp; NO AGENTS LOGGED IN &nbsp; </td>
+<td style="width:100px;font-size:30px;white-space:nowrap;" align=center> &nbsp; <? echo lang('go_NOAGENTSLOGGEDIN'); ?> &nbsp; </td>
 <td style="width:6px;height:50px;"></td>
 </tr>
 </table>
@@ -143,7 +143,7 @@ li{
 
 
 <div id=realTimeMonitor style="display:none;">
-<div id="campTitle" style="font-weight:bold;font-size:16px;color:#333;">Agent Monitoring<br /><span style="font-size:9px;font-weight:normal;">(click agent name to listen/barge)</span></div>
+<div id="campTitle" style="font-weight:bold;font-size:16px;color:#333;"><? echo lang('go_AgentMonitoring'); ?><br /><span style="font-size:9px;font-weight:normal;">(<? echo lang('go_clickagentnametolistenbarge'); ?>)</span></div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
 <table id='realtime_monitoring' border=0 cellpadding=1 cellspacing=1 width="102%" align=center class="tBorderSmall" style="margin-top:0px;margin-left:-5px;border-spacing: 0px 0px;">
@@ -151,14 +151,14 @@ li{
 </table>
 <br />
 <br />
-<em style="font-size:11px;color:#777;">* Remote Agents are not shown on the above list.</em>
+<em style="font-size:11px;color:#777;">* <? echo lang('go_RemoteAgentsarenotshownontheabovelist'); ?>.</em>
 <br />
 <br style="font-size:6px;" />
 </div>
 <table id="legendMonitoring" cellpadding="0" cellspacing="0" style="color:#333">
 	<tr>
     	<td colspan="2">
-			<small style="font-weight:bold;">LEGEND:</small>
+			<small style="font-weight:bold;"><? echo lang('go_LEGEND'); ?>:</small>
         </td>
     </tr>
 	<tr>
@@ -166,7 +166,7 @@ li{
         	<span style="background-color:#FF8000;color:black;border:#000 1px solid;font-size:5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </td>
     	<td style="font-size:9px;padding-left:3px;">
-        	Waiting For Call > 3m
+        	<? echo lang('go_WaitingForCall'); ?> > 3m
         </td>
     </tr>
 	<tr>
@@ -174,7 +174,7 @@ li{
         	<span style="background-color:#BAEE62;color:black;border:#000 1px solid;font-size:5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </td>
     	<td style="font-size:9px;padding-left:3px;">
-        	Waiting For Call
+        	<? echo lang('go_WaitingForCall'); ?>
         </td>
     </tr>
 	<tr>
@@ -182,7 +182,7 @@ li{
         	<span style="background-color:#DEEEC3;color:black;border:#000 1px solid;font-size:5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </td>
     	<td style="font-size:9px;padding-left:3px;">
-        	On Call
+        	<? echo lang('go_OnCall'); ?>
         </td>
     </tr>
 	<tr>
@@ -190,15 +190,16 @@ li{
         	<span style="background-color:#F9F57A;color:black;border:#000 1px solid;font-size:5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </td>
     	<td style="font-size:9px;padding-left:3px;">
-        	On Pause
+        	<? echo lang('go_OnPause'); ?>
         </td>
     </tr>
 	<tr>
+
     	<td>
         	<span style="background-color:black;color:white;border:#000 1px solid;font-size:5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </td>
     	<td style="font-size:9px;padding-left:3px;">
-        	Dead Call
+        	<? echo lang('go_DeadCall'); ?>
         </td>
     </tr>
 </table>

@@ -18,7 +18,7 @@ $(function()
 	if (isAdvance)
 	{
 		$('.advance_settings').show();
-		$('#advance_link').html('[ - ADVANCE SETTINGS ]');
+		$('#advance_link').html('[ - <? echo strtoupper($this->lang->line("go_adv_settings")); ?> ]');
 		$('#isAdvance').val('1');
 	}
 	
@@ -31,11 +31,11 @@ $(function()
 		if ($('.advance_settings').is(':hidden'))
 		{
 			$('.advance_settings').show();
-			$('#advance_link').html('[ - ADVANCE SETTINGS ]');
+			$('#advance_link').html('[ - <? echo strtoupper($this->lang->line("go_adv_settings")); ?> ]');
 			$('#isAdvance').val('1');
 		} else {
 			$('.advance_settings').hide();
-			$('#advance_link').html('[ + ADVANCE SETTINGS ]');
+			$('#advance_link').html('[ + <? echo strtoupper($this->lang->line("go_adv_settings")); ?> ]');
 			$('#isAdvance').val('0');
 		}
 	});
@@ -65,17 +65,17 @@ $(function()
 		if (strong_regex.test(pwd_field.val())) 
 			{
 			if (!pwd_span.html().match(/Strong/))
-				{pwd_span.html("<small style=\"color:green\">Strong</small>");}
+				{pwd_span.html("<small style=\"color:green\"><? echo strtoupper($this->lang->line("go_strong")); ?></small>");}
 			} 
 		else if (medium_regex.test(pwd_field.val())) 
 			{
 			if (!pwd_span.html().match(/Medium/))
-				{pwd_span.html("<small style=\"color:orange\">Medium</small>");}
+				{pwd_span.html("<small style=\"color:orange\"><? echo strtoupper($this->lang->line("go_medium")); ?></small>");}
 			}
 		else 
 			{
 			if (!pwd_span.html().match(/Weak/))
-				{pwd_span.html("<small style=\"color:red\">Weak</small>");}
+				{pwd_span.html("<small style=\"color:red\"><? echo strtoupper($this->lang->line("go_weak")); ?></small>");}
 			}
 	});
 	
@@ -96,7 +96,7 @@ $(function()
 		
 		if ($('#aloading').html().match(/Not Available/))
 		{
-			alert("Server ID Not Available.");
+			alert("<? echo $this->lang->line("go_server_id_navailable"); ?>");
 			isEmpty = 1;
 		}
 		
@@ -107,7 +107,7 @@ $(function()
 			function(data){
 				if (data=="SUCCESS")
 				{
-					alert(data);
+					alert("<? echo $this->lang->line("go_success_caps"); ?>");
 					
 					$('#box').animate({'top':'-2550px'},500);
 					$('#overlay').fadeOut('slow');
@@ -122,7 +122,7 @@ $(function()
 	$.validator.addMethod('IP4Checker', function(value) {
 	var ip = "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
 		return value.match(ip);
-	}, ' <small style="color:red;">Invalid IP address</small>');
+	}, ' <small style="color:red;"><? echo $this->lang->line("go_invalid_ip_add"); ?></small>');
 
 	$('#modifyServer').validate({
 		rules: {
@@ -140,13 +140,13 @@ $(function()
 		{
 			carShow = 1;
 			$('#carrier_list_table').slideDown("slow");
-			$('#carrier_list').html('- CARRIERS WITHIN THIS SERVER');
+			$('#carrier_list').html('- <? echo $this->lang->line("go_carriers_server"); ?>');
 			if (carCnt > 10)
 				$('#carrier_list_table').next().show();
 		} else {
 			carShow = 0;
 			$('#carrier_list_table').slideUp();
-			$('#carrier_list').html('+ CARRIERS WITHIN THIS SERVER');
+			$('#carrier_list').html('+ <? echo $this->lang->line("go_carriers_server"); ?>');
 			if (carCnt > 10)
 				$('#carrier_list_table').next().hide();
 		}
@@ -160,13 +160,13 @@ $(function()
 		{
 			phoShow = 1;
 			$('#phone_list_table').slideDown("slow");
-			$('#phone_list').html('- PHONES WITHIN THIS SERVER');
+			$('#phone_list').html('- <? echo $this->lang->line("go_phones_server"); ?>');
 			if (phoCnt > 10)
 				$('#phone_list_table').next().show();
 		} else {
 			phoShow = 0;
 			$('#phone_list_table').slideUp();
-			$('#phone_list').html('+ PHONES WITHIN THIS SERVER');
+			$('#phone_list').html('+ <? echo $this->lang->line("go_phones_server"); ?>');
 			if (phoCnt > 10)
 				$('#phone_list_table').next().hide();
 		}
@@ -180,13 +180,13 @@ $(function()
 		{
 			conShow = 1;
 			$('#conference_list_table').slideDown("slow");
-			$('#conference_list').html('- CONFERENCES WITHIN THIS SERVER');
+			$('#conference_list').html('- <? echo $this->lang->line("go_confer_server"); ?>');
 			if (conCnt > 10)
 				$('#conference_list_table').next().show();
 		} else {
 			conShow = 0;
 			$('#conference_list_table').slideUp();
-			$('#conference_list').html('+ CONFERENCES WITHIN THIS SERVER');
+			$('#conference_list').html('+ <? echo $this->lang->line("go_confer_server"); ?>');
 			if (conCnt > 10)
 				$('#conference_list_table').next().hide();
 		}
@@ -194,7 +194,7 @@ $(function()
 	
 	// Pagination
 	var options = {
-		optionsForRows : [10,25,50,100,"ALL"],
+		optionsForRows : [10,25,50,100,"<? strtoupper($this->lang->line('go_all')); ?>"],
 		rowsPerPage : 10
 	}
 	
@@ -250,13 +250,13 @@ switch ($type)
 	
 	default:
 ?>
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">MODIFY SERVER: <?php echo "{$server_info->server_id}"; ?></div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><? echo $this->lang->line("go_modify_server"); ?>: <?php echo "{$server_info->server_id}"; ?></div>
 <br />
 <form id="modifyServer" method="POST">
 <table id="test" border=0 cellpadding="3" cellspacing="3" style="width:95%; color:#000; margin-left:auto; margin-right:auto;">
 	<tr>
 		<td style="text-align:right;width:40%;height:10px;">
-		Server ID:
+		<? echo $this->lang->line("go_server_id"); ?>:
 		</td>
 		<td>
 		&nbsp;<span><?=$server_info->server_id ?></span>
@@ -266,7 +266,7 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:40%;height:10px;">
-		Server Description:
+		<? echo $this->lang->line("go_server_desc"); ?>:
 		</td>
 		<td>
 		<?=form_input('server_description',$server_info->server_description,'id="server_description" maxlength="255" size="30"') ?>
@@ -274,7 +274,7 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:40%;height:10px;">
-		Server IP:
+		<? echo $this->lang->line("go_server_ip"); ?>:
 		</td>
 		<td>
 		<?=form_input('server_ip',$server_info->server_ip,'id="server_ip" maxlength="15" size="20"') ?>
@@ -282,7 +282,7 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:40%;height:10px;">
-		Active:
+		<? echo $this->lang->line("go_active"); ?>:
 		</td>
 		<td>
 		<?php
@@ -293,7 +293,7 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:40%;height:10px;">
-		System Load:
+		<? echo $this->lang->line("go_system_load"); ?>:
 		</td>
 		<td>
 		&nbsp;<span id="system_load"></span>
@@ -301,7 +301,7 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:40%;height:10px;">
-		Live Channels:
+		<? echo $this->lang->line("go_live_channels"); ?>:
 		</td>
 		<td>
 		&nbsp;<span id="live_channels"></span>
@@ -309,7 +309,7 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:40%;height:10px;">
-		Disk Usage:
+		<? echo $this->lang->line("go_disk_usage"); ?>:
 		</td>
 		<td>
 		&nbsp;<span id="disk_usage"></span>
@@ -317,11 +317,11 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:40%;height:10px;">
-		Admin User Group:
+		<? echo $this->lang->line("go_admin_user_group"); ?>:
 		</td>
 		<td>
 		<?php
-		$groupArray = array("---ALL---"=>"ALL USER GROUPS");
+		$groupArray = array("---ALL---"=> strtoupper($this->lang->line("go_all_user_groups")));
 		foreach ($user_groups as $group)
 		{
 			$groupArray[$group->user_group] = "{$group->user_group} - {$group->group_name}";
@@ -332,7 +332,7 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:40%;height:10px;">
-		Asterisk Version:
+		<? echo $this->lang->line("go_asterisk_version"); ?>
 		</td>
 		<td>
 		<?=form_input('asterisk_version',$server_info->asterisk_version,'id="asterisk_version" maxlength="20" size="20"') ?>
@@ -340,7 +340,7 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:40%;height:10px;">
-		Max Trunks:
+		<? echo $this->lang->line("go_max_trunks"); ?>:
 		</td>
 		<td>
 		<?=form_input('max_vicidial_trunks',$server_info->max_vicidial_trunks,'id="max_vicidial_trunks" maxlength="4" size="5"') ?>
@@ -348,7 +348,7 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:40%;height:10px;">
-		Max Call per Second:
+		<? echo $this->lang->line("go_max_call_per_second"); ?>:
 		</td>
 		<td>
 		<?=form_input('outbound_calls_per_second',$server_info->outbound_calls_per_second,'id="outbound_calls_per_second" maxlength="4" size="5"') ?>
@@ -356,7 +356,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Balance Dialing:
+		<? echo $this->lang->line("go_bal_dialing"); ?>:
 		</td>
 		<td>
 		<?php
@@ -367,7 +367,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Balance Rank:
+		<? echo $this->lang->line("go_bal_rank"); ?>:
 		</td>
 		<td>
 		<?=form_input('vicidial_balance_rank',$server_info->vicidial_balance_rank,'id="vicidial_balance_rank" maxlength="2" size="4"') ?>
@@ -375,7 +375,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Balance Offlimits:
+		<? echo $this->lang->line("go_bal_offlimits"); ?>:
 		</td>
 		<td>
 		<?=form_input('vicidial_balance_offlimits',$server_info->vicidial_balance_offlimits,'id="vicidial_balance_offlimits" maxlength="4" size="5"') ?>
@@ -383,7 +383,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Telnet Host:
+		<? echo $this->lang->line("go_telnet_host"); ?>:
 		</td>
 		<td>
 		<?=form_input('telnet_host',$server_info->telnet_host,'id="telnet_host" maxlength="20" size="20"') ?>
@@ -391,7 +391,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Telnet Port:
+		<? echo $this->lang->line("go_telnet_port'"); ?>:
 		</td>
 		<td>
 		<?=form_input('telnet_port',$server_info->telnet_port,'id="telnet_port" maxlength="5" size="6"') ?>
@@ -399,7 +399,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Manager User:
+		<? echo $this->lang->line("go_manager_user"); ?>:
 		</td>
 		<td>
 		<?=form_input('ASTmgrUSERNAME',$server_info->ASTmgrUSERNAME,'id="ASTmgrUSERNAME" maxlength="20" size="20"') ?>
@@ -407,7 +407,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Manager Secret:
+		<? echo $this->lang->line("go_manager_secret"); ?>:
 		</td>
 		<td>
 		<?=form_input('ASTmgrSECRET',$server_info->ASTmgrSECRET,'id="ASTmgrSECRET" maxlength="20" size="20"') ?>
@@ -415,7 +415,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Manager Update User:
+		<? echo $this->lang->line("go_manager_update_user"); ?>:
 		</td>
 		<td>
 		<?=form_input('ASTmgrUSERNAMEupdate',$server_info->ASTmgrUSERNAMEupdate,'id="ASTmgrUSERNAMEupdate" maxlength="20" size="20"') ?>
@@ -423,7 +423,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Manager Listen User:
+		<? echo $this->lang->line("go_manager_listen_user"); ?>:
 		</td>
 		<td>
 		<?=form_input('ASTmgrUSERNAMElisten',$server_info->ASTmgrUSERNAMElisten,'id="ASTmgrUSERNAMElisten" maxlength="20" size="20"') ?>
@@ -431,7 +431,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Manager Send User:
+		<? echo $this->lang->line("go_manager_send_user"); ?>:
 		</td>
 		<td>
 		<?=form_input('ASTmgrUSERNAMEsend',$server_info->ASTmgrUSERNAMEsend,'id="ASTmgrUSERNAMEsend" maxlength="20" size="20"') ?>
@@ -439,16 +439,16 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Conf File Secret:
+		<? echo $this->lang->line("go_conf_file_secret"); ?>:
 		</td>
 		<td>
 		<?=form_input('conf_secret',$server_info->conf_secret,'id="conf_secret" maxlength="20" size="20"') ?>
-		&nbsp;<span id="testSpan"><small style="color:red">Weak</small></span>
+		&nbsp;<span id="testSpan"><small style="color:red"><? echo $this->lang->line("go_weak"); ?></small></span>
 		</td>
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Local GMT:
+		<? echo $this->lang->line("go_local_gmt"); ?>:
 		</td>
 		<td>
 		<?php
@@ -468,7 +468,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Voicemail Dump Exten:
+		<? echo $this->lang->line("go_voicemal_dump_exten"); ?>:
 		</td>
 		<td>
 		<?=form_input('voicemail_dump_exten',$server_info->voicemail_dump_exten,'id="voicemail_dump_exten" maxlength="20" size="20"') ?>
@@ -476,7 +476,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Autodial Extension:
+		<? echo $this->lang->line("go_autodial_exten"); ?>:
 		</td>
 		<td>
 		<?=form_input('answer_transfer_agent',$server_info->answer_transfer_agent,'id="answer_transfer_agent" maxlength="20" size="20"') ?>
@@ -484,7 +484,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Default Context:
+		<? echo $this->lang->line("go_default_context"); ?>:
 		</td>
 		<td>
 		<?=form_input('ext_context',$server_info->ext_context,'id="ext_context" maxlength="20" size="20"') ?>
@@ -492,7 +492,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		System Performance Log:
+		<? echo $this->lang->line("go_system_performance_log"); ?>:
 		</td>
 		<td>
 		<?php
@@ -503,7 +503,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Server Logs:
+		<? echo $this->lang->line("go_server_logs"); ?>:
 		</td>
 		<td>
 		<?php
@@ -514,7 +514,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		AGI Output:
+		<? echo $this->lang->line("go_agi_output"); ?>:
 		</td>
 		<td>
 		<?php
@@ -525,7 +525,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Carrier Logging Active:
+		<? echo $this->lang->line("go_carrier_logging_active"); ?>:
 		</td>
 		<td>
 		<?php
@@ -536,7 +536,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Recording Web Link:
+		<? echo $this->lang->line("go_recording_web_link"); ?>:
 		</td>
 		<td>
 		<?php
@@ -547,7 +547,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Alternate Recording Server IP:
+		<? echo $this->lang->line("go_alternate_recording_server_ip"); ?>:
 		</td>
 		<td>
 		<?=form_input('alt_server_ip',$server_info->alt_server_ip,'id="alt_server_ip" maxlength="100" size="30"') ?>
@@ -555,7 +555,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		External Server IP:
+		<? echo $this->lang->line("go_external_server_ip"); ?>:
 		</td>
 		<td>
 		<?=form_input('external_server_ip',$server_info->external_server_ip,'id="external_server_ip" maxlength="100" size="30"') ?>
@@ -563,7 +563,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Active Twin Server IP:
+		<? echo $this->lang->line("go_active_twin_server_ip"); ?>:
 		</td>
 		<td>
 		<?=form_input('active_twin_server_ip',$server_info->active_twin_server_ip,'id="active_twin_server_ip" maxlength="15" size="16"') ?>
@@ -571,7 +571,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Active Asterisk Server:
+		<? echo $this->lang->line("go_active_agent_server"); ?>Active Asterisk Server:
 		</td>
 		<td>
 		<?php
@@ -582,7 +582,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Active Agent Server:
+		<? echo $this->lang->line("go_active_agent_server"); ?>:
 		</td>
 		<td>
 		<?php
@@ -593,7 +593,7 @@ switch ($type)
 	</tr class="advance_settings" style="display: none;">
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Generate conf Files:
+		<? echo $this->lang->line("go_generate_conf_files"); ?>:
 		</td>
 		<td>
 		<?php
@@ -604,7 +604,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Rebuild conf Files:
+		<? echo $this->lang->line("go_rebuild_conf_files"); ?>:
 		</td>
 		<td>
 		<?php
@@ -615,7 +615,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Rebuild Music On Hold:
+		<? echo $this->lang->line("go_rebuild_moh"); ?>:
 		</td>
 		<td>
 		<?php
@@ -626,7 +626,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Sounds Update:
+		<? echo $this->lang->line("go_sounds_update"); ?>:
 		</td>
 		<td>
 		<?php
@@ -637,7 +637,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:right;width:40%;height:10px;">
-		Recording Limit:
+		<? echo $this->lang->line("go_recording_limit"); ?>:
 		</td>
 		<td>
 		<?=form_input('vicidial_recording_limit',$server_info->vicidial_recording_limit,'id="vicidial_recording_limit" maxlength="6" size="8"') ?>
@@ -645,7 +645,7 @@ switch ($type)
 	</tr>
 	<tr class="advance_settings" style="display: none;">
 		<td style="text-align:center;width:40%;height:10px;" colspan="2">
-		Custom Dialplan Entry:
+		<? echo $this->lang->line("go_custom_dialplan_entry"); ?>:
 		</td>
 	</tr>
 	<tr class="advance_settings" style="display: none;">
@@ -666,7 +666,7 @@ switch ($type)
 		<td>&nbsp;</td><td>&nbsp;</td>
 	</tr>
 	<tr>
-    	<td><span id="advance_link" style="cursor:pointer;font-size:9px;">[ + ADVANCE SETTINGS ]</span><input type="hidden" id="isAdvance" value="0" /></td><td style="text-align:right;"><span id="saveSettings" class="buttons">SAVE SETTINGS</span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
+    	<td><span id="advance_link" style="cursor:pointer;font-size:9px;">[ + <? echo $this->lang->line("go_adv_settings"); ?> ]</span><input type="hidden" id="isAdvance" value="0" /></td><td style="text-align:right;"><span id="saveSettings" class="buttons"><? echo $this->lang->line("go_save_settings"); ?></span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
     </tr>
 </table>
 </form>
@@ -674,7 +674,7 @@ switch ($type)
 <br style="font-size:9px;" />
 <table border="0" cellpadding="3" cellspacing="3" style="width:95%; color:#000; margin-left:auto; margin-right:auto;">
 	<tr>
-		<td style="text-align:center;font-weight:bold;" colspan="2">TRUNKS FOR THIS SERVER</td>
+		<td style="text-align:center;font-weight:bold;" colspan="2"><? echo strtoupper($this->lang->line("go_trunks_this_server")); ?></td>
 	</tr>
 </table>
 <br />
@@ -682,14 +682,14 @@ switch ($type)
 <?php form_hidden('server_ip',$server_info->server_ip); ?>
 <table border="0" cellpadding="3" cellspacing="3" style="width:95%; color:#000; margin-left:auto; margin-right:auto;">
 	<tr>
-		<td style="text-align:center;font-weight:bold;" colspan="2">ADD NEW SERVER TRUNK RECORD</td>
+		<td style="text-align:center;font-weight:bold;" colspan="2"><? echo $this->lang->line("go_add_new_server_tr"); ?></td>
 	</tr>
 	<tr>
-		<td style="text-align:right;width:40%;height:10px;">Trunks:</td>
+		<td style="text-align:right;width:40%;height:10px;"><? echo $this->lang->line("go_trunks"); ?>:</td>
 		<td><?php echo form_input('dedicated_trunks',null,'id="dedicated_trunks" maxlength="4" size="6"'); ?></td>
 	</tr>
 	<tr>
-		<td style="text-align:right;width:40%;height:10px;">Campaign:</td>
+		<td style="text-align:right;width:40%;height:10px;"><? echo $this->lang->line("go_campaign"); ?>:</td>
 		<td>
 		<?php
 		foreach ($allowed_campaigns as $audi)
@@ -702,24 +702,24 @@ switch ($type)
 		</td>
 	</tr>
 	<tr>
-		<td style="text-align:right;width:40%;height:10px;">Restriction:</td>
+		<td style="text-align:right;width:40%;height:10px;"><? echo $this->lang->line("go_restriction"); ?>:</td>
 		<td><?php echo form_dropdown('trunk_restriction',array('MAXIMUM_LIMIT'=>'MAXIMUM LIMIT','OVERFLOW_ALLOWED'=>'OVERFLOW ALLOWED'),'id="trunk_restriction"'); ?></td>
 	</tr>
 	<tr>
-		<td style="text-align:center;" colspan="2"><span id="addTrunks" class="buttons">ADD TRUNKS</span></td>
+		<td style="text-align:center;" colspan="2"><span id="addTrunks" class="buttons"><? echo strtoupper($this->lang->line("go_add_trunks")); ?></span></td>
 	</tr>
 </table>
 </form>
 </span>
 <br style="font-size:9px;" />
-<div id="carrier_list" style="float: left;padding-left: 20px;" class="buttons">+ CARRIERS WITHIN THIS SERVER</div>
+<div id="carrier_list" style="float: left;padding-left: 20px;" class="buttons">+ <? echo $this->lang->line("go_carriers_within_server"); ?></div>
 <table id="carrier_list_table" cellpadding="0" cellspacing="0" style="width: 95%;margin-left: auto;margin-right: auto;display: none;">
 	<thead>
 		<tr>
-			<th style="white-space: nowrap;font-weight: bold;padding: 3px;">CARRIER ID</th>
-			<th style="white-space: nowrap;font-weight: bold;padding: 3px;">NAME</th>
-			<th style="white-space: nowrap;font-weight: bold;padding: 3px;">REGISTRATION</th>
-			<th style="white-space: nowrap;font-weight: bold;padding: 3px;">ACTIVE</th>
+			<th style="white-space: nowrap;font-weight: bold;padding: 3px;"><? echo strtoupper($this->lang->line("go_carrier_id")); ?></th>
+			<th style="white-space: nowrap;font-weight: bold;padding: 3px;"><? echo strtoupper($this->lang->line("go_name")); ?></th>
+			<th style="white-space: nowrap;font-weight: bold;padding: 3px;"><? echo strtoupper($this->lang->line("go_registration")); ?></th>
+			<th style="white-space: nowrap;font-weight: bold;padding: 3px;"><? echo strtoupper($this->lang->line("go_active")); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -752,13 +752,13 @@ foreach ($server_carriers as $carrier)
 	</tbody>
 </table>
 <br />
-<div id="phone_list" style="float: left;padding-left: 20px;" class="buttons">+ PHONES WITHIN THIS SERVER</div>
+<div id="phone_list" style="float: left;padding-left: 20px;" class="buttons">+ <? echo $this->lang->line("go_phones_server"); ?></div>
 <table id="phone_list_table" cellpadding="0" cellspacing="0" style="width: 95%;margin-left: auto;margin-right: auto;display: none;">
 	<thead>
 		<tr>
-			<th style="white-space: nowrap;font-weight: bold;">EXTENSION</th>
-			<th style="white-space: nowrap;font-weight: bold;">NAME</th>
-			<th style="white-space: nowrap;font-weight: bold;">ACTIVE</th>
+			<th style="white-space: nowrap;font-weight: bold;"><? echo strtoupper($this->lang->line("go_exten")); ?></th>
+			<th style="white-space: nowrap;font-weight: bold;"><? echo strtoupper($this->lang->line("go_name")); ?></th>
+			<th style="white-space: nowrap;font-weight: bold;"><? echo strtoupper($this->lang->line("go_active")); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -783,12 +783,12 @@ foreach ($server_phones as $phone)
 	</tbody>
 </table>
 <br />
-<div id="conference_list" style="float: left;padding-left: 20px;" class="buttons">+ CONFERENCES WITHIN THIS SERVER</div>
+<div id="conference_list" style="float: left;padding-left: 20px;" class="buttons">+ <? echo $this->lang->line("go_conference_server"); ?></div>
 <table id="conference_list_table" cellpadding="0" cellspacing="0" style="width: 95%;margin-left: auto;margin-right: auto;display: none;">
 	<thead>
 		<tr>
-			<th style="white-space: nowrap;font-weight: bold;">CONFERENCE</th>
-			<th style="white-space: nowrap;font-weight: bold;">EXTENSION</th>
+			<th style="white-space: nowrap;font-weight: bold;"><? echo strtoupper($this->lang->line("go_conference")); ?></th>
+			<th style="white-space: nowrap;font-weight: bold;"><? echo strtoupper($this->lang->line("go_exten")); ?></th>
 		</tr>
 	</thead>
 	<tbody>

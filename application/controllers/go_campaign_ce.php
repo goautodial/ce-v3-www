@@ -22,7 +22,7 @@ class Go_campaign_ce extends Controller {
 		$this->load->helper(array('date','form','url','path'));
 		$this->is_logged_in();
 		$this->lang->load('userauth', $this->session->userdata('ua_language'));
-
+		$this->load->helper('language');
 		$this->userLevel = $this->session->userdata('users_level');
 		$config['enable_query_strings'] = FALSE;
 //		$this->config->initialize($config);
@@ -35,7 +35,8 @@ class Go_campaign_ce extends Controller {
 		$data['jsbodyloader'] = 'go_campaign_body_jsloader.php';
 
 		$data['theme'] = $this->session->userdata('go_theme');
-		$data['bannertitle'] = $this->lang->line('go_campaign_banner');
+		$data['bannertitle'] = $this->lang->line('go_Campaigns');
+		//$data['bannertitle'] = $this->lang->line('go_campaign_banner');
 		$data['adm']= 'wp-has-current-submenu';
 		$data['hostp'] = $_SERVER['SERVER_ADDR'];
 		$data['folded'] = 'folded';
@@ -49,6 +50,7 @@ class Go_campaign_ce extends Controller {
 		$data['permissions'] = $this->commonhelper->getPermissions("campaign",$this->session->userdata("user_group"));
 
 		$data['go_main_content'] = 'go_campaign/go_campaign';
+
 		$this->load->view('includes/go_dashboard_template',$data);
 	}
 
@@ -95,7 +97,7 @@ class Go_campaign_ce extends Controller {
 			$hotkey_status[$hotkey->campaign_id] .= $hotkey->status . " ";
 		}
 		
-		$query = $this->db->query("SELECT lead_filter_id AS filter_id,lead_filter_name AS filter_name FROM vicidial_lead_filters $addedSQL");
+		$query = $this->db->query("SELECT lead_filter_id AS filter_id,lead_filter_name AS filter_name FROM vicidial_lead_filters $addedSQL order by filter_id");
 		$filters['list'] = $query->result();
 		
 		$filters['pagelinks'] = $this->go_campaign->pagelinks($groupId,1,25,$query->num_rows(),5,"lead filters");
@@ -166,7 +168,7 @@ class Go_campaign_ce extends Controller {
 
         $this->load->view('go_campaign/go_campaign_list',$data);
 	}
-
+	
 	function go_update_campaign_list()
 	{
 		$update = $this->go_campaign->go_update_campaign_list();
@@ -399,11 +401,13 @@ class Go_campaign_ce extends Controller {
 		$data['listid'] = $query->row();
 		$data['list_id'] = $list_id;
 		$data['status_to_print'] = $statuses;
+
 		$this->load->view('go_campaign/go_campaign_listid',$data);
 	}
 
 	function go_campaign_wizard()
 	{
+
 		$campType = $this->uri->segment(3);
 		$data['step'] = $this->uri->segment(4);
 		$campaign_id = mysql_real_escape_string($this->uri->segment(5));
@@ -746,6 +750,7 @@ class Go_campaign_ce extends Controller {
 				$data['phone_code'] = $result['phone_code'];
 				$data['file_name'] = $result['file_name'];
 				$data['file_ext'] = $result['file_ext'];
+				
 				$this->load->view('go_campaign/go_campaign_wizard_fields', $data);
 			}
 		}
@@ -1199,6 +1204,7 @@ class Go_campaign_ce extends Controller {
 			$data['dup'] = $dup;
 			$data['post'] = $post;
 			$data['resultHTML'] = $resultHTML;
+
 			$this->load->view('go_campaign/go_campaign_wizard_fields', $data);
 		}
 	}
@@ -1284,6 +1290,7 @@ class Go_campaign_ce extends Controller {
 		$data['status'] = $str['status'];
 		$data['action'] = $action;
 		$data['campaign_id'] = $campaign_id;
+
         $this->load->view('go_campaign/go_campaign_statuses',$data);
 	}
 
@@ -1320,6 +1327,7 @@ class Go_campaign_ce extends Controller {
 	    $data['agent_ready'] =		$realtime['agent_ready'];
 	    $data['agent_waiting'] =	$realtime['agent_waiting'];
 		$data['user_level'] =		$this->userLevel;
+
 	    $this->load->view('go_monitoring/go_realtime',$data);
 	}
 
@@ -1349,6 +1357,7 @@ class Go_campaign_ce extends Controller {
 
 	    $data['type'] = $type;
 	    $data['campaign_id'] = $camp;
+
 	    $this->load->view('go_campaign/go_campaign_view',$data);
 	}
 	
@@ -1399,6 +1408,7 @@ class Go_campaign_ce extends Controller {
 				$data['campaign_id'] = $camp;
 				$data['recycle_list'] = $rcycle;
 				$data['action'] = "modify_recycle";
+
 		        $this->load->view('go_campaign/go_campaign_statuses',$data);
 				break;
 			
@@ -1533,6 +1543,7 @@ class Go_campaign_ce extends Controller {
 				$data['campaign_id'] = $camp;
 				$data['pause_list'] = $pcode;
 				$data['action'] = "modify_pausecode";
+
 		        $this->load->view('go_campaign/go_campaign_statuses',$data);
 				break;
 			
@@ -1667,6 +1678,7 @@ class Go_campaign_ce extends Controller {
 				$data['campaign_id'] = $camp;
 				$data['hotkeys_list'] = $hotkeys;
 				$data['action'] = "modify_hotkeys";
+
 		        $this->load->view('go_campaign/go_campaign_statuses',$data);
 				break;
 			
@@ -1811,7 +1823,7 @@ class Go_campaign_ce extends Controller {
 					$user_groups[$group->user_group] = "{$group->user_group} - {$group->group_name}";
 				}
 				$data['user_groups'] = $user_groups;
-				
+
 			        $this->load->view('go_campaign/go_lead_filters',$data);
 				break;
 			
@@ -1928,6 +1940,7 @@ class Go_campaign_ce extends Controller {
 	    $data['totalHopper'] = $totalHopper;
 	    $data['campaign_id'] = $camp;
 	    $data['campaign_name'] = $query->row()->campaign_name;
+
 	    $this->load->view('go_campaign/go_campaign_view_hopper',$data);
 	}
 	

@@ -24,13 +24,13 @@ $(function()
 		var isEmpty = 0;
 		if (mohid.length < 3)
 		{
-			alert("MoH ID should not be empty or should\nbe at least 3 characters in length.");
+			alert("<? echo $this->lang->line("go_moh_id_3_chars"); ?>");
 			isEmpty = 1;
 		}
 		
 		if ($('#mloading').html().match(/Not Available/))
 		{
-			alert("MoH ID Not Available.");
+			alert("<? echo $this->lang->line("go_moh_id_navailable"); ?>");
 			isEmpty = 1;
 		}
 		
@@ -40,7 +40,7 @@ $(function()
 			function(data){
 				if (data=="SUCCESS")
 				{
-					alert(data);
+					alert("<? echo $this->lang->line("go_success_caps"); ?>");
 				
 					$('#box').animate({'top':'-2550px'},500);
 					$('#overlay').fadeOut('slow');
@@ -86,7 +86,7 @@ $(function()
 				$(this).css('border','solid 1px #DFDFDF');
 				$('#mloading').load('<? echo $base; ?>index.php/go_moh_ce/go_check_moh/'+$(this).val());
 			} else {
-				$('#mloading').html("<small style=\"color:red;\">Minimum of 3 characters.</small>");
+				$('#mloading').html("<small style=\"color:red;\"><? echo $this->lang->line("go_min_3_char"); ?></small>");
 			}
 		}
 	});
@@ -152,7 +152,7 @@ $(function()
 </style>
 
 <div style="float:right;" id="small_step_number"><img src="<?php echo $base; ?>img/step1-nav-small.png" /></div>
-<div style="font-weight:bold;font-size:16px;color:#333;">Music on Hold Wizard &raquo; Add New Music on Hold</div>
+<div style="font-weight:bold;font-size:16px;color:#333;"><? echo $this->lang->line("go_moh_wizard"); ?> &raquo; <? echo $this->lang->line("go_add_new_moh"); ?></div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
 
@@ -165,19 +165,19 @@ $(function()
 			<form id="modifyMoH" method="POST">
 				<table id="test" border=0 cellpadding="3" cellspacing="3" style="width:90%; color:#000; margin-left:auto; margin-right:auto;">
 					<tr>
-					<td style="text-align:right;" nowrap>Music on Hold ID:</td><td><?=form_input('moh_id',null,'id="moh_id" size="25" maxlength="100"') ?> <span id="mloading"></span></td>
+					<td style="text-align:right;" nowrap><? echo $this->lang->line("go_moh_id"); ?>:</td><td><?=form_input('moh_id',null,'id="moh_id" size="25" maxlength="100"') ?> <span id="mloading"></span></td>
 				    </tr>
 					<tr>
-					<td style="text-align:right;" nowrap>Music on Hold Name:</td><td><?=form_input('moh_name',null,'id="moh_name" size="50" maxlength="100"') ?></td>
+					<td style="text-align:right;" nowrap><? echo $this->lang->line("go_moh_name"); ?>:</td><td><?=form_input('moh_name',null,'id="moh_name" size="50" maxlength="100"') ?></td>
 				    </tr>
 					<tr>
-					<td style="text-align:right;" nowrap>Status:</td><td><?=form_dropdown('active',array('N'=>'INACTIVE','Y'=>'ACTIVE'),null) ?></td>
+					<td style="text-align:right;" nowrap><? echo $this->lang->line("go_status"); ?>:</td><td><?=form_dropdown('active',array('N'=>''.$this->lang->line("go_inactive_caps").'','Y'=>''.$this->lang->line("go_active_caps").''),null) ?></td>
 				    </tr>
 					<tr style="<?php echo $hideFromTenant; ?>">
-					<td style="text-align:right;" nowrap>User Group:</td><td><?=form_dropdown('user_group',$user_group_array,$my_user_group,'style="width:300px;"') ?></td>
+					<td style="text-align:right;" nowrap><? echo $this->lang->line("go_user_group"); ?>:</td><td><?=form_dropdown('user_group',$user_group_array,$my_user_group,'style="width:300px;"') ?></td>
 				    </tr>
 					<tr>
-					<td style="text-align:right;" nowrap>Random Order:</td><td><?=form_dropdown('random',array('N'=>'No','Y'=>'Yes'),null) ?></td>
+					<td style="text-align:right;" nowrap><? echo $this->lang->line("go_random_order"); ?>:</td><td><?=form_dropdown('random',array('N'=>''.$this->lang->line("go_no").'','Y'=>''.$this->lang->line("go_yes").''),null) ?></td>
 				    </tr>
 				</table>
 			</form>
@@ -185,4 +185,4 @@ $(function()
 	</tr>
 </table>
 <hr style="border:#DFDFDF 1px solid;" />
-<span id="saveButtons"><span id="submit" style="white-space: nowrap;">Submit</span></span>
+<span id="saveButtons"><span id="submit" style="white-space: nowrap;"><? echo $this->lang->line("go_submit"); ?></span></span>

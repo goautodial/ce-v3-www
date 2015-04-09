@@ -29,27 +29,27 @@
                  <div class="userstatus-display">
                  <?Php
                       echo '<b>'.$userinfo[0]->user . " - " .$userinfo[0]->full_name . "&nbsp;&nbsp;&nbsp;Group: ".$userinfo[0]->user_group.'</b><br/><br/>';
-                      echo "<div class='leftside'>Agent logged in at server</div><div class='rightside'> ". $liveagent[0]->server_ip."</div><br/>";
-                      echo "<div class='leftside'>In session</div><div class='rightside'> ". $liveagent[0]->conf_exten."</div><br/>";
-                      echo "<div class='leftside'>From phone</div><div class='rightside'> ". $liveagent[0]->extension."</div><br/>";
-                      echo "<div class='leftside'>Agent is in campaign</div><div class='rightside'> ". $liveagent[0]->campaign_id."</div><br/>";
-                      echo "<div class='leftside'>Status</div><div class='rightside'> ". $liveagent[0]->status."</div><br/>";
-                      echo "<div class='leftside'>Hang-up last call at</div><div class='rightside'> ". $liveagent[0]->last_call_finish."</div><br/>";
-                      echo "<div class='leftside'>Closer groups</div><div class='rightside'> ". $liveagent[0]->closer_campaigns."</div><br/>";
+                      echo "<div class='leftside'>".$goUsers_agentLoggedInAtServer."</div><div class='rightside'> ". $liveagent[0]->server_ip."</div><br/>";
+                      echo "<div class='leftside'>".$goUsers_inSession."</div><div class='rightside'> ". $liveagent[0]->conf_exten."</div><br/>";
+                      echo "<div class='leftside'>".$goUsers_fromPhone."</div><div class='rightside'> ". $liveagent[0]->extension."</div><br/>";
+                      echo "<div class='leftside'>".$goUsers_agentIsInCampaign."</div><div class='rightside'> ". $liveagent[0]->campaign_id."</div><br/>";
+                      echo "<div class='leftside'>".$goUsers_status."</div><div class='rightside'> ". $liveagent[0]->status."</div><br/>";
+                      echo "<div class='leftside'>".$goUsers_hangupLastCallAt."</div><div class='rightside'> ". $liveagent[0]->last_call_finish."</div><br/>";
+                      echo "<div class='leftside'>".$goUsers_closerGroups."</div><div class='rightside'> ". $liveagent[0]->closer_campaigns."</div><br/>";
                  ?> 
                  </div>
-                 <p id="<?=$userinfo[0]->user?>"><a href="javascript:void(0);" class="emergency">Emergency Logout</a></p>
+                 <p id="<?=$userinfo[0]->user?>"><a href="javascript:void(0);" class="emergency"><?php echo $goUsers_emergencyLogout; ?></a></p>
                  <br class="clear"/>
             </div>
         </div>
         <div class="adv-user-stats">
             <div class="adv-toggle"></div>
-            <h3>User Stats</h3>
+            <h3><?php echo $goUsers_userStatus; ?></h3>
             <div class="adv-user-detail user-corners">
                 <div class="datepicker-container">
                     <div class="hovermenu" id="widgetField">
                         <span id="user-stat-<?=$userinfo[0]->user?>"><? echo date('Y-m-d'); ?> to <? echo date('Y-m-d'); ?></span>
-                        <a href="javascript:void(0);" id="daterange">Select date range</a>
+                        <a href="javascript:void(0);" id="daterange"><?php echo $goUsers_selectDateRange; ?></a>
                     </div>
                     <div id="widgetCalendar"></div> <!--//calendar layout//-->
                 </div>
@@ -57,13 +57,13 @@
                 <div class="stats-container">
                     <div class="kaliwa">
                         <div class="agent-talk-time user-cornerall">
-                           <strong>Agent Talk Time and Status </strong>
+                           <strong><?php echo $goUsers_agentTalkTimeAndStatus; ?> </strong>
                            <br class="clear"/>
                            <br class="clear"/>
                            <div class="time-status-tbl">
                                <div class="time-stat-hdr">
-                                   <div class="cols">Status</div>
-                                   <div class="cols">Count</div>
+                                   <div class="cols"><?php echo $goUsers_status; ?></div>
+                                   <div class="cols"><?php echo $goUsers_count; ?></div>
                                    <div class="cols">Hours:MM:SS</div>
                                </div>
                                <br class="clear"/> 
@@ -72,20 +72,20 @@
                         </div>
                         <br class="greatespace"/>
                         <div class="agent-loginlogout-time user-cornerall">
-                           <strong>Agent Login/Logout Time</strong>
+                           <strong><?php echo $goUsers_agentLoginLogoutTime; ?></strong>
                            <br class="clear"/>
                            <br class="clear"/>
                            <div class="time-loginlogout-tbl">
                                <div class="agent-loginlogout-hdr">
-                                   <div class="cols">Event</div>
-                                   <div class="cols">Date</div>
-                                   <div class="cols">Campaign</div>
-                                   <div class="cols">Group</div>
+                                   <div class="cols"><?php echo $goUsers_event; ?></div>
+                                   <div class="cols"><?php echo $goUsers_date; ?></div>
+                                   <div class="cols"><?php echo $goUsers_campaign; ?></div>
+                                   <div class="cols"><?php echo $goUsers_group; ?></div>
                                    <div class="cols">HH:MM:SS</div>
-                                   <div class="cols">Session</div>
-                                   <div class="cols">Server</div>
-                                   <div class="cols">Phone</div>
-                                   <div class="cols">Computer</div>
+                                   <div class="cols"><?php echo $goUsers_session; ?></div>
+                                   <div class="cols"><?php echo $goUsers_server; ?></div>
+                                   <div class="cols"><?php echo $goUsers_phone; ?></div>
+                                   <div class="cols"><?php echo $goUsers_computer; ?></div>
                                </div>
                                <br class="clear"/> 
                                <div class="time-loginlogout-content"></div>
@@ -93,20 +93,20 @@
                         </div>
                         <br class="greatespace"/>
                         <div class="agent-outbound-thistime user-cornerall">
-                           <strong>Outbound Calls For This Time Period(1000 record limit)</strong>
+                           <strong><?php echo $goUsers_outboundCallsForThisTimePeriod1k; ?></strong>
                            <br class="clear"/>
                            <br class="clear"/>
                            <div class="outbound-thistime-tbl">
                                <div class="outbound-thistime-hdr">
-                                   <div class="cols">Date/Time</div>
-                                   <div class="cols">Length</div>
-                                   <div class="cols">Status</div>
-                                   <div class="cols">Phone</div>
-                                   <div class="cols">Campaign</div>
-                                   <div class="cols">Group</div>
-                                   <div class="cols">List</div>
-                                   <div class="cols">Lead</div>
-                                   <div class="cols">Hangup Reason</div>
+                                   <div class="cols"><?php echo $goUsers_dateTime; ?></div>
+                                   <div class="cols"><?php echo $goUsers_length; ?></div>
+                                   <div class="cols"><?php echo $goUsers_status; ?></div>
+                                   <div class="cols"><?php echo $goUsers_phone; ?></div>
+                                   <div class="cols"><?php echo $goUsers_campaign; ?></div>
+                                   <div class="cols"><?php echo $goUsers_group; ?></div>
+                                   <div class="cols"><?php echo $goUsers_list; ?></div>
+                                   <div class="cols"><?php echo $goUsers_lead; ?></div>
+                                   <div class="cols"><?php echo $goUsers_hangupReason; ?></div>
                                </div>
                                <br class="clear"/> 
                                <div class="outbound-thistime-content"></div>
@@ -114,21 +114,21 @@
                         </div>
                         <br class="greatespace"/>
                         <div class="agent-inbound-thistime user-cornerall">
-                           <strong>Inbound/Closer Calls For This Time Period(1000 record limit)</strong>
+                           <strong><?php echo $goUsers_inboundCloserCallsForThisTimePeriod1k; ?></strong>
                            <br class="clear"/>
                            <br class="clear"/>
                            <div class="inbound-thistime-tbl">
                                <div class="inbound-thistime-hdr">
-                                   <div class="cols">Date/Time</div>
-                                   <div class="cols">Length</div>
-                                   <div class="cols">Status</div>
-                                   <div class="cols">Phone</div>
-                                   <div class="cols">Campaign</div>
-                                   <div class="cols">Wait(s)</div>
-                                   <div class="cols">Agent(s)</div>
-                                   <div class="cols">List</div>
-                                   <div class="cols">Lead</div>
-                                   <div class="cols">Hangup Reason</div>
+                                   <div class="cols"><?php echo $goUsers_dateTime; ?></div>
+                                   <div class="cols"><?php echo $goUsers_length; ?></div>
+                                   <div class="cols"><?php echo $goUsers_status; ?></div>
+                                   <div class="cols"><?php echo $goUsers_phone; ?></div>
+                                   <div class="cols"><?php echo $goUsers_campaign; ?></div>
+                                   <div class="cols"><?php echo $goUsers_waits; ?></div>
+                                   <div class="cols"><?php echo $goUsers_agents; ?></div>
+                                   <div class="cols"><?php echo $goUsers_list; ?></div>
+                                   <div class="cols"><?php echo $goUsers_lead; ?></div>
+                                   <div class="cols"><?php echo $goUsers_hangupReason; ?></div>
                                </div>
                                <br class="clear"/> 
                                <div class="inbound-thistime-content"></div>
@@ -136,22 +136,22 @@
                         </div>
                         <br class="greatespace"/>
                         <div class="agent-activity-thistime user-cornerall">
-                           <strong>Agent Activity For This Time Period(1000 limit)</strong>
+                           <strong><?php echo $goUsers_agentActivityForThisTimePeriod1k ?></strong>
                            <br class="clear"/>
                            <br class="clear"/>
                            <div class="agent-activity-tbl">
                                <div class="agentactivity-thistime-hdr">
-                                   <div class="cols">Date/Time</div>
-                                   <div class="cols">Pause</div>
-                                   <div class="cols">Wait</div>
-                                   <div class="cols">Talk</div>
-                                   <div class="cols">Dispo</div>
-                                   <div class="cols">Dead</div>
-                                   <div class="cols">Customer</div>
-                                   <div class="cols">Status</div>
-                                   <div class="cols">Lead</div>
-                                   <div class="cols">Campaign</div>
-                                   <div class="cols">Pause Code</div>
+                                   <div class="cols"><?php echo $goUsers_dateTime; ?></div>
+                                   <div class="cols"><?php echo $goUsers_pause; ?></div>
+                                   <div class="cols"><?php echo $goUsers_wait; ?></div>
+                                   <div class="cols"><?php echo $goUsers_talk; ?></div>
+                                   <div class="cols"><?php echo $goUsers_disposition; ?></div>
+                                   <div class="cols"><?php echo $goUsers_dead; ?></div>
+                                   <div class="cols"><?php echo $goUsers_customer; ?></div>
+                                   <div class="cols"><?php echo $goUsers_status; ?></div>
+                                   <div class="cols"><?php echo $goUsers_lead; ?></div>
+                                   <div class="cols"><?php echo $goUsers_campaign; ?></div>
+                                   <div class="cols"><?php echo $goUsers_pauseCode; ?></div>
                                </div>
                                <br class="clear"/>
                                <div class="agent-activity-content"></div>
@@ -159,17 +159,17 @@
                         </div>
                         <br class="greatespace"/>
                         <div class="agent-recording-thistime user-cornerall">
-                           <strong>Recording For This Time Period(1000 record limit)</strong>
+                           <strong><?php echo $goUsers_recordingForThisTimePeriod; ?></strong>
                            <br class="clear"/>
                            <br class="clear"/>
                            <div class="recording-thistime-tbl">
                                <div class="recording-thistime-hdr">
-                                   <div class="cols">Lead</div>
-                                   <div class="cols">Date/Time</div>
-                                   <div class="cols">Seconds</div>
-                                   <div class="cols">RECID</div>
-                                   <div class="cols">Filename</div>
-                                   <div class="cols">Location</div>
+                                   <div class="cols"><?php echo $goUsers_lead; ?></div>
+                                   <div class="cols"><?php echo $goUsers_dateTime; ?></div>
+                                   <div class="cols"><?php echo $goUsers_seconds; ?></div>
+                                   <div class="cols"><?php echo $goUsers_recid; ?></div>
+                                   <div class="cols"><?php echo $goUsers_filename; ?></div>
+                                   <div class="cols"><?php echo $goUsers_location; ?></div>
                                </div>
                                <br class="clear"/> 
                                <div class="recording-thistime-content"></div>
@@ -177,21 +177,21 @@
                         </div>
                         <br class="greatespace"/>
                         <div class="agent-manualoutbound-thistime user-cornerall">
-                           <strong>Manual Outbound Calls For This Time Period(1000 record limit)</strong>
+                           <strong><?php echo $goUsers_manualOutboundCallsForThisTimePeriod; ?></strong>
                            <br class="clear"/>
                            <br class="clear"/>
                            <div class="manualoutbound-thistime-tbl">
                                <div class="manualoutbound-thistime-hdr">
-                                   <div class="cols">Date/Time</div>
-                                   <div class="cols">Call Type</div>
-                                   <div class="cols">Server</div>
-                                   <div class="cols">Phone</div>
-                                   <div class="cols">Dialed</div>
-                                   <div class="cols">Lead</div>
-                                   <div class="cols">Caller Id</div>
-                                   <div class="cols">Alias</div>
-                                   <div class="cols">Preset</div>
-                                   <div class="cols">C3HU</div>
+                                   <div class="cols"><?php echo $goUsers_dateTime; ?></div>
+                                   <div class="cols"><?php echo $goUsers_callType; ?></div>
+                                   <div class="cols"><?php echo $goUsers_server; ?></div>
+                                   <div class="cols"><?php echo $goUsers_phone; ?></div>
+                                   <div class="cols"><?php echo $goUsers_dialed; ?></div>
+                                   <div class="cols"><?php echo $goUsers_lead; ?></div>
+                                   <div class="cols"><?php echo $goUsers_callerId; ?></div>
+                                   <div class="cols"><?php echo $goUsers_alias; ?></div>
+                                   <div class="cols"><?php echo $goUsers_peset; ?></div>
+                                   <div class="cols"><?php echo $goUsers_c3hu; ?></div>
                                </div>
                                <br class="clear"/> 
                                <div class="manualoutbound-thistime-content"></div>
@@ -199,16 +199,16 @@
                         </div>
                         <br class="greatespace"/>
                         <div class="agent-leadsearch-thistime user-cornerall">
-                           <strong>Lead Searches For This Time Period(1000 record limit)</strong>
+                           <strong><?php echo $goUsers_leadSearchesForThisTimePeriod1k; ?></strong>
                            <br class="clear"/>
                            <br class="clear"/>
                            <div class="leadsearch-thistime-tbl">
                                <div class="leadsearch-thistime-hdr">
-                                   <div class="cols">Date/Time</div>
-                                   <div class="cols">Type</div>
-                                   <div class="cols">Results</div>
-                                   <div class="cols">Sec</div>
-                                   <div class="cols">Query</div>
+                                   <div class="cols"><?php echo $goUsers_dateTime; ?></div>
+                                   <div class="cols"><?php echo $goUsers_type; ?></div>
+                                   <div class="cols"><?php echo $goUsers_results ?></div>
+                                   <div class="cols"><?php echo $goUsers_second; ?></div>
+                                   <div class="cols"><?php echo $goUsers_query; ?></div>
                                </div>
                                <br class="clear"/> 
                                <div class="leadsearch-thistime-content"></div>

@@ -86,19 +86,19 @@ $(function(){
 <table id="user-list" class="tablesorter" border="0" cellpadding="1" cellspacing="0" style="width:99.98%;margin-top:6px;">
 	<thead>
         <tr style="font-weight:bold;text-align: left;">
-            <th style="width:12%">&nbsp;&nbsp;AGENT ID</th>
-            <th>&nbsp;&nbsp;AGENT NAME</th>
-            <th>&nbsp;&nbsp;LEVEL</th>
+            <th style="width:14%">&nbsp;&nbsp;<?php echo $goUsers_agentId; ?></th>
+            <th>&nbsp;&nbsp;<?php echo $goUsers_agentName; ?></th>
+            <th>&nbsp;&nbsp;<?php echo $goUsers_level; ?></th>
 			<?php
 			if (!$this->commonhelper->checkIfTenant($user_group)){
 			?>
-            <th>&nbsp;&nbsp;GROUP</th>
+            <th>&nbsp;&nbsp;<?php echo $goUsers_group; ?></th>
 			<?php
 			}
 			?>
-            <th>&nbsp;&nbsp;STATUS</th>
+            <th>&nbsp;&nbsp;<?php echo $goUsers_status; ?></th>
             <th colspan="3" style="width:6%;text-align:center;" nowrap>
-               <div class="user-cols-action-lbl" style="display: inline;cursor: pointer;">&nbsp;<span>ACTION &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" /></span>&nbsp;</div></th>
+               <div class="user-cols-action-lbl" style="display: inline;cursor: pointer;">&nbsp;<span><?php echo $goUsers_action; ?> &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" /></span>&nbsp;</div></th>
             <th style="width:2.2%;text-align:center;"><div class="user-cols-action-chkbx" style="display: inline"><input type="checkbox" id="batch" /></div></th>
         </tr>
     </thead>
@@ -126,14 +126,14 @@ $(function(){
          }
          
          echo "<tr style=\"background-color:$bgcolor;\" class='user-tbl-rows'>\n";
-         echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;<a class='action-id toolTip' style='cursor:pointer' title='Modify user $row->user' id='user-action-modify-".$row->user."' rel='$row->user_id'>".$row->user."</a></td>\n";
-         echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;<a class='action-id toolTip' style='cursor:pointer' title='Modify user $row->user' id='user-action-modify-".$row->user."' rel='$row->user_id'>".str_replace("-","&#150;",$row->full_name)."</a></td>\n";
-         echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;".$row->user_level."</td>\n";
+         echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;<a class='action-id toolTip' style='cursor:pointer' title='".$goUsers_tooltip_modifyUser." $row->user' id='user-action-modify-".$row->user."' rel='$row->user_id'>".$row->user."</a></td>\n";
+         echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;<a class='action-id toolTip' style='cursor:pointer' title='".$goUsers_tooltip_modifyUser." $row->user' id='user-action-modify-".$row->user."' rel='$row->user_id'>".str_replace("-","&#150;",$row->full_name)."</a></td>\n";
+         echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" class=\" toolTip\" title='".lang('goUsers_tooltip_level')."'>&nbsp;&nbsp;".$row->user_level."</td>\n";
 		 if (!$this->commonhelper->checkIfTenant($user_group)){
 			echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;".$row->user_group."</td>\n";
 		 }
          echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;".$active."</td>\n";
-         echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><div class='user-actions-cols' style='display:inline;text-align:center;cursor:pointer;'><a id='user-action-modify-$row->user' rel='$row->user_id' title='Modify user $row->user' class='toolTip'><img src=\"{$base}img/edit.png\" style=\"cursor:pointer;width:12px;\" /></a></div></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><div class='user-actions-cols' style='display:inline;text-align:center;cursor:pointer;'><a id='user-action-delete-$row->user' rel='$row->user_id' title='Delete user $row->user' class='toolTip'><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></a></div></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><div class='user-actions-cols' style='display:inline;text-align:center;cursor:pointer;'><a id='user-action-info-".$row->user."' rel='$row->user_id' title='Info user $row->user' class='toolTip'><img src=\"{$base}img/status_display_i.png\" style=\"cursor:pointer;width:12px;\" /></a></div></td>\n";
+         echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><div class='user-actions-cols' style='display:inline;text-align:center;cursor:pointer;'><a id='user-action-modify-$row->user' rel='$row->user_id' title='".$goUsers_tooltip_modifyUser." $row->user' class='toolTip'><img src=\"{$base}img/edit.png\" style=\"cursor:pointer;width:12px;\" /></a></div></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><div class='user-actions-cols' style='display:inline;text-align:center;cursor:pointer;'><a id='user-action-delete-$row->user' rel='$row->user_id' title='".$goUsers_tooltip_actionDelete." $row->user' class='toolTip'><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></a></div></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><div class='user-actions-cols' style='display:inline;text-align:center;cursor:pointer;'><a id='user-action-info-".$row->user."' rel='$row->user_id' title='".$goUsers_tooltip_actionIcon." $row->user' class='toolTip'><img src=\"{$base}img/status_display_i.png\" style=\"cursor:pointer;width:12px;\" /></a></div></td>\n";
          echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><div class='user-cols-container' style='display:inline'><div class='user-actions-cols' style='display:inline'><input type='checkbox' id='user-action-chkbx-$row->user' value='$row->user' rel='$row->user_id' /></div></div></td>\n";
          echo "</tr>\n";
       }
@@ -143,9 +143,9 @@ $(function(){
 </table>
     
     <div class="user-batch-action user-cornerall2">
-       <span style="width:100%"><a id="user-batch-activate">Enable Selected</a></span><br/>
-       <span style="width:100%"><a id="user-batch-deactivate">Disable Selected</a></span><br/>
-       <span style="width:100%"><a id="user-batch-delete">Delete Selected</a></span><br/>
+       <span style="width:100%"><a id="user-batch-activate"><?php echo $goUsers_actionEnabledSelected; ?></a></span><br/>
+       <span style="width:100%"><a id="user-batch-deactivate"><?php echo $goUsers_actionDisabledSelected; ?></a></span><br/>
+       <span style="width:100%"><a id="user-batch-delete"><?php echo $goUsers_actionDeleteSelected; ?></a></span><br/>
     </div>
     <br class="clear"/>
 </div>

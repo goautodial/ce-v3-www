@@ -7,10 +7,44 @@
 # Copyright (C) 2010  Matt Florell <vicidial@gmail.com>    LICENSE: AGPLv2
 #
 
-if (file_exists("/etc/astguiclient.conf")) {
-        $confpath = "/etc/astguiclient.conf";
-} elseif (file_exists("{$_SERVER['DOCUMENT_ROOT']}/astguiclient.conf")) {
+if (file_exists("{$_SERVER['DOCUMENT_ROOT']}/goautodial.conf")) {
+        $confpath = "{$_SERVER['DOCUMENT_ROOT']}/goautodial.conf";
+} elseif (file_exists("/etc/goautodial.conf")) {
+        $confpath = "/etc/goautodial.conf";
+} else {
+        die ("ERROR: 'goautodial.conf' file not found.");
+}
+
+if ( file_exists($confpath) )
+ 	{
+	$DBCgo = file($confpath);
+	foreach ($DBCgo as $DBCline) 
+		{
+		$DBCline = preg_replace("/ |>|\n|\r|\t|\#.*|;.*/","",$DBCline);
+                if (preg_match("/^\&db\[goautodialdb\]\[hostname\]/", $DBCline))
+                        {$GOHOSTNAMEDB = $DBCline;   $GOHOSTNAMEDB = preg_replace("/.*=/","",$GOHOSTNAMEDB);}
+                if (preg_match("/^\&db\[goautodialdb\]\[username\]/", $DBCline))
+                        {$GOUSERNAMEDB = $DBCline;   $GOUSERNAMEDB = preg_replace("/.*=/","",$GOUSERNAMEDB);}
+                if (preg_match("/^\&db\[goautodialdb\]\[password\]/", $DBCline))
+                        {$GOPASSWORDDB = $DBCline;   $GOPASSWORDDB = preg_replace("/.*=/","",$GOPASSWORDDB);}
+                if (preg_match("/^\&db\[goautodialdb\]\[database\]/", $DBCline))
+                        {$GOLANGUANGEDB = $DBCline;   $GOLANGUANGEDB = preg_replace("/.*=/","",$GOLANGUANGEDB);}
+		}
+	}
+
+$goLink=mysql_connect("$GOHOSTNAMEDB", "$GOUSERNAMEDB", "$GOPASSWORDDB");
+if (!$goLink) 
+	{
+    die('MySQL connect ERROR: ' . mysql_error());
+	}
+mysql_select_db("$GOLANGUANGEDB");
+
+
+
+if (file_exists("{$_SERVER['DOCUMENT_ROOT']}/astguiclient.conf")) {
         $confpath = "{$_SERVER['DOCUMENT_ROOT']}/astguiclient.conf";
+} elseif (file_exists("/etc/astguiclient.conf")) {
+        $confpath = "/etc/astguiclient.conf";
 } else {
         die ("ERROR: 'astguiclient.conf' file not found.");
 }

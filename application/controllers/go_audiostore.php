@@ -48,7 +48,7 @@ class Go_audiostore extends Controller{
         $data['cssloader'] = 'go_dashboard_cssloader.php';
         $data['jsheaderloader'] = 'go_dashboard_header_jsloader.php';
         $data['jsbodyloader'] = 'go_dashboard_body_jsloader.php';
-        $data['bannertitle'] = $this->lang->line('go_voicefile_banner');
+        $data['bannertitle'] = $this->lang->line("go_voice_files");
         $data['folded'] = 'folded';
         $data['go_main_content'] = 'go_audiostore/go_audiostore'; 
         $data['users'] = $users;
@@ -148,14 +148,14 @@ class Go_audiostore extends Controller{
 		$this->asteriskDB->query($stmt);
 
                 } else {
-                	$data['uploadfail'] = "File type should be in wav format.";
+                	$data['uploadfail'] = "{$this->lang->line("go_file_type_wav")}";
                 }
 		}
 	
 		if($addSUBMIT) {		
         	 $message = $this->goaudiostore->insertingroup($accounts, $users, $group_id, $group_name, $group_color, $active, $web_form_address, $voicemail_ext, $next_agent_call, $fronter_display, $script_id, $get_call_launch);
         	 if($message !=null) {
-        	 	print "<script type=\"text/javascript\">alert('GROUP NOT ADDED - Please go back and look at the data you entered');</script>";
+        	 	print "<script type=\"text/javascript\">alert('{$this->lang->line("go_group_not_added")}');</script>";
         	 } else {
         	 	header("Location: #");
 			 }        	 		      

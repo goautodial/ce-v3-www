@@ -248,8 +248,8 @@ $(function()
 
 					<!-- GO WIDGET -->
 					<div id="account_info_status" class="postbox">
-						<div class="rightdiv toolTip" style="display: none;" id="search_logs" title="Search Logs">
-                        	Search Logs <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
+						<div class="rightdiv toolTip" style="display: none;" id="search_logs" title="<? echo $this->lang->line('go_search_logs'); ?>">
+                        	<? echo $this->lang->line('go_search_logs'); ?> <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
 						</div>
 						<div class="hndle">
 							<span><span id="title_bar" />&nbsp;</span><!-- Title Bar -->
@@ -258,7 +258,7 @@ $(function()
 						</div>
 						<div class="inside">
 
-                            <div style="margin:<?php echo (preg_match("/^Windows/",$userOS)) ? "-23px" : "-22px"; ?> 0px -2px -10px;" id="request_tab"><span id="showServer" class="tabtoggle menuOn">Server</span><span id="showTheme" class="tabtoggle hideSpan">Theme</span><span id="request" style="display:none;">showList</span></div>
+                            <div style="margin:<?php echo (preg_match("/^Windows/",$userOS)) ? "-23px" : "-22px"; ?> 0px -2px -10px;" id="request_tab"><span id="showServer" class="tabtoggle menuOn"><? echo $this->lang->line('go_server'); ?></span><span id="showTheme" class="tabtoggle hideSpan"><? echo $this->lang->line('go_theme'); ?></span><span id="request" style="display:none;"><? echo $this->lang->line('go_show_list'); ?></span></div>
 
 							<div id="showServer_div" class="table_container">
 							<?php
@@ -271,23 +271,23 @@ $(function()
 								<br />
 								<table class="theme_settings">
 									<tr>
-										<td class="rightTD">Company Name:</td>
+										<td class="rightTD"><? echo $this->lang->line('go_comp_name'); ?>:</td>
 										<td>&nbsp;<?=form_input('company_name',$server_settings[0]->company_name,'id="company_name" size="50" maxlength="100"')?></td>
 									</tr>
 									<tr>
-										<td class="rightTD">Company Logo:</td>
+										<td class="rightTD"><? echo $this->lang->line('go_comp_logo'); ?>:</td>
 										<td>&nbsp;<?=form_upload('company_logo',null,'id="company_logo"')?> &nbsp;&nbsp;&nbsp;&nbsp; <img src="<?=$base?>login/<?=$server_settings[0]->company_logo?>" class="logo" /></td>
 									</tr>
 									<tr>
-										<td class="rightTD">Theme Color:</td>
+										<td class="rightTD"><? echo $this->lang->line('go_theme_color'); ?>:</td>
 										<td>&nbsp;<?=form_input('theme_color',$server_settings[0]->theme_color,'id="theme_color" class="color" maxlength="50"')?></td>
 									</tr>
 									<tr>
-										<td class="rightTD">Login Color:</td>
+										<td class="rightTD"><? echo $this->lang->line('go_login_color'); ?>:</td>
 										<td>&nbsp;<?=form_input('login_color',$server_settings[0]->login_color,'id="login_color" class="color" maxlength="50"')?></td>
 									</tr>
 									<tr>
-										<td class="rightTD">Login Button:</td>
+										<td class="rightTD"><? echo $this->lang->line('go_login_button'); ?>:</td>
 										<td>&nbsp;<?=form_upload('login_button',null,'id="login_button"')?> &nbsp;&nbsp;&nbsp;&nbsp; <img src="<?=$base?>login/<?=$server_settings[0]->login_button?>" class="login" /></td>
 									</tr>
 									<tr>
@@ -363,7 +363,7 @@ echo "</div>\n";
 <!-- Overlay1 -->
 <div id="overlay" style="display:none;"></div>
 <div id="box">
-<a id="closebox" class="toolTip" title="CLOSE"></a>
+<a id="closebox" class="toolTip" title="<? echo strtoupper($this->lang->line('go_close')); ?>"></a>
 <div id="overlayContent"></div>
 </div>
 

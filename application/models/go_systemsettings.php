@@ -33,6 +33,10 @@ class Go_systemsettings extends Model{
         $this->result = $this->asteriskDB->get('servers');
     }
 
+    function getlanguages(){
+        $this->result = $this->goDB->get('go_language');
+    }
+
     function query_result($result=null){
         return $this->result;
     }

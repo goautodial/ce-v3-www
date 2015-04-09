@@ -22,31 +22,31 @@
 <table class="tablesorter elem-tbl" id="script-table">
     <thead>
          <tr class="elem-tbl-rows">
-           <th class="elem-tbl-cols sort">&nbsp;&nbsp;<span>SCRIPT ID<?#=img('js/tablesorter/themes/blue/bg.gif')?></span></th>
+           <th class="elem-tbl-cols sort">&nbsp;&nbsp;<span><? echo lang('go_SCRIPTID'); ?><?#=img('js/tablesorter/themes/blue/bg.gif')?></span></th>
            <?php
            if($this->commonhelper->checkIfTenant($this->session->userdata('user_group'))){
            ?>
-           <th class="elem-tbl-cols sort"><span>SCRIPT NAME<?#=img('js/tablesorter/themes/blue/bg.gif')?></span></th>
+           <th class="elem-tbl-cols sort"><span><? echo lang('go_SCRIPTNAME'); ?><?#=img('js/tablesorter/themes/blue/bg.gif')?></span></th>
            <th class="elem-tbl-cols elem-tbl-cols-centered sort"><span>&nbsp;<?#=img('js/tablesorter/themes/blue/bg.gif')?></span></th>
            <?php
            } else {
            ?>
-           <th class="elem-tbl-cols sort" style="width:27.3%"><span>SCRIPT NAME<?#=img('js/tablesorter/themes/blue/bg.gif')?></span></th>
+           <th class="elem-tbl-cols sort" style="width:27.3%"><span><? echo lang('go_SCRIPTNAME'); ?><?#=img('js/tablesorter/themes/blue/bg.gif')?></span></th>
            <?php
            }
            ?>
-           <th class="elem-tbl-cols elem-tbl-cols-centered sort"><span>STATUS</span></th>
-           <th class="elem-tbl-cols elem-tbl-cols-centered sort"><span>TYPE</span></th>
+           <th class="elem-tbl-cols elem-tbl-cols-centered sort"><span><? echo lang('go_STATUS'); ?></span></th>
+           <th class="elem-tbl-cols elem-tbl-cols-centered sort"><span><? echo lang('go_TYPE'); ?></span></th>
            <?php
            if(!$this->commonhelper->checkIfTenant($this->session->userdata('user_group'))){
            ?>
-           <th class="elem-tbl-cols sort" style="width:5.3%"><span>USER GROUP</span></th>
+           <th class="elem-tbl-cols sort" style="width:5.3%"><span><? echo lang('go_USERGROUP'); ?></span></th>
            <?php
            }
            ?>
            <th class="elem-tbl-cols elem-tbl-cols-centered">
                 <div class="elem-cols-action-lbl">
-                    <span>&nbsp;ACTION &nbsp;<?=img("img/arrow_down.png")?></span>
+                    <span>&nbsp;<? echo lang('go_ACTION'); ?> &nbsp;<?=img("img/arrow_down.png")?></span>
                 </div>
            </th>
            <th class="elem-tbl-cols elem-tbl-cols-centered elem-tbl-cols-chkbox">
@@ -77,15 +77,18 @@
                           echo "<td class='elem-tbl-cols elem-tbl-cols-centered'>".$this->commonhelper->statusstringconvert($rows->active)."</td>";
                           echo "<td class='elem-tbl-cols elem-tbl-cols-centered scripts-action'>".(!empty($limeresult)?(($limeresult[$rows->script_id] > 0)?"Advance":"Default"): '')."</td>";
                           if(!$this->commonhelper->checkIfTenant($this->session->userdata('user_group'))) {
+                             $go_ALLUSERGROUPSlang = lang('go_ALLUSERGROUPS');
                              echo "<td class='elem-tbl-cols' style='width:5.3%'>";
-                             echo ($rows->user_group == "---ALL---") ? "ALL USER GROUPS" : $rows->user_group;
+                             echo ($rows->user_group == "---ALL---") ? "$go_ALLUSERGROUPSlang" : $rows->user_group;
                              echo "</td>";
                           }
+                          $go_Deletescriptlang = lang('go_Deletescript');
+                          $go_Modifyscriptlang = lang('go_Modifyscript');
                           echo "<td class='elem-tbl-cols '>
                                    <div class='cols-action-container'>
                                        <div class='cols-action'><a class='toolTip' title='Info script $script_id'>".img(array('src'=>'img/status_display_i_grayed.png','width'=>'12px'))."</a></div>
-                                       <div class='cols-action'><a id='$rows->script_id-delete' class='toolTip' title='Delete script $rows->script_id'>".img(array('src'=>'img/delete.png','width'=>'12px'))."</a></div>
-                                       <div class='cols-action'><a id='$rows->script_id-update' class='toolTip' title='Modify script $rows->script_id'>".img(array('src'=>'img/edit.png','width'=>'12px'))."</a></div>
+                                       <div class='cols-action'><a id='$rows->script_id-delete' class='toolTip' title='$go_Deletescriptlang $rows->script_id'>".img(array('src'=>'img/delete.png','width'=>'12px'))."</a></div>
+                                       <div class='cols-action'><a id='$rows->script_id-update' class='toolTip' title='$go_Modifyscriptlang $rows->script_id'>".img(array('src'=>'img/edit.png','width'=>'12px'))."</a></div>
                                    </div>
                                 </td>";
                           echo "<td class='elem-tbl-cols elem-tbl-cols-centered elem-tbl-cols-chkbox'>
@@ -103,8 +106,9 @@
 <?=$pageinfo ?>
 <?=$pagelinks ?>
 <div class="batch-actions scripts-cornerall2">
-   <br class="clear"/>
-   <span style="width:100%"><a id='active-selected'>Enable Selected</a></span><br class="clear"/><br class="clear"/><br class="clear"/><br class="clear"/>
-   <span style="width:100%"><a id='deactivate-selected'>Disable Selected</a></span><br class="clear"/><br class="clear"/><br class="clear"/><br class="clear"/>
-   <span style="width:100%"><a id='delete-selected'>Delete Selected</a></span><br class="clear"/><br class="clear"/><br class="clear"/>
+<ul>
+  <li> <span style="width:100%"><a id='active-selected'><? echo lang('go_EnableSelected'); ?></a></span></li>
+  <li> <span style="width:100%"><a id='deactivate-selected'><? echo lang('go_DisableSelected'); ?></a></span></li>
+  <li> <span style="width:100%"><a id='delete-selected'><? echo lang('go_DeleteSelected'); ?></a></span></li>
+</ul>
 </div>

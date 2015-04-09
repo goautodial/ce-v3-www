@@ -52,8 +52,8 @@ $(function() {
 </script>
 
 <div style="color:#333;">
-<span style="font-size:16px;font-weight:bold;">CURRENT HOPPER LIST: &nbsp;<?php echo "$campaign_id - $campaign_name"; ?></span><br /><br style="font-size:8px;" />
-Total Leads in Hopper: &nbsp; <?php echo $totalHopper; ?><br /><br style="font-size:8px;" />
+<span style="font-size:16px;font-weight:bold;"><? echo lang('go_CURRENTHOPPERLIST_'); ?> &nbsp;<?php echo "$campaign_id - $campaign_name"; ?></span><br /><br style="font-size:8px;" />
+<? echo lang('go_TotalLeadsinHopper_'); ?> &nbsp; <?php echo $totalHopper; ?><br /><br style="font-size:8px;" />
 <?php
 echo $hopperHTML;
 ?>

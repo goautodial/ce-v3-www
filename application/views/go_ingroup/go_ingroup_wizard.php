@@ -122,7 +122,7 @@ $('#did_pattern,#did_description,#extension').bind("keydown keypress", function(
 if ($wiztype=="ingroup") {
 ?>
 <div style="float:right;" id="small_step_number"><img src="<?php echo $base; ?>img/step1-nav-small.png" /></div>
-<div style="font-weight:bold;font-size:16px;color:#333;">In-Group Wizard &raquo; Create New In-Group</div>
+<div style="font-weight:bold;font-size:16px;color:#333;"><?php echo lang('go_InGroupWizard'); ?> &raquo; <?php echo lang('go_CreateNewInGroup'); ?></div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
 
@@ -138,10 +138,10 @@ if ($wiztype=="ingroup") {
 				<input type="hidden" id="addSUBMIT" name="addSUBMIT" value="addSUBMIT">
 				<table id="wizardTable" width="100%">
 					<tr>
-						<td style="width:100px"><label class="modify-value">Group ID:</label></td>
+						<td style="width:100px"><label class="modify-value"><?php echo lang('go_GroupID'); ?>:</label></td>
 						<td><input type="text" name="group_id" id="group_id" size="20" maxlength="20" onkeydown="return isAlphaNumericwospace(event.keyCode);" onkeyup="KeyUp(event.keyCode);"><br>
 							<font color="red" size="1">
-							*(no spaces). 2 and 20 characters in length
+							<?php echo lang('go_nospaces2and20charactersinlength'); ?> 
 							</font>
 						</td>
 					</tr>
@@ -149,17 +149,17 @@ if ($wiztype=="ingroup") {
 						<td><label class="modify-value">Group Name:</label></td>
 						<td><input type="text" name="group_name" id="group_name" size="30" maxlength="30" onkeydown="return isAlphaNumericwspace(event.keyCode);" onkeyup="KeyUp(event.keyCode);"><br>
 							<font color="red" size="1">
-							*2 and 20 characters in length
+							<? echo lang('go_2and20charactersinlength'); ?>
 							</font>
 						</td>
 					</tr>
 					<tr>
-					   <td><label class="modify-value">Group Color:</label></td>
+					   <td><label class="modify-value"><?php echo lang('go_GroupColor'); ?>:</label></td>
 						<td><input class="color" type="text" name="group_color" id="group_color" size="7" maxlength="7" value="66ff00">
 						</td>
 					</tr>
 					<tr style="<?=($this->commonhelper->checkIfTenant($this->session->userdata('user_group'))) ? "display:none" : "" ?>">
-					   <td><label class="modify-value">User Group:</label></td>
+					   <td><label class="modify-value"><?php echo lang('go_UserGroup'); ?>:</label></td>
 						<td>
 							<?php
 							foreach ($usergroups as $group)
@@ -171,7 +171,7 @@ if ($wiztype=="ingroup") {
 						</td>
 					</tr>
 					<tr>
-						<td><label class="modify-value">Active:</label></td>
+						<td><label class="modify-value"><?echo lang('go_Active_'); ?>:</label></td>
 						<td>
 							<select size="1" name="active" id="active">
 								<option SELECTED>Y</option>
@@ -180,7 +180,7 @@ if ($wiztype=="ingroup") {
 						</td>
 					</tr>
 					<tr>
-						<td><label class="modify-value">Web Form:</label></td>
+						<td><label class="modify-value"><?php echo lang('go_WebForm_'); ?></label></td>
 						<td>
 							<input type="text" name="web_form_address" size="50" maxlength="500">
 						</td>
@@ -189,11 +189,11 @@ if ($wiztype=="ingroup") {
 						<td><label class="modify-value">Voicemail:</label></td>
 						<td>
 							<input type="text" name="voicemail_ext" id="iWizvoicemail_ext" size=12 maxlength=10 readonly="readonly">
-							<a href="javascript:launch_vm_chooser('iWizvoicemail_ext','vm',500,document.getElementById('iWizvoicemail_ext').value);"><FONT color="blue" size="1">[ Voicemail Chooser ]</a><div id="diviWizvoicemail_ext"></div>
+							<a href="javascript:launch_vm_chooser('iWizvoicemail_ext','vm',500,document.getElementById('iWizvoicemail_ext').value);"><FONT color="blue" size="1">[ <?php echo lang('go_VoicemailChooser'); ?> ]</a><div id="diviWizvoicemail_ext"></div>
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;"><label class="modify-value">Next Agent Call:</label></td>
+						<td style="white-space: nowrap;"><label class="modify-value"><?php echo lang('go_NextAgentCall'); ?>:</label></td>
 						<td>
 							<select size="1" name="next_agent_call" id="next_agent_call">
 								<option>random</option>
@@ -210,7 +210,7 @@ if ($wiztype=="ingroup") {
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;"><label class="modify-value">Fronter Display:</label></td>
+						<td style="white-space: nowrap;"><label class="modify-value"><?php echo lang('go_FronterDisplay'); ?>:</label></td>
 						<td>
 							<select size="1" name="fronter_display">
 								<option SELECTED>Y</option>
@@ -219,7 +219,7 @@ if ($wiztype=="ingroup") {
 						</td>
 					</tr>
 					<tr>
-						<td><label class="modify-value">Script:</label></td>
+						<td><label class="modify-value"><?php echo lang('go_script'); ?>:</label></td>
 						<td>
 							<select size="1" name="script_id" id="script_id" style="width:300px">
 								<?php
@@ -234,7 +234,7 @@ if ($wiztype=="ingroup") {
 						</td>
 					</tr>              
 					<tr>
-						<td style="white-space: nowrap;"><label class="modify-value">Get Call Launch:</label></td>
+						<td style="white-space: nowrap;"><label class="modify-value"><?php echo lang('go_GetCallLaunch'); ?>:</label></td>
 						<td> <select name="get_call_launch" id="get_call_launch">
 								<option selected="">NONE</option>
 								<option>SCRIPT</option>
@@ -250,14 +250,14 @@ if ($wiztype=="ingroup") {
 	</tr>
 </table>
 <hr style="border:#DFDFDF 1px solid;" />
-<span id="saveButtons"><span id="submitForm" style="white-space: nowrap;" onclick="return formsubmitlist();">Submit</span></span>
+<span id="saveButtons"><span id="submitForm" style="white-space: nowrap;" onclick="return formsubmitlist();"><?php echo lang('go_Submit'); ?></span></span>
 <?php
 }
 
 if ($wiztype=="did") {
 ?>
 <div style="float:right;" id="small_step_number"><img src="<?php echo $base; ?>img/step1-nav-small.png" /></div>
-<div style="font-weight:bold;font-size:16px;color:#333;">DID Wizard &raquo; Create New DID</div>
+<div style="font-weight:bold;font-size:16px;color:#333;"><?php echo lang('goInbound_didWizard'); ?></div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
 
@@ -273,28 +273,28 @@ if ($wiztype=="did") {
 				<input type="hidden" id="addDID" name="addDID" value="addDID">
 				<table width="100%">
 					<tr>
-						<td><label class="modify-value">DID Extension:</label></td>
+						<td><label class="modify-value"><?php echo lang('goInbound_didExtension'); ?>:</label></td>
 						<td><input type="text" name="did_pattern" id="did_pattern" size="30" maxlength="50">
 						</td>
 					</tr>
 					<tr>
-						<td><label class="modify-value">DID Description:</label></td>
+						<td><label class="modify-value"><?php echo lang('goInbound_didDescription'); ?>:</label></td>
 						<td>
 							<input type="text" name="did_description" id="did_description" size="30" maxlength="50" onkeydown="return isAlphaNumericwspace(event.keyCode);" onkeyup="KeyUp(event.keyCode);">
 						</td>
 					</tr>
 					<tr>
-						<td><label class="modify-value">Active:</label></td>
+						<td><label class="modify-value"><?php echo lang('goInbound_active'); ?>:</label></td>
 						<td><?php echo form_dropdown('active',array('Y'=>'Y','N'=>'N'),null,'id="active"'); ?>
 						</td>
 					</tr>
 					<tr>
-						<td><label class="modify-value">DID Route:</label></td>
+						<td><label class="modify-value"><?php echo lang('goInbound_didRoute'); ?>:</label></td>
 						<td><?php echo form_dropdown('did_route',array('AGENT'=>'Agent','IN_GROUP'=>'In-group','PHONE'=>'Phone','CALLMENU'=>'Call Menu / IVR','VOICEMAIL'=>'Voicemail','EXTEN'=>'Custom Extension'),null,'id="did_route" onchange="showRouteOptions(document.getElementById(\'did_route\').value,\'Wizard\')"'); ?>
 						</td>
 					</tr>
 					<tr style="<?=($this->commonhelper->checkIfTenant($this->session->userdata('user_group'))) ? "display:none" : "" ?>">
-					   <td><label class="modify-value">User Group:</label></td>
+					   <td><label class="modify-value"><?php echo lang('goInbound_userGroups'); ?>:</label></td>
 						<td>
 							<?php
 							foreach ($usergroups as $group)
@@ -318,14 +318,14 @@ if ($wiztype=="did") {
 					}
 					?>
 					<tr class="didAgentWizard">
-						<td><label class="modify-value">Agent ID:</label></td>
+						<td><label class="modify-value"><?php echo lang('goInbound_agentId'); ?>:</label></td>
 						<td><select id="user" name="user" style="width:350px;">
 						<?php echo "$Agent_menu"; ?>
 						</select>
 						</td>
 					</tr>
 					<tr class="didAgentWizard">
-						<td><label class="modify-value">Agent Unavailable Action:</label></td>
+						<td><label class="modify-value"><?php echo lang('goInbound_agentUnavailableAction'); ?>:</label></td>
 						<td><?php echo form_dropdown('user_unavailable_action',array('VOICEMAIL'=>'Voicemail','PHONE'=>'Phone','IN_GROUP'=>'In-group','EXTEN'=>'Custom Extension'),null,'id="user_unavailable_action"'); ?>
 						</td>
 					</tr>
@@ -437,7 +437,7 @@ if ($wiztype=="did") {
 	</tr>
 </table>
 <hr style="border:#DFDFDF 1px solid;" />
-<span id="saveButtons"><span id="submitForm" style="white-space: nowrap;" onclick="return formsubmitdid();">Submit</span></span>
+<span id="saveButtons"><span id="submitForm" style="white-space: nowrap;" onclick="return formsubmitdid();"><?php echo lang('goInbound_submit'); ?></span></span>
 <?php
 }
 
@@ -453,7 +453,7 @@ $(function()
 		{
 			if ($('#err_menu_id').html().match(/Not Available/))
 			{
-				alert("Menu ID Not Available.");
+				alert("<? echo $this->lang->line('go_menu_id_navailable'); ?>");
 				isEmpty = 1;
 			}
 			
@@ -472,7 +472,7 @@ $(function()
 				$("#box").css('left','10%');
 			}
 		} else {
-			alert('Menu ID should NOT be empty.');
+			alert('<? echo $this->lang->line('go_menu_id_should_nempty'); ?>');
 		}
 	});
 	
@@ -498,7 +498,7 @@ $(function()
 		{
 			if ($('#err_menu_id').html().match(/Not Available/))
 			{
-				alert("Menu ID Not Available.");
+				alert("<? echo $this->lang->line('go_menu_id_navailable'); ?>");
 				isEmpty = 1;
 			}
 			
@@ -508,7 +508,7 @@ $(function()
 				$("#go_callmenufrm").submit();
 			}
 		} else {
-			alert('Menu ID should NOT be empty.');
+			alert('<? echo $this->lang->line('go_menu_id_should_nempty'); ?>');
 		}
 	});
 	
@@ -518,7 +518,7 @@ $(function()
 		{
 			$('#err_menu_id').load('<? echo $base; ?>index.php/go_ingroup/go_check_ingroup/'+$(this).val());
 		} else {
-			$('#err_menu_id').html("<small style=\"color:red;\">Minimum of 4 digits.</small>");
+			$('#err_menu_id').html("<small style=\"color:red;\"><? echo $this->lang->line('go_min_4_digits'); ?></small>");
 		}
 	});
 });
@@ -538,7 +538,7 @@ function showoptionpostval(menuid,optionval,route,ctr)
 }
 </script>
 <div style="float:right;" id="small_step_number"><img src="<?php echo $base; ?>img/step1of2-navigation-small.png" /></div>
-<div style="font-weight:bold;font-size:16px;color:#333;" id="wizardHeader">Call Menu Wizard &raquo; Create New Call Menu</div>
+<div style="font-weight:bold;font-size:16px;color:#333;" id="wizardHeader"><? echo $this->lang->line('go_call_menu_wizard'); ?> &raquo; <? echo $this->lang->line('go_create_new_call_menu'); ?></div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
 
@@ -554,21 +554,21 @@ function showoptionpostval(menuid,optionval,route,ctr)
 				<input type="hidden" id="addCALLMENU" name="addCALLMENU" value="addCALLMENU">
 				<table width="100%" id="ivrMenuStep1">
 					<tr>
-						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;">Menu ID: </td>
+						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;"><? echo $this->lang->line('go_menu_id'); ?>: </td>
 						<td><input type="text" name="menu_id" id="menu_id" size="25" maxlength="50" onkeydown="return isAlphaNumericwospace(event.keyCode);" onkeyup="KeyUp(event.keyCode);" /> <span id="err_menu_id"></span>
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;">Menu Name: </td>
+						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;"><? echo $this->lang->line('go_menu_name'); ?>: </td>
 						<td>
 							<input type="text" name="menu_name" id="menu_name" size="30" maxlength="100" onkeydown="return isAlphaNumericwspace(event.keyCode);" onkeyup="KeyUp(event.keyCode);" />
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;">Menu Greeting: </td>
+						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;"><? echo $this->lang->line('go_menu_greeting'); ?>: </td>
 						<td style="white-space: nowrap;">
 							<input type="text" name="menu_prompt" id="menu_prompt" size="30" maxlength="255" readonly="readonly" /> 
-							 <a href="javascript:launch_chooser('menu_prompt','date',1200,document.getElementById('menu_prompt').value,1);"><font color="blue" size="1">[ audio chooser ]</font></a>
+							 <a href="javascript:launch_chooser('menu_prompt','date',1200,document.getElementById('menu_prompt').value,1);"><font color="blue" size="1">[ <? echo $this->lang->line('go_audio_chooser'); ?> ]</font></a>
 						</td>
 					</tr>
 					<tr style="display:none;" id="tblmenu_prompt">
@@ -578,16 +578,16 @@ function showoptionpostval(menuid,optionval,route,ctr)
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;">Menu Timeout: </td>
+						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;"><? echo $this->lang->line('go_menu_timeout'); ?>: </td>
 						<td>
 							<input type="text" name="menu_timeout" id="menu_timeout" size="10" maxlength="5" value="10" />
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;">Menu Timeout Greeting: </td>
+						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;"><? echo $this->lang->line('go_menu_timeout_greeting'); ?>: </td>
 						<td style="white-space: nowrap;">
 							<input type="text" name="menu_timeout_prompt" id="menu_timeout_prompt" size="30" maxlength="255" readonly="readonly" /> 
-							 <a href="javascript:launch_chooser('menu_timeout_prompt','date',1200,document.getElementById('menu_timeout_prompt').value,1);"><font color="blue" size="1">[ audio chooser ]</font></a>
+							 <a href="javascript:launch_chooser('menu_timeout_prompt','date',1200,document.getElementById('menu_timeout_prompt').value,1);"><font color="blue" size="1">[ <? echo $this->lang->line('go_audio_chooser'); ?> ]</font></a>
 						</td>
 					</tr>
 					<tr style="display:none;" id="tblmenu_timeout_prompt">
@@ -597,10 +597,10 @@ function showoptionpostval(menuid,optionval,route,ctr)
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;">Menu Invalid Greeting: </td>
+						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;"><? echo $this->lang->line('go_menu_invalid_greeting'); ?>: </td>
 						<td style="white-space: nowrap;">
 							<input type="text" name="menu_invalid_prompt" id="menu_invalid_prompt" size="30" maxlength="255" readonly="readonly" /> 
-							 <a href="javascript:launch_chooser('menu_invalid_prompt','date',1200,document.getElementById('menu_invalid_prompt').value,1);"><font color="blue" size="1">[ audio chooser ]</font></a>
+							 <a href="javascript:launch_chooser('menu_invalid_prompt','date',1200,document.getElementById('menu_invalid_prompt').value,1);"><font color="blue" size="1">[ <? echo $this->lang->line('go_audio_chooser'); ?> ]</font></a>
 						</td>
 					</tr>
 					<tr style="display:none;" id="tblmenu_invalid_prompt">
@@ -610,13 +610,13 @@ function showoptionpostval(menuid,optionval,route,ctr)
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;">Menu Repeat: </td>
+						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;"><? echo $this->lang->line('go_menu_repeat'); ?>: </td>
 						<td>
 							<input type="text" name="menu_repeat" id="menu_repeat" size="3" maxlength="3" value="1" />
 						</td>
 					</tr>
 					<tr style="display:none">
-						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;">Menu Time Check: </td>
+						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;"><? echo $this->lang->line('go_menu_time_check'); ?>: </td>
 						<td>
 							<?php
 							$options = array('0 - No Time Check','1 - Time Check');
@@ -625,7 +625,7 @@ function showoptionpostval(menuid,optionval,route,ctr)
 						</td>
 					</tr>
 					<tr style="display:none">
-						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;">Call Time: </td>
+						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;"><? echo $this->lang->line('go_call_time'); ?>: </td>
 						<td>
 							<?php
 							$calltimeArray = array();
@@ -638,7 +638,7 @@ function showoptionpostval(menuid,optionval,route,ctr)
 						</td>
 					</tr>
 					<tr style="display:none">
-						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;">Track Calls in<br />Real-Time Report: </td>
+						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;"><? echo $this->lang->line('go_track_calls'); ?><br /><? echo $this->lang->line('go_real_time_report'); ?>: </td>
 						<td>
 							<?php
 							$options = array('0 - No Realtime Tracking','1 - Realtime Tracking');
@@ -647,7 +647,7 @@ function showoptionpostval(menuid,optionval,route,ctr)
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;">Tracking Group: </td>
+						<td style="white-space: nowrap;font-weight:bold;color:#7f7f7f;"><? echo $this->lang->line('go_tracking_group'); ?>: </td>
 						<td>
 							<?php
 							foreach ($active_ingroups as $ingroup)
@@ -660,7 +660,7 @@ function showoptionpostval(menuid,optionval,route,ctr)
 						</td>
 					</tr>
 					<tr style="<?=($this->commonhelper->checkIfTenant($this->session->userdata('user_group'))) ? "display:none" : "" ?>">
-					   <td><label class="modify-value">User Group:</label></td>
+					   <td><label class="modify-value"><? echo $this->lang->line('go_user_group'); ?>:</label></td>
 						<td>
 							<?php
 							foreach ($usergroups as $group)
@@ -676,16 +676,16 @@ function showoptionpostval(menuid,optionval,route,ctr)
 				<table id="ivrMenuStep2" style="display:none">
 				<?php
 				echo "<tr>";
-				echo "<td colspan='6' style='font-weight:bold'><div style='border-bottom:2px solid #DFDFDF; padding-bottom: 5px; text-align: center;'>Default Call Menu Entry</div></td>";
+				echo "<td colspan='6' style='font-weight:bold'><div style='border-bottom:2px solid #DFDFDF; padding-bottom: 5px; text-align: center;'>{$this->lang->line('go_default_call_menu_entry')}</div></td>";
 				echo "</tr><tr>";
 				echo "<td style='padding-left:10px'>Option:</td><td>".form_dropdown('',array('TIMEOUT'=>'TIMEOUT','TIMECHECK'=>'TIMECHECK'),'TIMEOUT','disabled')."</td>";
-				echo "<td>Description:</td><td>".form_input('','Hangup','maxlength="255" size="30" disabled')."</td>";
-				echo "<td>Route:</td><td>".form_dropdown('',array('HANGUP'=>'Hangup','EXTENSION'=>'Custom Extension'),'HANGUP','disabled')."</td>";
+				echo "<td>{$this->lang->line('go_description')}:</td><td>".form_input('','Hangup','maxlength="255" size="30" disabled')."</td>";
+				echo "<td>{$this->lang->line('go_route')}:</td><td>".form_dropdown('',array('HANGUP'=>'Hangup','EXTENSION'=>'Custom Extension'),'HANGUP','disabled')."</td>";
 				echo "</tr>\n";
 				echo "<tr>";
-				echo "<td colspan=\"6\" style=\"text-align:center;\">Audio File: ".form_input('','vm-goodbye','size="30" disabled')."</td>";
+				echo "<td colspan=\"6\" style=\"text-align:center;\">{$this->lang->line('go_audio_file')}: ".form_input('','vm-goodbye','size="30" disabled')."</td>";
 				echo "</tr>";
-				echo "<tr><td colspan='6' style='font-weight:bold'><div style='border-bottom:2px solid #DFDFDF;padding:10px 0 5px 0;'>Add New Call Menu Options</div></td></tr>";
+				echo "<tr><td colspan='6' style='font-weight:bold'><div style='border-bottom:2px solid #DFDFDF;padding:10px 0 5px 0;'>{$this->lang->line('go_add_new_call_menu_options')}</div></td></tr>";
 				$ctr = 0;
 				while ($ctr < 10)
 				{
@@ -694,8 +694,8 @@ function showoptionpostval(menuid,optionval,route,ctr)
 					$optionRoute = form_dropdown('option_route_'.$ctr,array(''=>'','CALLMENU'=>'Call Menu / IVR','INGROUP'=>'In-group','DID'=>'DID','HANGUP'=>'Hangup','EXTENSION'=>'Custom Extension','PHONE'=>'Phone','VOICEMAIL'=>'Voicemail','AGI'=>'AGI'),'','id="option_route_'.$ctr.'" onChange="javascript:showoptionpostval(\''.$dataval.'\',document.getElementById(\'option_value_'.$ctr.'\').options[document.getElementById(\'option_value_'.$ctr.'\').selectedIndex].value,this.options[this.selectedIndex].value,'.$ctr.');"');
 					echo "<tr class=\"trview\">";
 					echo "<td style='padding-left:10px'>Option:</td><td>$optionDD</td>";
-					echo "<td>Description:</td><td>".form_input('option_description_'.$ctr,'','maxlength="255" size="30"')."</td>";
-					echo "<td>Route:</td><td>$optionRoute</td>";
+					echo "<td>{$this->lang->line('go_description')}:</td><td>".form_input('option_description_'.$ctr,'','maxlength="255" size="30"')."</td>";
+					echo "<td>{$this->lang->line('go_route')}:</td><td>$optionRoute</td>";
 					echo "</tr>\n";
 					echo "<tr class=\"trview option_hidden_$ctr\" style=\"display:none;\">";
 					echo "<td colspan=\"6\" style=\"text-align:center;\" class=\"option_display_$ctr\"></td>";
@@ -710,7 +710,7 @@ function showoptionpostval(menuid,optionval,route,ctr)
 	</tr>
 </table>
 <hr style="border:#DFDFDF 1px solid;" />
-<div style="float: right"><a id="backCallMenu" style="cursor: pointer;display:none;color:#7A9E22;">Back</a><span class="divider" style="display:none"> | </span><a id="nextStepCallMenu" style="cursor: pointer;color:#7A9E22;">Next</a><a id="submitCallMenu" style="cursor: pointer;color:#7A9E22;display:none;">Finish</a></div>
+<div style="float: right"><a id="backCallMenu" style="cursor: pointer;display:none;color:#7A9E22;"><? echo $this->lang->line('go_back'); ?></a><span class="divider" style="display:none"> | </span><a id="nextStepCallMenu" style="cursor: pointer;color:#7A9E22;"><? echo $this->lang->line('go_next'); ?></a><a id="submitCallMenu" style="cursor: pointer;color:#7A9E22;display:none;"><? echo $this->lang->line('go_finish'); ?></a></div>
 <?php
 }
 ?>

@@ -16,7 +16,7 @@ $NOW = date('Y-m-d');
 $regstrChecked = FALSE;
 $ipbasedChecked = TRUE;
 
-$accountEntry = "[]\ndisallow=all\nallow=gsm\nallow=ulaw\ntype=friend\ndtmfmode=rfc2833\ncontext=trunkinbound\nqualify=yes\ninsecure=very\nnat=yes\nhost=";
+$accountEntry = "[]\ndisallow=all\nallow=gsm\nallow=ulaw\ntype=friend\ndtmfmode=rfc2833\ncontext=trunkinbound\nqualify=yes\ninsecure=invite,port\nnat=yes\nhost=";
 
 $allowGSM = FALSE;
 $allowULAW = FALSE;
@@ -137,7 +137,7 @@ $(function()
 			//$('#aloading').empty().html('<img src="<? echo $base; ?>img/loading.gif" />');
 			$('#aloading').load('<? echo $base; ?>index.php/go_carriers_ce/go_check_carrier/'+$(this).val());
 		} else {
-			$('#aloading').html("<small style=\"color:red;\">Minimum of 3 characters.</small>");
+			$('#aloading').html("<small style=\"color:red;\"><? echo $this->lang->line("go_min_3_char"); ?></small>");
 		}
 	});
 	
@@ -204,7 +204,7 @@ $(function()
 			isEmpty = 1;
 		}
 		
-		if ($("#customProtocol").val()!=='---CUSTOM---')
+		if ($("#customProtocol").val()!=='---<? echo $this->lang->line("go_custom_caps"); ?>---')
 		{
 			if ($('.ip_based').is(":hidden"))
 			{
@@ -254,7 +254,7 @@ $(function()
 		
 		if ($('#aloading').html().match(/Not Available/))
 		{
-			alert("Carrier ID Not Available.");
+			alert("<? echo $this->lang->line("go_carrier_not_available"); ?>.");
 			isEmpty = 1;
 		}
 
@@ -267,16 +267,16 @@ $(function()
                         $("#box").append("<div class='processing'><img src='<?=$base?>img/goloading.gif' ></div>");
 			var items = $('#carrierForm').serialize();
 
-                        //if(!$("#servers_checkbox").prop("checked")){
-                        //     items = items + "&server_ip=" + $("#server_ip").val();
-                        //}
+                        if(!$("#servers_checkbox").prop("checked")){
+                             items = items + "&server_ip=" + $("#server_ip").val();
+                        }
 
 			$.post("<?=$base?>index.php/go_carriers_ce/go_carrier_wizard", { items: items, action: "add_new_carrier" },
 			function(data){
 				if (data=="SUCCESS")
 				{
                                         $(".processing").remove();
-					alert(data);
+					alert("<? echo $this->lang->line("go_success_caps"); ?>");
 				
 					$('#box').animate({'top':'-2550px'},500);
 					$('#overlay').fadeOut('slow');
@@ -286,7 +286,7 @@ $(function()
 	
 				if (data=="FAILED")
 				{
-					alert("A JustGoVoIP account already exist.");
+					alert("<? echo $this->lang->line("go_jgvp_already"); ?>.");
 					$('#registration_string').css('border','solid 1px red');
 				}
 			});
@@ -327,7 +327,7 @@ $(function()
 		var dialEntry = [];
 		var prefix = $("#dialprefix").val();
 		
-		if (prefix.length > 0 && $("#customProtocol").val() != "---CUSTOM---")
+		if (prefix.length > 0 && $("#customProtocol").val() != "---<? echo $this->lang->line("go_custom_caps"); ?>---")
 		{
 			dialEntry[0] = "exten => _"+prefix+".,1,AGI(agi://127.0.0.1:4577/call_log)";
 			dialEntry[1] = "exten => _"+prefix+".,2,Dial(SIP/${EXTEN:"+prefix.length+"}@"+$("#carrier_id").val()+",,tTo)";
@@ -378,7 +378,7 @@ $(function()
 	$('#customProtocol').change(function()
 	{
 		$("#protocol").val($(this).val());
-		if ($(this).val() == "---CUSTOM---")
+		if ($(this).val() == "---<? echo $this->lang->line("go_custom_caps"); ?>---")
 		{
 			$(".advanceConfig").show();
 			$(".basicConfig").hide();
@@ -585,7 +585,7 @@ function changeValue(cVar,cVal,cOpt)
 </script>
 
 <div style="float:right;" id="small_step_number"><img src="<?php echo $base; ?>img/step2of2-navigation-small.png" /></div>
-<div style="font-weight:bold;font-size:16px;color:#333;">Carrier Wizard &raquo; Add New Carrier</div>
+<div style="font-weight:bold;font-size:16px;color:#333;"><? echo $this->lang->line("go_carrier_wizard"); ?> &raquo; <? echo $this->lang->line("go_add_new_carrier"); ?></div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
 
@@ -601,7 +601,7 @@ function changeValue(cVar,cVal,cOpt)
                 <table id="carrierTable" style="width:100%;">
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        Carrier ID:
+                        <? echo $this->lang->line("go_carrier_id"); ?>:
                         </td>
                         <td>
                         <?=form_input('carrier_id',null,'id="carrier_id" maxlength="15" size="15"') ?>
@@ -610,7 +610,7 @@ function changeValue(cVar,cVal,cOpt)
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        Carrier Name:
+                        <? echo $this->lang->line("go_carrier_name"); ?>:
                         </td>
                         <td>
                         <?=form_input('carrier_name',null,'id="carrier_name" maxlength="50" size="25"') ?>
@@ -618,7 +618,7 @@ function changeValue(cVar,cVal,cOpt)
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;white-space:nowrap;">
-                        Carrier Description:
+                        <? echo $this->lang->line("go_carrier_desc"); ?>:
                         </td>
                         <td>
                         <?=form_input('carrier_description',null,'id="carrier_description" maxlength="255" size="40"') ?>
@@ -626,11 +626,11 @@ function changeValue(cVar,cVal,cOpt)
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        User Group:
+                        <? echo $this->lang->line("go_user_group"); ?>:
                         </td>
                         <td>
                         <?php
-						$groupArray = array("---ALL---"=>"ALL USER GROUPS");
+						$groupArray = array("---{$this->lang->line("go_all")}---"=> strtoupper($this->lang->line("go_all_user_groups")));
 						foreach ($user_groups as $group)
 						{
 							$groupArray[$group->user_group] = "{$group->user_group} - {$group->group_name}";
@@ -641,16 +641,16 @@ function changeValue(cVar,cVal,cOpt)
                     </tr>
 					<tr class="basicConfig">
 						<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-						Authentication:
+						<? echo $this->lang->line("go_authentication"); ?>:
 						</td>
 						<td style="padding-left:5px;">
-						<?=form_radio('reg_auth','ipbased',$ipbasedChecked,'id="reg_auth"'); ?> IP Based &nbsp; 
-						<?=form_radio('reg_auth','regstring',$regstrChecked,'id="reg_auth"'); ?> Registration
+						<?=form_radio('reg_auth','ipbased',$ipbasedChecked,'id="reg_auth"'); ?> <? echo $this->lang->line("go_ip_based"); ?> &nbsp; 
+						<?=form_radio('reg_auth','regstring',$regstrChecked,'id="reg_auth"'); ?> <? echo $this->lang->line("go_registration"); ?>
 						</td>
 					</tr>
 					<tr class="reg_string" style="display:none;">
 						<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-						Username:
+						<? echo $this->lang->line("go_username"); ?>:
 						</td>
 						<td>
 						<?=form_input('reg_user',null,'id="username" maxlength="25"'); ?>
@@ -658,7 +658,7 @@ function changeValue(cVar,cVal,cOpt)
 					</tr>
 					<tr class="reg_string" style="display:none;">
 						<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-						Password:
+						<? echo $this->lang->line("go_pass"); ?>:
 						</td>
 						<td>
 						<?=form_input('reg_pass',null,'id="secret" maxlength="25"'); ?>
@@ -666,7 +666,7 @@ function changeValue(cVar,cVal,cOpt)
 					</tr>
 					<tr class="reg_string" style="display:none;">
 						<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-						Servers IP/Host:
+						<? echo $this->lang->line("go_server_ip_host"); ?>:
 						</td>
 						<td>
 						<?=form_input('reg_host',null,'id="host" maxlength="255" size="40"'); ?>
@@ -674,7 +674,7 @@ function changeValue(cVar,cVal,cOpt)
 					</tr>
 					<tr class="reg_string" style="display:none;">
 						<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-						Port:
+						<? echo $this->lang->line("go_port"); ?>:
 						</td>
 						<td>
 						<?=form_input('reg_port','5060','id="port" maxlength="10" size="10"'); ?>
@@ -683,7 +683,7 @@ function changeValue(cVar,cVal,cOpt)
 					<tr class="ip_based" style="display:none;">
 						<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
 						<!-- Server IP/Host: -->
-                                                SIP Server:
+                                                <? echo $this->lang->line("go_sip_server"); ?>:
 						</td>
 						<td>
 						<?=form_input('ip_host',null,'id="iphost" maxlength="255" size="40"'); ?>
@@ -691,7 +691,7 @@ function changeValue(cVar,cVal,cOpt)
 					</tr>
                     <tr class="advanceConfig" style="display: none;">
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        Registration String:
+                        <? echo $this->lang->line("go_reg_str"); ?>:
                         </td>
                         <td>
                         <?=form_input('registration_string',null,'id="registration_string" maxlength="255" size="50"') ?>
@@ -699,11 +699,11 @@ function changeValue(cVar,cVal,cOpt)
                     </tr>
                     <tr style="display: none;">
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        Template ID:
+                        <? echo $this->lang->line("go_template_id"); ?>:
                         </td>
                         <td>
                         <?php
-						$tempArray = array(''=>'--NONE--');
+						$tempArray = array(''=>'--'.$this->lang->line("go_none").'--');
 						foreach ($templates as $temp)
 						{
 							$tempArray[$temp->id] = "{$temp->id} - {$temp->name}";
@@ -714,7 +714,7 @@ function changeValue(cVar,cVal,cOpt)
                     </tr>
 					<tr class="basicConfig">
 						<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-						Codecs:
+						<? echo $this->lang->line("go_codecs"); ?>:
 						</td>
 						<td style="padding-left:5px;white-space:nowrap;">
 						<?=form_checkbox('allow_gsm','allow_gsm',$allowGSM,'id="allow_gsm"'); ?> GSM &nbsp; 
@@ -723,23 +723,23 @@ function changeValue(cVar,cVal,cOpt)
 						<?=form_checkbox('allow_g729','allow_g729',$allowG729,'id="allow_g729"'); ?> G729 &nbsp; 
 						<br style="display: none;" />
 						<?=form_checkbox('allow_custom','allow_custom',$allowCustom,'id="allow_custom" style="display: none;"'); ?><!-- Custom Codec(s) &nbsp; -->
-						<?=form_input('customCodecs',$customCodecVal,'id="customCodecs" maxlength="20" size="30" style="display:none" placeholder="comma delimited eg. speex,g711"'); ?>
+						<?=form_input('customCodecs',$customCodecVal,'id="customCodecs" maxlength="20" size="30" style="display:none" placeholder="'.$this->lang->line("go_comma_delimited").'"'); ?>
 						</td>
 					</tr>
 					<tr class="basicConfig">
 						<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-						DTMF Mode:
+						<? echo $this->lang->line("go_dtmf_mode"); ?>:
 						</td>
 						<td style="padding-left:5px;white-space:nowrap;">
 						<?=form_radio('dtmf_mode','rfc2833',$rfc2833,'id="dtmf_mode"'); ?> RFC2833 &nbsp; 
 						<?=form_radio('dtmf_mode','inband',$inband,'id="dtmf_mode"'); ?> Inband &nbsp; 
-						<?=form_radio('dtmf_mode','custom',$customDTMF,'id="dtmf_mode"'); ?> Custom DTMF 
-						<?=form_input('customDTMF',$customDTMFVal,'id="customDTMF" maxlength="20" size="16" style="display:none" placeholder="Enter Custom DTMF"'); ?>
+						<?=form_radio('dtmf_mode','custom',$customDTMF,'id="dtmf_mode"'); ?> <? echo $this->lang->line("go_custom"); ?> DTMF 
+						<?=form_input('customDTMF',$customDTMFVal,'id="customDTMF" maxlength="20" size="16" style="display:none" placeholder="'.$this->lang->line("go_enter_custom_dtmf").'"'); ?>
 						</td>
 					</tr>
 					<tr class="advanceConfig" style="display:none;">
 						<td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-						Account Entry:
+						<? echo $this->lang->line("go_account_entry"); ?>:
 						</td>
 						<td>
 						<?php
@@ -757,7 +757,7 @@ function changeValue(cVar,cVal,cOpt)
 					</tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        Protocol:
+                        <? echo $this->lang->line("go_protocol"); ?>:
                         </td>
                         <td>
                         <?php
@@ -770,7 +770,7 @@ function changeValue(cVar,cVal,cOpt)
                     </tr>
 					<tr style="display: none;">
 						<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-						Dial Prefix:
+						<? echo $this->lang->line("go_dial_prefix"); ?>:
 						</td>
 						<td>
 						<?=form_input('dialprefix',$randPrefix,'id="dialprefix" maxlength="15" size="20"'); ?>
@@ -778,7 +778,7 @@ function changeValue(cVar,cVal,cOpt)
 					</tr>
                     <tr class="advanceConfig" style="display: none;">
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        Globals String:
+                        <? echo $this->lang->line("go_global_str"); ?>:
                         </td>
                         <td>
                         <?=form_input('globals_string',null,'id="globals_string" maxlength="255" size="50"') ?>
@@ -786,7 +786,7 @@ function changeValue(cVar,cVal,cOpt)
                     </tr>
 					<tr class="advanceConfig" style="display:none;">
 						<td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-						Dialplan Entry:
+						<? echo $this->lang->line("go_dialplan_entry"); ?>:
 						</td>
 						<td>
 						<?php
@@ -804,7 +804,7 @@ function changeValue(cVar,cVal,cOpt)
 					</tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        Server IP:
+                        <? echo $this->lang->line("go_server_ip"); ?>:
                         </td>
                         <td>
                         <?php
@@ -815,7 +815,7 @@ function changeValue(cVar,cVal,cOpt)
 						{
 							$serverArray["{$server->server_ip}"] = "{$server->server_ip} - {$server->server_description}";
 						}
-						echo form_dropdown('server_ip',$serverArray,$_SERVER["SERVER_ADDR"],'id="server_ip"');
+						echo form_dropdown('',$serverArray,null,'id="server_ip" style');
 						?>
                         </td>
                     </tr>
@@ -837,4 +837,4 @@ $options = array(
 echo form_textarea($options);
 ?>
 <hr style="border:#DFDFDF 1px solid;" />
-<span id="saveButtons"><span id="cancel" style="white-space: nowrap;">Cancel</span> | <span id="submit" style="white-space: nowrap;">Submit</span></span>
+<span id="saveButtons"><span id="cancel" style="white-space: nowrap;"><? echo $this->lang->line("go_cancel"); ?></span> | <span id="submit" style="white-space: nowrap;"><? echo $this->lang->line("go_submit"); ?></span></span>

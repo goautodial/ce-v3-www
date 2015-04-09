@@ -153,9 +153,9 @@ class Go_tenants_ce extends Controller {
 		//var_dump("SELECT * FROM vicidial_server_carriers WHERE $carrierSQL");
 		if ($return && !$isSelf)
 		{
-			$return = "<small style=\"color:red;\">Not Available.</small>";
+			$return = "<small style=\"color:red;\">{$this->lang->line('go_not_available')}</small>";
 		} else {
-			$return = "<small style=\"color:green;\">Available.</small>";
+			$return = "<small style=\"color:green;\">{$this->lang->line('go_available')}</small>";
 		}
 		
 		echo $return;

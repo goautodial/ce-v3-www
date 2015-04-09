@@ -274,7 +274,7 @@ $(function()
 				$(this).removeClass('menuOff');
 				$('#' + currentTab + '_div').show();
 				$('#' + currentTab + '_add').show();
-				$('#search_list').attr('placeholder','Search '+$('#' + currentTab).html());
+				$('#search_list').attr('placeholder','<? $this->lang->line("go_search"); ?> '+$('#' + currentTab).html());
 				$('#request').html(request);
 			} else {
 				$(this).addClass('menuOff');
@@ -313,7 +313,7 @@ $(function()
 			$("#table_container").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
 			$('#table_container').load('<? echo $base; ?>index.php/go_calltimes_ce/go_get_calltimes/search/'+type+'/1/'+search);
 		} else {
-			alert("Please enter at least 3 characters to search.");
+			alert("<? echo $this->lang->line('go_entry_3_char_search'); ?>.");
 		}
 	});
 	
@@ -347,7 +347,7 @@ $(function()
 				$("#table_container").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
 				$('#table_container').load('<? echo $base; ?>index.php/go_calltimes_ce/go_get_calltimes/search/'+type+'/1/'+search);
 			} else {
-				alert("Please enter at least 3 characters to search.");
+				alert("<? echo $this->lang->line('go_entry_3_char_search'); ?>.");
 			}
 		}
 	});
@@ -402,7 +402,8 @@ function modify(calltime,type)
 
 function delCalltimes(calltime,type)
 {
-	var r=confirm("Are you sure you want to delete '"+calltime+"' from the list?");
+	//var r=confirm("Are you sure you want to delete '"+calltime+"' from the list?");
+	var r=confirm("<? echo $this->lang->line("go_del_con"); ?> '"+calltime+"' <? echo $this->lang->line("go_frm_list"); ?>?");
 	if (r)
 	{
 		if (type===undefined)
@@ -412,7 +413,8 @@ function delCalltimes(calltime,type)
 			function(data){
 			if (data=="SUCCESS")
 			{
-				alert("Success!\n\nCall time '"+calltime+"' has been deleted.");
+				//alert("Success!\n\nCall time '"+calltime+"' has been deleted.");
+                                alert("<? echo $this->lang->line("go_success"); ?>!\n\n<? echo $this->lang->line("go_call_time"); ?> '"+calltime+"' <? echo $this->lang->line("go_been_del"); ?>.");
 				
 				location.reload();
 			} else {
@@ -585,7 +587,7 @@ function editpost(groupID) {
 		}
 		
 		if(datas[0]=="SUCCESS") {
-			alert(data);
+			alert("<? echo $this->lang->line("go_success_caps"); ?>");
 			location.reload();
 		}
 		
@@ -634,7 +636,7 @@ function closeme() {
 <div id='outbody' class="wrap">
 <div id="icon-calltimes" class="icon32">
 </div>
-<div style="float: right;margin-top:15px;margin-right:25px;"><span id="showAllLists" style="display: none">[Clear Search]</span>&nbsp;<?=form_input('search_list',null,'id="search_list" maxlength="100" size="25" placeholder="Search '.$bannertitle.'"') ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_list_button" style="cursor: pointer;" /></div>
+<div style="float: right;margin-top:15px;margin-right:25px;"><span id="showAllLists" style="display: none">[<? echo $this->lang->line("go_clear_search"); ?>]</span>&nbsp;<?=form_input('search_list',null,'id="search_list" maxlength="100" size="25" placeholder="'.$this->lang->line("go_search").' '.$bannertitle.'"') ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_list_button" style="cursor: pointer;" /></div>
 <h2><? echo $bannertitle; ?></h2>
 
 	<div id="dashboard-widgets-wrap">
@@ -646,11 +648,11 @@ function closeme() {
 
 					<!-- GO WIDGET -->
 					<div id="account_info_status" class="postbox">
-						<div class="rightdiv toolTip" id="showList_add" onclick="addNewCalltimes()" title="Add New Call Times">
-                        	Add New Call Times <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
+						<div class="rightdiv toolTip" id="showList_add" onclick="addNewCalltimes()" title="<? echo $this->lang->line("go_add_new_call_time"); ?>">
+                        	<? echo $this->lang->line("go_add_new_call_time"); ?> <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
 						</div>
-						<div class="rightdiv toolTip" style="display:none" onclick="addNewStateCalltimes()" id="showState_add" title="Add New State Call Times">
-                        	Add New State Call Times <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
+						<div class="rightdiv toolTip" style="display:none" onclick="addNewStateCalltimes()" id="showState_add" title="<? echo $this->lang->line("go_add_state_call_time"); ?>">
+                        	<? echo $this->lang->line("go_add_state_call_time"); ?> <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
 						</div>
 						<div class="hndle">
 							<span><span id="title_bar" />&nbsp;</span><!-- Title Bar -->
@@ -659,7 +661,7 @@ function closeme() {
 						</div>
 						<div class="inside">
 
-                            <div style="margin:<?php echo (preg_match("/^Windows/",$userOS)) ? "-23px" : "-22px"; ?> 0px -2px -10px;" id="request_tab"><span id="showList" class="tabtoggle menuOn">Call Times</span><span id="showState" class="tabtoggle menuOff">State Call Times</span><span id="request" style="display:none;">showList</span></div>
+                            <div style="margin:<?php echo (preg_match("/^Windows/",$userOS)) ? "-23px" : "-22px"; ?> 0px -2px -10px;" id="request_tab"><span id="showList" class="tabtoggle menuOn"><? echo $this->lang->line("go_call_times"); ?></span><span id="showState" class="tabtoggle menuOff"><? echo $this->lang->line("go_state_call_times"); ?></span><span id="request" style="display:none;"><? echo $this->lang->line("go_show_list"); ?></span></div>
 
 							<div id="table_container" class="table_container">
                             </div>
@@ -710,21 +712,21 @@ function closeme() {
 <!-- Overlay1 -->
 <div id="overlay" style="display:none;"></div>
 <div id="box">
-<a id="closebox" class="toolTip" title="CLOSE"></a>
+<a id="closebox" class="toolTip" title="<? echo strtoupper($this->lang->line("go_close")); ?>"></a>
 <div id="overlayContent"></div>
 </div>
 
 <!-- Overlay2 -->
 <div id="overlayCalltimes" style="display:none;"></div>
 <div id="boxCalltimes">
-<a id="closeboxCalltimes" class="toolTip" title="CLOSE"></a>
+<a id="closeboxCalltimes" class="toolTip" title="<? echo strtoupper($this->lang->line("go_close")); ?>"></a>
 <div id="overlayContentCalltimes"></div>
 </div>
 
 <!-- Hopper Overlay -->
 <div id="hopperOverlay" style="display:none;"></div>
 <div id="hopperBox">
-<a id="hopperClosebox" class="toolTip" title="CLOSE"></a>
+<a id="hopperClosebox" class="toolTip" title="<? echo strtoupper($this->lang->line("go_close")); ?>"></a>
 <div id="hopperOverlayContent"></div>
 </div>
 
@@ -732,11 +734,11 @@ function closeme() {
 <span id="audioButtonClicked" style="display:none;"></span>
 <div id="fileOverlay" style="display:none;"></div>
 <div id="fileBox" style="display:none">
-<a id="fileClosebox" class="toolTip" title="CLOSE"></a>
+<a id="fileClosebox" class="toolTip" title="<? echo strtoupper($this->lang->line("go_close")); ?>"></a>
 <div id="fileOverlayContent">
 <table style="width: 100%">
 	<tr>
-		<td>List of Files Uploaded:</td>
+		<td><? echo $this->lang->line("go_list_files_upload"); ?>:</td>
 	</tr>
 <?php
 $WeBServeRRooT = '/var/lib/asterisk';
@@ -779,18 +781,18 @@ if(is_dir($WeBServeRRooT.'/'.$storage)){
 <!-- Action Menu -->
 <div id='go_action_menu' class='go_action_menu'>
 <ul>
-<li class="go_action_submenu" title="Activate Selected" id="activate" style="display:none;">Activate Selected</li>
-<li class="go_action_submenu" title="Deactivate Selected" id="deactivate" style="display:none;">Deactivate Selected</li>
-<li class="go_action_submenu" title="Delete Selected" id="delete">Delete Selected</li>
+<li class="go_action_submenu" title="<? echo strtoupper($this->lang->line('go_activated_selected')); ?>" id="activate" style="display:none;"><? echo $this->lang->line("go_activated_selected"); ?></li>
+<li class="go_action_submenu" title="<? echo strtoupper($this->lang->line('go_deactivate_Selected')); ?>" id="deactivate" style="display:none;"><? echo $this->lang->line("go_deactivate_Selected"); ?></li>
+<li class="go_action_submenu" title="<? echo $this->lang->line("go_del_selected"); ?>" id="delete"><? echo $this->lang->line("go_del_selected"); ?></li>
 </ul>
 </div>
 
 <!-- State Action Menu -->
 <div id='go_state_action_menu' class='go_state_action_menu'>
 <ul>
-<li class="go_state_action_submenu" title="Activate Selected" id="activate" style="display:none;">Activate Selected</li>
-<li class="go_state_action_submenu" title="Deactivate Selected" id="deactivate" style="display:none;">Deactivate Selected</li>
-<li class="go_state_action_submenu" title="Delete Selected" id="delete">Delete Selected</li>
+<li class="go_state_action_submenu" title="<? echo strtoupper($this->lang->line('go_activated_selected')); ?>" id="activate" style="display:none;"><? echo $this->lang->line("go_activate_selected"); ?></li>
+<li class="go_state_action_submenu" title="<? echo strtoupper($this->lang->line('go_deactivate_Selected')); ?>" id="deactivate" style="display:none;"><? echo $this->lang->line("go_deactivate_selected"); ?></li>
+<li class="go_state_action_submenu" title="<? echo $this->lang->line("go_del_selected"); ?>" id="delete"><? echo $this->lang->line("go_del_selected"); ?></li>
 </ul>
 </div>
 
@@ -809,7 +811,7 @@ if(is_dir($WeBServeRRooT.'/'.$storage)){
 
 	
 	<div id="listid_edit" align="left" class="title-header"> </div>
-	<div align="center" class="title-header" style="font-size:16px;color:#000;font-weight:bold;"> MODIFY INBOUND: <label id="egroup_id"></label></div>
+	<div align="center" class="title-header" style="font-size:16px;color:#000;font-weight:bold;"> <? echo strtoupper($this->lang->line("go_modify_inbound")); ?>: <label id="egroup_id"></label></div>
 	<br>
 	<div align="left">
 	</div>  
@@ -830,7 +832,7 @@ if(is_dir($WeBServeRRooT.'/'.$storage)){
 	
 	if ($Xmenus_selected < 1) 
 	{
-		$Xmenuslist .= "<option SELECTED value=\"---NONE---\">---NONE---</option>\n";
+		$Xmenuslist .= "<option SELECTED value=\"---NONE---\">---{$this->lang->line("go_none")}---</option>\n";
 	}
 	
 	## ingroup pulldown
@@ -888,25 +890,25 @@ if(is_dir($WeBServeRRooT.'/'.$storage)){
 	} // end foreach
 	
 	if ($Xgroups_selected < 1) 
-		{$Xgroups_menu .= "<option SELECTED value=\"---NONE---\">---NONE---</option>\n";}
+		{$Xgroups_menu .= "<option SELECTED value=\"---NONE---\">---{$this->lang->line("go_none")}---</option>\n";}
 	else 
-		{$Xgroups_menu .= "<option value=\"---NONE---\">---NONE---</option>\n";}
+		{$Xgroups_menu .= "<option value=\"---NONE---\">---{$this->lang->line("go_none")}---</option>\n";}
 	if ($Dgroups_selected < 1) 
-		{$Dgroups_menu .= "<option SELECTED value=\"---NONE---\">---NONE---</option>\n";}
+		{$Dgroups_menu .= "<option SELECTED value=\"---NONE---\">---{$this->lang->line("go_none")}---</option>\n";}
 	else 
-		{$Dgroups_menu .= "<option value=\"---NONE---\">---NONE---</option>\n";}
+		{$Dgroups_menu .= "<option value=\"---NONE---\">---{$this->lang->line("go_none")}---</option>\n";}
 	if ($Agroups_selected < 1) 
-		{$Agroups_menu .= "<option SELECTED value=\"---NONE---\">---NONE---</option>\n";}
+		{$Agroups_menu .= "<option SELECTED value=\"---NONE---\">---{$this->lang->line("go_none")}---</option>\n";}
 	else 
-		{$Agroups_menu .= "<option value=\"---NONE---\">---NONE---</option>\n";}
+		{$Agroups_menu .= "<option value=\"---NONE---\">---{$this->lang->line("go_none")}---</option>\n";}
 	if ($Tgroups_selected < 1) 
-		{$Tgroups_menu .= "<option SELECTED value=\"---NONE---\">---NONE---</option>\n";}
+		{$Tgroups_menu .= "<option SELECTED value=\"---NONE---\">---{$this->lang->line("go_none")}---</option>\n";}
 	else 
-		{$Tgroups_menu .= "<option value=\"---NONE---\">---NONE---</option>\n";}
+		{$Tgroups_menu .= "<option value=\"---NONE---\">---{$this->lang->line("go_none")}---</option>\n";}
 	if ($Hgroups_selected < 1) 
-		{$Hgroups_menu .= "<option SELECTED value=\"---NONE---\">---NONE---</option>\n";}
+		{$Hgroups_menu .= "<option SELECTED value=\"---NONE---\">---{$this->lang->line("go_none")}---</option>\n";}
 	else 
-		{$Hgroups_menu .= "<option value=\"---NONE---\">---NONE---</option>\n";}
+		{$Hgroups_menu .= "<option value=\"---NONE---\">---{$this->lang->line("go_none")}---</option>\n";}
 	
 	echo "<center><TABLE width=95% class=\"tableeditingroup\" style=\"color:#000;\">\n";
 	echo "<tr class=trview><td align=right>Description: </td><td align=left><input type=text name=group_name id=egroup_name size=30 maxlength=30 onkeydown=\"return isAlphaNumericwspace(event.keyCode);\" onkeyup=\"KeyUp(event.keyCode);\"></td></tr>\n";
@@ -1089,7 +1091,7 @@ if(is_dir($WeBServeRRooT.'/'.$storage)){
 
  <div style="border-top: 2px solid #DFDFDF;height:20px;vertical-align:middle; padding-top: 7px;" align="right">
 
-  <a id="searchcallhistory" style="cursor: pointer;" onclick="editpost(document.getElementById('showvaledit').value);"><font color="#7A9E22">SAVE SETTINGS</font></a>
+  <a id="searchcallhistory" style="cursor: pointer;" onclick="editpost(document.getElementById('showvaledit').value);"><font color="#7A9E22"><? echo $this->lang->line("go_save_settings"); ?></font></a>
   </div>	
   </td>
 </tr>

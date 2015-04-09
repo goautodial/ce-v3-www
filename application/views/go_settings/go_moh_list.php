@@ -78,12 +78,12 @@ $(function()
 <table id="mainTable" class="tablesorter" style="width:100%;" cellpadding=0 cellspacing=0>
 	<thead>
 		<tr style="font-weight:bold;">
-			<th>&nbsp;MOH ID</th>
-			<th>&nbsp;MOH NAME</th>
-			<th>&nbsp;STATUS</th>
-			<th>&nbsp;RANDOM ORDER</th>
-			<th style="<?php echo $hideFromTenant; ?>">&nbsp;GROUP</th>
-			<th colspan="3" style="width:6%;text-align:center;" nowrap><span style="cursor:pointer;" id="selectAction">&nbsp;ACTION &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
+			<th>&nbsp;<? echo $this->lang->line("go_moh_id_caps"); ?></th>
+			<th>&nbsp;<? echo $this->lang->line("go_moh_name_caps"); ?></th>
+			<th>&nbsp;<? echo $this->lang->line("go_status_caps"); ?></th>
+			<th>&nbsp;<? echo $this->lang->line("go_random_order_caps"); ?></th>
+			<th style="<?php echo $hideFromTenant; ?>">&nbsp;<? echo $this->lang->line("go_group_caps"); ?></th>
+			<th colspan="3" style="width:6%;text-align:center;" nowrap><span style="cursor:pointer;" id="selectAction">&nbsp;<? echo $this->lang->line("go_action_caps"); ?> &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
 			<th style="width:2%;text-align:center;"><input type="checkbox" id="selectAll" /></th>
 		</tr>
 	</thead>
@@ -101,12 +101,12 @@ if ($moh_list->num_rows() > 0) {
 			$x=0;
 		}
 		
-		$status = ($list->active=="Y") ? "ACTIVE" : "INACTIVE";
-		$acolor = ($status=="ACTIVE") ? "green" : "#F00";
-		$ugroup = ($list->user_group=="---ALL---") ? "ALL USER GROUPS" : $list->user_group;
-		$random = ($list->random=="Y") ? "YES" : "NO";
+		$status = ($list->active=="Y") ? "{$this->lang->line("go_active_caps")}" : "{$this->lang->line("go_inactive_caps")}";
+		$acolor = ($status=="{$this->lang->line("go_active_caps")}") ? "green" : "#F00";
+		$ugroup = ($list->user_group=="---{$this->lang->line("go_all_caps")}---") ? "{$this->lang->line("go_all_user_groups_caps")}" : $list->user_group;
+		$random = ($list->random=="Y") ? "{$this->lang->line("go_yes")}" : "{$this->lang->line("go_no")}";
 		
-		$deleteMOH = "<span onclick=\"delMOH('{$list->moh_id}')\" style='cursor:pointer;' class='toolTip' title='DELETE MOH ID<br />{$list->moh_id}'>";
+		$deleteMOH = "<span onclick=\"delMOH('{$list->moh_id}')\" style='cursor:pointer;' class='toolTip' title='{$this->lang->line("go_del_moh_id")}<br />{$list->moh_id}'>";
 		$deleteMOHclass = "";
 		$deleteMOHbox = "";
 		if ($list->moh_id=="default")
@@ -122,12 +122,12 @@ if ($moh_list->num_rows() > 0) {
 		echo "<td style='border-top:#D0D0D0 dashed 1px;color:$acolor;font-weight:bold;width:10%;'>&nbsp;$status</td>";
 		echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;$random</td>";
 		echo "<td style='border-top:#D0D0D0 dashed 1px;white-space:nowrap;width:6%;$hideFromTenant'>&nbsp;$ugroup&nbsp;&nbsp;&nbsp;</td>";
-		echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><span onclick=\"modify('{$list->moh_id}')\" style='cursor:pointer;' class='toolTip' title='MODIFY MOH ID<br />{$list->moh_id}'><img src='{$base}img/edit.png' style='cursor:pointer;width:12px;' /></span></td><td align='center' style='border-top:#D0D0D0 dashed 1px;'>{$deleteMOH}<img src='{$base}img/delete.png' style='width:12px;' {$deleteMOHclass} /></span></td><td align='center' style='border-top:#D0D0D0 dashed 1px;'><span><img src='{$base}img/status_display_i_grayed.png' style='width:12px;' /></span></td>\n";
+		echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><span onclick=\"modify('{$list->moh_id}')\" style='cursor:pointer;' class='toolTip' title='{$this->lang->line("go_modify_moh_id")}<br />{$list->moh_id}'><img src='{$base}img/edit.png' style='cursor:pointer;width:12px;' /></span></td><td align='center' style='border-top:#D0D0D0 dashed 1px;'>{$deleteMOH}<img src='{$base}img/delete.png' style='width:12px;' {$deleteMOHclass} /></span></td><td align='center' style='border-top:#D0D0D0 dashed 1px;'><span><img src='{$base}img/status_display_i_grayed.png' style='width:12px;' /></span></td>\n";
 		echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><input type='checkbox' id='delMOH[]' value='{$list->moh_id}' {$deleteMOHbox} /></td>\n";
 		echo "</tr>";
 	}
 } else {
-	echo "<tr style=\"background-color:#E0F8E0;\"><td style=\"border-top:#D0D0D0 dashed 1px;font-weight:bold;color:#FF0000;text-align:center;\" colspan=\"9\">No record(s) found.</td></tr>\n";
+	echo "<tr style=\"background-color:#E0F8E0;\"><td style=\"border-top:#D0D0D0 dashed 1px;font-weight:bold;color:#FF0000;text-align:center;\" colspan=\"9\">{$this->lang->line("go_no_records_found")}</td></tr>\n";
 }
 ?>
 	</tbody>

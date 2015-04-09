@@ -35,7 +35,7 @@ function showQuery(name,query)
 	var header = "DETAILS";
 	if (name=='query')
 	{
-		header = "DB QUERY";
+		header = "<? echo $this->lang->line("go_db_query"); ?>";
 	}
 	
     $("#overlayContent").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
@@ -46,12 +46,12 @@ function showQuery(name,query)
 	<thead>
 		<tr style="font-weight:bold;">
 			<!--<th style="text-align: left;">&nbsp;ID</th>-->
-			<th style="text-align: left;">&nbsp;USER</th>
-			<th style="text-align: left;">&nbsp;IP ADDRESS</th>
-			<th style="text-align: left;">&nbsp;DATE</th>
-			<th style="text-align: left;">&nbsp;ACTION</th>
-			<th style="text-align: left;">&nbsp;DETAILS</th>
-			<th style="text-align: left;">&nbsp;DB QUERY</th>
+			<th style="text-align: left;">&nbsp;<? echo strtoupper($this->lang->line("go_user")); ?></th>
+			<th style="text-align: left;">&nbsp;<? echo strtoupper($this->lang->line("go_ip_address")); ?></th>
+			<th style="text-align: left;">&nbsp;<? echo strtoupper($this->lang->line("go_date")); ?></th>
+			<th style="text-align: left;">&nbsp;<? echo strtoupper($this->lang->line("go_action")); ?></th>
+			<th style="text-align: left;">&nbsp;<? echo strtoupper($this->lang->line("go_details")); ?></th>
+			<th style="text-align: left;">&nbsp;<? echo strtoupper($this->lang->line("go_db_query")); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -61,8 +61,8 @@ function showQuery(name,query)
 		$x = 0;
 		foreach ($admin_logs->result() as $idx => $logs)
 		{
-			$details = (strlen($logs->details) > 50) ? substr($logs->details,0,50) . "... &nbsp;<span id=\"descTruncate\" style=\"cursor:pointer;color:blue;font-size:10px;line-height:10px;\" onclick=\"showQuery('details','".$logs->details."')\" class=\"toolTip\" title=\"".$logs->details."\">more</span>" : $logs->details;
-			$db_query = (strlen($logs->db_query) > 0) ? "<span id=\"descTruncate\" style=\"cursor:pointer;color:blue;font-size:10px;line-height:10px;text-transform:uppercase;\" onclick=\"showQuery('query','".str_replace('	','',str_replace('\r','',str_replace('\n','',str_replace(',',', ',$logs->db_query))))."')\">show query</span>" : "";
+			$details = (strlen($logs->details) > 50) ? substr(str_replace('\n',' ',$logs->details),0,50) . "... &nbsp;<span id=\"descTruncate\" style=\"cursor:pointer;color:blue;font-size:10px;line-height:10px;\" onclick=\"showQuery('details','".$logs->details."')\" class=\"toolTip\" title=\"".str_replace('\n',' ',$logs->details)."\"> ".$this->lang->line('go_more')."</span>" : str_replace('\n',' ',$logs->details);
+			$db_query = (strlen($logs->db_query) > 0) ? "<span id=\"descTruncate\" style=\"cursor:pointer;color:blue;font-size:10px;line-height:10px;text-transform:uppercase;\" onclick=\"showQuery('query','".str_replace('	','',str_replace('\r','',str_replace('\n','',str_replace(',',', ',$logs->db_query))))."')\">{$this->lang->line("go_show_query")}</span>" : "";
 			$class = ($x&1) ? "odd" : "even";
 			echo "<tr class='$class'>";
 			//echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;".($idx+1)."</td>";
@@ -77,7 +77,7 @@ function showQuery(name,query)
 		}
 	} else {
 		echo "<tr class='odd'>";
-		echo "<td colspan='6' style='border-top:#D0D0D0 dashed 1px;color:red;text-align:center;font-weight:bold;'>&nbsp;No log(s) found.</td>";
+		echo "<td colspan='6' style='border-top:#D0D0D0 dashed 1px;color:red;text-align:center;font-weight:bold;'>&nbsp;{$this->lang->line('no_logs_found')}</td>";
 		echo "</tr>";
 	}
 	?>

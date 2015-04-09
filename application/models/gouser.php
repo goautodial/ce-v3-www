@@ -22,6 +22,7 @@ class Gouser extends Model {
          parent::Model();
          $this->asteriskDB = $this->load->database('dialerdb',TRUE);
          $this->goautodialDB = $this->load->database('goautodialdb',TRUE);
+         $this->lang->load("goUser_spanish","spanish");
      }
 
 
@@ -137,7 +138,7 @@ class Gouser extends Model {
       *          $data > data columns 
       */
      function insertuser($table=null,$data=null,$condition=null){
-
+          $goSomethingWentWrongContactYourSupport = $this->lang->line('goUsers_somethingWentWrongContactYourSupport');
           if(!is_null($table) && !is_null($data) ){
                if($this->errortrapping($data)){
                    if($this->checkduplicate($table,array($condition))){
@@ -147,7 +148,7 @@ class Gouser extends Model {
                    }
                }
           }else{
-               die("Something went wrong contact your Support");
+               die($goSomethingWentWrongContactYourSupport);
           }
      }
 
@@ -158,7 +159,9 @@ class Gouser extends Model {
       * @param : $data > data columns to be checked
       */
      function errortrapping($data){
-         
+           $goInvalidUserFormat = $this->lang->line('goUsers_invalidUserFormat');
+           $goInvalidPassword = $this->lang->line('goUsers_invalidPassword');
+           $goErrorUserGroupMustNotBeEmpty = $this->lang->line('goUsers_errorUserGroupMustNotBeEmpty');         
            # array of fields to be check
            $fields  = array('pass'); 
            $valid = false;
@@ -171,10 +174,10 @@ class Gouser extends Model {
                                 if(preg_match('/^[a-z0-9\_]+$/i',$value)){
                                     $valid = true;
                                 }else{
-                                    die('Invalid user format');
+                                    die($goInvalidUserFormat);
                                 }
                             }else{
-                                die('Invalid user format');
+                                die($goInvalidUserFormat);
                             }
                        break;
                        case 'pass':
@@ -182,17 +185,17 @@ class Gouser extends Model {
                                 if(preg_match('/^[a-z0-9\_\'\-\@\#\$\%\^\&\*\!\.\,\"\(\)]+$/i',$value)){
                                     $valid = true;
                                 }else{
-                                    die('Invalid password');
+                                    die($goInvalidPassword);
                                 }
                             }else{
-                                die('Invalid user format');
+                                die($goInvalidUserFormat);
                             }
                        break;
                        case 'user_group':
                              if(strlen($value) > 0){
                                  $valid = true;
                              }else{
-                                 die('Error: User group must not be empty');
+                                 die($goErrorUserGroupMustNotBeEmpty);
                              }
                        break;
                    }
@@ -216,7 +219,8 @@ class Gouser extends Model {
       *          $self > array containing condition to check if editing a user account
       */
      function checkduplicate($table=null,$queryconditions=array(),$self=array()){
-
+         $goErrorConditionsAreEmptyOrNotAnArray = $this->lang->line('goUsers_errorConditionsAreEmptyOrNotAnArray');
+         $goErrorTableNotExistOrFieldsetEmpty = $this->lang->line('goUsers_errorTableNotExistOrFieldsetEmpty');
          # check fields info if allow null don't check null
          $fieldsinfo=$this->asteriskDB->query("show columns from $table");
          if($fieldsinfo->num_rows > 0){ 
@@ -241,12 +245,12 @@ class Gouser extends Model {
                                      $ctr++;
                                  }
                              }else{ # else report error 
-                                 die('Error: supplied condition not in an array');
+                                 die($goErrorConditionsAreEmptyOrNotAnArray);
                              }
                          }
                          
                      }else{
-                         die('Error: conditions are empty or not an array');
+                         die($goErrorConditionsAreEmptyOrNotAnArray);
                      }
              }
              if(array_key_exists("NO",$resultsofcheck)){
@@ -273,7 +277,7 @@ class Gouser extends Model {
              }
 
          }else{
-             die('Error: Table not exist or fieldset empty!');
+             die($goErrorTableNotExistOrFieldsetEmpty);
          }
  
      }
@@ -407,6 +411,8 @@ class Gouser extends Model {
       * $param : $fields > array of fields to update
       */
      function updateuser($fields=array(),$updatestat='quick'){
+         $goErrorOnUpdatingUser = $this->lang->line('goUsers_errorOnUpdatingUser');
+         $goUpdateSuccessful = $this->lang->line('goUsers_updateSuccessful');
          # set permission here not yer applied
          # if(in_array(MODIFYUSER,$permissionarray)){ user allowed to update this is just a sample
                foreach($fields as $userid => $fieldsarray){
@@ -435,9 +441,9 @@ class Gouser extends Model {
                            #$this->asteriskDB->update('phones',array('pass'=>$vicidialusers['phone_pass']));
                        $this->asteriskDB->trans_complete();
                        if ($this->asteriskDB->trans_status() === FALSE){
-                           $toreturn = "Error on updating User!";
+                           $toreturn = $goErrorOnUpdatingUser;
                        }else{
-                           $toreturn = "Update successful!";
+                           $toreturn = $goUpdateSuccessful;
                        }
                        
                        // update phone login and pass on phones table
@@ -492,6 +498,13 @@ class Gouser extends Model {
       * @param: id of the current user logged in
       */
      function createusergroup($currentuser=null){
+         $goGroupConfiguration = $this->lang->line('goUsers_groupConfiguration');
+         $goGroupName = $this->lang->line('goUsers_groupName');
+         $goGroupLevel = $this->lang->line('goUsers_groupLevel');
+         $goAddAccess = $this->lang->line('goUsers_addAccess');
+         $goRemoveAccess = $this->lang->line('goUsers_removeAccess');
+         $goSomethingWentWrongOnCreatingNewGroup = $this->lang->line('goUsers_somethingWentWrongOnCreatingNewGroup');
+         $goSomethingWentWrongOnSavingNewGroup = $this->lang->line('goUsers_somethingWentWrongOnSavingNewGroup');
          if(!is_null($currentuser)){
 
              #logged in user level get from session
@@ -533,28 +546,28 @@ class Gouser extends Model {
                  }
 
                  echo "<div id='user-groups-".$this->tempgroupcreated."--$createdowner_group' class='new-user-groups'>
-                           <h3>Group Configuration</h3>
+                           <h3>$goGroupConfiguration</h3>
                            <div class='adv-allowed-access user-corners new-allowed-access'>
                                 <form id='new-group-".$this->tempgroupcreated."'>
-                                <div class='leftcol'>Group Name</div>
+                                <div class='leftcol'>$goGroupName</div>
                                 <div class='rightcol'><input type='text' name='groupaccess_name-".$this->tempgroupcreated."' id='group_name-".$this->tempgroupcreated."' size='16'></div>
-                                <div class='leftcol'>Group level</div>
+                                <div class='leftcol'>$goGroupLevel</div>
                                 <div class='rightcol'>".form_dropdown('group_level-'.$this->tempgroupcreated,$options,null,"id='group_level-".$this->tempgroupcreated."'")."</div>
                                 <br class='clear'/>
                                 <div id='new-allowed-access' class='new-access'></div>
                                 <br class='clear'/>
                                 <div class='group-action'>
-                                     <a href='javascript:void(0);'>Add access</a> |
-                                     <a href='javascript:void(0);'>Remove access</a>
+                                     <a href='javascript:void(0);'>$goAddAccess</a> |
+                                     <a href='javascript:void(0);'>$goRemoveAccess</a>
                                 </div>
                                 </form>
                            </div>
                        </div>"; 
              }else{
-                 die("Something went wrong on creating new group");
+                 die($goSomethingWentWrongOnCreatingNewGroup);
              }
          }else{
-             die("Something went wrong on saving new group");
+             die($goSomethingWentWrongOnSavingNewGroup);
          }
      }
 
@@ -590,6 +603,9 @@ class Gouser extends Model {
       *          $groupid > id to be update
       */
      function saveusergroup($postfields=array(),$groupid){
+        $goSomethingWentWrongContactYourSupport = $this->lang->line('goUsers_somethingWentWrongContactYourSupport');
+        $goSaved = $this->lang->line('goUsers_saved');
+        $goFieldsAreEmpty = $this->lang->line('goUsers_fieldsAreEmpty');
         if(!empty($postfields)){
             # prepare of data entry
             $vicidial_user_id = null;
@@ -608,13 +624,13 @@ class Gouser extends Model {
             $this->asteriskDB->trans_complete();
 
             if ($this->asteriskDB->trans_status() === FALSE){
-                die('Something went wrong contact your support');
+                die($goSomethingWentWrongContactYourSupport);
             }else{
-                echo 'Saved';
+                echo $goSaved;
             }
 
         }else{
-            die("Fields are empty");
+            die($goFieldsAreEmpty);
         }
      }
 
@@ -654,13 +670,16 @@ class Gouser extends Model {
       *          $msg = true if you want a echo message
       */
      function deleteitem($table,$condition,$msg=false){
+         $goWrongConditionFormat = $this->lang->line('goUsers_wrongConditionFormat');
+         $goItemDeleted = $this->lang->line('goUsers_itemDeleted');
+         $goMustHaveConditionToDeleteAnItem = $this->lang->line('goUsers_mustHaveConditionToDeleteAnItem');
          if(!empty($condtion) || !is_null($condition)){
              if(is_array($condition)){
                  foreach($condition as $conditions){
                      if(is_array($conditions)){
                          $this->gouser->asteriskDB->where($conditions);
                      }else{
-                         die('Wrong condition format');
+                         die($goWrongConditionFormat);
                      }
                  }
              }else{
@@ -668,10 +687,10 @@ class Gouser extends Model {
              }
              $this->gouser->asteriskDB->delete($table);
              if($msg){
-                 echo "Item deleted";
+                 echo $goItemDeleted;
              }
          }else{
-             die('Must have condition to delete an item');
+             die($goMustHaveConditionToDeleteAnItem);
          }
      }
 
@@ -684,6 +703,7 @@ class Gouser extends Model {
       *          $isSlave > check what to use 
       */
      function getallowedcampaign($usergroup=null,$isSlave=false){
+         $goErrorOnPassingUserAccountOrUserGroup = $this->lang->line('goUsers_errorOnPassingUserAccountOrUserGroup');
          if($usergroup){
              if(!$isSlave){
                  $this->asteriskDB->where(array('user_group'=>$usergroup));   
@@ -696,7 +716,7 @@ class Gouser extends Model {
              }
              return $campaigns;
          }else{
-             die('Error on passing user account or user group');
+             die($goErrorOnPassingUserAccountOrUserGroup);
          }
      }
 

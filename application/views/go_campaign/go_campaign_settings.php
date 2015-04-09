@@ -57,7 +57,7 @@ foreach (explode(' ',$campinfo->dial_statuses) as $status)
 {
 	if ($dial_status[$status] != '')
 	{
-		$enabled_dial_statuses .= '<tr class="advance_settings"><td style="text-align:right;">Active Dial Status '.$i.':</td><td>&nbsp;<strong>'.$status.'</strong> - '.$dial_status[$status].' <span id="removeStatus" class="toolTip" style="float:right;font-size:10px;cursor:pointer;" onclick="delStatus(\''.$status.'\')" title="REMOVE STATUS: '.$status.'">REMOVE&nbsp;&nbsp;&nbsp;</span></td></tr>';
+		$enabled_dial_statuses .= '<tr class="advance_settings"><td style="text-align:right;">'.lang('go_ActiveStatusDial').' '.$i.':</td><td>&nbsp;<strong>'.$status.'</strong> - '.$dial_status[$status].' <span id="removeStatus" class="toolTip" style="float:right;font-size:10px;cursor:pointer;" onclick="delStatus(\''.$status.'\')" title="'. lang('go_REMOVESTATUS_').' '.$status.'">REMOVE&nbsp;&nbsp;&nbsp;</span></td></tr>';	
 		$i++;
 	}
 }
@@ -73,7 +73,7 @@ $(document).ready(function()
 	{
 		$('.advance_settings').show();
 		$('.webFormSpan').show();
-		$('#advance_link').html('[ - ADVANCE SETTINGS ]');
+		$('#advance_link').html('<? echo lang('go_minusADVANCESETTINGS'); ?>');		
 		$('#isAdvance').val('1');
 	}
 
@@ -245,13 +245,13 @@ $(document).ready(function()
 			$('.advance_settings').show();
 			$('#web_form_address').show();
 			$('.webFormSpan').show();
-			$('#advance_link').html('[ - ADVANCE SETTINGS ]');
+			$('#advance_link').html('<? echo lang('go_minusADVANCESETTINGS'); ?>');
 			$('#isAdvance').val('1');
 		} else {
 			$('.advance_settings').hide();
 			$('#web_form_address').hide();
 			$('.webFormSpan').hide();
-			$('#advance_link').html('[ + ADVANCE SETTINGS ]');
+			$('#advance_link').html('<? echo lang('go_plusADVANCESETTINGS'); ?>');			
 			$('#isAdvance').val('0');
 		}
 	});
@@ -574,52 +574,52 @@ function setDivVal(divid,idval) {
 	font-weight:bold;
 }
 </style>
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">MODIFY CAMPAIGN: <?php echo "$campaign_id - ".$campinfo->campaign_name; ?></div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><? echo lang('go_MODIFYCAMPAIGN'); ?>: <?php echo "$campaign_id - ".$campinfo->campaign_name; ?></div>
 <br />
-<table id="test" border=0 cellpadding="3" cellspacing="3" style="width:95%; color:#000; margin-left:auto; margin-right:auto; padding-right:10%; padding-left:10%;">
+<table id="test" border=0 cellpadding="3" cellspacing="3" style="width:95%; color:#000; margin-left:auto; margin-right:auto;">
 	<tr>
-    	<td style="text-align:right;" nowrap>Campaign ID:</td><td>&nbsp;<?php echo $campaign_id; ?><input id="campaign_id" type="hidden" value="<?php echo $campaign_id; ?>" /></td>
+    	<td style="text-align:right; width: 50%;" nowrap><? echo lang('go_CampaignID_'); ?></td><td style="width: 50%;">&nbsp;<?php echo $campaign_id; ?><input id="campaign_id" type="hidden" value="<?php echo $campaign_id; ?>" /></td>
     </tr>
 <?php
 if (!$isSurvey)
 {
 ?>
 	<tr>
-    	<td style="text-align:right;" nowrap>Campaign Name:</td><td><input id="campaign_name" type="text" value="<?php echo $campinfo->campaign_name; ?>" size="50" maxlength="40" /></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_CampaignName_'); ?></td><td><input id="campaign_name" type="text" value="<?php echo $campinfo->campaign_name; ?>" size="50" style="width:250px;" maxlength="40" onChange="checkCampName();" /> <span id="camp_name_check" style="font-size:10px;"></span></td>
     </tr>
 	<tr>
-    	<td style="text-align:right;" nowrap>Campaign Description:</td><td><input id="campaign_description" type="text" value="<?php echo $campinfo->campaign_description; ?>" size="50" maxlength="255" /></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_CampaignDescription_'); ?></td><td><input id="campaign_description" type="text" value="<?php echo $campinfo->campaign_description; ?>" size="50" maxlength="255" /></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Campaign Change Date:</td><td>&nbsp;<?php echo $campinfo->campaign_changedate; ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_CampaignChangeDate_'); ?></td><td>&nbsp;<?php echo $campinfo->campaign_changedate; ?></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Campaign Login Date:</td><td>&nbsp;<?php echo $campinfo->campaign_logindate; ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_CampaignLoginDate_'); ?></td><td>&nbsp;<?php echo $campinfo->campaign_logindate; ?></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Campaign Call Date:</td><td>&nbsp;<?php echo $campinfo->campaign_calldate; ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_CampaignCallDate_'); ?></td><td>&nbsp;<?php echo $campinfo->campaign_calldate; ?></td>
     </tr>
 	<tr>
-    	<td style="text-align:right;" nowrap>Active:</td><td><select id="active"><option>Y</option><option>N</option></select></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_Active_'); ?></td><td><select id="active"><option>Y</option><option>N</option></select></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Park Music-on-Hold:</td><td><input id="park_ext" class="advanceSettings" type="text" value="<?php echo $campinfo->park_ext; ?>" size="10" maxlength="10" /></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_ParkMusicOnHold_'); ?></td><td><input id="park_ext" class="advanceSettings" type="text" value="<?php echo $campinfo->park_ext; ?>" size="10" maxlength="10" /></td>
     </tr>
 	<tr class="webFormSpan" style="display:none;">
-    	<td style="text-align:right;" nowrap>Web Form:</td><td class="toolTip" title="<b>Web Form</b> - Allows admin to specify the webpage that will open when an agent clicks on the Web Form button."><input id="web_form_address" type="text" value="<?php echo $campinfo->web_form_address; ?>" size="55" /></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_WebForm_'); ?></td><td class="toolTip" title="<? echo lang('go_WebFormTooltip'); ?>"><input id="web_form_address" type="text" value="<?php echo $campinfo->web_form_address; ?>" size="55" /></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Web Form Target:</td><td class="toolTip" title="<b>Web Form Target</b> - allows admin to specify the frame where the web </br> form will open. Only applicable for multi frame browsers."><input type="text" id="web_form_target" class="advanceSettings" value="<?php echo $campinfo->web_form_target; ?>" size="25" maxlength="255" /></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_WebFormTarget_'); ?></td><td class="toolTip" title="<? echo lang('go_WebFormTargetTooltip'); ?>"><input type="text" id="web_form_target" class="advanceSettings" value="<?php echo $campinfo->web_form_target; ?>" size="25" maxlength="255"/></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Allow Inbound and Blended:</td><td class="toolTip" title="<b>Dial Status</b> - Specifies the dispositions on the active lead file(s) on the campaign that</br> the system will automatically dial. Any dispositions not included on the dial status will</br> not be dialed."><select id="campaign_allow_inbound" class="advanceSettings"><option>Y</option><option>N</option></select></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_AllowInboundAndBlended_'); ?></td><td class="toolTip" title="<? echo lang('go_AllowInboundAndBlendedTooltip'); ?>"><select id="campaign_allow_inbound" class="advanceSettings" ><option>Y</option><option>N</option></select></td>
     </tr>
     <?php echo $enabled_dial_statuses; ?>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Add A Dial Status to Call:</td><td><select id="dial_status"><option value="NONE">NONE</option><?php echo $dial_statuses_list; ?></select> &nbsp;<input type="submit" style="cursor:pointer;" id="addStatus" value=" ADD " /></td>
+	<td style="text-align:right;" nowrap><? echo lang('go_AddADialStatustoCall_'); ?></td><td><select id="dial_status"><option value="NONE">NONE</option><?php echo $dial_statuses_list; ?></select> &nbsp;<input type="submit" style="cursor:pointer;" id="addStatus" value=" ADD " /></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>List Order:</td><td>
+	<td style="text-align:right;" nowrap><? echo lang('go_ListOrder_');  ?></td><td>
 			<select size=1 name="lead_order" id="lead_order" class="advanceSettings">
             <option>DOWN</option>
             <option>UP</option>
@@ -732,31 +732,25 @@ if (!$isSurvey)
 //     </tr>
 }
 ?>
-	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Lead Filter:</td><td><?=form_dropdown("lead_filter_id",$lead_filters,$campinfo->lead_filter_id,'id="lead_filter_id" class="advanceSettings"'); ?></td>
+ 	<tr class="advance_settings" style="display:none;">
+    	<td style="text-align:right;" nowrap><? echo lang('go_LeadFilter_'); ?></td><td><?=form_dropdown("lead_filter_id",$lead_filters,$campinfo->lead_filter_id,'id="lead_filter_id" class="advanceSettings"'); ?></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Force Reset Leads on Hopper:</td><td class="toolTip" title="<b>Force Reset Leads on Hopper</b> - will clear the current phone numbers loaded on the hopper that are </br>waiting to be dialed. The hopper willautomatically load a new set of numbers after a few minutes."><select id="force_reset_hopper" name="force_reset_hopper" class="advanceSettings"><option>N</option><option>Y</option></select></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_ForceResetLeadsonHopper_'); ?></td><td class="toolTip" title="<? echo lang('go_ForceResetLeadsonHopperTooltip'); ?>"><select id="force_reset_hopper" name="force_reset_hopper" class="advanceSettings"><option>N</option><option>Y</option></select></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Dial Timeout:</td><td class="toolTip" title="<b>Dial Timeout</b> - specifies the number of seconds the system will attempt to dial a phone number before hanging up."><input type="text" value="<?php echo $campinfo->dial_timeout; ?>" size="3" id="dial_timeout" name="dial_timeout" class="advanceSettings" /> <em>in seconds</em></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_DialTimeout_'); ?></td><td class="toolTip" title="<? echo lang('go_DialTimeoutTooltip'); ?>"><input type="text" value="<?php echo $campinfo->dial_timeout; ?>" size="3" id="dial_timeout" name="dial_timeout" class="advanceSettings" /> <em>in seconds</em></td>
+
     </tr>
 <?php
 if (!$isSurvey)
 {
 ?>
-	<tr>
-     	<td style="text-align:right;" nowrap>Dial Method:</td><td  class="toolTip" title="<center><b>Dial Method</b></center></br> <b>Manual</b> - User will have to click the <i> - Dial Next</i> button to make outbound</br> calls. This is always done after a call has been dispositioned.</br> <b>Auto Dial</b> - Used for outbound type campaign. System will automatically </br>
-dial phone numbers on the lead file. Number of lines is set on the</br> Auto Dial Level.</br> <b>Predictive</b> - Used for outbound type campaign. System will automatically</br> calculate dial level based on the drop percentage. Default drop </br> percentage is 3%. If drop percentage is met or exceeded, the system will </br> lower down the Auto Dial level.</br> <b>Inbound Man.</b> - Used for blended type campaign. Agents will get inbound</br> calls when they click on the Resume button. Outbound calls are done by</br> either clicking on the \Dial Next] button. Or by clicking on the Manual Dial </br>link on the agent webpage" style="cursor:default;width:12px;" > <?=form_dropdown('dial_method',array('MANUAL'=>'MANUAL','AUTO_DIAL'=>'AUTO DIAL','PREDICTIVE'=>'PREDICTIVE','INBOUND_MAN'=>'INBOUND MAN'),$dial_method,'id="dial_method"'); ?></td>
+ 	<tr>
+     	<td style="text-align:right;" nowrap><? echo lang('go_DialMethod_'); ?></td><td  class="toolTip" title="<? echo lang('go_DialMethodTooltip'); ?>" style="cursor:default;width:12px;" > <?=form_dropdown('dial_method',array('MANUAL'=>'MANUAL','AUTO_DIAL'=>'AUTO DIAL','PREDICTIVE'=>'PREDICTIVE','INBOUND_MAN'=>'INBOUND MAN'),$dial_method,'id="dial_method"'); ?></td>
     </tr>
 	<tr>
-    	<td style="text-align:right;" nowrap>Auto Dial Level:</td><td class="toolTip" title="<center><b>Auto Dial Level</b></center></br>
-<b>Slow</b> - 1 line per available agent.</br>
-<b>Normal</b> - 2 lines per available agent.</br>
-<b>High</b> - 4 lines per available agent.</br>
-<b>Max</b> - 6 lines per available agent.</br>
-<b>Advance</b> - Allows admin to set how</br>
-many lines per agent will be opened." style="cursor:default;width:12px;"><select id="auto_dial_level"><option>OFF</option><option>SLOW</option><option>NORMAL</option><option>HIGH</option><option>MAX</option><option>ADVANCE</option></select><select id="auto_dial_level_adv" style="display:none;"><?php echo $auto_dial_num; ?></select></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_AutoDialLevel_'); ?></td><td class="toolTip" title="<? echo lang('go_AutoDialLevelTooltip'); ?>" style="cursor:default;width:12px;"><select id="auto_dial_level"><option>OFF</option><option>SLOW</option><option>NORMAL</option><option>HIGH</option><option>MAX</option><option>MAX_PREDICTIVE</option><option>ADVANCE</option></select><select id="auto_dial_level_adv" style="display:none;"><?php echo $auto_dial_num; ?></select></td>
     </tr>
 <?php
 }
@@ -796,7 +790,7 @@ if (strlen($selected_manual_prefix) == 0)
 	$show_custom_manual_prefix = "";
 }
 ?>
-    	<td style="text-align:right;" nowrap>Carrier to use for this Campaign:</td><td><?=form_dropdown('dial_prefix',$dial_prefix,$selected_prefix,'id="dial_prefix" style="width:250px;"') ?> <?=form_input('custom_prefix',$campinfo->dial_prefix,'id="custom_prefix" size="12" maxlength="20" '.$show_custom_prefix) ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_CarrierForCampaign_'); ?></td><td><?=form_dropdown('dial_prefix',$dial_prefix,$selected_prefix,'id="dial_prefix" style="width:250px;"') ?> <?=form_input('custom_prefix',$campinfo->dial_prefix,'id="custom_prefix" size="12" maxlength="20" '.$show_custom_prefix) ?></td>
     </tr>
 <?php
 if (!$isSurvey)
@@ -805,7 +799,7 @@ if (!$isSurvey)
 	{
 ?>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Manual Dial Prefix:</td><td><?=form_dropdown('custom_manual_prefix',$manual_dial_prefix,$selected_manual_prefix,'id="custom_manual_prefix" style="width:250px;"') ?>  <?=form_input('manual_dial_prefix',$campinfo->manual_dial_prefix,'id="manual_dial_prefix" size="12" maxlength="20" class="advanceSettings" '.$show_custom_manual_prefix) ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_ManualDialPrefix_'); ?></td><td><?=form_dropdown('custom_manual_prefix',$manual_dial_prefix,$selected_manual_prefix,'id="custom_manual_prefix" style="width:250px;"') ?>  <?=form_input('manual_dial_prefix',$campinfo->manual_dial_prefix,'id="manual_dial_prefix" size="12" maxlength="20" class="advanceSettings" '.$show_custom_manual_prefix) ?></td>
     </tr>
 <?php
 	}
@@ -833,47 +827,47 @@ if (!$isSurvey)
 	if ($custom_fields_enabled > 0)
 		{$cfwOpt = '<option>FORM</option>';}
 	?>
-    	<td style="text-align:right;" nowrap>Get Call Launch:</td><td  class="toolTip" title="<b>Get Call Launch</b> - allows admin to automatically have the script popup on the Agent webpage at</br> the onset of a call without the need for the agents to click on their respective button"><select size=1 name="get_call_launch" id="get_call_launch" class="advanceSettings"><option selected>NONE</option><option>SCRIPT</option><?php echo "$eswOpt$cfwOpt"; ?></select></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_GetCallLaunch_'); ?></td><td  class="toolTip" title="<? echo lang('go_GetCallLaunchTooltip'); ?> "><select size=1 name="get_call_launch" id="get_call_launch" class="advanceSettings"><option selected>NONE</option><option>SCRIPT</option><option>WEBFORM</option><?php echo "$eswOpt$cfwOpt"; ?></select></td>
     </tr>
 	<tr>
-    	<td style="text-align:right;" nowrap>Script:</td><td  class="toolTip" title="<center><b>Script</b></center></br> Allows admin to enable a window to popup on the Agent webpage during a live call (Agent needs to</br> click on the <b>script button</b>)."> <?php echo form_dropdown('campaign_script',$camp_script_list,$campinfo->campaign_script,'id="campaign_script"'); ?> </td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_Script_'); ?></td><td  class="toolTip" title="<?php echo lang('go_ScriptTooltip'); ?>"> <?php echo form_dropdown('campaign_script',$camp_script_list,$campinfo->campaign_script,'id="campaign_script"'); ?> </td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Answering Machine Message:</td><td  class="toolTip" title="<b>Answering Machine Message</b> - allows admin to set a pre-recorded voice file to be played when </br>the system detects an answering machine. CPD AMD Action should be set to Message."><?php echo form_input('am_message_exten',$campinfo->am_message_exten,'id="am_message_exten" class="advanceSettings" maxlength="100" size="50"'); ?> <a href="javascript:launch_chooser('am_message_exten','date',1200,document.getElementById('am_message_exten').value);"><FONT color="blue">[ Audio Chooser ]</a><div id="divam_message_exten"></div></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_AnsweringMachineMessage_'); ?></td><td  class="toolTip" title="<? echo lang('go_AnsweringMachineMessageTooltip'); ?>"><?php echo form_input('am_message_exten',$campinfo->am_message_exten,'id="am_message_exten" class="advanceSettings" maxlength="100" size="35"'); ?> <a href="javascript:launch_chooser('am_message_exten','date',1200,document.getElementById('am_message_exten').value);"><FONT color="blue"><? echo lang('go_AudioChooser'); ?></a><div id="divam_message_exten"></div></td>
+   </tr>
+	<tr class="advance_settings" style="display:none;">
+    	<td style="text-align:right;" nowrap><? echo lang('go_WaitForSilenceOptions_'); ?></td><td class="toolTip" title="<? echo lang('go_WaitForSilenceOptionsTooltip'); ?>" > <?php echo form_input('waitforsilence_options',$campinfo->waitforsilence_options,'id="waitforsilence_options" class="advanceSettings" maxlength="25" size="20"'); ?> </td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>WaitForSilence Options:</td><td class="toolTip" title="<b>Wait for Silence</b> - sets the number of milliseconds the system will wait before triggering</br> the Answering Machine Message. Two settings, separated by a comima, are needed to </br> be entered. First setting will detect the length of silence to wait (measured in milliseconds)</br> and the other is the number of times it needs to detect that before playing the pre- recorded </br>voice file." > <?php echo form_input('waitforsilence_options',$campinfo->waitforsilence_options,'id="waitforsilence_options" class="advanceSettings" maxlength="25" size="20"'); ?> </td>
+   	<td style="text-align:right;" nowrap><? echo lang('go_AMDSendtoVMexten_'); ?></td><td><?php echo form_dropdown('amd_send_to_vmx',array('Y'=>'Y','N'=>'N'),$campinfo->amd_send_to_vmx,'id="amd_send_to_vmx" class="advanceSettings"'); ?></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>AMD Send to VM exten:</td><td><?php echo form_dropdown('amd_send_to_vmx',array('Y'=>'Y','N'=>'N'),$campinfo->amd_send_to_vmx,'id="amd_send_to_vmx" class="advanceSettings"'); ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_CPDAMDAction_'); ?></td><td  class="toolTip" title="<? echo lang('go_CPDAMDActionTooltip'); ?>"> <?php echo form_dropdown('cpd_amd_action',array('DISABLED'=>'DISABLED','DISPO'=>'DISPO','MESSAGE'=>'MESSAGE'),$campinfo->cpd_amd_action,'id="cpd_amd_action" class="advanceSettings"'); ?></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>CPD AMD Action:</td><td  class="toolTip" title="<b>CPD AMD Action</b> - defines what the system will do when it detects an answering machine.</br> Dispo will allow the system to disposition the call as AA before it gets to an agent. Message </br> will allow system to auto play a voice file set on the Answering Machine Message setting"> <?php echo form_dropdown('cpd_amd_action',array('DISABLED'=>'DISABLED','DISPO'=>'DISPO','MESSAGE'=>'MESSAGE'),$campinfo->cpd_amd_action,'id="cpd_amd_action" class="advanceSettings"'); ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_PauseCodesActive_'); ?></td><td><?php echo form_dropdown('agent_pause_codes_active',array('N'=>'NO','FORCE'=>'YES'),$campinfo->agent_pause_codes_active,'id="agent_pause_codes_active" class="advanceSettings"'); ?></td>
+   </tr>
+	<tr class="advance_settings" style="display:none;">
+    	<td style="text-align:right;" nowrap><? echo lang('go_AvailableOnlyTally_'); ?></td><td><?php echo form_dropdown('available_only_ratio_tally',array('N'=>'NO','Y'=>'YES'),$campinfo->available_only_ratio_tally,'id="available_only_ratio_tally" class="advanceSettings"'); ?></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Pause Codes Active:</td><td><?php echo form_dropdown('agent_pause_codes_active',array('N'=>'NO','FORCE'=>'YES'),$campinfo->agent_pause_codes_active,'id="agent_pause_codes_active" class="advanceSettings"'); ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_ManualDialFilter_'); ?></td><td><?php echo form_dropdown('manual_dial_filter',array('NONE'=>'NONE','DNC_ONLY'=>'DNC ONLY','CAMPLISTS_ONLY'=>'CAMPLISTS ONLY','CAMPLISTS_ALL'=>'CAMPLISTS ALL','DNC_AND_CAMPLISTS'=>'DNC AND CAMPLISTS','DNC_AND_CAMPLISTS_ALL'=>'DNC AND CAMPLISTS ALL'),$campinfo->manual_dial_filter,'id="manual_dial_filter" class="advanceSettings"'); ?></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Available Only Tally:</td><td><?php echo form_dropdown('available_only_ratio_tally',array('N'=>'NO','Y'=>'YES'),$campinfo->available_only_ratio_tally,'id="available_only_ratio_tally" class="advanceSettings"'); ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_AgentLeadSearch_'); ?></td><td><?php echo form_dropdown('agent_lead_search',array('ENABLED'=>'ENABLED','DISABLED'=>'DISABLED'),$campinfo->agent_lead_search,'id="agent_lead_search" class="advanceSettings"'); ?></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Manual Dial Filter:</td><td><?php echo form_dropdown('manual_dial_filter',array('NONE'=>'NONE','DNC_ONLY'=>'DNC ONLY','CAMPLISTS_ONLY'=>'CAMPLISTS ONLY','CAMPLISTS_ALL'=>'CAMPLISTS ALL','DNC_AND_CAMPLISTS'=>'DNC AND CAMPLISTS','DNC_AND_CAMPLISTS_ALL'=>'DNC AND CAMPLISTS ALL'),$campinfo->manual_dial_filter,'id="manual_dial_filter" class="advanceSettings"'); ?></td>
-    </tr>
-	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Agent Lead Search:</td><td><?php echo form_dropdown('agent_lead_search',array('ENABLED'=>'ENABLED','DISABLED'=>'DISABLED'),$campinfo->agent_lead_search,'id="agent_lead_search" class="advanceSettings"'); ?></td>
-    </tr>
-	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Agent Lead Search Method:</td><td><?php echo form_dropdown('agent_lead_search_method',array('SYSTEM'=>'SYSTEM','CAMPAIGNLISTS'=>'CAMPAIGNLISTS','CAMPLISTS_ALL'=>'CAMPLISTS ALL','LIST'=>'LIST','USER_CAMPLISTS_ALL'=>'USER CAMPLISTS ALL','USER_LIST'=>'USER LIST','GROUP_SYSTEM'=>'GROUP SYSTEM','GROUP_CAMPAIGNLISTS'=>'GROUP CAMPAIGNLISTS','GROUP_CAMPLISTS_ALL'=>'GROUP CAMPLISTS ALL','GROUP_LIST'=>'GROUP LIST','TERRITORY_SYSTEM'=>'TERRITORY SYSTEM','TERRITORY_CAMPAIGNLISTS'=>'TERRITORY CAMPAIGNLISTS','TERRITORY_CAMPLISTS_ALL'=>'TERRITORY CAMPLISTS ALL','TERRITORY_LIST'=>'TERRITORY LIST'),$campinfo->agent_lead_search_method,'id="agent_lead_search_method" class="advanceSettings"'); ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_AgentLeadSearchMethod_'); ?></td><td><?php echo form_dropdown('agent_lead_search_method',array('SYSTEM'=>'SYSTEM','CAMPAIGNLISTS'=>'CAMPAIGNLISTS','CAMPLISTS_ALL'=>'CAMPLISTS ALL','LIST'=>'LIST','USER_CAMPLISTS_ALL'=>'USER CAMPLISTS ALL','USER_LIST'=>'USER LIST','GROUP_SYSTEM'=>'GROUP SYSTEM','GROUP_CAMPAIGNLISTS'=>'GROUP CAMPAIGNLISTS','GROUP_CAMPLISTS_ALL'=>'GROUP CAMPLISTS ALL','GROUP_LIST'=>'GROUP LIST','TERRITORY_SYSTEM'=>'TERRITORY SYSTEM','TERRITORY_CAMPAIGNLISTS'=>'TERRITORY CAMPAIGNLISTS','TERRITORY_CAMPLISTS_ALL'=>'TERRITORY CAMPLISTS ALL','TERRITORY_LIST'=>'TERRITORY LIST'),$campinfo->agent_lead_search_method,'id="agent_lead_search_method" class="advanceSettings"'); ?></td>
     </tr>
 <?php
 } else {
 ?>
 	<tr>
-		<td style="text-align:right;">Active:</td>
-		<td><select id="active" name="status"><option value="N">INACTIVE</option><option value="Y">ACTIVE</option></select></td>
+		<td style="text-align:right;"><? echo lang('go_Active_'); ?></td>
+		<td><select id="active" name="status"><option value="N"><? echo lang('go_INACTIVE'); ?></option><option value="Y"><? echo lang('go_ACTIVE'); ?></option></select></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Available Only Tally:</td><td><?php echo form_dropdown('available_only_ratio_tally',array('N'=>'NO','Y'=>'YES'),$campinfo->available_only_ratio_tally,'id="available_only_ratio_tally" class="advanceSettings"'); ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_AvailableOnlyTally_'); ?></td><td><?php echo form_dropdown('available_only_ratio_tally',array('N'=>'NO','Y'=>'YES'),$campinfo->available_only_ratio_tally,'id="available_only_ratio_tally" class="advanceSettings"'); ?></td>
     </tr>
 	<!--<tr>
     	<td style="text-align:right;" nowrap>Activesssss:</td><td><select id="active"><option>Y</option><option>N</option></select></td>
@@ -882,14 +876,14 @@ if (!$isSurvey)
 }
 ?>
 	<tr>
-    	<td style="text-align:right;" nowrap>Campaign CallerID:</td><td  class="toolTip" title="<b>Campaign Caller ID</b> - sets the phone number that will be displayed on the called party phone."><input id="campaign_cid" type="text" value="<?php echo $campinfo->campaign_cid; ?>" size="15" /></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_CampaignCallerID_'); ?></td><td  class="toolTip" title="<? echo lang('go_CampaignCallerIDTooltip'); ?>"><input id="campaign_cid" type="text" value="<?php echo $campinfo->campaign_cid; ?>" size="15" /></td>
     </tr>
 <?php
 if ($campinfo->campaign_allow_inbound == 'Y')
 {
 ?>
 	<tr>
-    	<td style="text-align:right;" nowrap>Assigned DID/TFN:</td><td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_AssignedDID_TFN_'); ?></td><td>
     	<a href="<?php echo $base; ?>index.php/ingroups#tabs-2" class="toolTip" title="View All DID Numbers" style="text-decoration:none">
 <?php
 foreach ($inbound_dids as $did)
@@ -908,37 +902,37 @@ if (!$isSurvey)
 {
 ?>
 	<tr>
-    	<td style="text-align:right;" nowrap>Campaign Recording:</td><td  class="toolTip" title="<center><b>Campaign Recording</b></center></br><b>Off</b> - No calls will be recorded.</br><b>On</b> - All <b>outbound</b> calls will be recorded.</br><b>ONDEMAND</b> - No <b>outbound</b> calls will be recorded</br>unless agent clicks on the record button on the Agent</br>webpage"><select id="campaign_recording"><option value="NEVER">OFF</option><option value="ALLFORCE">ON</option><option value="ONDEMAND">ONDEMAND</option></select></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_CampaignRecording_'); ?></td><td  class="toolTip" title="<? echo lang('go_CampaignRecordingTooltip'); ?>"><select id="campaign_recording"><option value="NEVER">OFF</option><option value="ALLFORCE">ON</option><option value="ONDEMAND">ONDEMAND</option></select></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Campaign Rec Filename:</td><td><input type=text name="campaign_rec_filename" id="campaign_rec_filename" class="advanceSettings" size=50 maxlength=50 value="<?php echo $campinfo->campaign_rec_filename; ?>"></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_CampaignRecFilename_'); ?></td><td><input type=text name="campaign_rec_filename" id="campaign_rec_filename" class="advanceSettings" size=50 maxlength=50 value="<?php echo $campinfo->campaign_rec_filename; ?>"></td>
     </tr>
 	<tr>
-    	<td style="text-align:right;" nowrap>Answering Machine Detection:</td><td><select id="campaign_vdad_exten"><?php echo $camp_vdad_option; ?></select></td>
+    	<td style="text-align:right;" nowrap class="toolTip" title="<? echo lang('go_AnsweringMachineDetectionTooltip'); ?>"><? echo lang('go_AnsweringMachineDetection_'); ?></td><td><select id="campaign_vdad_exten"><?php echo $camp_vdad_option; ?></select></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Next Agent Call:</td><td  class="toolTip" title="<b>Next Agent Call</b> - defines how calls will be routed to an agent." style="cursor:default;width:12px;"><?=form_dropdown('next_agent_call',array('random'=>'Random','oldest_call_start'=>'Oldest Call Start','oldest_call_finish'=>'Oldest Call Finish','overall_user_level'=>'Overall User Level','campaign_rank'=>'Campaign Rank','campaign_grade_random'=>'Campaign Grade Random','fewest_calls'=>'Fewest Calls','longest_wait_time'=>'Longest Wait Time'),$campinfo->next_agent_call,'id="next_agent_call" class="advanceSettings"'); ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_NextAgentCall_'); ?></td><td  class="toolTip" title="<? echo lang('go_NextAgentCallTooltip'); ?>" style="cursor:default;width:12px;"><?=form_dropdown('next_agent_call',array('random'=>'Random','oldest_call_start'=>'Oldest Call Start','oldest_call_finish'=>'Oldest Call Finish','overall_user_level'=>'Overall User Level','campaign_rank'=>'Campaign Rank','campaign_grade_random'=>'Campaign Grade Random','fewest_calls'=>'Fewest Calls','longest_wait_time'=>'Longest Wait Time'),$campinfo->next_agent_call,'id="next_agent_call" class="advanceSettings"'); ?></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Transfer-Conf Number 1:</td><td  class="toolTip" title="<b>Transfer-Conf Number 1 and 2: </b>- will store a specific phone number on the D1 and D2 that can be</br>used to auto populate the number to call box. This option is only used during transfer calls."><input type=text name="xferconf_a_number" id="xferconf_a_number" class="advanceSettings" size=20 maxlength=50 value="<?php echo $campinfo->xferconf_a_number; ?>"></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_TransferConfNumber1_'); ?></td><td  class="toolTip" title="<? echo lang('go_TransferConfNumber1Tooltip'); ?>"><input type=text name="xferconf_a_number" id="xferconf_a_number" class="advanceSettings" size=20 maxlength=50 value="<?php echo $campinfo->xferconf_a_number; ?>"></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Transfer-Conf Number 2:</td><td class="toolTip" title="<b>Transfer-Conf Number 1 and 2: </b>- will store a specific phone number on the D1 and D2 that can be</br> used to auto populate the number to call box. This option is only used during transfer calls."><input type=text name="xferconf_b_number" id="xferconf_b_number" class="advanceSettings" size=20 maxlength=50 value="<?php echo $campinfo->xferconf_b_number; ?>"></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_TransferConfNumber2_'); ?></td><td class="toolTip" title="<? echo lang('go_TransferConfNumber2Tooltip'); ?>"><input type=text name="xferconf_b_number" id="xferconf_b_number" class="advanceSettings" size=20 maxlength=50 value="<?php echo $campinfo->xferconf_b_number; ?>"></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>3-Way Call Outbound CallerID:</td><td class="toolTip" title="<b>3-Way Call Outbound CallerID - defines the caller ID that will be used during a 3-way call" style="cursor:default;width:12px;"><?php echo form_dropdown('three_way_call_cid',array('CAMPAIGN'=>'CAMPAIGN','CUSTOMER'=>'CUSTOMER','AGENT_PHONE'=>'AGENT PHONE','AGENT_CHOOSE'=>'AGENT CHOOSE','CUSTOM_CID'=>'CUSTOM CID'),$campinfo->three_way_call_cid,'id="three_way_call_cid" class="advanceSettings"'); ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_3WayCallOutboundCallerID_'); ?></td><td class="toolTip" title="<? echo lang('go_3WayCallOutboundCallerIDTooltip'); ?>" style="cursor:default;width:12px;"><?php echo form_dropdown('three_way_call_cid',array('CAMPAIGN'=>'CAMPAIGN','CUSTOMER'=>'CUSTOMER','AGENT_PHONE'=>'AGENT PHONE','AGENT_CHOOSE'=>'AGENT CHOOSE','CUSTOM_CID'=>'CUSTOM CID'),$campinfo->three_way_call_cid,'id="three_way_call_cid" class="advanceSettings"'); ?></td>
     </tr>
 	<tr <?=$showThisOption ?> style="display:none;">
-    	<td style="text-align:right;" nowrap>3-Way Call Dial Prefix:</td><td><?php echo form_input('three_way_dial_prefix',$campinfo->three_way_dial_prefix,'id="three_way_dial_prefix" maxlength="20" size="15" class="advanceSettings"'); ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_3WayCallDialPrefix_'); ?></td><td><?php echo form_input('three_way_dial_prefix',$campinfo->three_way_dial_prefix,'id="three_way_dial_prefix" maxlength="20" size="15" class="advanceSettings"'); ?></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Customer 3-Way Hangup Logging:</td><td class="toolTip" title="<b>Customer 3-Way Hangup Logging </b> - if this option is enabled will allow the system to log if customer hung up</br> during a 3-way call. This option will also trigger the option set on Customer 3-Way Hangup Action"> <?php echo form_dropdown('customer_3way_hangup_logging',array('DISABLED'=>'DISABLED','ENABLED'=>'ENABLED'),$campinfo->customer_3way_hangup_logging,'id="customer_3way_hangup_logging" class="advanceSettings"'); ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_Customer3WayHangupLogging_'); ?></td><td class="toolTip" title="<? echo lang('go_Customer3WayHangupLoggingTooltip'); ?>"> <?php echo form_dropdown('customer_3way_hangup_logging',array('DISABLED'=>'DISABLED','ENABLED'=>'ENABLED'),$campinfo->customer_3way_hangup_logging,'id="customer_3way_hangup_logging" class="advanceSettings"'); ?></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Customer 3-Way Hangup Seconds:</td><td class="toolTip" title="<b>Customer 3-Way Hangup Seconds </b> - specifies the amount in seconds before the system will trigger</br> the Customer 3-Way Hangup Action"><?php echo form_input('customer_3way_hangup_seconds',$campinfo->customer_3way_hangup_seconds,'id="customer_3way_hangup_seconds" maxlength="5" size="5" class="advanceSettings"'); ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_Customer3WayHangupSeconds_'); ?></td><td class="toolTip" title="<? echo lang('go_Customer3WayHangupSecondsTooltip'); ?>"><?php echo form_input('customer_3way_hangup_seconds',$campinfo->customer_3way_hangup_seconds,'id="customer_3way_hangup_seconds" maxlength="5" size="5" class="advanceSettings"'); ?></td>
     </tr>
 	<tr class="advance_settings" style="display:none;">
-    	<td style="text-align:right;" nowrap>Customer 3-Way Hangup Action:</td><td><?php echo form_dropdown('customer_3way_hangup_action',array('NONE'=>'NONE','DISPO'=>'DISPO'),$campinfo->customer_3way_hangup_action,'id="customer_3way_hangup_action" class="advanceSettings"'); ?></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_Customer3WayHangupAction_'); ?></td><td class="toolTip" title="<? echo lang('go_Customer3WayHangupActionTooltip'); ?>"><?php echo form_dropdown('customer_3way_hangup_action',array('NONE'=>'NONE','DISPO'=>'DISPO'),$campinfo->customer_3way_hangup_action,'id="customer_3way_hangup_action" class="advanceSettings"'); ?></td>
     </tr>
 <?php
 }
@@ -946,11 +940,11 @@ if ($isSurvey)
 {
 ?>
 	<tr>
-		<td style="text-align:right;">Audio File:</td>
+		<td style="text-align:right;"><? echo lang('go_AudioFile_'); ?></td>
 		<td><input id="survey_first_audio_file" name="survey_first_audio_file" type="text" maxlength="50" size="25" value="<?php echo $campinfo->survey_first_audio_file; ?>" /><input type="button" value="Audio" style="cursor:pointer;" class="selectAudio" id="first_audio" /></td>
 	</tr>
 	<tr>
-		<td style="text-align:right;">Survey Method:</td>
+		<td style="text-align:right;"><? echo lang('go_SurveyMethod_'); ?></td>
 		<td>
 			<select id="survey_method" name="survey_method">
 				<option value="AGENT_XFER">CAMPAIGN</option>
@@ -960,7 +954,7 @@ if ($isSurvey)
 		</td>
 	</tr>
 	<tr>
-		<td style="text-align:right;">Survey Call Menu:</td>
+		<td style="text-align:right;"><? echo lang('go_SurveyCallMenu_'); ?></td>
 		<td>
 			<?php
 			$callMenuArray[''] = "---NONE---";
@@ -978,15 +972,12 @@ if ($isSurvey)
 	{
 ?>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Survey DTMF Digits:</td>
-		<td><input id="survey_dtmf_digits" name="survey_dtmf_digits" class="advanceSettings" type="text" maxlength="16" size="16" placeholder="eg. 0123456789*#" value="<?php echo $campinfo->survey_dtmf_digits; ?>" /> <small>* customer define key press e.g.0123456789*#</small></td>
+		<td style="text-align:right;"><? echo lang('go_SurveyDTMFDigits_'); ?></td>
+		<td><input id="survey_dtmf_digits" name="survey_dtmf_digits" class="advanceSettings" type="text" maxlength="16" size="16" placeholder="eg. 0123456789*#" value="<?php echo $campinfo->survey_dtmf_digits; ?>" /> <small>* <? echo lang('go_customerdefinekeypres
+																														       s'); ?> e.g.0123456789*#</small></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Survey Wait Seconds:</td>
-		<td><input id="survey_wait_sec" name="survey_wait_sec" class="advanceSettings" type="text" maxlength="2" size="5" value="<?php echo $campinfo->survey_wait_sec; ?>" /></td>
-	</tr>
-	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">DID:</td>
+		<td style="text-align:right;"><? echo lang('go_DID_'); ?></td>
 		<td><input id="survey_xfer_exten" name="survey_xfer_exten" class="advanceSettings" type="text" maxlength="25" size="20" value="<?php echo $campinfo->survey_xfer_exten; ?>" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
@@ -997,15 +988,15 @@ if ($isSurvey)
 		<td colspan="2">&nbsp;</td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 8 Not Interested Digit:</td>
+		<td style="text-align:right;"><? echo lang('go_Press8NotInterestedDigit_'); ?></td>
 		<td><input id="survey_ni_digit" name="survey_ni_digit" class="advanceSettings" type="text" maxlength="10" size="5" value="<?php echo $campinfo->survey_ni_digit; ?>" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 8 Not Interested Audio File:</td>
+		<td style="text-align:right;"><? echo lang('go_Press8NotInterestedAudioFile_'); ?></td>
 		<td><input id="survey_ni_audio_file" name="survey_ni_audio_file" class="advanceSettings" type="text" maxlength="50" size="25" value="<?php echo $campinfo->survey_ni_audio_file; ?>" /><input type="button" value="Audio" style="cursor:pointer;" class="selectAudio" id="ni_audio" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 8 Not Interested Status:</td>
+		<td style="text-align:right;"><? echo lang('go_Press8NotInterestedStatus_'); ?></td>
 		<td>
 			<select id="survey_ni_status" name="survey_ni_status" class="advanceSettings">
 				<option value="NI">NI - Not Interested</option>
@@ -1017,38 +1008,38 @@ if ($isSurvey)
 		<td colspan="2">&nbsp;</td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 3 Third Digit:</td>
+		<td style="text-align:right;"><? echo lang('go_Press3Digit_'); ?></td>
 		<td><input id="survey_third_digit" name="survey_third_digit" class="advanceSettings" type="text" maxlength="10" size="5" value="<?php echo $campinfo->survey_third_digit; ?>" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 3 Third Audio File:</td>
+		<td style="text-align:right;"><? echo lang('go_Press3AudioFile_'); ?></td>
 		<td><input id="survey_third_audio_file" name="survey_third_audio_file" class="advanceSettings" type="text" maxlength="50" size="25" value="<?php echo $campinfo->survey_third_audio_file; ?>" /><input type="button" value="Audio" style="cursor:pointer;" class="selectAudio" id="third_audio" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 3 Third Status:</td>
+		<td style="text-align:right;"><? echo lang('go_Press3Status_'); ?></td>
 		<td><input id="survey_third_status" name="survey_third_status" class="advanceSettings" type="text" maxlength="6" size="10" value="<?php echo $campinfo->survey_third_status; ?>" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 3 Third DID:</td>
+		<td style="text-align:right;"><? echo lang('go_Press3DID_'); ?></td>
 		<td><input id="survey_third_exten" name="survey_third_exten" class="advanceSettings" type="text" maxlength="25" size="20" value="<?php echo $campinfo->survey_third_exten; ?>" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
 		<td colspan="2">&nbsp;</td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 4 Fourth Digit:</td>
+		<td style="text-align:right;"><? echo lang('go_Press4Digit_'); ?></td>
 		<td><input id="survey_fourth_digit" name="survey_fourth_digit" class="advanceSettings" type="text" maxlength="10" size="5" value="<?php echo $campinfo->survey_fourth_digit; ?>" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 4 Fourth Audio File:</td>
+		<td style="text-align:right;"><? echo lang('go_Press4AudioFile_'); ?></td>
 		<td><input id="survey_fourth_audio_file" name="survey_fourth_audio_file" class="advanceSettings" type="text" maxlength="50" size="25" value="<?php echo $campinfo->survey_fourth_audio_file; ?>" /><input type="button" value="Audio" style="cursor:pointer;" class="selectAudio" id="fourth_audio" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 4 Fourth Status:</td>
+		<td style="text-align:right;"><? echo lang('go_Press4Status_'); ?></td>
 		<td><input id="survey_fourth_status" name="survey_fourth_status" class="advanceSettings" type="text" maxlength="6" size="10" value="<?php echo $campinfo->survey_fourth_status; ?>" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Press 4 Fourth DID:</td>
+		<td style="text-align:right;"><? echo lang('go_Press4DID_'); ?></td>
 		<td><input id="survey_fourth_exten" name="survey_fourth_exten" class="advanceSettings" type="text" maxlength="25" size="20" value="<?php echo $campinfo->survey_fourth_exten; ?>" /></td>
 	</tr>
 	<tr class="advance_settings" style="display:none;">
@@ -1062,7 +1053,7 @@ if ($isSurvey)
 		<td><select id="status" name="status"><option>INACTIVE</option><option>ACTIVE</option></select></td>
 	</tr> -->
 	<tr>
-		<td style="text-align:right;">Number of Lines:</td>
+		<td style="text-align:right;"><? echo lang('go_NumberofLines_'); ?></td>
 		<td>
 			<select id="number_of_lines" name="number_of_lines">
 				<option>1</option>
@@ -1083,14 +1074,14 @@ if ($isSurvey)
 }
 ?>
 	<tr>
-    	<td style="text-align:right;" nowrap>Local Call Time:</td><td class="toolTip" title="<b>Local Call Time</b> - sets the time window when leads will be called. This is based</br> on the actual time where the phone number is located."><select id="local_call_time"><?php echo $local_call_times; ?></select></td>
+    	<td style="text-align:right;" nowrap><? echo lang('go_LocalCallTime_'); ?></td><td class="toolTip" title="<? echo lang('go_LocalCallTimeTooltip'); ?>"><select id="local_call_time"><?php echo $local_call_times; ?></select></td>
     </tr>
 <?php
 if ($campinfo->campaign_allow_inbound=="Y")
 {
 ?>
 	<tr class="advance_settings" style="display:none;">
-		<td style="text-align:right;">Inbound Groups:</td>
+		<td style="text-align:right;"><? echo lang('go_InboundGroups_'); ?></td>
 		<td>
 <?php
 	foreach ($inbound_groups as $inb_grp)
@@ -1111,7 +1102,7 @@ if ($campinfo->campaign_allow_inbound=="Y")
 	</tr>
 
         <tr class="advance_settings" style="display:none;">
-                <td style="text-align:right;">Allowed Transfer Group:</td>
+                <td style="text-align:right;"><? echo lang('go_AllowedTransferGroup_'); ?></td>
                 <td>
 <?php
 
@@ -1145,21 +1136,20 @@ if ($isSurvey && $campinfo->campaign_vdad_exten=='8373')
 }
 ?>
 	<tr>
-    	<td><span id="advance_link" style="cursor:pointer;font-size:9px;<?php echo $hideAdvanceLink; ?>">[ + ADVANCE SETTINGS ]</span><input type="hidden" id="isAdvance" value="0" /></td><td style="text-align:right; padding-right:-50px;"><span id="saveSettings" class="buttons">SAVE SETTINGS</span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
+    	<td><span id="advance_link" style="cursor:pointer;font-size:9px;<?php echo $hideAdvanceLink; ?>"><? echo lang('go_plusADVANCESETTINGS'); ?></span><input type="hidden" id="isAdvance" value="0" /></td><td style="text-align:right;"><span id="saveSettings" class="buttons"><? echo lang('go_SAVESETTINGS'); ?></span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
     </tr>
 </table>
 <br />
-<div align="center" style="font-weight:bold; color:#000; font-size:16px;">LISTS WITHIN THIS CAMPAIGN</div>
+<div align="center" style="font-weight:bold; color:#000; font-size:16px;"><? echo lang('go_LISTWITHINCAMPAIGN'); ?></div>
 <br />
-<table class="toolTip" title="<b>List ID - being used by the campaign</b> - you can toggle between lists or combine them by ticking the - Active</br> column box. The Modify icon allows you to edit the List ID itself"  id="list_within_campaign" border=0 cellpadding="1" cellspacing="1" style="margin-left:auto; margin-right:auto; width:95%; border:#D0D0D0 solid 1px; -moz-border-radius:5px; -khtml-border-radius:5px; -webkit-border-radius:5px; border-radius:5px;">
-	<tr style="font-weight:bold;color:#000;">
-    	<td style="white-space: nowrap">&nbsp;&nbsp;LIST ID&nbsp;</td>
-    	<td style="white-space: nowrap">&nbsp;LIST NAME&nbsp;</td>
-    	<td>&nbsp;DESCRIPTION&nbsp;</td>
-    	<td style="text-align:center;white-space: nowrap" nowrap>&nbsp;LEADS COUNT&nbsp;</td>
-    	<td style="text-align:center">&nbsp;ACTIVE&nbsp;</td>
-    	<td style="text-align:center;white-space: nowrap" nowrap>&nbsp;LAST CALL DATE&nbsp;</td>
-    	<td style="text-align:center">&nbsp;MODIFY&nbsp;</td>
+<table class="toolTip" title="<? echo lang('go_LISTIDTooltip'); ?>"  id="list_within_campaign" border=0 cellpadding="1" cellspacing="1" style="margin-left:auto; margin-right:auto; width:95%; border:#D0D0D0 solid 1px; -moz-border-radius:5px; -khtml-border-radius:5px; -webkit-border-radius:5px; border-radius:5px;">
+    	<td style="white-space: nowrap">&nbsp;&nbsp;<? echo lang('go_LISTID'); ?>&nbsp;</td>
+    	<td style="white-space: nowrap">&nbsp;<? echo lang('go_LISTNAME'); ?> &nbsp;</td>
+    	<td>&nbsp;<? echo lang('go_DESCRIPTION'); ?>&nbsp;</td>
+    	<td style="text-align:center;white-space: nowrap" nowrap>&nbsp;<? echo lang('go_LEADSCOUNT'); ?>&nbsp;</td>
+    	<td style="text-align:center">&nbsp;<? echo lang('go_ACTIVE'); ?>&nbsp;</td>
+    	<td style="text-align:center;white-space: nowrap" nowrap>&nbsp;<? echo lang('go_LASTCALLDATE'); ?>&nbsp;</td>
+    	<td style="text-align:center">&nbsp;<?echo lang('go_MODIFY'); ?> &nbsp;</td>
     </tr>
 <?php
 	$active_list_id = 0;
@@ -1202,18 +1192,18 @@ if ($isSurvey && $campinfo->campaign_vdad_exten=='8373')
 ?>
 </table>
 <br style="font-size:8px;" />
-<div align="center" style="font-size:14px;"><span id="saveListIDs" class="buttons">SAVE ACTIVE LIST CHANGES</span><!--<input id="saveListIDs" type="submit" value=" SAVE ACTIVE LIST CHANGES " style="cursor:pointer;" />--></div>
+<div align="center" style="font-size:14px;"><span id="saveListIDs" class="buttons"><? echo lang('go_SAVEACTIVELISTCHANGES'); ?></span><!--<input id="saveListIDs" type="submit" value=" SAVE ACTIVE LIST CHANGES " style="cursor:pointer;" />--></div>
 <br /><br />
-<div align="center" style="color:#000;">This campaign has <?php echo $active_list_id; ?> active lists and <?php echo $inactive_list_id; ?> inactive lists</div>
+<div align="center" style="color:#000;"><? echo lang('go_Thiscampaignhas');?> <?php echo $active_list_id; ?> <? echo lang('go_activelistsand'); ?> <?php echo $inactive_list_id; ?> <? echo lang('go_inactivelists'); ?></div>
 <br style="font-size:8px;" />
-<div align="center" style="color:#000;">This campaign has <?php echo $leads_on_hopper->count; ?> leads in the queue (dial hopper)</div>
+<div align="center" style="color:#000;"><? echo lang('go_Thiscampaignhas');?> <?php echo $leads_on_hopper->count; ?> <? echo lang('go_leadsinthequeue'); ?></div>
 <br style="font-size:8px;" />
-<div align="center" style="color:#000;"><span id="view_hopper" class="buttons toolTip" title="Clicking on this link will show all phone numbers currently loaded on the hopper">View leads in the hopper for this campaign</span></div>
+<div align="center" style="color:#000;"><span id="view_hopper" class="buttons toolTip" title="<? echo lang('go_VLITHFTCtooltip'); ?>"><? echo lang('go_Viewleadsinthehopperforthiscampaign'); ?></span></div>
 <br style="font-size:8px;" />
 <?php
 if (! $isSurvey) {
 ?>
-<div align="center" style="color:#000;"><span id="logout_agents" class="buttons" style="color:red;">Logout all agents within this campaign</span></div>
+<div align="center" style="color:#000;"><span id="logout_agents" class="buttons" style="color:red;"><? echo lang('go_Logoutallagentswithinthiscampaign'); ?></span></div>
 <br style="font-size:8px;" />
 <?php
 }
@@ -1228,7 +1218,7 @@ if (! $isSurvey) {
 <div id="fileOverlayContent" style="overflow-x: hidden; overflow-y: auto; height: 98%;">
 <table>
 	<tr>
-		<td>List of Files Uploaded:</td>
+		<td><? echo lang('go_ListofFilesUploaded_');  ?></td>
 	</tr>
 <?php
 $WeBServeRRooT = '/var/lib/asterisk';

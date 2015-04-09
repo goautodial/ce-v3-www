@@ -88,7 +88,8 @@ $(document).ready(function()
 		
 		if (lead_file.length < 1)
 		{
-			alert('Please include a lead file.');
+			alert('<? echo lang('go_Pleaseincludealeadfile'); ?>');
+			//alert('Please include a lead file.');
 		}
 		else
 		{
@@ -102,7 +103,8 @@ $(document).ready(function()
 			}
 			else
 			{
-				alert('Uploaded file is invalid: '+lead_file+'<br /><br />File must be in Excel format (xls, xlsx) or in Comma Separated Values (csv).');
+				alert('<? echo lang('go_Uploadedfileisinvalid'); ?>'+lead_file+'<br /><br /><? echo lang('go_FilemustbeinExcelformatxlsxlsxorinCommaSeparatedValuescsv'); ?>');
+				//alert('Uploaded file is invalid: '+lead_file+'<br /><br />File must be in Excel format (xls, xlsx) or in Comma Separated Values (csv).');
 			}
 		}
 	});
@@ -115,7 +117,8 @@ $(document).ready(function()
 		
 		if (wav_file.length < 1)
 		{
-			alert('Please include a .WAV file.');
+			alert('<? echo lang('go_PleaseincludeaWAVfile'); ?>');
+			//alert('Please include a .WAV file.');
 		}
 		else
 		{
@@ -126,7 +129,8 @@ $(document).ready(function()
 			}
 			else
 			{
-				alert('Error uploading '+wav_file+'.<br />Please upload only audio files.<br />We strongly recommend <strong>.WAV</strong> files.');
+				alert('<? echo lang('go_Erroruploading'); ?> '+wav_file+'.<br /><? echo lang('go_Pleaseuploadonlyaudiofiles'); ?><br /><? echo lang('go_Westronglyrecommend'); ?><strong> .WAV</strong> <? echo lang('go_files'); ?>.');
+				//alert('Error uploading '+wav_file+'.<br />Please upload only audio files.<br />We strongly recommend <strong>.WAV</strong> files.');
 			}
 		}
 	});
@@ -136,7 +140,8 @@ $(document).ready(function()
 		var filename = $(this).val();
 		if ( ! /\.wav/.test(filename)) {
 			$(this).val('');
-			alert('Please upload only audio files.\nWe strongly recommend .WAV files.');
+			alert('<? echo lang('go_Pleaseuploadonlyaudiofiles'); ?> \n <? echo lang('go_Westronglyrecommend'); ?> .WAV <? echo lang('go_files'); ?>.');
+			//alert('Please upload only audio files.\nWe strongly recommend .WAV files.');
 		}
 	}
 	
@@ -191,7 +196,8 @@ $(document).ready(function()
 
 		if (leadArray.length < 1)
 		{
-			alert('Please select field values.');
+			alert('<? echo lang('go_Pleaseselectfieldvalues'); ?>');
+			//alert('Please select field values.');
 		}
 		else
 		{
@@ -211,7 +217,8 @@ $(document).ready(function()
 
 			if (go < 1)
 			{
-				alert('Please fill-in at least PHONE NUMBER, FIRST NAME and LAST NAME.');
+				alert('<? echo lang('go_PleasefillinatleastPHONENUMBERFIRSTNAMEandLASTNAME'); ?>');
+				//alert('Please fill-in at least PHONE NUMBER, FIRST NAME and LAST NAME.');
 			}
 			else
 			{
@@ -222,7 +229,8 @@ $(document).ready(function()
 				var file_ext = $('#file_ext').val();
 				var leadArray = $('.uploadLeads').serialize();
 
-				$('#next').text('Next');
+				$('#next').text('<? echo lang('go_Next'); ?>');
+				//$('#next').text('Next');
 				$('#processLeads').hide();
 				$('#showDivResult').show();
 				$('#box').css('position','absolute');
@@ -289,7 +297,7 @@ $(document).ready(function()
             <input type="hidden" id="survey_type" value="<?php echo $survey_type; ?>" />
             <table style="width:100%;">
                 <tr>
-                    <td class="label">Lead File:</td>
+                    <td class="label"><? echo lang('go_LeadFile_'); ?></td>
                     <td><input type="file" name="leadFile" id="leadFile" value="<?php echo $lead_file ?>">
                     </td>
                 </tr>
@@ -303,14 +311,14 @@ $(document).ready(function()
                     </td>
                 </tr>
                 <tr>
-                    <td class="label">List ID:</td>
+                    <td class="label"><? echo lang('go_ListID_'); ?></td>
                     <td>
                         <span style="font-weight:bold;font-size:11px;color:#000; line-height:12px;">&nbsp;<?php echo "$list_id &raquo; $list_name"; ?></span>
                         <input type="hidden" id="list_id" name="list_id" value="<?php echo $list_id; ?>" />
                     </td>
                 </tr>
                 <tr>
-                    <td class="label">Country:</td>
+                    <td class="label"><? echo lang('go_Country_'); ?></td>
                     <td>
                     <select name="phone_code" id="phone_code">
                         <?php
@@ -325,28 +333,28 @@ $(document).ready(function()
                     </td>
                  </tr>
                  <tr>
-                    <td class="label">Check for Duplicates:</td>
+                    <td class="label"><? echo lang('go_CheckforDuplicates'); ?></td>
                     <td>
                         <select size="1" name="checkDuplicates" id="checkDuplicates" style="width: 350px;">
-                            <option value="NONE">NO DUPLICATE CHECK</option>
-                            <option value="CHECKLIST">CHECK FOR DUPLICATES BY PHONE IN LIST ID</option>
-                            <option value="CHECKCAMP">CHECK FOR DUPLICATES BY PHONE IN ALL CAMPAIGN LISTS</option>
+                            <option value="NONE"><? echo lang('go_NODUPLICATECHECK'); ?></option>
+                            <option value="CHECKLIST"><? echo lang('go_CHECKFORDUPLICATESBYPHONEINLISTID'); ?></option>
+                            <option value="CHECKCAMP"><? echo lang('go_CHECKFORDUPLICATESBYPHONEINALLCAMPAIGNLISTS'); ?></option>
                             <?php if ($admin_level > 8) { ?>
-                            <option value="CHECKSYS">CHECK FOR DUPLICATES BY PHONE IN ENTIRE SYSTEM</option>
-                            <option value="CHECKALTPHONELIST">CHECK FOR DUPLICATES BY ALT-PHONE IN LIST ID</option>
-                            <option value="CHECKALTPHONESYS">CHECK FOR DUPLICATES BY ALT-PHONE IN ENTIRE SYSTEM</option>
+                            <option value="CHECKSYS"><? echo lang('go_CHECKFORDUPLICATESBYPHONEINENTIRESYSTEM'); ?></option>
+                            <option value="CHECKALTPHONELIST"><? echo lang('go_CHECKFORDUPLICATESBYALTPHONEINLISTID'); ?></option>
+                            <option value="CHECKALTPHONESYS"><? echo lang('go_CHECKFORDUPLICATESBYALTPHONEINENTIRESYSTEM'); ?></option>
                             <?php } ?>
                         </select>
                     </td>
                  </tr>
                  <?php if ($admin_level > 8) { ?>
                  <tr>
-                 <td class="label">Time Zone Lookup:</td>
+                 <td class="label"><? echo lang('go_TimeZoneLookup'); ?></td>
                     <td>
                         <select size="1" name="timeZone" id="timeZone">
-                            <option value="AREA" selected>COUNTRY CODE AND AREA CODE ONLY</option>
-                            <option value="POSTAL">POSTAL CODE FIRST</option>
-                            <option value="TZCODE">OWNER TIME ZONE CODE FIRST</option>
+                            <option value="AREA" selected><? echo lang('go_COUNTRYCODEANDAREACODEONLY'); ?></option>
+                            <option value="POSTAL"><? echo lang('go_POSTALCODEFIRST'); ?></option>
+                            <option value="TZCODE"><? echo lang('go_OWNERTIMEZONECODEFIRST'); ?></option>
                         </select>
                     </td>
                  </tr>
@@ -355,7 +363,7 @@ $(document).ready(function()
                     <tr>
                     <td></td>
                     <td>
-                            <input type="button" value="UPLOAD LEADS" name="submit_file" id="submit_file" style="cursor:pointer;">
+                            <input type="button" value="<? echo lang('go_UPLOADLEADS'); ?>" name="submit_file" id="submit_file" style="cursor:pointer;">
                     </td>
                     
                  </tr>
@@ -364,7 +372,7 @@ $(document).ready(function()
             <div id="custom_forms">
             </div>
 			<table style="width:100%;display:none;" id="processTable">
-			<tr><td style="text-align:center;width:50%;"><input type="button" id="processLeads" value="OK TO PROCESS" style="cursor:pointer;" /></td><td style="width:50%;display:none;"><input type="button" value="START OVER" style="display:none;" /></td></tr>
+			<tr><td style="text-align:center;width:50%;"><input type="button" id="processLeads" value="<? echo lang('go_OKTOPROCESS'); ?>" style="cursor:pointer;" /></td><td style="width:50%;display:none;"><input type="button" value="START OVER" style="display:none;" /></td></tr>
 			</table>
 <?php
 		}
@@ -427,19 +435,19 @@ $(document).ready(function()
 ?>
 			<table style="width:100%;">
             	<tr>
-                	<td class="label">Campaign ID:</td>
+                	<td class="label"><? echo lang('go_CampaignID_'); ?></td>
                     <td><?php echo $campaign_id; ?><input type="hidden" value="<?php echo $campaign_id; ?>" name="campaign_id" id="campaign_id" class="previewEdit" /></td>
                 </tr>
             	<tr>
-                	<td class="label">Campaign Name:</td>
+                	<td class="label"><? echo lang('go_CampaignName_'); ?></td>
                     <td><?php echo $campaign_name; ?></td>
                 </tr>
             	<tr>
-                	<td class="label">Dial Method:</td>
+                	<td class="label"><? echo lang('go_DialMethod_'); ?></td>
                     <td><?php echo form_dropdown('dial_method',array('MANUAL'=>'Manual','RATIO'=>'Auto-Dial','ADAPT_AVERAGE'=>'Predictive'),$dial_method,'id="dial_method" class="previewEdit"'); ?></td>
                 </tr>
             	<tr>
-                	<td class="label">Auto-Dial Level:</td>
+                	<td class="label"><? echo lang('go_AutoDialLevel_'); ?></td>
                     <td><?php echo form_dropdown('auto_dial_level',array('0'=>'OFF','1.0'=>'SLOW','2.0'=>'NORMAL','4.0'=>'HIGH','6.0'=>'MAX'),$auto_dial_level,'id="auto_dial_level" class="previewEdit"'); ?></td>
                 </tr>
 				<tr style="<?php echo ($this->commonhelper->checkIfTenant($accountNum)) ? 'display:none' : ''?>">
@@ -465,14 +473,14 @@ $(document).ready(function()
 						$show_custom_prefix = "";
 					}
 					?>
-					<td style="text-align:right;white-space: nowrap;font-weight: bold;">Carrier to use for this Campaign:</td><td style="white-space: nowrap;"><?=form_dropdown('dial_prefix',$dial_prefix,$selected_prefix,'id="dial_prefix" style="width:200px;" class="previewEdit"') ?> <?=form_input('custom_prefix',$dialPrefix,'id="custom_prefix" class="previewEdit" size="8" maxlength="20" '.$show_custom_prefix) ?></td>
+					<td style="text-align:right;white-space: nowrap;font-weight: bold;"><? echo lang('go_CarriertouseforthisCampaign');  ?></td><td style="white-space: nowrap;"><?=form_dropdown('dial_prefix',$dial_prefix,$selected_prefix,'id="dial_prefix" style="width:200px;" class="previewEdit"') ?> <?=form_input('custom_prefix',$dialPrefix,'id="custom_prefix" class="previewEdit" size="8" maxlength="20" '.$show_custom_prefix) ?></td>
 				</tr>
 				<?php
 				if ($campType!='Inbound' && $campType!='Survey' && $campType!='Copy') {
 				?>
 				<tr style="display:none;">
 					<td style="text-align:right;width:250px;font-weight:bold;">
-					Manual Dial Prefix:
+					<? echo lang('go_ManualDialPrefix_'); ?>
 					</td>
 					<td>
 					<input type="text" id="manual_dial_prefix" name="manual_dial_prefix" value="" class="previewEdit" />
@@ -484,7 +492,7 @@ $(document).ready(function()
 				if ($campType!='Outbound' && $campType!='Survey' && $campType!='Copy') {
 				?>
             	<tr>
-                	<td class="label">DID/TFN Extension:</td>
+                	<td class="label"><? echo lang('go_DIDTFNExtension_'); ?></td>
                     <td><?php
 					if (strlen($did_pattern) > 0 || $did_pattern != false) {
 						echo $did_pattern;
@@ -494,7 +502,7 @@ $(document).ready(function()
 					?></td>
                 </tr>
             	<tr>
-                	<td class="label">Campaign Recording:</td>
+                	<td class="label"><? echo lang('go_CampaignRecording_'); ?></td>
                     <td><?php
 					echo form_dropdown('campaign_recording',array('NEVER'=>'OFF','ALLFORCE'=>'ON','ONDEMAND'=>'ONDEMAND'),$campaign_recording,'id="campaign_recording" class="previewEdit"');
 					?></td>
@@ -503,7 +511,7 @@ $(document).ready(function()
 				} else {
 				?>
             	<tr>
-                	<td class="label">Answering Machine Detection:</td>
+                	<td class="label"><? echo lang('go_AnsweringMachineDetection_'); ?></td>
                     <td><?php echo form_dropdown('campaign_vdad_exten',$vdadOptions,$campaign_vdad_exten,'id="campaign_vdad_exten" class="previewEdit"'); ?></td>
                 </tr>
 				<?php
@@ -519,11 +527,11 @@ $(document).ready(function()
 			<input type="hidden" value="<?php echo $campType; ?>" name="campaign_type" class="previewEdit" />
 			<table style="width:100%;">
             	<tr>
-                	<td class="label">Campaign ID:</td>
+                	<td class="label"><? echo lang('go_CampaignID_'); ?></td>
                     <td><?php echo $campaign_id; ?><input type="hidden" value="<?php echo $campaign_id; ?>" name="campaign_id" id="campaign_id" class="previewEdit" /></td>
                 </tr>
             	<tr>
-                	<td class="label">Campaign Name:</td>
+                	<td class="label"><? echo lang('go_CampaignName_'); ?></td>
                     <td><?php echo $campaign_name; ?></td>
                 </tr>
 <?php
@@ -531,11 +539,11 @@ $(document).ready(function()
 			{
 ?>
             	<tr>
-                	<td class="label">Audio File:</td>
+                	<td class="label"><? echo lang('go_AudioFile_'); ?></td>
                     <td><?php echo $survey_info->survey_first_audio_file; ?><input id="survey_first_audio_file" type="text" maxlength="50" size="25" style="display:none;" value="<?php echo $survey_info->survey_first_audio_file; ?>" /><input type="button" value="Audio" style="display:none;" class="selectAudio" /></td>
                 </tr>
                 <tr>
-                	<td class="label">Survey Method:</td>
+                	<td class="label"><? echo lang('go_SurveyMethod_'); ?></td>
                     <td><?php echo $survey_info->survey_method; ?>
                         <select id="survey_method" style="display:none;">
                             <option value="AGENT_XFER">CAMPAIGN</option>
@@ -545,7 +553,7 @@ $(document).ready(function()
                     </td>
                 </tr>
                 <tr>
-                	<td class="label">Survey Call Menu:</td>
+                	<td class="label"><? echo lang('go_SurveyCallMenu_'); ?></td>
                     <td>
 			<?php
 			$callMenuArray[''] = "---NONE---";
@@ -559,26 +567,26 @@ $(document).ready(function()
                     </td>
                 </tr>
             	<tr class="advanced">
-                	<td class="label">Survey DTMF Digits:</td>
+                	<td class="label"><? echo lang('go_SurveyDTMFDigits_'); ?></td>
                     <td><?php echo $survey_info->survey_dtmf_digits; ?><input id="survey_dtmf_digits" type="text" maxlength="16" size="16" placeholder="eg. 0123456789*#" style="display:none;" value="<?php echo $survey_info->survey_dtmf_digits; ?>" /> <small>* customer define key press e.g.0123456789*#</small></td>
                 </tr>
             	<tr class="advanced">
-                	<td class="label">DID:</td>
+                	<td class="label"><? echo lang('go_DID_'); ?></td>
                     <td><?php echo $survey_info->survey_xfer_exten; ?><input id="survey_xfer_exten" type="text" maxlength="25" size="20" style="display:none;" value="<?php echo $survey_info->survey_xfer_exten; ?>" /></td>
                 </tr>
                 <tr class="advanced">
 					<td colspan="2">&nbsp;</td>
                 </tr>
             	<tr class="advanced">
-                	<td class="label">Press 8 Not Interested Digit:</td>
+                	<td class="label"><? echo lang('go_Press8NotInterestedDigit_'); ?></td>
                     <td><?php echo $survey_info->survey_ni_digit; ?><input id="survey_ni_digit" type="text" maxlength="10" size="5" style="display:none;" value="<?php echo $survey_info->survey_ni_digit; ?>" /></td>
                 </tr>
             	<tr class="advanced">
-                	<td class="label">Press 8 Not Interested Audio File:</td>
+                	<td class="label"><? echo lang('go_Press8NotInterestedAudioFile_'); ?></td>
                     <td><?php echo $survey_info->survey_ni_audio_file; ?><input id="survey_ni_audio_file" type="text" maxlength="50" size="25" style="display:none;" value="<?php echo $survey_info->survey_ni_audio_file; ?>" /><input type="button" style="display:none;" value="Audio" class="selectAudio" /></td>
                 </tr>
             	<tr class="advanced">
-                	<td class="label">Press 8 Not Interested Status:</td>
+                	<td class="label"><? echo lang('go_Press8NotInterestedStatus_'); ?></td>
                     <td><?php echo $survey_info->survey_ni_status; ?>
                         <select id="survey_ni_status" style="display:none;">
                             <option value="NI">NI - Not Interested</option>
@@ -590,38 +598,38 @@ $(document).ready(function()
 					<td colspan="2">&nbsp;</td>
                 </tr>
             	<tr class="advanced">
-                	<td class="label">Press 3 Digit:</td>
+                	<td class="label"><? echo lang('go_Press3Digit_'); ?></td>
                     <td><?php echo $survey_info->survey_third_digit; ?><input id="survey_third_digit" type="text" maxlength="10" size="5" style="display:none;" value="<?php echo $survey_info->survey_third_digit; ?>" /></td>
                 </tr>
             	<tr class="advanced">
-                	<td class="label">Press 3 Audio File:</td>
+                	<td class="label"><? echo lang('go_Press3AudioFile_'); ?></td>
                     <td><?php echo $survey_info->survey_third_audio_file; ?><input id="survey_third_audio_file" type="text" maxlength="50" size="25" style="display:none;" value="<?php echo $survey_info->survey_third_audio_file; ?>" /><input type="button" style="display:none;" value="Audio" class="selectAudio" /></td>
                 </tr>
             	<tr class="advanced">
-                	<td class="label">Press 3 Status:</td>
+                	<td class="label"><? echo lang('go_Press3Status_'); ?></td>
                     <td><?php echo $survey_info->survey_third_status; ?><input id="survey_third_status" type="text" maxlength="6" size="10" style="display:none;" value="<?php echo $survey_info->survey_third_status; ?>" /></td>
                 </tr>
             	<tr class="advanced">
-                	<td class="label">Press 3 DID:</td>
+                	<td class="label"><? echo lang('go_Press3DID_'); ?></td>
                     <td><?php echo $survey_info->survey_third_exten; ?><input id="survey_third_exten" type="text" maxlength="25" size="20" style="display:none;" value="<?php echo $survey_info->survey_third_exten; ?>" /></td>
                 </tr>
                 <tr class="advanced">
 					<td colspan="2">&nbsp;</td>
                 </tr>
             	<tr class="advanced">
-                	<td class="label">Press 4 Digit:</td>
+                	<td class="label"><? echo lang('go_Press4Digit_'); ?></td>
                     <td><?php echo $survey_info->survey_fourth_digit; ?><input id="survey_fourth_digit" type="text" maxlength="10" size="5" style="display:none;" value="<?php echo $survey_info->survey_fourth_digit; ?>" /></td>
                 </tr>
             	<tr class="advanced">
-                	<td class="label">Press 4 Audio File:</td>
+                	<td class="label"><? echo lang('go_Press4AudioFile_'); ?></td>
                     <td><?php echo $survey_info->survey_fourth_audio_file; ?><input id="survey_fourth_audio_file" type="text" maxlength="50" size="25" style="display:none;" value="<?php echo $survey_info->survey_fourth_audio_file; ?>" /><input type="button" style="display:none;" value="Audio" class="selectAudio" /></td>
                 </tr>
             	<tr class="advanced">
-                	<td class="label">Press 4 Status:</td>
+                	<td class="label"><? echo lang('go_Press4Status_'); ?></td>
                     <td><?php echo $survey_info->survey_fourth_status; ?><input id="survey_fourth_status" type="text" maxlength="6" size="10" style="display:none;" value="<?php echo $survey_info->survey_fourth_status; ?>" /></td>
                 </tr>
             	<tr class="advanced">
-                	<td class="label">Press 4 DID:</td>
+                	<td class="label"><? echo lang('go_Press4DID_'); ?></td>
                     <td><?php echo $survey_info->survey_fourth_exten; ?><input id="survey_fourth_exten" type="text" maxlength="25" size="20" style="display:none;" value="<?php echo $survey_info->survey_fourth_exten; ?>" /></td>
                 </tr>
                 <tr class="advanced">
@@ -653,14 +661,14 @@ $(document).ready(function()
 						$show_custom_prefix = "";
 					}
 					?>
-					<td style="text-align:right;white-space: nowrap;font-weight: bold;">Carrier to use for this Campaign:</td><td style="white-space: nowrap;"><?=form_dropdown('dial_prefix',$dial_prefix,$selected_prefix,'id="dial_prefix" style="width:200px;" class="previewEdit"') ?> <?=form_input('custom_prefix',$dialPrefix,'id="custom_prefix" class="previewEdit" size="8" maxlength="20" '.$show_custom_prefix) ?></td>
+					<td style="text-align:right;white-space: nowrap;font-weight: bold;"><? echo lang('go_CarriertouseforthisCampaign'); ?></td><td style="white-space: nowrap;"><?=form_dropdown('dial_prefix',$dial_prefix,$selected_prefix,'id="dial_prefix" style="width:200px;" class="previewEdit"') ?> <?=form_input('custom_prefix',$dialPrefix,'id="custom_prefix" class="previewEdit" size="8" maxlength="20" '.$show_custom_prefix) ?></td>
 				</tr>
             	<tr>
-                	<td class="label">Status:</td>
+                	<td class="label"><? echo lang('go_Status_'); ?></td>
                     <td>INACTIVE<select id="remote_agent_status" style="display:none;"><option>INACTIVE</option><option>ACTIVE</option></select></td>
                 </tr>
             	<tr>
-                	<td class="label">Number of Lines:</td>
+                	<td class="label"><? echo lang('go_NumberofChannels_'); ?></td>
                     <td><?php echo $survey_info->number_of_lines; ?>
                         <select id="number_of_lines" style="display:none;">
                             <option>1</option>
@@ -677,7 +685,7 @@ $(document).ready(function()
 			{
 ?>
                 <tr>
-					<td colspan="2" style="text-align:right;"><span id="showAdvance">Advance Settings</span></td>
+					<td colspan="2" style="text-align:right;"><span id="showAdvance"><? echo lang('go_AdvanceSettings'); ?></span></td>
                 </tr>
 <?php
 			}
@@ -701,7 +709,7 @@ $(document).ready(function()
 ?>
 	    <table id="survey_audio" style="width:100%;">
             	<tr>
-                	<td style="text-align:center;font-weight:bold;">Please upload .wav file (16bit Mono 8k PCM WAV audio files only)</td>
+                	<td style="text-align:center;font-weight:bold;"><? echo lang('go_Pleaseuploadwavfile16bitMono8kPCMWAVaudiofilesonly'); ?></td>
                 </tr>
             	<tr>
                 	<td style="text-align:center"><input type="file" name="wavFile1" id="wavFile1" value="" accept="audio/*" /></td>
@@ -709,7 +717,7 @@ $(document).ready(function()
             </table>
             </form>
             <br />
-            <div style="text-align:center"><span id="more" style="cursor:pointer;">More+</span> | <span id="upload" style="cursor:pointer;">Upload</span></div>
+            <div style="text-align:center"><span id="more" style="cursor:pointer;"><? echo lang('go_More'); ?>+</span> | <span id="upload" style="cursor:pointer;"><? echo lang('go_Upload'); ?></span></div>
             <div style="text-align:center" id="uploadResult"></div>
 <?php
 			}
@@ -767,31 +775,31 @@ $(document).ready(function()
             <input type="hidden" name='campaign_type' id="campaign_type" value="<?php echo $campType; ?>" />
 			<table style="width:100%;">
             	<tr>
-                	<td class="label">Campaign ID:</td>
+                	<td class="label"><? echo lang('go_CampaignID_'); ?></td>
                     <td><?php echo $campaign_id; ?></td>
                 </tr>
             	<tr>
-                	<td class="label">Campaign Name:</td>
+                	<td class="label"><? echo lang('go_CampaignName_'); ?></td>
                     <td><?php echo $campaign_name; ?></td>
                 </tr>
             	<tr>
-                	<td class="label">Dial Method:</td>
+                	<td class="label"><? echo lang('go_DialMethod_'); ?></td>
                     <td><?php echo $dial_method; ?></td>
                 </tr>
             	<tr>
-                	<td class="label">Auto-Dial Level:</td>
+                	<td class="label"><? echo lang('go_AutoDialLevel_'); ?></td>
                     <td><?php echo $auto_dial_level; ?></td>
                 </tr>
             	<tr>
-                	<td class="label">Campaign CallerID:</td>
+                	<td class="label"><? echo lang('go_CampaignCallerID_'); ?></td>
                     <td><?php echo $campaign_cid; ?></td>
                 </tr>
             	<tr>
-                	<td class="label">Campaign Recording:</td>
+                	<td class="label"><? echo lang('go_CampaignRecording_'); ?></td>
                     <td><?php echo $campaign_recording; ?></td>
                 </tr>
             	<tr>
-                	<td class="label">Answering Machine Detection:</td>
+                	<td class="label"><? echo lang('go_AnsweringMachineDetection_'); ?></td>
                     <td><?php echo $campaign_vdad_exten; ?></td>
                 </tr>
             </table>

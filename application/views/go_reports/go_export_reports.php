@@ -13,32 +13,32 @@ $dateNOW = date('Y-m-d');
 
 switch ($pagetitle)
 {
-	case "agent_detail":
-		$pagetitle = "Agent_Time_Detail_Report";
-		break;
-	case "agent_pdetail":
-		$pagetitle = "Agent_Performance_Detail_Report";
-		break;
-	case "dispo":
-		$pagetitle = "Dial_Statuses_Summary_Report";
-		break;
-	case "sales_agent":
-		$pagetitle = "Sales_Per_Agent_Report";
-		break;
-	case "sales_tracker":
-		$pagetitle = "Sales_Tracker_Report";
-		break;
-	case "inbound_report":
-		$pagetitle = "Inbound_Call_Report";
-		break;
-	case "call_export_report":
-		$pagetitle = "Export_Call_Report";
-		break;
-	case "dashboard":
-		$pagetitle = "Dashboard";
-		break;
-	default:
-		$pagetitle = "Statistical_Report";
+        case "agent_detail":
+                $pagetitle = $this->lang->line("go_atdr_download");
+                break;
+        case "agent_pdetail":
+                $pagetitle = $this->lang->line("go_apdr_download");
+                break;
+        case "dispo":
+                $pagetitle = $this->lang->line("go_dssr_download");
+                break;
+        case "sales_agent":
+                $pagetitle = $this->lang->line("go_spar_download");
+                break;
+        case "sales_tracker":
+                $pagetitle = $this->lang->line("go_str_download");
+                break;
+        case "inbound_report":
+                $pagetitle = $this->lang->line("go_icr_download");
+                break;
+        case "call_export_report":
+                $pagetitle = $this->lang->line("go_ecr_download");
+                break;
+        case "dashboard":
+                $pagetitle = $this->lang->line("go_d_download");
+                break;
+        default:
+                $pagetitle = $this->lang->line("go_sr_download");
 }
 
 $file_name = "$pagetitle.$dateNOW.csv";

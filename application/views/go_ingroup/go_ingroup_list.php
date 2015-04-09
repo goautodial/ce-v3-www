@@ -520,12 +520,12 @@ function checkLeadRecycle()
 	<thead>
         <tr style="font-weight:bold;">
             <th style="width:12%">&nbsp;&nbsp;IN-GROUP</th>
-            <th>&nbsp;&nbsp;DESCRIPTIONS</th>
-            <th>&nbsp;&nbsp;PRIORITY</th>
-            <th>&nbsp;&nbsp;STATUS</th>
-            <th>&nbsp;&nbsp;TIME</th>
+            <th>&nbsp;&nbsp;<?php echo lang('go_DESCRIPTIONS'); ?></th>
+            <th>&nbsp;&nbsp;<?php echo lang('go_PRIORITY'); ?></th>
+            <th>&nbsp;&nbsp;<?php echo lang('go_STATUS'); ?></th>
+            <th>&nbsp;&nbsp;<?php echo lang('go_TIME'); ?></th>
             <th colspan="3" style="width:6%;text-align:center;" nowrap>
-				<span style="cursor:pointer;" id="selectAction">&nbsp;ACTION &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
+				<span style="cursor:pointer;" id="selectAction">&nbsp;<?php echo lang('go_ACTION'); ?> &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
             <th style="width:2%;text-align:center;"><input type="checkbox" id="selectAll" /></th>
         </tr>
     </thead>
@@ -552,18 +552,18 @@ function checkLeadRecycle()
 			$donotdelete = "grayedout";
 		
 		echo "<tr style=\"background-color:$bgcolor;\">\n";
-		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;<span onclick=\"modify('ingroup','".$row->group_id."')\" style=\"cursor:pointer;\" class=\"toolTip hoverIngroupID\" title=\"MODIFY IN-GROUP<br />".$row->group_id."\">".$row->group_id."</span></td>\n";
-		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;<span onclick=\"modify('ingroup','".$row->group_id."')\" style=\"cursor:pointer;\" class=\"toolTip hoverIngroupID\" title=\"MODIFY IN-GROUP<br />".$row->group_id."\">".str_replace("-","&#150;",$row->group_name)."</span></td>\n";
+		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;<span onclick=\"modify('ingroup','".$row->group_id."')\" style=\"cursor:pointer;\" class=\"toolTip hoverIngroupID\" title=\"".lang('go_MODIFYINGROUP')."<br />".$row->group_id."\">".$row->group_id."</span></td>\n";
+		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;<span onclick=\"modify('ingroup','".$row->group_id."')\" style=\"cursor:pointer;\" class=\"toolTip hoverIngroupID\" title=\"".lang('go_MODIFYINGROUP')."<br />".$row->group_id."\">".str_replace("-","&#150;",$row->group_name)."</span></td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;{$row->queue_priority}</td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;$active</td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;{$row->call_time_id}</td>\n";
-		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span onclick=\"modify('ingroup','".$row->group_id."')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"MODIFY IN-GROUP<br />".$row->group_id."\"><img src=\"{$base}img/edit.png\" style=\"cursor:pointer;width:12px;\" /></span></td>";
+		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span onclick=\"modify('ingroup','".$row->group_id."')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"".lang('go_MODIFYINGROUP')."<br />".$row->group_id."\"><img src=\"{$base}img/edit.png\" style=\"cursor:pointer;width:12px;\" /></span></td>";
 		if ($row->group_id=="AGENTDIRECT") {
-			echo "<td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><img src=\"{$base}img/delete.png\" style=\"width:13px;\" class=\"grayedout toolTip\" title=\"Cannot delete AGENTDIRECT.\" /></td>";
+			echo "<td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><img src=\"{$base}img/delete.png\" style=\"width:13px;\" class=\"grayedout toolTip\" title=\"".lang('go_CannotdeleteAGENTDIRECT').".\" /></td>";
 		} else {
-			echo "<td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"delIngroup('".$row->group_id."')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"DELETE IN-GROUP<br />".$row->group_id."\"><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></span></td>";
+			echo "<td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"delIngroup('".$row->group_id."')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"".lang('go_DELETEINGROUP')."<br />".$row->group_id."\"><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></span></td>";
 		}
-		echo "<td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"modify('ingroup','".$row->group_id."')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"VIEW INFO FOR IN-GROUP<br />".$row->group_id."\"><img src=\"{$base}img/status_display_i.png\" style=\"cursor:pointer;width:12px;\" /></span></td>\n";
+		echo "<td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"modify('ingroup','".$row->group_id."')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"".lang('go_VIEWINFOFORINGROUP')."<br />".$row->group_id."\"><img src=\"{$base}img/status_display_i.png\" style=\"cursor:pointer;width:12px;\" /></span></td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><input type=\"checkbox\" id=\"delIngroup[]\" value=\"".$row->group_id."\" /></td>\n";
 		echo "</tr>\n";
 	}
@@ -579,11 +579,11 @@ function checkLeadRecycle()
 <table id="DIDTable" class="tablesorter" border="0" cellpadding="1" cellspacing="0" style="width:100%;">
 	<thead>
         <tr style="font-weight:bold;">
-            <th style="width:12%">&nbsp;&nbsp;PHONE NUMBERS</th>
-            <th>&nbsp;&nbsp;DESCRIPTIONS</th>
-            <th>&nbsp;&nbsp;STATUS</th>
-            <th>&nbsp;&nbsp;ROUTE</th>
-            <th style="width:6%;text-align:center;" colspan="3" nowrap><span style="cursor:pointer;" id="selectDIDAction">&nbsp;ACTION &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
+            <th style="width:16%">&nbsp;&nbsp;<?php echo lang('goInbound_phoneNumbers'); ?></th>
+            <th>&nbsp;&nbsp;<?php echo lang('goInbound_description'); ?></th>
+            <th>&nbsp;&nbsp;<?php echo lang('goInbound_status'); ?></th>
+            <th>&nbsp;&nbsp;<?php echo lang('goInbound_route'); ?></th>
+            <th style="width:6%;text-align:center;" colspan="3" nowrap><span style="cursor:pointer;" id="selectDIDAction">&nbsp;<?php echo lang('goInbound_action'); ?> &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
             <th style="width:2%;text-align:center;"><input type="checkbox" id="selectAllDIDs" /></th>
         </tr>
     </thead>
@@ -608,11 +608,11 @@ function checkLeadRecycle()
 		}
 		
 		echo "<tr style=\"background-color:$bgcolor;\">\n";
-		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;<span onclick=\"modify('did','".$row->did_id."')\" style=\"cursor:pointer;\" class=\"toolTip hoverIngroupID\" title=\"MODIFY DID<br />".$row->did_pattern."\">".$row->did_pattern."</span>&nbsp;&nbsp;</td>\n";
-		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" nowrap>&nbsp;&nbsp;<span onclick=\"modify('did',".$row->did_id."')\" style=\"cursor:pointer;\" class=\"toolTip hoverIngroupID\" title=\"MODIFY DID<br />".$row->did_pattern."\">".str_replace("-","&#150;",$row->did_description)."</span>&nbsp;&nbsp;</td>\n";
+		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;<span onclick=\"modify('did','".$row->did_id."')\" style=\"cursor:pointer;\" class=\"toolTip hoverIngroupID\" title=\"".lang('goInbound_modifyDID')."<br />".$row->did_pattern."\">".$row->did_pattern."</span>&nbsp;&nbsp;</td>\n";
+		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" nowrap>&nbsp;&nbsp;<span onclick=\"modify('did',".$row->did_id."')\" style=\"cursor:pointer;\" class=\"toolTip hoverIngroupID\" title=\"".lang('goInbound_modifyDID')."<br />".$row->did_pattern."\">".str_replace("-","&#150;",$row->did_description)."</span>&nbsp;&nbsp;</td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;$active&nbsp;&nbsp;</td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;{$row->did_route}&nbsp;&nbsp;</td>\n";
-		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span onclick=\"modify('did','".$row->did_id."')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"MODIFY DID<br />".$row->did_pattern."\"><img src=\"{$base}img/edit.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"delDID('".$row->did_id."')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"DELETE DID<br />".$row->did_pattern."\"><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><img src=\"{$base}img/status_display_i.png\" class=\"grayedout\" style=\"width:13px;\" /></td>\n";
+		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span onclick=\"modify('did','".$row->did_id."')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"".lang('goInbound_modifyDID')."<br />".$row->did_pattern."\"><img src=\"{$base}img/edit.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"delDID('".$row->did_id."')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"".lang('goInbound_deleteDID')."<br />".$row->did_pattern."\"><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><img src=\"{$base}img/status_display_i.png\" class=\"grayedout\" style=\"width:13px;\" /></td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><input type=\"checkbox\" id=\"delDID[]\" value=\"".$row->did_id."\" /></td>\n";
 		echo "</tr>\n";
 	}
@@ -628,11 +628,11 @@ function checkLeadRecycle()
 <table id="IVRTable" class="tablesorter" border="0" cellpadding="1" cellspacing="0" style="width:100%;">
 	<thead>
         <tr style="font-weight:bold;">
-            <th style="width:12%">&nbsp;&nbsp;MENU ID</th>
-            <th style="width:20%">&nbsp;&nbsp;DESCRIPTIONS</th>
-            <th>&nbsp;&nbsp;PROMPT</th>
-            <th>&nbsp;&nbsp;TIMEOUT</th>
-            <th style="width:6%;text-align:center;" colspan="3" nowrap><span style="cursor:pointer;" id="selectIVRAction">&nbsp;ACTION &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
+            <th style="width:12%">&nbsp;&nbsp;<? echo strtoupper($this->lang->line('go_menu_id')); ?></th>
+            <th style="width:20%">&nbsp;&nbsp;<? echo $this->lang->line('go_descriptions'); ?></th>
+            <th>&nbsp;&nbsp;<? echo $this->lang->line('go_prompt'); ?></th>
+            <th>&nbsp;&nbsp;<? echo $this->lang->line('go_timeout'); ?></th>
+            <th style="width:6%;text-align:center;" colspan="3" nowrap><span style="cursor:pointer;" id="selectIVRAction">&nbsp;<? echo $this->lang->line('go_action'); ?> &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
             <th style="width:2%;text-align:center;"><input type="checkbox" id="selectAllIVRs" /></th>
         </tr>
     </thead>
@@ -650,11 +650,11 @@ function checkLeadRecycle()
 		}
 					
 		echo "<tr style=\"background-color:$bgcolor;\">\n";
-		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;<span onclick=\"modify('ivr','".$row->menu_id."')\" style=\"cursor:pointer;\" class=\"toolTip hoverCampID\" title=\"MODIFY IVR<br />".$row->menu_id."\">".$row->menu_id."</span>&nbsp;&nbsp;</td>\n";
-		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" nowrap>&nbsp;&nbsp;<span onclick=\"modify('ivr','".$row->menu_id."')\" style=\"cursor:pointer;\" class=\"toolTip hoverCampID\" title=\"MODIFY IVR<br />".$row->menu_id."\">".str_replace("-","&#150;",$row->menu_name)."</span>&nbsp;&nbsp;</td>\n";
+		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;<span onclick=\"modify('ivr','".$row->menu_id."')\" style=\"cursor:pointer;\" class=\"toolTip hoverCampID\" title=\"{$this->lang->line('go_modify_ivr')}<br />".$row->menu_id."\">".$row->menu_id."</span>&nbsp;&nbsp;</td>\n";
+		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" nowrap>&nbsp;&nbsp;<span onclick=\"modify('ivr','".$row->menu_id."')\" style=\"cursor:pointer;\" class=\"toolTip hoverCampID\" title=\"{$this->lang->line('go_modify_ivr')}<br />".$row->menu_id."\">".str_replace("-","&#150;",$row->menu_name)."</span>&nbsp;&nbsp;</td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;{$row->menu_prompt}&nbsp;&nbsp;</td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;".$row->menu_timeout."&nbsp;&nbsp;</td>\n";
-		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span onclick=\"modify('ivr','".$row->menu_id."')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"MODIFY IVR<br />".$row->menu_id."\"><img src=\"{$base}img/edit.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"delIVR('".$row->menu_id."')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"DELETE IVR<br />".$row->menu_id."\"><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><img src=\"{$base}img/status_display_i_grayed.png\" style=\"cursor:default;width:12px;\" /></td>\n";
+		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span onclick=\"modify('ivr','".$row->menu_id."')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"{$this->lang->line('go_modify_ivr')}<br />".$row->menu_id."\"><img src=\"{$base}img/edit.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"delIVR('".$row->menu_id."')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"{$this->lang->line('go_delete_ivr')}<br />".$row->menu_id."\"><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><img src=\"{$base}img/status_display_i_grayed.png\" style=\"cursor:default;width:12px;\" /></td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><input type=\"checkbox\" id=\"delIVR[]\" value=\"".$row->menu_id."\" /></td>\n";
 		echo "</tr>\n";
 	}

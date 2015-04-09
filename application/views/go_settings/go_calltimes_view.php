@@ -28,7 +28,7 @@ $(function()
 				function(data){
 				if (data=="SUCCESS")
 				{
-					alert("Success!\n\nCall time '<?=$calltime_info->call_time_id ?>' has been modified.");
+					alert("<? echo $this->lang->line("go_success_s"); ?>"+"\n\n"+"<? echo $this->lang->line("go_call_time_s"); ?> " +" <?=$calltime_info->call_time_id ?> "+" <? echo $this->lang->line("go_has_been_modified"); ?>");
 					
 					$('#box').animate({'top':'-2550px'},500);
 					$('#overlay').fadeOut('slow');
@@ -54,7 +54,7 @@ $(function()
 				function(data){
 				if (data=="SUCCESS")
 				{
-					alert("Success!\n\nState call time '<?=$calltime_info->state_call_time_id ?>' has been modified.");
+					alert("<? echo $this->lang->line("go_success_s"); ?>"+"\n\n"+"<? echo $this->lang->line("go_state_call_time_s"); ?> "+" <?=$calltime_info->state_call_time_id ?>"+" <? echo $this->lang->line("go_has_been_modified"); ?>");
 					
 					$('#box').animate({'top':'-2550px'},500);
 					$('#overlay').fadeOut('slow');
@@ -124,7 +124,7 @@ $(function()
 				function(data){
 				if (data=="SUCCESS")
 				{
-					alert("Success!\n\nState call time rule '"+state_rule+"' has been added.");
+					alert("<? echo $this->lang->line("go_success_s"); ?>"+"\n\n"+"<? echo $this->lang->line("go_state_call_time_rule_s"); ?>'"+state_rule+"' <? echo $this->lang->line("go_has_been_added"); ?>");
 					
 					$("#overlayContentCalltimes").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
 					$('#overlayContentCalltimes').fadeOut("slow").load('<?php echo $base; ?>index.php/go_calltimes_ce/go_get_calltimes/view/'+calltime_id).fadeIn("slow");
@@ -134,7 +134,7 @@ $(function()
 	
 			});
 		} else {
-			alert("Please select a state call time rule.");
+			alert("<? echo $this->lang->line("go_pls_sel_state_call_time_rule"); ?>");
 		}
 	});
 
@@ -169,14 +169,14 @@ $(function()
 
 function delCalltime(cid,sid)
 {
-	var r=confirm("Are you sure you want to delete '"+sid+"' from the list?");
+	var r=confirm("<? echo $this->lang->line("go_want_to_del"); ?> '"+sid+"' <? echo $this->lang->line("go_from_list"); ?>");
 	if (r)
 	{
 		$.post("<?=$base?>index.php/go_calltimes_ce/go_get_calltimes/delete/"+cid+"/state_rule/"+sid,
 			function(data){
 			if (data=="SUCCESS")
 			{
-				alert("Success!\n\nState call time rule '"+sid+"' has been deleted.");
+				alert("<? echo $this->lang->line("go_success_s"); ?>"+"\n\n"+"<? echo $this->lang->line("go_state_call_time_rule_s"); ?> "+sid+" <? echo $this->lang->line("go_has_been_del"); ?>");
 				
 				$("#overlayContentCalltimes").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
 				$('#overlayContentCalltimes').fadeOut("slow").load('<?php echo $base; ?>index.php/go_calltimes_ce/go_get_calltimes/view/'+cid).fadeIn("slow");
@@ -218,7 +218,7 @@ function delCalltime(cid,sid)
     background-color: #fff;
 }
 </style>
-<div align="center" style="font-weight:bold; color:#333; font-size:16px; text-transform: uppercase;">MODIFY <?=(strlen($if_state) > 0) ? "$if_state " : ""; ?>CALL TIME: <?=(strlen($if_state) > 0) ? "{$calltime_info->state_call_time_id}" : "{$calltime_info->call_time_id}"; ?></div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px; text-transform: uppercase;"><? echo $this->lang->line("go_modify"); ?> <?=(strlen($if_state) > 0) ? "$if_state " : ""; ?><? echo $this->lang->line("go_call_time"); ?>: <?=(strlen($if_state) > 0) ? "{$calltime_info->state_call_time_id}" : "{$calltime_info->call_time_id}"; ?></div>
 <br />
 <form id="modifyCalltimes" method="POST">
 <?php
@@ -228,7 +228,7 @@ if ($if_state!="state")
 <table id="test" border=0 cellpadding="3" cellspacing="3" style="width:95%; color:#000; margin-left:auto; margin-right:auto;">
 	<tr>
 		<td style="text-align:right;width:25%;height:10px;font-weight:bold;">
-		Call Time ID:
+		<? echo $this->lang->line("go_call_time_id"); ?>:
 		</td>
 		<td>
 		&nbsp;<?=$calltime_info->call_time_id ?>
@@ -238,7 +238,7 @@ if ($if_state!="state")
 	</tr>
 	<tr>
 		<td style="text-align:right;width:25%;height:10px;font-weight:bold;">
-		Call Time Name:
+		<? echo $this->lang->line("go_call_time_name"); ?>:
 		</td>
 		<td>
 		<?=form_input('call_time_name',$calltime_info->call_time_name,'id="call_time_name" maxlength="30" size="30"') ?>
@@ -246,7 +246,7 @@ if ($if_state!="state")
 	</tr>
 	<tr>
 		<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-		Call Time Comments:
+		<? echo $this->lang->line("go_call_time_comments"); ?>:
 		</td>
 		<td>
 		<?=form_input('call_time_comments',$calltime_info->call_time_comments,'id="call_time_comments" maxlength="255" size="40"') ?>
@@ -254,11 +254,11 @@ if ($if_state!="state")
 	</tr>
 	<tr>
 		<td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-		User Group:
+		<? echo $this->lang->line("go_user_group"); ?>:
 		</td>
 		<td>
 		<?php
-		$groupArray = array("---ALL---"=>"ALL USER GROUPS");
+		$groupArray = array("--{$this->lang->line("go_all")}---"=>"{$this->lang->line("go_all_user_groups_caps")}");
 		foreach ($user_groups as $group)
 		{
 			$groupArray[$group->user_group] = "{$group->user_group} - {$group->group_name}";
@@ -275,57 +275,57 @@ if ($if_state!="state")
 			<table border="0" cellpadding="0" cellspacing="0" style="width:95%; margin-left:auto; margin-right:auto;">
 				<tr>
 					<td style="font-weight:bold;width: 10%;">&nbsp;</td>
-					<td style="font-weight:bold;">START</td>
-					<td style="font-weight:bold;">STOP</td>
-					<td style="font-weight:bold;">AFTER HOURS AUDIO</td>
+                                        <td style="font-weight:bold;"><? echo $this->lang->line("go_start"); ?></td>
+                                        <td style="font-weight:bold;"><? echo $this->lang->line("go_stop"); ?></td>
+                                        <td style="font-weight:bold;"><? echo $this->lang->line("go_after_hours_audio"); ?></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_default"); ?>: &nbsp; &nbsp; </td>
+                                        <td><?=form_input('ct_default_start',$calltime_info->ct_default_start,'id="ct_default_start" maxlength="4" size="5"') ?></td>
+                                        <td><?=form_input('ct_default_stop',$calltime_info->ct_default_stop,'id="ct_default_stop" maxlength="4" size="5"') ?></td>
+                                        <td style="width: 20%;white-space: nowrap;"><?=form_input('default_afterhours_filename_override',$calltime_info->default_afterhours_filename_override,'id="default_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="default">[<? echo $this->lang->line("go_audio_chooser"); ?>]</a></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_sun"); ?>: &nbsp; &nbsp; </td>
+                                        <td><?=form_input('ct_sunday_start',$calltime_info->ct_sunday_start,'id="ct_sunday_start" maxlength="4" size="5"') ?></td>
+                                        <td><?=form_input('ct_sunday_stop',$calltime_info->ct_sunday_stop,'id="ct_sunday_stop" maxlength="4" size="5"') ?></td>
+                                        <td style="width: 20%;white-space: nowrap;"><?=form_input('sunday_afterhours_filename_override',$calltime_info->sunday_afterhours_filename_override,'id="sunday_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="sunday">[<? echo $this->lang->line("go_audio_chooser"); ?>]</a></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_mon"); ?>: &nbsp; &nbsp; </td>
+                                        <td><?=form_input('ct_monday_start',$calltime_info->ct_monday_start,'id="ct_monday_start" maxlength="4" size="5"') ?></td>
+                                        <td><?=form_input('ct_monday_stop',$calltime_info->ct_monday_stop,'id="ct_monday_stop" maxlength="4" size="5"') ?></td>
+                                        <td style="width: 20%;white-space: nowrap;"><?=form_input('monday_afterhours_filename_override',$calltime_info->monday_afterhours_filename_override,'id="monday_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="monday">[<? echo $this->lang->line("go_audio_chooser"); ?>]</a></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_tues"); ?>: &nbsp; &nbsp; </td>
+                                        <td><?=form_input('ct_tuesday_start',$calltime_info->ct_tuesday_start,'id="ct_tuesday_start" maxlength="4" size="5"') ?></td>
+                                        <td><?=form_input('ct_tuesday_stop',$calltime_info->ct_tuesday_stop,'id="ct_tuesday_stop" maxlength="4" size="5"') ?></td>
+                                        <td style="width: 20%;white-space: nowrap;"><?=form_input('tuesday_afterhours_filename_override',$calltime_info->tuesday_afterhours_filename_override,'id="tuesday_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="tuesday">[<? echo $this->lang->line("go_audio_chooser"); ?>]</a></td>
 				</tr>
 				<tr>
-					<td style="text-align: right;white-space: nowrap;">Default: &nbsp; &nbsp; </td>
-					<td><?=form_input('ct_default_start',$calltime_info->ct_default_start,'id="ct_default_start" maxlength="4" size="5"') ?></td>
-					<td><?=form_input('ct_default_stop',$calltime_info->ct_default_stop,'id="ct_default_stop" maxlength="4" size="5"') ?></td>
-					<td style="width: 20%;white-space: nowrap;"><?=form_input('default_afterhours_filename_override',$calltime_info->default_afterhours_filename_override,'id="default_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="default">[audio chooser]</a></td>
-				</tr>
-				<tr>
-					<td style="text-align: right;white-space: nowrap;">Sunday: &nbsp; &nbsp; </td>
-					<td><?=form_input('ct_sunday_start',$calltime_info->ct_sunday_start,'id="ct_sunday_start" maxlength="4" size="5"') ?></td>
-					<td><?=form_input('ct_sunday_stop',$calltime_info->ct_sunday_stop,'id="ct_sunday_stop" maxlength="4" size="5"') ?></td>
-					<td style="width: 20%;white-space: nowrap;"><?=form_input('sunday_afterhours_filename_override',$calltime_info->sunday_afterhours_filename_override,'id="sunday_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="sunday">[audio chooser]</a></td>
-				</tr>
-				<tr>
-					<td style="text-align: right;white-space: nowrap;">Monday: &nbsp; &nbsp; </td>
-					<td><?=form_input('ct_monday_start',$calltime_info->ct_monday_start,'id="ct_monday_start" maxlength="4" size="5"') ?></td>
-					<td><?=form_input('ct_monday_stop',$calltime_info->ct_monday_stop,'id="ct_monday_stop" maxlength="4" size="5"') ?></td>
-					<td style="width: 20%;white-space: nowrap;"><?=form_input('monday_afterhours_filename_override',$calltime_info->monday_afterhours_filename_override,'id="monday_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="monday">[audio chooser]</a></td>
-				</tr>
-				<tr>
-					<td style="text-align: right;white-space: nowrap;">Tuesday: &nbsp; &nbsp; </td>
-					<td><?=form_input('ct_tuesday_start',$calltime_info->ct_tuesday_start,'id="ct_tuesday_start" maxlength="4" size="5"') ?></td>
-					<td><?=form_input('ct_tuesday_stop',$calltime_info->ct_tuesday_stop,'id="ct_tuesday_stop" maxlength="4" size="5"') ?></td>
-					<td style="width: 20%;white-space: nowrap;"><?=form_input('tuesday_afterhours_filename_override',$calltime_info->tuesday_afterhours_filename_override,'id="tuesday_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="tuesday">[audio chooser]</a></td>
-				</tr>
-				<tr>
-					<td style="text-align: right;white-space: nowrap;">Wednesday: &nbsp; &nbsp; </td>
-					<td><?=form_input('ct_wednesday_start',$calltime_info->ct_wednesday_start,'id="ct_wednesday_start" maxlength="4" size="5"') ?></td>
-					<td><?=form_input('ct_wednesday_stop',$calltime_info->ct_wednesday_stop,'id="ct_wednesday_stop" maxlength="4" size="5"') ?></td>
-					<td style="width: 20%;white-space: nowrap;"><?=form_input('wednesday_afterhours_filename_override',$calltime_info->wednesday_afterhours_filename_override,'id="wednesday_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="wednesday">[audio chooser]</a></td>
-				</tr>
-				<tr>
-					<td style="text-align: right;white-space: nowrap;">Thursday: &nbsp; &nbsp; </td>
-					<td><?=form_input('ct_thursday_start',$calltime_info->ct_thursday_start,'id="ct_thursday_start" maxlength="4" size="5"') ?></td>
-					<td><?=form_input('ct_thursday_stop',$calltime_info->ct_thursday_stop,'id="ct_thursday_stop" maxlength="4" size="5"') ?></td>
-					<td style="width: 20%;white-space: nowrap;"><?=form_input('thursday_afterhours_filename_override',$calltime_info->thursday_afterhours_filename_override,'id="thursday_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="thursday">[audio chooser]</a></td>
-				</tr>
-				<tr>
-					<td style="text-align: right;white-space: nowrap;">Friday: &nbsp; &nbsp; </td>
-					<td><?=form_input('ct_friday_start',$calltime_info->ct_friday_start,'id="ct_friday_start" maxlength="4" size="5"') ?></td>
-					<td><?=form_input('ct_friday_stop',$calltime_info->ct_friday_stop,'id="ct_friday_stop" maxlength="4" size="5"') ?></td>
-					<td style="width: 20%;white-space: nowrap;"><?=form_input('friday_afterhours_filename_override',$calltime_info->friday_afterhours_filename_override,'id="friday_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="friday">[audio chooser]</a></td>
-				</tr>
-				<tr>
-					<td style="text-align: right;white-space: nowrap;">Saturday: &nbsp; &nbsp; </td>
-					<td><?=form_input('ct_saturday_start',$calltime_info->ct_saturday_start,'id="ct_saturday_start" maxlength="4" size="5"') ?></td>
-					<td><?=form_input('ct_saturday_stop',$calltime_info->ct_saturday_stop,'id="ct_saturday_stop" maxlength="4" size="5"') ?></td>
-					<td style="width: 20%;white-space: nowrap;"><?=form_input('saturday_afterhours_filename_override',$calltime_info->saturday_afterhours_filename_override,'id="saturday_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="saturday">[audio chooser]</a></td>
+                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_wed"); ?>: &nbsp; &nbsp; </td>
+                                        <td><?=form_input('ct_wednesday_start',$calltime_info->ct_wednesday_start,'id="ct_wednesday_start" maxlength="4" size="5"') ?></td>
+                                        <td><?=form_input('ct_wednesday_stop',$calltime_info->ct_wednesday_stop,'id="ct_wednesday_stop" maxlength="4" size="5"') ?></td>
+                                        <td style="width: 20%;white-space: nowrap;"><?=form_input('wednesday_afterhours_filename_override',$calltime_info->wednesday_afterhours_filename_override,'id="wednesday_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="wednesday">[<? echo $this->lang->line("go_audio_chooser"); ?>]</a></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_thurs"); ?>: &nbsp; &nbsp; </td>
+                                        <td><?=form_input('ct_thursday_start',$calltime_info->ct_thursday_start,'id="ct_thursday_start" maxlength="4" size="5"') ?></td>
+                                        <td><?=form_input('ct_thursday_stop',$calltime_info->ct_thursday_stop,'id="ct_thursday_stop" maxlength="4" size="5"') ?></td>
+                                        <td style="width: 20%;white-space: nowrap;"><?=form_input('thursday_afterhours_filename_override',$calltime_info->thursday_afterhours_filename_override,'id="thursday_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="thursday">[<? echo $this->lang->line("go_audio_chooser"); ?>]</a></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_fri"); ?>: &nbsp; &nbsp; </td>
+                                        <td><?=form_input('ct_friday_start',$calltime_info->ct_friday_start,'id="ct_friday_start" maxlength="4" size="5"') ?></td>
+                                        <td><?=form_input('ct_friday_stop',$calltime_info->ct_friday_stop,'id="ct_friday_stop" maxlength="4" size="5"') ?></td>
+                                        <td style="width: 20%;white-space: nowrap;"><?=form_input('friday_afterhours_filename_override',$calltime_info->friday_afterhours_filename_override,'id="friday_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="friday">[<? echo $this->lang->line("go_audio_chooser"); ?>]</a></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_sat"); ?>: &nbsp; &nbsp; </td>
+                                        <td><?=form_input('ct_saturday_start',$calltime_info->ct_saturday_start,'id="ct_saturday_start" maxlength="4" size="5"') ?></td>
+                                        <td><?=form_input('ct_saturday_stop',$calltime_info->ct_saturday_stop,'id="ct_saturday_stop" maxlength="4" size="5"') ?></td>
+                                        <td style="width: 20%;white-space: nowrap;"><?=form_input('saturday_afterhours_filename_override',$calltime_info->saturday_afterhours_filename_override,'id="saturday_afterhours_filename_override" maxlength="255" size="30"') ?> <a class="selectAudio" id="saturday">[<? echo $this->lang->line("go_audio_chooser"); ?>]</a></td>
 				</tr>
 			</table>
 		</td>
@@ -334,7 +334,7 @@ if ($if_state!="state")
 		<td colspan="2">&nbsp;</td>
 	</tr>
 	<tr>
-    	<td><td style="text-align:right;"><span id="saveCalltimes" class="buttons">SAVE SETTINGS</span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
+    	<td><td style="text-align:right;"><span id="saveCalltimes" class="buttons"><? echo $this->lang->line("go_save_settings"); ?></span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
     </tr>
 	<tr>
 		<td colspan="2">&nbsp;</td>
@@ -343,11 +343,11 @@ if ($if_state!="state")
 		<td colspan="2">
 			<table border="0" cellpadding="0" cellspacing="0" style="width:100%; margin-left:auto; margin-right:auto;">
 				<tr>
-					<td style="font-weight:bold;text-align: center;" colspan="3">ACTIVE STATE CALL TIME FOR THIS RECORD</td>
+					<td style="font-weight:bold;text-align: center;" colspan="3"><? echo $this->lang->line("go_active_state_call"); ?></td>
 				</tr>
 				<tr>
-					<td style="font-weight:bold;white-space:nowrap;">&nbsp;&nbsp;STATE CALL TIME ID</td>
-					<td style="font-weight:bold;white-space:nowrap;">&nbsp;&nbsp;&nbsp;STATE CALL TIME DEFINITION</td>
+					<td style="font-weight:bold;white-space:nowrap;">&nbsp;&nbsp;<? echo $this->lang->line("go_state_call_time_id"); ?></td>
+					<td style="font-weight:bold;white-space:nowrap;">&nbsp;&nbsp;&nbsp;<? echo $this->lang->line("go_state_call_defi"); ?></td>
 					<td style="font-weight:bold;white-space:nowrap;">&nbsp;</td>
 				</tr>
 				<?php
@@ -369,7 +369,7 @@ if ($if_state!="state")
 						echo "<tr style='background-color:$bgcolor;'>\n";
 						echo "<td style='border-top:#D0D0D0 dashed 1px;white-space:nowrap;'>&nbsp;&nbsp;<span class='otherLinks' onclick=\"modify('$state_calltime_info->state_call_time_id','state')\">{$state_calltime_info->state_call_time_id}</span></td>";
 						echo "<td style='border-top:#D0D0D0 dashed 1px;white-space:nowrap;'>&nbsp;&nbsp;&nbsp;{$state_calltime_info->state_call_time_state} - {$state_calltime_info->state_call_time_name}</td>";
-						echo "<td style='border-top:#D0D0D0 dashed 1px;text-align:right;'><span onclick=\"delCalltime('{$calltime_info->call_time_id}','{$state_calltime_info->state_call_time_id}')\" style='cursor:pointer;margin:5px;' class='toolTip' title='DELETE STATE CALLTIME<br />{$state_calltime_info->state_call_time_id}<br />FROM THIS RECORD'><img src='{$base}img/delete.png' style='cursor:pointer;width:12px;' /></span>&nbsp;</td>";
+						echo "<td style='border-top:#D0D0D0 dashed 1px;text-align:right;'><span onclick=\"delCalltime('{$calltime_info->call_time_id}','{$state_calltime_info->state_call_time_id}')\" style='cursor:pointer;margin:5px;' class='toolTip' title='{$this->lang->line("go_del_state_calltime")}<br />{$state_calltime_info->state_call_time_id}<br />{$this->lang->line("go_from_this_record")}'><img src='{$base}img/delete.png' style='cursor:pointer;width:12px;' /></span>&nbsp;</td>";
 						echo "</tr>\n";
 					}
 				}
@@ -378,7 +378,7 @@ if ($if_state!="state")
 					<td colspan="3" style="font-size:5px;">&nbsp;</td>
 				</tr>
 				<tr>
-					<td style="white-space:nowrap;width:20%;">&nbsp;&nbsp;ADD STATE CALL TIME RULE:</td>
+					<td style="white-space:nowrap;width:20%;">&nbsp;&nbsp;<? echo $this->lang->line("go_add_state_call_t_rule"); ?>:</td>
 					<td style="white-space:nowrap;width:20%;">&nbsp;&nbsp;
 						<?php
 						$state_call_time_list = $this->go_calltimes->go_get_calltimes_list('state',true);
@@ -394,7 +394,7 @@ if ($if_state!="state")
 						?>
 					</td>
 					<td style="white-space:nowrap;text-align:right;">
-						<span id="submit_rule" class="buttons">ADD RULE</span>
+						<span id="submit_rule" class="buttons"><? echo $this->lang->line("go_add_rule"); ?></span>
 					</td>
 				</tr>
 			</table>
@@ -407,7 +407,7 @@ if ($if_state!="state")
 <table id="test" border=0 cellpadding="3" cellspacing="3" style="width:95%; color:#000; margin-left:auto; margin-right:auto;">
 	<tr>
 		<td style="text-align:right;width:25%;height:10px;font-weight:bold;">
-		State Call Time ID:
+		<? echo $this->lang->line("go_state_call_time_id"); ?>:
 		</td>
 		<td>
 		&nbsp;<?=$calltime_info->state_call_time_id ?>
@@ -417,7 +417,7 @@ if ($if_state!="state")
 	</tr>
 	<tr>
 		<td style="text-align:right;width:25%;height:10px;font-weight:bold;">
-		State Call Time State:
+		<? echo $this->lang->line("go_state_Call_time_state"); ?>:
 		</td>
 		<td>
 		<?=form_input('state_call_time_state',$calltime_info->state_call_time_state,'id="state_call_time_state" maxlength="2" size="3"') ?>
@@ -425,7 +425,7 @@ if ($if_state!="state")
 	</tr>
 	<tr>
 		<td style="text-align:right;width:25%;height:10px;font-weight:bold;">
-		State Call Time Name:
+		<? echo $this->lang->line("go_state_call_time_name"); ?>:
 		</td>
 		<td>
 		<?=form_input('state_call_time_name',$calltime_info->state_call_time_name,'id="state_call_time_name" maxlength="30" size="30"') ?>
@@ -433,7 +433,7 @@ if ($if_state!="state")
 	</tr>
 	<tr>
 		<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-		State Call Time Comments:
+		<? echo $this->lang->line("go_state_call_time_comments"); ?>:
 		</td>
 		<td>
 		<?=form_input('state_call_time_comments',$calltime_info->state_call_time_comments,'id="state_call_time_comments" maxlength="255" size="40"') ?>
@@ -441,11 +441,11 @@ if ($if_state!="state")
 	</tr>
 	<tr>
 		<td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-		User Group:
+		<? echo $this->lang->line("go_user_group"); ?>:
 		</td>
 		<td>
 		<?php
-		$groupArray = array("---ALL---"=>"ALL USER GROUPS");
+		$groupArray = array("---{$this->lang->line("go_all")}---"=>"{$this->lang->line("go_all_user_groups_caps")}");
 		foreach ($user_groups as $group)
 		{
 			$groupArray[$group->user_group] = "{$group->user_group} - {$group->group_name}";
@@ -462,46 +462,46 @@ if ($if_state!="state")
 			<table border="0" cellpadding="0" cellspacing="0" style="width:50%; margin-left:auto; margin-right:auto;">
 				<tr>
 					<td style="font-weight:bold;width: 10%;">&nbsp;</td>
-					<td style="font-weight:bold;">START</td>
-					<td style="font-weight:bold;">STOP</td>
-				</tr>
-				<tr>
-					<td style="text-align: right;white-space: nowrap;">Default: &nbsp; &nbsp; </td>
-					<td><?=form_input('sct_default_start',$calltime_info->sct_default_start,'id="ct_default_start" maxlength="4" size="5"') ?></td>
-					<td><?=form_input('sct_default_stop',$calltime_info->sct_default_stop,'id="ct_default_stop" maxlength="4" size="5"') ?></td>
-				</tr>
-				<tr>
-					<td style="text-align: right;white-space: nowrap;">Sunday: &nbsp; &nbsp; </td>
-					<td><?=form_input('sct_sunday_start',$calltime_info->sct_sunday_start,'id="ct_sunday_start" maxlength="4" size="5"') ?></td>
-					<td><?=form_input('sct_sunday_stop',$calltime_info->sct_sunday_stop,'id="ct_sunday_stop" maxlength="4" size="5"') ?></td>
-				</tr>
-				<tr>
-					<td style="text-align: right;white-space: nowrap;">Monday: &nbsp; &nbsp; </td>
-					<td><?=form_input('sct_monday_start',$calltime_info->sct_monday_start,'id="ct_monday_start" maxlength="4" size="5"') ?></td>
-					<td><?=form_input('sct_monday_stop',$calltime_info->sct_monday_stop,'id="ct_monday_stop" maxlength="4" size="5"') ?></td>
-				</tr>
-				<tr>
-					<td style="text-align: right;white-space: nowrap;">Tuesday: &nbsp; &nbsp; </td>
-					<td><?=form_input('sct_tuesday_start',$calltime_info->sct_tuesday_start,'id="ct_tuesday_start" maxlength="4" size="5"') ?></td>
-					<td><?=form_input('sct_tuesday_stop',$calltime_info->sct_tuesday_stop,'id="ct_tuesday_stop" maxlength="4" size="5"') ?></td>
-				</tr>
-				<tr>
-					<td style="text-align: right;white-space: nowrap;">Wednesday: &nbsp; &nbsp; </td>
-					<td><?=form_input('sct_wednesday_start',$calltime_info->sct_wednesday_start,'id="ct_wednesday_start" maxlength="4" size="5"') ?></td>
-					<td><?=form_input('sct_wednesday_stop',$calltime_info->sct_wednesday_stop,'id="ct_wednesday_stop" maxlength="4" size="5"') ?></td>
-				</tr>
-				<tr>
-					<td style="text-align: right;white-space: nowrap;">Thursday: &nbsp; &nbsp; </td>
-					<td><?=form_input('sct_thursday_start',$calltime_info->sct_thursday_start,'id="ct_thursday_start" maxlength="4" size="5"') ?></td>
-					<td><?=form_input('sct_thursday_stop',$calltime_info->sct_thursday_stop,'id="ct_thursday_stop" maxlength="4" size="5"') ?></td>
-				</tr>
-				<tr>
-					<td style="text-align: right;white-space: nowrap;">Friday: &nbsp; &nbsp; </td>
+                                        <td style="font-weight:bold;"><? echo $this->lang->line("go_start"); ?></td>
+                                        <td style="font-weight:bold;"><? echo $this->lang->line("go_stop"); ?></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_default"); ?>: &nbsp; &nbsp; </td>
+                                        <td><?=form_input('sct_default_start',$calltime_info->sct_default_start,'id="ct_default_start" maxlength="4" size="5"') ?></td>
+                                        <td><?=form_input('sct_default_stop',$calltime_info->sct_default_stop,'id="ct_default_stop" maxlength="4" size="5"') ?></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_sun"); ?>: &nbsp; &nbsp; </td>
+                                        <td><?=form_input('sct_sunday_start',$calltime_info->sct_sunday_start,'id="ct_sunday_start" maxlength="4" size="5"') ?></td>
+                                        <td><?=form_input('sct_sunday_stop',$calltime_info->sct_sunday_stop,'id="ct_sunday_stop" maxlength="4" size="5"') ?></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_mon"); ?>: &nbsp; &nbsp; </td>
+                                        <td><?=form_input('sct_monday_start',$calltime_info->sct_monday_start,'id="ct_monday_start" maxlength="4" size="5"') ?></td>
+                                        <td><?=form_input('sct_monday_stop',$calltime_info->sct_monday_stop,'id="ct_monday_stop" maxlength="4" size="5"') ?></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_tues"); ?>: &nbsp; &nbsp; </td>
+                                        <td><?=form_input('sct_tuesday_start',$calltime_info->sct_tuesday_start,'id="ct_tuesday_start" maxlength="4" size="5"') ?></td>
+                                        <td><?=form_input('sct_tuesday_stop',$calltime_info->sct_tuesday_stop,'id="ct_tuesday_stop" maxlength="4" size="5"') ?></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_wed"); ?>: &nbsp; &nbsp; </td>
+                                        <td><?=form_input('sct_wednesday_start',$calltime_info->sct_wednesday_start,'id="ct_wednesday_start" maxlength="4" size="5"') ?></td>
+                                        <td><?=form_input('sct_wednesday_stop',$calltime_info->sct_wednesday_stop,'id="ct_wednesday_stop" maxlength="4" size="5"') ?></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_thurs"); ?>: &nbsp; &nbsp; </td>
+                                        <td><?=form_input('sct_thursday_start',$calltime_info->sct_thursday_start,'id="ct_thursday_start" maxlength="4" size="5"') ?></td>
+                                        <td><?=form_input('sct_thursday_stop',$calltime_info->sct_thursday_stop,'id="ct_thursday_stop" maxlength="4" size="5"') ?></td>
+                                </tr>
+                                <tr>
+                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_fri"); ?>: &nbsp; &nbsp; </td>
 					<td><?=form_input('sct_friday_start',$calltime_info->sct_friday_start,'id="ct_friday_start" maxlength="4" size="5"') ?></td>
 					<td><?=form_input('sct_friday_stop',$calltime_info->sct_friday_stop,'id="ct_friday_stop" maxlength="4" size="5"') ?></td>
 				</tr>
 				<tr>
-					<td style="text-align: right;white-space: nowrap;">Saturday: &nbsp; &nbsp; </td>
+					<td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_sat"); ?>: &nbsp; &nbsp; </td>
 					<td><?=form_input('sct_saturday_start',$calltime_info->sct_saturday_start,'id="ct_saturday_start" maxlength="4" size="5"') ?></td>
 					<td><?=form_input('sct_saturday_stop',$calltime_info->sct_saturday_stop,'id="ct_saturday_stop" maxlength="4" size="5"') ?></td>
 				</tr>
@@ -512,7 +512,7 @@ if ($if_state!="state")
 		<td colspan="2">&nbsp;</td>
 	</tr>
 	<tr>
-    	<td><td style="text-align:right;"><span id="saveStateCalltimes" class="buttons">SAVE SETTINGS</span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
+    	<td><td style="text-align:right;"><span id="saveStateCalltimes" class="buttons"><? echo $this->lang->line("go_save_settings"); ?></span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
     </tr>
 </table>
 <?php
@@ -526,7 +526,7 @@ if ($if_state!="state")
 ?>
 <table border="0" cellpadding="0" cellspacing="0" style="color: #000;margin-left: auto;margin-right: auto;">
 	<tr>
-		<td colspan="2" style="font-weight:bold;text-align:center;">CAMPAIGNS USING THIS CALL TIME</td>
+		<td colspan="2" style="font-weight:bold;text-align:center;"><? echo $this->lang->line("go_campaigns_using_call_time"); ?></td>
 	</tr>
 	<?php
 	if (count($using_calltime['camp']) > 0)
@@ -552,7 +552,7 @@ if ($if_state!="state")
 <br />
 <table border="0" cellpadding="0" cellspacing="0" style="color: #000;margin-left: auto;margin-right: auto;">
 	<tr>
-		<td colspan="2" style="font-weight:bold;text-align:center;">INBOUND GROUPS USING THIS CALL TIME</td>
+		<td colspan="2" style="font-weight:bold;text-align:center;"><? echo $this->lang->line("go_inbound_groups_call_time"); ?></td>
 	</tr>
 	<?php
 	if (count($using_calltime['inb']) > 0)
@@ -580,7 +580,7 @@ if ($if_state!="state")
 ?>
 <table border="0" cellpadding="0" cellspacing="0" style="color: #000;margin-left: auto;margin-right: auto;">
 	<tr>
-		<td colspan="2" style="font-weight:bold;text-align:center;">&nbsp; CALL TIMES USING THIS STATE CALL TIME &nbsp;</td>
+		<td colspan="2" style="font-weight:bold;text-align:center;">&nbsp; <? echo $this->lang->line("go_call_times_state"); ?> &nbsp;</td>
 	</tr>
 	<?php
 	if (count($using_calltime['list']) > 0)

@@ -132,7 +132,7 @@ function voipsignup() {
 </style>
 
 <div class="table table_balance" id="table_balance">
-								<p class="sub" style="margin-left: -20px;"><a id="payWithPayPal" class="rightdiv toolTip" style="text-decoration: none; cursor:pointer; font-weight:normal; font-size: 13px; color: #777777;" title="">Balance</a></p>
+								<p class="sub" style="margin-left: -20px;"><a id="payWithPayPal" class="rightdiv toolTip" style="text-decoration: none; cursor:pointer; font-weight:normal; font-size: 13px; color: #777777;" title=""><? echo lang('go_Balance'); ?></a></p>
 									<?php
                                                                         $rate = 0.0129;	
 									$mins_remain = ($totalbalance > 0) ? $totalbalance / $rate : 0;
@@ -192,11 +192,11 @@ function voipsignup() {
 											<?php
 											if($totals < $thold) {
 											?>
-                        									<span style="font-size:11px;cursor: default;font-style: italic;color: <?=$redcolor_inactive?>" class="toolTip" title="Minutes remaining is based on US and Canada call rate.">&nbsp;Remaining Minutes: <?=$mins_remain?>*</span> <br /><br style="font-size:8px;" />
+                        									<span style="font-size:11px;cursor: default;font-style: italic;color: <?=$redcolor_inactive?>" class="toolTip" title="<? echo lang('go_RemainingMinutesTooltip'); ?>">&nbsp;<? echo lang('go_RemainingMinutes'); ?>: <?=$mins_remain?>*</span> <br /><br style="font-size:8px;" />
 											<?php
 											} else {
 											?>	
-                        									<span style="font-size:11px;cursor: default;font-style: italic; color: #464646" class="toolTip" title="Minutes remaining is based on US and Canada call rate.">&nbsp;Remaining Minutes: <?=$mins_remain?>*</span> <br /><br style="font-size:8px;" />
+                        									<span style="font-size:11px;cursor: default;font-style: italic; color: #464646" class="toolTip" title="<? echo lang('go_RemainingMinutesTooltip'); ?>">&nbsp;<? echo lang('go_RemainingMinutes'); ?>: <?=$mins_remain?>*</span> <br /><br style="font-size:8px;" />
 											<?php
 											}
 											?>
@@ -208,14 +208,14 @@ function voipsignup() {
                                                                                         ?>
                         								<td class="t bold disableLink" align="left"><a class="" <?php echo $font_inactive; ?>>$</a></td>
                         								<td class="b" align="left">
-                        									<a id="payWithPayPalbalance" class="rightdiv toolTip" style="font-weight:normal; text-decoration: none; cursor:pointer; <?php echo $fontSize; ?> <?php echo $font_inactivebal; ?>" title="Click here to signup and activate GoAutoDial's JustGoVoIP carrier." onclick="voipsignup();"><? echo $totalbalance; ?></a>
+                        									<a id="payWithPayPalbalance" class="rightdiv toolTip" style="font-weight:normal; text-decoration: none; cursor:pointer; <?php echo $fontSize; ?> <?php echo $font_inactivebal; ?>" title="<? echo lang('go_ClickheretosignupandactivateGoAutoDialsJustGoVoIPcarrier'); ?>." onclick="voipsignup();"><? echo $totalbalance; ?></a>
                         								</td>
 											<?php
 											} else {
 											?>
                         								<td class="t bold disableLink" align="left"><a class="" <?php echo $font_inactive; ?>>$</a></td>
                         								<td class="b" align="left">
-                        									<a id="payWithPayPalbalance" class="rightdiv toolTip" href="https://dal.justgovoip.com/account.php" target="_blank"  style="font-weight:normal; text-decoration: none; cursor:pointer; <?php echo $fontSize; ?> <?php echo $font_inactivebal; ?> <?php echo $font_color; ?>" title="<?php echo $statusmsg; ?> Click here to login to your JustGoVoip account and load credits."><? echo number_format($totalbalance,2); ?></a> 
+                        									<a id="payWithPayPalbalance" class="rightdiv toolTip" href="https://dal.justgovoip.com/account.php" target="_blank"  style="font-weight:normal; text-decoration: none; cursor:pointer; <?php echo $fontSize; ?> <?php echo $font_inactivebal; ?> <?php echo $font_color; ?>" title="<?php echo $statusmsg; ?>  <? echo lang('go_ClickheretologintoyourJustGoVoipaccountandloadcredits'); ?>."><? echo number_format($totalbalance,2); ?></a> 
                         									<!--<a id="payWithPayPalbalance" class="rightdiv toolTip"  target="_blank"  style="font-weight:normal; text-decoration: none; cursor:pointer; <?php echo $fontSize; ?> <?php echo $font_inactivebal; ?>" title="<?php echo $statusmsg; ?> Click here to login to your JustGoVoip account and load credits."><? #echo $totalbalance; ?></a>
                                                                                                 <script>
                                                                                                      $(function(){
@@ -240,7 +240,7 @@ function voipsignup() {
 											<?php
 											if($activecarrier == "" OR $activecarrier == NULL) {
 											?>	
-                                                                                     	<span style="font-size:11px;cursor: pointer; font-weight:normal;" class="toolTip" title="Click here to signup and activate GoAutoDial's JustGoVoip carrier." onclick="voipsignup();">&nbsp;<center><a class="" style="cursor: pointer; font-weight:normal;" onclick="voipsignup();">Signup for free<br> 60 minutes</a></span> <br /><br style="font-size:8px;" /></center><?php
+                                                                                     	<span style="font-size:11px;cursor: pointer; font-weight:normal;" class="toolTip" title="Click here to signup and activate GoAutoDial's JustGoVoip carrier." onclick="voipsignup();">&nbsp;<center><a class="" style="cursor: pointer; font-weight:normal;" onclick="voipsignup();"><? echo lang('go_Signupforfree'); ?><br><? echo lang('go_60minutes'); ?></a></span> <br /><br style="font-size:8px;" /></center><?php
 											} else {
 
 											?>
@@ -252,7 +252,7 @@ echo "ACTIVE";
 echo "INACTIVE"; 
 }
 
-?> ">&nbsp;<center>Carrier Status <br> 
+?> ">&nbsp;<center><? echo lang('go_CarrierStatus'); ?> <br> 
 							<!--<a class="" href="<?=$base?>carriers" style="cursor: pointer; font-weight:normal;">-->
 							<a class="" style="cursor: pointer; font-weight:normal;"><?php
 											}
@@ -275,7 +275,7 @@ echo "INACTIVE";
                                                         </div>
 
                                                         <div class="table table_account" id="table_account">
-								<p class="sub">Account Number</p>
+								<p class="sub"><? echo lang('go_AccountNumber'); ?></p>
 									<table>
 										<tbody>
 										<tr>
@@ -296,43 +296,43 @@ echo "INACTIVE";
                                                         </div>
                                                         <br /><br />
                                                         <div class="table table_info" id="table_info">
-									<p class="sub">Account Informations</p>
+									<p class="sub"><? echo lang('go_AccountInformations'); ?></p>
                                                                         <table>
                                                                                 <tbody>
                                                                                 <tr>    
-                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>>First name:</a></td>
+                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>><? echo lang('go_Firstname_'); ?>:</a></td>
                                                                                         <td class="f disableLink"><a class="" <?php echo $font_inactive; ?>><? echo $sippy_firstname;?></a></td>
                                                                                 </tr>           
                                                                                 <tr>    
-                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>>Last name:</a></td>
+                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>><? echo lang('go_Lastname_'); ?>:</a></td>
                                                                                         <td class="f disableLink"><a class="" <?php echo $font_inactive; ?>><? echo $sippy_lastname;?></a></td>
                                                                                 </tr>           
                                                                                 <tr>    
-                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>>Email:</a></td>
+                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>><? echo lang('go_Email_'); ?></a></td>
                                                                                         <td class="f disableLink"><a class="" <?php echo $font_inactive; ?>><? echo $sippy_email;?></a></td>
                                                                                 </tr>           
                                                                                 <tr>    
-                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>>Phone:</a></td>
+                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>><? echo lang('go_Phone_'); ?>:</a></td>
                                                                                         <td class="f disableLink"><a class="" <?php echo $font_inactive; ?>><? echo $sippy_phone;?></a></td>
                                                                                 </tr>           
                                                                                 <tr>    
-                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>>Address:</a></td>
+                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>><? echo lang('go_Address_'); ?>:</a></td>
                                                                                         <td class="f disableLink"><a class="" <?php echo $font_inactive; ?>><? echo $sippy_address;?></a></td>
                                                                                 </tr>           
                                                                                 <tr>    
-                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>>City:</a></td>
+                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>><? echo lang('go_City_'); ?>:</a></td>
                                                                                         <td class="f disableLink"><a class="" <?php echo $font_inactive; ?>><? echo $sippy_city;?></a></td>
                                                                                 </tr>           
                                                                                 <tr>    
-                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>>State:</a></td>
+                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>><? echo lang('go_State_'); ?>:</a></td>
                                                                                         <td class="f disableLink"><a class="" <?php echo $font_inactive; ?>><? echo $sippy_state;?></a></td>
                                                                                 </tr>           
                                                                                 <tr>    
-                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>>Zip Code:</a></td>
+                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>><? echo lang('go_ZipCode'); ?>:</a></td>
                                                                                         <td class="f disableLink"><a class="" <?php echo $font_inactive; ?>><? echo $sippy_postal_code;?></a></td>
                                                                                 </tr>           
                                                                                 <tr>    
-                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>>Country:</a></td>
+                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>><? echo lang('go_Country_'); ?></a></td>
                                                                                         <td class="f disableLink"><a class="" <?php echo $font_inactive; ?>><? echo $sippy_country;?></a></td>
                                                                                 </tr>   
                                                                                 <tr>  
@@ -369,40 +369,40 @@ echo "INACTIVE";
                  				
                                                         <div class="table table_info" id="table_carrier" style="display: none;">
                                                         
-								<p class="sub">Carrier Information</p>
+								<p class="sub"><? echo lang('go_CarrierInformation'); ?></p>
 								<table>
                                                                        <tbody>
                                                                        <tr>
-                                                                                <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>>Carrier name:</a></td>
+                                                                                <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>><? echo lang('go_Carriername'); ?>:</a></td>
                                                                                 <td class="f disableLink"><a class="" <?php echo $font_inactive; ?>><? echo $namecarrier;?></a></td>
                                                                        </tr>
                                                                        <tr>
-                                                                                <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>>Carrier I.D. :</a></td>
+                                                                                <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>><? echo lang('go_CarrierID'); ?>:</a></td>
                                                                                 <td class="f disableLink"><a class="" <?php echo $font_inactive; ?>><? echo $idcarrier;?></a></td>
                                                                        </tr>
                                                                                 <tr>
-                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>>Web Username:</a></td>
+                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>><? echo lang('go_WebUsername'); ?>:</a></td>
                                                                                         <td class="f disableLink"><a class="" <?php echo $font_inactive; ?>><? echo $web_username;?></a></td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>>Web Password:</a></td>
+                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>><? echo lang('go_WebPassword'); ?>:</a></td>
                                                                                         <td class="f disableLink">
                                                                                         <span class="hiddenPass" <?php echo $font_inactive; ?>>********</span>
                                                                                         <span class="showPass" style="display:none; <?=$font_inactivebal?>"><? echo $web_password; ?></span></a>
-                                                                                        <span id="showPass" class="toolTip" title="Show/Hide Password" style="cursor:pointer;font-size:10px;<?=$font_inactivebal?>">[show]</span>
+                                                                                        <span id="showPass" class="toolTip" title="Show/Hide Password" style="cursor:pointer;font-size:10px;<?=$font_inactivebal?>">[<? echo lang('go_show'); ?>]</span>
                                                                                         </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>>VoIP Username:</a></td>
+                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>><?echo lang('go_VoIPUsername'); ?>:</a></td>
                                                                                         <td class="f disableLink"><a class="" <?php echo $font_inactive; ?>><? echo $voip_authname;?></a></td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>>VoIP Password:</a></td>
+                                                                                        <td class="f bold disableLink"><a class="" <?php echo $font_inactive; ?>><? echo lang('go_VoIPPassword'); ?>:</a></td>
                                                                                         <td class="f disableLink">
                                                                                         <span id="hiddenvoippass" <?php echo $font_inactive; ?>>********</span>
                                                                                         <span id="showvoippass" style="display:none;"><? echo $voip_password; ?></span></a>
-                                                                                        <span id="showPassvoip" class="toolTip" title="Show/Hide Password" style="cursor:pointer;font-size:10px;<?=$font_inactivebal?>">[show]</span>
-                                                                                        <span id="showPassvoiphide" class="toolTip" title="Show/Hide Password" style="cursor:pointer;font-size:10px;display:none;<?=$font_inactivebal?>">[hide]</span>
+                                                                                        <span id="showPassvoip" class="toolTip" title="Show/Hide Password" style="cursor:pointer;font-size:10px;<?=$font_inactivebal?>">[<? echo lang('go_show'); ?>]</span>
+                                                                                        <span id="showPassvoiphide" class="toolTip" title="Show/Hide Password" style="cursor:pointer;font-size:10px;display:none;<?=$font_inactivebal?>">[<? echo lang('go_hide'); ?>]</span>
                                                                                         </td>
                                                                                 </tr>
                                                                                
@@ -411,11 +411,11 @@ echo "INACTIVE";
 								       </tbody>
 								</table>
 								<br><br>
-								<a id='hidecarrier' style="cursor: pointer;"><i><b>&nbsp;&raquo; Click here to hide... </b></i></a><br><br><br>
-								 <div id="call_basedout" style="width: 500px; font-size:11px;cursor: default;font-style: italic;color: #777;font-style: italic;padding-left: 15px;<?=$font_inactivebal;?>">* Minutes remaining is based on US and Canada call rate.</div>
+								<a id='hidecarrier' style="cursor: pointer;"><i><b>&nbsp;&raquo; <? echo lang('go_Clickheretohide'); ?>... </b></i></a><br><br><br>
+								 <div id="call_basedout" style="width: 500px; font-size:11px;cursor: default;font-style: italic;color: #777;font-style: italic;padding-left: 15px;<?=$font_inactivebal;?>">* <? echo lang('go_MinutesremainingisbasedonUSandCanadacallrate'); ?>.</div>
 								
 							</div>
-							 <div id="call_basedin" style="width: 500px; font-size:11px;cursor: default;font-style: italic;color: #777;font-style: italic;padding-left: 15px;<?=$font_inactivebal;?>">* Minutes remaining is based on US and Canada call rate.</div>
+							 <div id="call_basedin" style="width: 500px; font-size:11px;cursor: default;font-style: italic;color: #777;font-style: italic;padding-left: 15px;<?=$font_inactivebal;?>">* <? echo lang('go_MinutesremainingisbasedonUSandCanadacallrate'); ?>.</div>
 						
 
 

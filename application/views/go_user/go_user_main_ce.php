@@ -101,8 +101,8 @@ $(function()
 
 <div id='outbody' class="wrap">
     <div id="icon-user" class="icon32"></div>
-    <div style="float: right;margin-top:15px;margin-right:25px;"><span id="showAllLists" style="display: none">[Clear Search]</span>&nbsp;<?=form_input('search_list',$search_list,'id="search_list" maxlength="100" placeholder="Search '.$bannertitle.'"') ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_list_button" style="cursor: pointer;" /></div>
-    <h2><?=$bannertitle?></h2>
+    <div style="float: right;margin-top:15px;margin-right:25px;"><span id="showAllLists" style="display: none"><?php echo $goUsers_clearSearch  ?></span>&nbsp;<?=form_input('search_list',$search_list,'id="search_list" maxlength="100" placeholder="'.$goUsers_searchUsers.'"') ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_list_button" style="cursor: pointer;" /></div>
+    <h2><?=$bannertitle?><img class="toolTip" src="/img/status_display_i.png" title="<? echo lang('go_UserTooltip');?>" style="margin-left:10px; cursor:default; width:15px;"></h2>
     <div id="dashboard-widgets-wrap">
         <div id="dashboard-widgets" class="metabox-holder">
             <div class="postbox-container" style="width:99%;min-width:1200px;">
@@ -128,7 +128,7 @@ $(function()
 			}
 			?>
                         <div class="user-add rightdiv" id="call-user-wizard" style="color:#555555;<?=$hideWizard?>">
-                            Add New User<?#=img('img/cross.png')?>
+                            <?php echo $goUsers_addNewUser; ?><?#=img('img/cross.png')?>
                         </div>
                         <h3 class="hndle">
                             <span><span id="title_bar" /><?=$bannertitle?>&nbsp;Lists</span>
@@ -137,7 +137,7 @@ $(function()
                         </h3>
                             <div id="tab-nav" class="tab-nav">
                                 <ul>
-                                    <li><a href="<?=$base_path?>index.php/go_user_ce/index/<?=$user_group?>/<?=$page?>"><span>Users</span></a></li>
+                                    <li><a href="<?=$base_path?>index.php/go_user_ce/index/<?=$user_group?>/<?=$page?>"><span><?php echo $goUsers_users; ?></span></a></li>
                                     <!-- <li><a href="userstatus"><span>User Status</span></a></li> -->
                                     <?if($user_level > 8){?>
                                     <!-- <li><a href="advancemodifyuser"><span>Advance</span></a></li> -->
@@ -156,30 +156,30 @@ $(function()
 
 				if ($pg['last'] > 1) {
 				    $pagelinks  = '<div style="cursor: pointer;font-weight: bold;" id="paginationLinks">';
-				    $pagelinks .= '<a title="Go to First Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
-				    $pagelinks .= '<a title="Go to Previous Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
+				    $pagelinks .= '<a title="'.$goUsers_tooltip_goToFirstPage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
+				    $pagelinks .= '<a title="'.$goUsers_tooltip_goToPreviousPage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
 							    
 				    for ($i=$pg['start'];$i<=$pg['end'];$i++) { 
 				       if ($i==$pg['page']) $current = 'color: #F00;cursor: default;'; else $current="";
 				    
-					$pagelinks .= '<a title="Go to Page '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="gopage('.$i.')"><span>'.$i.'</span></a>';
+					$pagelinks .= '<a title="'.$goUsers_tooltip_goToPage.' '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="gopage('.$i.')"><span>'.$i.'</span></a>';
 							    
 				    }
 					    
 				    //$pagelinks .= '<a title="View All Pages" style="vertical-align:text-top;padding: 0px 2px;" onclick="gopage(\'ALL\')"><span>ALL</span></a>';
-				    $pagelinks .= '<a title="Go to Next Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
-				    $pagelinks .= '<a title="Go to Last Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
+				    $pagelinks .= '<a title="'.$goUsers_tooltip_goToNextPage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
+				    $pagelinks .= '<a title="'.$goUsers_tooltip_goToLastPage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
 				    $pagelinks .= '</div>';
 				} else {
 				    if ($rp > 25) {
 					    $pagelinks  = '<div style="cursor: pointer;font-weight: bold;padding-top:10px;">';
-					    $pagelinks .= '<a title="Back to Paginated View" style="vertical-align:text-top;padding: 0px 2px;" onclick="gopage(1)"><span>BACK</span></a>';
+					    $pagelinks .= '<a title="'.$goUsers_tooltip_backToPaginatedView.'" style="vertical-align:text-top;padding: 0px 2px;" onclick="gopage(1)"><span>BACK</span></a>';
 					    $pagelinks .= '</div>';
 				    } else {
 					$pagelinks = '';
 				    }
 				}
-				echo "<span style='float:right;padding-right:10px;' id='paginationInfo'>Displaying {$pg['istart']} to {$pg['iend']} of {$pg['total']} users</span>";
+				echo "<span style='float:right;padding-right:10px;' id='paginationInfo'>$goUsers_displaying {$pg['istart']} $goUsers_to {$pg['iend']} $goUsers_of {$pg['total']} $goUsers_users</span>";
                                 echo $pagelinks;
                                 echo '<form action="users" id="page_track" method="post">';
                                 echo "<input type='hidden' name='page'>";
@@ -205,7 +205,7 @@ $(function()
         <div class='add-close'>&nbsp;</div>
         <br class="clear"/>
         <div class='wizard-breadcrumb'>
-             <div class="wizard-title"><strong>Users Wizard &raquo; Add New User</strong></div>
+             <div class="wizard-title"><strong><?php echo $goUsers_wizard; ?> &raquo;<?php echo $goUsers_addNewUser; ?></strong></div>
              <?=img("img/step2of3-navigation-small.png")?>
              <br class="clear"/>
         </div>
@@ -220,7 +220,7 @@ $(function()
 						}
 						?>
                         <div class="boxleftside" <?=$hideDiv ?>>
-                             <span><strong>User Group:</strong></span>
+                             <span><strong><?php echo $goUsers_userGroup; ?><?php echo":" ?></strong></span>
                         </div>
                         <div class="boxrightside" <?=$hideDiv ?>> 
                              <?php #if($user_level < 9){?>
@@ -250,7 +250,7 @@ $(function()
                            ?>
                         </div><br class="clear"/> -->
                         <div class="boxleftside">
-                           <span><strong>Current Users:</strong></span>
+                           <span><strong><?php echo $goUsers_currentUsers; ?><?php echo":" ?></strong></span>
                         </div>
                         <div class="boxrightside">
                            <?php #if($user_level < 9){?> 
@@ -263,7 +263,7 @@ $(function()
                            ?>
                         </div><br class="clear"/>
                         <div class="boxleftside">
-                            <span><strong>Additional Seat(s):</strong></span>
+                            <span><strong><?php echo $goUsers_addSeats; ?><?php echo":" ?></strong></span>
                         </div>
                         <div class="boxrightside"> 
                             <?php
@@ -274,17 +274,17 @@ $(function()
                             <?=form_hidden('skip','skip')?>
                         </div><br class="clear"/>
                         <div class="boxleftside">
-                            <span><strong>Generate Phone Login(s):</strong></span>
+                            <span><strong><?php echo $goUsers_generatePhoneLogins; ?>:</strong></span>
                         </div>
                         <div class="boxrightside">
                             <?=form_dropdown("generate_phone",array('No','Yes'),0,"class='generate_phone' onChange='generatePhone();'")?>
                         </div><br class="clear"/>
                         <div class="boxleftside generate_phone_class">
-                            <span><strong>Phone Login:</strong></span>
+                            <span><strong><?php echo $goUsers_phoneLogin; ?></strong></span>
                         </div>
                         <div class="boxrightside generate_phone_class">
                             <?=form_input("start_phone_exten",null,"class='start_phone_exten' maxlength='10' size='12' onkeydown='digitsOnly(event)' onkeyup='checkPhoneIfExist()' placeholder='eg. 8001'")?>
-			    <span class="eloading" style="font-size: 10px;"></span>
+			    &nbsp;<span class="eloading" style="font-size: 10px;"></span>
                         </div><br class="clear generate_phone_class"/>
                   <?=form_close();?>
              </div>
@@ -292,8 +292,8 @@ $(function()
         </div>
         <br class="clear"/>
         <div class="wizard-action">
-              <a onclick="cancelWizard(this)">Cancel</a>&nbsp;|&nbsp;
-              <a onclick="next()">Next</a>
+              <a onclick="cancelWizard(this)"><?php echo $goUsers_cancel; ?></a>&nbsp;|&nbsp;
+              <a onclick="next()"><?php echo $goUsers_next; ?></a>
         </div>
         <br class="clear"/>
     </div>
@@ -302,18 +302,18 @@ $(function()
     <div class="wizard-box-modify">
         <div class='add-close-modify'>&nbsp;</div>
         <br class="clear"/>
-        <div class="box-header"><center><strong style="font-size:16px;">Modify User : <span style="font-size:16px;" id="modify_users_id"></span></strong></center></div><br class="clear"/>
+        <div class="box-header"><center><strong style="font-size:16px;"><?php echo $goUsers_modify; ":" ?> <span style="font-size:16px;" id="modify_users_id"></span></strong></center></div><br class="clear"/>
        
         <?=form_open(null,'id="form" class="edit-user"');?>
-            <div class="boxleftside boxleftside-modify">Agent ID:</div>
+            <div class="boxleftside boxleftside-modify toolTip" title="<? echo lang('goUsers_agentandphoneTooltip'); ?>"><?php echo $goUsers_agentId;?><?php echo":" ?></div>
             <div class="boxrightside boxrightside-modify">&nbsp;<input type="hidden" id="users_id" name="users_id"><input type="hidden" id="vicidial_user_id" name="vicidial_user_id"></div><br class="clear">
-            <div class="boxleftside boxleftside-modify">Password:</div>
+            <div class="boxleftside boxleftside-modify"><?php echo $goUsers_password;?><?php echo":" ?></div>
             <div class="boxrightside boxrightside-modify"><?=form_input('pass',null,'id="pass" maxlength="20"')?></div><br class="clear">
-            <div class="boxleftside boxleftside-modify">Full Name:</div>
+            <div class="boxleftside boxleftside-modify"><?php echo $goUsers_fullName;?><?php echo":" ?></div>
             <div class="boxrightside boxrightside-modify"><?=form_input('full_name',null,'id="full_name" maxlength="50" size="30"')?></div><br class="clear">
-            <div class="boxleftside boxleftside-modify">Phone Login:</div>
+            <div class="boxleftside boxleftside-modify toolTip" title="<? echo lang('goUsers_agentandphoneTooltip'); ?>"><?php echo $goUsers_phoneLogin;?><?php echo":" ?></div>
             <div class="boxrightside boxrightside-modify"><?=form_input('phone_login',null,'id="phone_login" maxlength="15" size="15"')?></div><br class="clear">
-            <div class="boxleftside boxleftside-modify">Phone pass:</div>
+            <div class="boxleftside boxleftside-modify"><?php echo $goUsers_phonePassword;?><?php echo":" ?></div>
             <div class="boxrightside boxrightside-modify"><?=form_input('phone_pass',null,'id="phone_pass" maxlength="10" size="12"')?></div><br class="clear">
 			<?php
 			if ($this->commonhelper->checkIfTenant($user_group))
@@ -322,7 +322,7 @@ $(function()
 			}
 			?>
 			<div class="boxleftside boxleftside-modify" <?=$hideDiv ?>>
-				 User Group:
+				 <?php echo $goUsers_userGroup;?><?php echo":" ?>
 			</div>
 			<div class="boxrightside boxrightside-modify" <?=$hideDiv ?>> 
 				<?php 
@@ -331,11 +331,11 @@ $(function()
 					 echo form_dropdown('user_group',$accnt_list,$user_group,$attr);
 				?>
 			</div><br class="clear" <?=$hideDiv ?>/>
-            <div class="boxleftside boxleftside-modify">Active:</div>
+            <div class="boxleftside boxleftside-modify"><?php echo $goUsers_active;?><?php echo ":" ?></div>
             <div class="boxrightside boxrightside-modify">
                  <?=form_dropdown('active',array('Y'=>'Yes','N'=>'No'),null,'id="active"')?>
             </div><br class="clear">
-            <div class="boxleftside boxleftside-modify">Hotkeys:</div>
+            <div class="boxleftside boxleftside-modify"><?php echo $goUsers_hotkeys;?><?php echo":" ?></div>
             <div class="boxrightside boxrightside-modify">
                  <?=form_dropdown('hotkeys_active',array('1'=>'Yes','0'=>'No'),null,'id="hotkeys_active"')?>
             </div><br class="clear">
@@ -352,7 +352,7 @@ $(function()
 	//       }
 	    }
 	    ?>
-            <div class="boxleftside boxleftside-modify" <?=$hideLevels?>>User Level:</div>
+            <div class="boxleftside boxleftside-modify" <?=$hideLevels?>><?php echo $goUsers_userLevel;?><?php echo":" ?></div>
             <div class="boxrightside boxrightside-modify" <?=$hideLevels?>>
                  <?php
 		 $levels = range(0,$max_level);unset($levels[0]);
@@ -362,7 +362,7 @@ $(function()
 	    <?php
 	    if ($user_group === "ADMIN") {
 	    ?>
-            <div class="boxleftside boxleftside-modify">Modify Same User Level:</div>
+            <div class="boxleftside boxleftside-modify"><?php echo $goUsers_modifySameUserLevel ?><?php echo":" ?></div>
             <div class="boxrightside boxrightside-modify">
 		<?=form_dropdown('modify_same_user_level',array('1'=>'Yes','0'=>'No'),null,'id="modify_same_user_level"')?>
 	    </div>
@@ -383,7 +383,7 @@ $(function()
         <?=form_close();?> 
         <br class="clear"/>
         <div class="quick-action-set">
-            <a id="actions-update">Update</a> 
+            <a id="actions-update"><?php echo $goUsers_update; ?></a> 
         </div>
         <br class="clear"/>
     </div>
@@ -391,21 +391,21 @@ $(function()
     <div class='type-close'>&nbsp;</div>
     <br class="clear"/>
     <div class='wizard-breadcrumb'>
-       <div class="wizard-title"><strong>Users Wizard </strong></div>
+       <div class="wizard-title"><strong><?php echo $goUsers_wizard; ?></strong></div>
           <?=img("img/step1of2-navigation-small.png")?>
           <br class="clear"/>
        </div>
        <div class="wizard-content">
              <div class="wizard-content-left"><?=img("img/step1-trans.png")?></div>
              <div class="wizard-content-right">
-                  <div class="boxleftside"><strong>Wizard Type:</strong></div>
+                  <div class="boxleftside"><strong><?php echo $goUsers_wizardType; ?><?php echo ":" ?></strong></div>
                   <!-- <div class="boxrightside"><?#=form_dropdown('wizard_type',array('add'=>'Add New User','copy'=>'Copy User'),'add','id="wizard_type"')?></div> -->
                   <div class="boxrightside"><?=form_dropdown('wizard_type',array('add'=>'Add New User'),'add','id="wizard_type"')?></div>
              </div>
        </div>
         <br class="clear"/>
         <div class="wizard-action">
-              <a onclick="showtype()">Next</a>
+              <a onclick="showtype()"><?php echo $goUsers_next; ?></a>
         </div>
         <br class="clear"/>
 </div>
@@ -414,7 +414,7 @@ $(function()
         <div class="copy-close">&nbsp;</div>
         <br class="clear"/>
         <div class='wizard-breadcrumb'>
-             <div class="wizard-title"><strong>Users Wizard &raquo; Copy User</strong></div>
+             <div class="wizard-title"><strong><?php echo $goUsers_wizard; ?> &raquo; <?php echo $goUsers_copyUser; ?></strong></div>
              <?=img("img/step2of2-navigation-small.png")?>
              <br class="clear"/>
         </div>
@@ -422,10 +422,10 @@ $(function()
              <div class="wizard-content-left"><?=img("img/step2-trans.png")?></div>
              <div class="wizard-content-right">
                 <form id="copy-form">
-                   <div class="copy-boxleftside"><strong>Users:</strong></div><div class="copy-boxrightside"><?=form_dropdown('source_user',$users,null,'id="source_user"')?></div>
+                   <div class="copy-boxleftside"><strong><?php echo $goUsers_users; ?></strong></div><div class="copy-boxrightside"><?=form_dropdown('source_user',$users,null,'id="source_user"')?></div>
                    <!-- <div class="copy-boxleftside"><strong>User ID:</strong></div><div class="copy-boxrightside"><?#=form_input('user',null,'id="user" maxlength="20"')?></div> -->
-                   <div class="copy-boxleftside"><strong>Password:</strong></div><div class="copy-boxrightside"><?=form_input('pass',null,'id="pass" maxlength="20"')?></div>
-                   <div class="copy-boxleftside"><strong>Fullname:</strong></div><div class="copy-boxrightside"><?=form_input('full_name',null,'id="full_name" maxlength="50" size="30"')?></div>
+                   <div class="copy-boxleftside"><strong><?php echo $goUsers_password; ?></strong></div><div class="copy-boxrightside"><?=form_input('pass',null,'id="pass" maxlength="20"')?></div>
+                   <div class="copy-boxleftside"><strong><?php echo $goUsers_fullName; ?></strong></div><div class="copy-boxrightside"><?=form_input('full_name',null,'id="full_name" maxlength="50" size="30"')?></div>
                    <br class="clear"/>
                    <br class="clear"/>
                 </form>
@@ -434,15 +434,15 @@ $(function()
          </div>
          <br class="clear"/>
         <div class="wizard-action">
-          <a onclick="cancelWizard(this)">Cancel</a>&nbsp;|&nbsp;<a id="copy-proceed">Submit</a>
+          <a onclick="cancelWizard(this)"><?php echo $goUsers_cancel; ?></a>&nbsp;|&nbsp;<a id="copy-proceed"><?php echo $goUsers_submit; ?></a>
         </div>
     </div>
     <div class="user-cornerall wizard-box-info">
          <div class='add-close-info'>&nbsp;</div>
          <div class="datepicker-container">
               <div class="hovermenu" id="widgetField">
-                    <div id="widgetDate"><span id="user-stat-<?=$userinfo[0]->user?>"><? echo date('Y-m-d'); ?> to <? echo date('Y-m-d'); ?></span></div>
-                    <a href="javascript:void(0);" id="daterange">Select date range</a>
+                    <div id="widgetDate" class="toolTip" title="<? echo lang('go_widgetDateTooltip'); ?>"><span id="user-stat-<?=$userinfo[0]->user?>"><? echo date('Y-m-d'); ?> to <? echo date('Y-m-d'); ?></span></div>
+                    <a href="javascript:void(0);" id="daterange"><?php echo $goUsers_selectDateRange; ?></a>
               </div>
               <div id="widgetCalendar"></div> <!--//calendar layout//-->
          </div>
@@ -468,25 +468,25 @@ $(function()
              </div>
          </div> -->
          <div class="agent-talk-time user-cornerall">
-               <strong>Agent Talk Time and Status </strong>
+               <strong><?php echo $goUsers_agentTalkTimeAndStatus; ?></strong>
                <br class="clear"/>
                   <div class="userstatus-display">
                   <?Php
                        echo '<br/><strong></strong><br/>';
                        #echo "<div class='leftside'>Agent logged in at server</div><div class='rightside' id='server_ip'> </div><br/>";
                        #echo "<div class='leftside'>In session</div><div class='rightside' id='conf_exten'> </div><br/>";
-                       echo "<div class='leftside'>Phone extension:</div><div class='rightside' id='extension'> </div><br/>";
-                       echo "<div class='leftside'>Agent is in campaign:</div><div class='rightside' id='campaign_id'> </div><br/>";
-                       echo "<div class='leftside'>Status:</div><div class='rightside' id='status'> </div><br/>";
-                       echo "<div class='leftside'>Hang-up last call at:</div><div class='rightside' id='last_call_finish'> </div><br/>";
-                       echo "<div class='leftside'>Closer groups:</div><div class='rightside' id='close_campaigns'></div><br/>";
+                       echo "<div class='leftside'>$goUsers_phoneExtension:</div><div class='rightside' id='extension'> </div><br/>";
+                       echo "<div class='leftside'>$goUsers_agentIsInCampaign:</div><div class='rightside' id='campaign_id'> </div><br/>";
+                       echo "<div class='leftside'>$goUsers_status:</div><div class='rightside' id='status'> </div><br/>";
+                       echo "<div class='leftside'>$goUsers_hangupLastCallAt:</div><div class='rightside' id='last_call_finish'> </div><br/>";
+                       echo "<div class='leftside'>$goUsers_closerGroups:</div><div class='rightside' id='close_campaigns'></div><br/>";
                   ?> 
                   </div>
                <br class="clear"/>
                <div class="time-status-tbl">
                   <div class="time-stat-hdr">
-                      <div class="cols">Status</div>
-                      <div class="cols">Count</div>
+                      <div class="cols"><?php echo $goUsers_status; ?></div>
+                      <div class="cols"><?php echo $goUsers_count; ?></div>
                       <div class="cols">HH:MM:SS</div>
                   </div>
                   <br class="clear"/> 
@@ -495,50 +495,50 @@ $(function()
          </div>
          <br class="clear"/>
          <div class="user-stats">
-              <span>Other Statics Info</span><br class="clear"/>
-              <label><a id="agentloginlogout">Agent Login/Logout</a></label>
-              <label><a id="outboundthistime">Outbound Calls This Time</a></label>
-              <label><a id="inboundthistime">Inbound/Closer Calls</a></label>
-              <label><a id="agentactivity">Agent Activity</a></label>
-              <label><a id="recordingthistime">Recording</a></label>
-              <label><a id="manualoutbound">Manual Outbound</a></label>
-              <label><a id="leadsearchthistime">Lead Searches</a></label>
+              <span><?php echo $goUsers_otherStaticsInfo; ?></span><br class="clear"/>
+              <label><a id="agentloginlogout"><?php echo $goUsers_agentLoginLogout; ?></a></label>
+              <label><a id="outboundthistime" class="toolTip" title="<? echo lang('go_inboundthistimeTooltip'); ?>"><?php echo $goUsers_outboundCallThisTime;?></a></label>
+              <label><a id="inboundthistime"><?php echo $goUsers_inboundCloserCalls; ?></a></label>
+              <label><a id="agentactivity"><?php echo $goUsers_agentActivity; ?></a></label>
+              <label><a id="recordingthistime"><?php echo $goUsers_recording; ?></a></label>
+              <label><a id="manualoutbound"><?php echo $goUsers_manualOutbound; ?></a></label>
+              <label><a id="leadsearchthistime"><?php echo $goUsers_leadSearch; ?></a></label>
          </div>
          <br class="clear"/>
-         <div id="<?=$userinfo[0]->user?>" class="emergency-container"><a href="javascript:void(0);" class="emergency">Force Logout</a></div>
+         <div id="<?=$userinfo[0]->user?>" class="emergency-container"><a href="javascript:void(0);" class="emergency toolTip" title="<? echo lang('goUsers_forceLogoutTooltip');?>"><?php echo $goUsers_forceLogout; ?></a></div>
          <br class="clear"/>
     </div>
          <div class="agent-loginlogout-time user-cornerall">
-              <strong>Agent Login/Logout Time</strong><a class="userstat-closer">Close</a>
+              <strong><?php echo $goUsers_agentLoginLogoutTime; ?></strong><a class="userstat-closer"><?php echo $goUsers_close; ?></a>
               <br class="clear"/>
               <br class="clear"/>
               <div class="time-loginlogout-tbl">
                    <div class="agent-loginlogout-hdr">
-                        <div class="cols">Event</div>
-                        <div class="cols">Date</div>
-                        <div class="cols">Campaign</div>
-                        <div class="cols">Group</div>
+                        <div class="cols"><?php echo $goUsers_event; ?></div>
+                        <div class="cols"><?php echo $goUsers_date; ?></div>
+                        <div class="cols"><?php echo $goUsers_campaign; ?></div>
+                        <div class="cols"><?php echo $goUsers_group; ?></div>
                         <div class="cols">HH:MM:SS</div>
-                        <div class="cols">Session</div>
-                        <div class="cols">Server</div>
-                        <div class="cols">Phone</div>
-                        <div class="cols">Computer</div>
+                        <div class="cols"><?php echo $goUsers_session; ?></div>
+                        <div class="cols"><?php echo $goUsers_server; ?></div>
+                        <div class="cols"><?php echo $goUsers_phone; ?></div>
+                        <div class="cols"><?php echo $goUsers_computer; ?></div>
                    </div>
                    <br class="clear"/> 
                    <div class="time-loginlogout-content"></div>
                    <div class="pager-container agent-loginlogout-pager">
                        <div class="totaltime">
-                            <div class="labelcols">Total Calls</div>
+                            <div class="labelcols"><?php echo $goUsers_totalCalls; ?></div>
                             <div class="totalcols">&nbsp;</div> 
                             <div class="totalcols">&nbsp;</div> 
                             <div class="totalcols">&nbsp;</div> 
-                            <div class="totalcols">dispo</div> 
+                            <div class="totalcols"><?php echo $goUsers_disposition; ?></div> 
                             <div class="totalcols">&nbsp;</div> 
                             <div class="totalcols">&nbsp;</div> 
                             <div class="spacercols">&nbsp;</div> 
                             <br class="clear"/>
                        </div>
-                       <span class="pager-perpage"><?=form_dropdown('page-dropdown',array(25=>25,50=>50,100=>100,"all"=>"All"))?>&nbsp;per page</span>
+                       <span class="pager-perpage"><?=form_dropdown('page-dropdown',array(25=>25,50=>50,100=>100,"all"=>"All"))?>&nbsp; <?php echo $goUsers_perPage; ?></span>
                        <span class="pager-paginater">
                            <?=img(array('id'=>"loginlogout-firstpage","src"=>'img/first.gif'))."&nbsp;".img(array("id"=>"loginlogout-prevpage","src"=>"img/prev.gif"))?>
                            <?="Page&nbsp;".form_input('loginlogout-currpage',1,'id="loginlogout-currpage" size="2" readonly')."&nbsp;of&nbsp;"."<span id='loginlogout-total-page'>&nbsp;</span>"?>
@@ -548,26 +548,26 @@ $(function()
               </div>
          </div>
          <div class="agent-outbound-thistime user-cornerall">
-              <strong>Outbound Calls For This Time Period(25 record limit)</strong><a class="userstat-closer">Close</a>
+              <strong><?php echo $goUsers_outboundCallsForThisTimePeriod; ?></strong><a class="userstat-closer"><?php echo $goUsers_close; ?></a>
               <br class="clear"/>
               <br class="clear"/>
               <div class="outbound-thistime-tbl">
                    <div class="outbound-thistime-hdr">
-                        <div class="cols">Date/Time</div>
-                        <div class="cols">Length</div>
-                        <div class="cols">Status</div>
-                        <div class="cols">Phone</div>
-                        <div class="cols">Campaign</div>
-                        <div class="cols">Group</div>
-                        <div class="cols">List</div>
-                        <div class="cols">Lead</div>
-                        <div class="cols">Hangup Reason</div>
+                        <div class="cols"><?php echo $goUsers_dateTime; ?></div>
+                        <div class="cols"><?php echo $goUsers_length; ?></div>
+                        <div class="cols"><?php echo $goUsers_status; ?></div>
+                        <div class="cols"><?php echo $goUsers_phone; ?></div>
+                        <div class="cols"><?php echo $goUsers_campaign; ?></div>
+                        <div class="cols"><?php echo $goUsers_group; ?></div>
+                        <div class="cols"><?php echo $goUsers_list; ?></div>
+                        <div class="cols"><?php echo $goUsers_lead; ?></div>
+                        <div class="cols"><?php echo $goUsers_hangupReason; ?></div>
                    </div>
                    <br class="clear"/> 
                    <div class="outbound-thistime-content"></div>
                    <!-- <div class="outbound-paginator"></div>  -->
                    <div class="pager-container outbound-thistime-pager">
-                       <span class="pager-perpage"><?=form_dropdown('page-dropdown',array(25=>25,50=>50,100=>100,"all"=>"All"))?>&nbsp;per page</span>
+                       <span class="pager-perpage"><?=form_dropdown('page-dropdown',array(25=>25,50=>50,100=>100,"all"=>"All"))?>&nbsp;<?php echo $goUsers_perPage; ?></span>
                        <span class="pager-paginater">
                            <?=img(array('id'=>"outbound-firstpage","src"=>'img/first.gif'))."&nbsp;".img(array("id"=>"outbound-prevpage","src"=>"img/prev.gif"))?>
                            <?="Page&nbsp;".form_input('outbound-currpage',1,'id="outbound-currpage" size="2" readonly')."&nbsp;of&nbsp;"."<span id='outbound-total-page'>&nbsp;</span>"?>
@@ -577,27 +577,27 @@ $(function()
               </div>
          </div>
          <div class="agent-inbound-thistime user-cornerall">
-              <strong>Inbound/Closer Calls For This Time Period(25 record limit)</strong><a class="userstat-closer">Close</a>
+              <strong><?php echo $goUsers_inboundCloserCallsForThisTimePeriod; ?></strong><a class="userstat-closer"><?php echo $goUsers_close; ?></a>
               <br class="clear"/>
               <br class="clear"/>
               <div class="inbound-thistime-tbl">
                   <div class="inbound-thistime-hdr">
-                       <div class="cols">Date/Time</div>
-                       <div class="cols">Length</div>
-                       <div class="cols">Status</div>
-                       <div class="cols">Phone</div>
-                       <div class="cols">Campaign</div>
-                       <div class="cols">Wait(s)</div>
-                       <div class="cols">Agent(s)</div>
-                       <div class="cols">List</div>
-                       <div class="cols">Lead</div>
-                       <div class="cols">Hangup Reason</div>
+                       <div class="cols"><?php echo $goUsers_dateTime; ?></div>
+                       <div class="cols"><?php echo $goUsers_length; ?></div>
+                       <div class="cols"><?php echo $goUsers_status; ?></div>
+                       <div class="cols"><?php echo $goUsers_phone; ?></div>
+                       <div class="cols"><?php echo $goUsers_campaign; ?></div>
+                       <div class="cols"><?php echo $goUsers_waits; ?></div>
+                       <div class="cols"><?php echo $goUsers_agents; ?></div>
+                       <div class="cols"><?php echo $goUsers_list; ?></div>
+                       <div class="cols"><?php echo $goUsers_lead; ?></div>
+                       <div class="cols"><?php echo $goUsers_hangupReason; ?></div>
                   </div>
                   <br class="clear"/> 
                   <div class="inbound-thistime-content"></div>
                    <div class="pager-container inbound-thistime-pager">
                        <div class="totaltime">
-                            <div class="labelcols">Total Calls</div>
+                            <div class="labelcols"><?php echo $goUsers_totalCalls; ?></div>
                             <div class="totalcols">&nbsp;</div> 
                             <div class="totalcols">&nbsp;</div> 
                             <div class="totalcols">&nbsp;</div> 
@@ -609,7 +609,7 @@ $(function()
                             <div class="spacercols">&nbsp;</div> 
                             <br class="clear"/>
                        </div>
-                       <span class="pager-perpage"><?=form_dropdown('page-dropdown',array(25=>25,50=>50,100=>100,"all"=>"All"))?>&nbsp;per page</span>
+                       <span class="pager-perpage"><?=form_dropdown('page-dropdown',array(25=>25,50=>50,100=>100,"all"=>"All"))?>&nbsp;<?php echo $goUsers_perPage; ?></span>
                        <span class="pager-paginater">
                            <?=img(array('id'=>"inbound-firstpage","src"=>'img/first.gif'))."&nbsp;".img(array("id"=>"inbound-prevpage","src"=>"img/prev.gif"))?>
                            <?="Page&nbsp;".form_input('inbound-currpage',1,'id="inbound-currpage" size="2" readonly')."&nbsp;of&nbsp;"."<span id='inbound-total-page'>&nbsp;</span>"?>
@@ -619,28 +619,28 @@ $(function()
               </div>
          </div>
          <div class="agent-activity-thistime user-cornerall">
-              <strong>Agent Activity For This Time Period(25 limit)</strong><a class="userstat-closer">Close</a>
+              <strong><?php echo $goUsers_agentActivityForThisTime; ?></strong><a class="userstat-closer"><?php echo $goUsers_close; ?></a>
               <br class="clear"/>
               <br class="clear"/>
               <div class="agent-activity-tbl">
                    <div class="agentactivity-thistime-hdr">
-                        <div class="cols">Date/Time</div>
-                        <div class="cols">Pause</div>
-                        <div class="cols">Wait</div>
-                        <div class="cols">Talk</div>
-                        <div class="cols">Dispo</div>
-                        <div class="cols">Dead</div>
-                        <div class="cols">Customer</div>
-                        <div class="cols">Status</div>
-                        <div class="cols">Lead</div>
-                        <div class="cols">Campaign</div>
-                        <div class="cols">Pause Code</div>
+                        <div class="cols"><?php echo $goUsers_dateTime; ?></div>
+                        <div class="cols"><?php echo $goUsers_pause; ?></div>
+                        <div class="cols"><?php echo $goUsers_wait; ?></div>
+                        <div class="cols"><?php echo $goUsers_talk; ?></div>
+                        <div class="cols"><?php echo $goUsers_disposition; ?></div>
+                        <div class="cols"><?php echo $goUsers_dead; ?></div>
+                        <div class="cols"><?php echo $goUsers_customer; ?></div>
+                        <div class="cols"><?php echo $goUsers_status; ?></div>
+                        <div class="cols"><?php echo $goUsers_lead; ?></div>
+                        <div class="cols"><?php echo $goUsers_campaign; ?></div>
+                        <div class="cols"><?php echo $goUsers_pauseCode; ?></div>
                    </div>
                    <br class="clear"/>
                    <div class="agent-activity-content"></div>
                    <div class="pager-container agent-activity-pager">
                        <div class="totaltime">
-                            <div class="labelcols">Total Calls</div>
+                            <div class="labelcols"><?php echo $goUsers_totalCalls; ?></div>
                             <div class="totalcols totalpause">&nbsp;</div> 
                             <div class="totalcols totalwait">&nbsp;</div> 
                             <div class="totalcols totaltalk">&nbsp;</div> 
@@ -650,7 +650,7 @@ $(function()
                             <div class="spacercols">&nbsp;</div> 
                             <br class="clear"/>
                        </div>
-                       <span class="pager-perpage"><?=form_dropdown('page-dropdown',array(25=>25,50=>50,100=>100,"all"=>"All"))?>&nbsp;per page</span>
+                       <span class="pager-perpage"><?=form_dropdown('page-dropdown',array(25=>25,50=>50,100=>100,"all"=>"All"))?>&nbsp;<?php echo $goUsers_perPage; ?></span>
                        <span class="pager-paginater">
                            <?=img(array('id'=>"agentactivity-firstpage","src"=>'img/first.gif'))."&nbsp;".img(array("id"=>"agentactivity-prevpage","src"=>"img/prev.gif"))?>
                            <?="Page&nbsp;".form_input('agentactivity-currpage',1,'id="agentactivity-currpage" size="2" readonly')."&nbsp;of&nbsp;"."<span id='agentactivity-total-page'>&nbsp;</span>"?>
@@ -660,22 +660,22 @@ $(function()
               </div>
          </div>
          <div class="agent-recording-thistime user-cornerall">
-              <strong>Recording For This Time Period(25 record limit)</strong><a class="userstat-closer">Close</a>
+              <strong><?php echo $goUsers_recordingForThisTimePeriod; ?></strong><a class="userstat-closer"><?php echo $goUsers_close; ?></a>
               <br class="clear"/>
               <br class="clear"/>
               <div class="recording-thistime-tbl">
                    <div class="recording-thistime-hdr">
-                        <div class="cols">Lead</div>
-                        <div class="cols">Date/Time</div>
-                        <div class="cols">Seconds</div>
-                        <div class="cols">RECID</div>
-                        <div class="cols">Filename</div>
-                        <div class="cols">Location</div>
+                        <div class="cols"><?php echo $goUsers_lead; ?></div>
+                        <div class="cols"><?php echo $goUsers_dateTime; ?></div>
+                        <div class="cols"><?php echo $goUsers_seconds; ?></div>
+                        <div class="cols"><?php echo $goUsers_recid; ?></div>
+                        <div class="cols"><?php echo $goUsers_filename; ?></div>
+                        <div class="cols"><?php echo $goUsers_location; ?></div>
                    </div>
                    <br class="clear"/> 
                    <div class="recording-thistime-content"></div>
                    <div class="pager-container recording-thistime-pager">
-                       <span class="pager-perpage"><?=form_dropdown('page-dropdown',array(25=>25,50=>50,100=>100,"all"=>"All"))?>&nbsp;per page</span>
+                       <span class="pager-perpage"><?=form_dropdown('page-dropdown',array(25=>25,50=>50,100=>100,"all"=>"All"))?>&nbsp;<?php echo $goUsers_perPage; ?></span>
                        <span class="pager-paginater">
                            <?=img(array('id'=>"recording-firstpage","src"=>'img/first.gif'))."&nbsp;".img(array("id"=>"recording-prevpage","src"=>"img/prev.gif"))?>
                            <?="Page&nbsp;".form_input('recording-currpage',1,'id="recording-currpage" size="2" readonly')."&nbsp;of&nbsp;"."<span id='recording-total-page'>&nbsp;</span>"?>
@@ -685,18 +685,18 @@ $(function()
               </div>
          </div>
          <div class="agent-manualoutbound-thistime user-cornerall">
-              <strong>Manual Outbound Calls For This Time Period(25 record limit)</strong><a class="userstat-closer">Close</a>
+              <strong><?php echo $goUsers_manualOutboundCallsForThisTimePeriod; ?></strong><a class="userstat-closer"><?php echo $goUsers_close; ?></a>
               <br class="clear"/>
               <br class="clear"/>
               <div class="manualoutbound-thistime-tbl">
                    <div class="manualoutbound-thistime-hdr">
-                        <div class="cols">Date/Time</div>
-                        <div class="cols">Call Type</div>
-                        <div class="cols">Server</div>
-                        <div class="cols">Phone</div>
+                        <div class="cols"><?php echo $goUsers_dateType; ?></div>
+                        <div class="cols"><?php echo $goUsers_callType; ?></div>
+                        <div class="cols"><?php echo $goUsers_server; ?></div>
+                        <div class="cols"><?php echo $goUsers_phone; ?></div>
                         <!-- <div class="cols">Dialed</div> -->
-                        <div class="cols">Lead</div>
-                        <div class="cols">Caller Id</div>
+                        <div class="cols"><?php echo $goUsers_lead; ?></div>
+                        <div class="cols"><?php echo $goUsers_callerId; ?></div>
                         <!-- <div class="cols">Alias</div>
                         <div class="cols">Preset</div>
                         <div class="cols">C3HU</div> -->
@@ -704,7 +704,7 @@ $(function()
                    <br class="clear"/> 
                    <div class="manualoutbound-thistime-content"></div>
                    <div class="pager-container manualoutbound-thistime-pager">
-                       <span class="pager-perpage"><?=form_dropdown('page-dropdown',array(25=>25,50=>50,100=>100,"all"=>"All"))?>&nbsp;per page</span>
+                       <span class="pager-perpage"><?=form_dropdown('page-dropdown',array(25=>25,50=>50,100=>100,"all"=>"All"))?>&nbsp;<?php echo $goUsers_perPage; ?></span>
                        <span class="pager-paginater">
                            <?=img(array('id'=>"manualoutbound-firstpage","src"=>'img/first.gif'))."&nbsp;".img(array("id"=>"manualoutbound-prevpage","src"=>"img/prev.gif"))?>
                            <?="Page&nbsp;".form_input('manualoutbound-currpage',1,'id="manualoutbound-currpage" size="2" readonly')."&nbsp;of&nbsp;"."<span id='manualoutbound-total-page'>&nbsp;</span>"?>
@@ -714,40 +714,40 @@ $(function()
               </div>
          </div>
          <div class="agent-leadsearch-thistime user-cornerall">
-              <strong>Lead Searches For This Time Period(25 record limit)</strong><a class="userstat-closer">Close</a>
+              <strong><?php echo $goUsers_leadSearchesForThisTimePeriod; ?></strong><a class="userstat-closer"><?php echo $goUsers_close; ?></a>
               <br class="clear"/>
               <br class="clear"/>
               <div class="leadsearch-thistime-tbl">
                   <div class="leadsearch-thistime-hdr">
-                       <div class="cols">Date/Time</div>
-                       <div class="cols">Type</div>
-                       <div class="cols">Results</div>
-                       <div class="cols">Sec</div>
-                       <div class="cols">Query</div>
+                       <div class="cols"><?php echo $goUsers_dateTime; ?></div>
+                       <div class="cols"><?php echo $goUsers_type; ?></div>
+                       <div class="cols"><?php echo $goUsers_results; ?></div>
+                       <div class="cols"><?php echo $goUsers_seconds; ?></div>
+                       <div class="cols"><?php echo $goUsers_query; ?></div>
                   </div>
                   <br class="clear"/> 
                   <div class="leadsearch-thistime-content"></div>
               </div>
          </div>
          <div class="leadinfo user-cornerall">
-              <strong>Lead Information</strong><a class="userstat-closer">Close</a><br/>
-              <div class="leadinfolabel">Lead ID</div>
+              <strong><?php echo $goUsers_leadInformation; ?></strong><a class="userstat-closer"><?php echo $goUsers_close; ?></a><br/>
+              <div class="leadinfolabel"><?php echo $goUsers_leadId; ?></div>
               <div class="leadinfocont lead_id"></div>
-              <div class="leadinfolabel">List ID</div>
+              <div class="leadinfolabel"><?php echo $goUsers_listId; ?></div>
               <div class="leadinfocont list_id"></div>
-              <div class="leadinfolabel">Address</div>
+              <div class="leadinfolabel"><?php echo $goUsers_address; ?></div>
               <div class="leadinfocont address1"></div>
-              <div class="leadinfolabel">Phone Code</div>
+              <div class="leadinfolabel"><?php echo $goUsers_phoneCode; ?></div>
               <div class="leadinfocont phone_code"></div>
-              <div class="leadinfolabel">Phone Number</div>
+              <div class="leadinfolabel"><?php echo $goUsers_phoneNumber; ?></div>
               <div class="leadinfocont phone_number"></div>
-              <div class="leadinfolabel">City</div>
+              <div class="leadinfolabel"><?php echo $goUsers_city; ?></div>
               <div class="leadinfocont city"></div>
-              <div class="leadinfolabel">State</div>
+              <div class="leadinfolabel"><?php echo $goUsers_state; ?></div>
               <div class="leadinfocont state"></div>
-              <div class="leadinfolabel">Postal Code</div>
+              <div class="leadinfolabel"><?php echo $goUsers_postalCode; ?></div>
               <div class="leadinfocont postal_code"></div>
-              <div class="leadinfolabel">Comment</div>
+              <div class="leadinfolabel"><?php echo $goUsers_comment; ?></div>
               <div class="leadinfocont comment"></div>
               <br class="clear"/>
          </div>

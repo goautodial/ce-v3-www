@@ -77,7 +77,7 @@ $(function()
 			//$('#aloading').empty().html('<img src="<? echo $base; ?>img/loading.gif" />');
 			$('#aloading').load('<? echo $base; ?>index.php/go_voicemail_ce/go_check_voicemail/'+$(this).val());
 		} else {
-			$('#aloading').html("<small style=\"color:red;\">Minimum of 2 characters.</small>");
+			$('#aloading').html("<small style=\"color:red;\"><? echo $this->lang->line("go_min_2_numbers"); ?>.</small>");
 		}
 	});
 	
@@ -135,7 +135,7 @@ $(function()
 		
 		if ($('#aloading').html().match(/Not Available/))
 		{
-			alert("Voicemail Box Not Available.");
+			alert("<? echo $this->lang->line("go_vm_box_navailable"); ?>.");
 			isEmpty = 1;
 		}
 		
@@ -146,7 +146,7 @@ $(function()
 			function(data){
 				if (data=="SUCCESS")
 				{
-					alert(data);
+					alert("<? echo $this->lang->line("go_success_caps"); ?>");
 				
 					$('#box').animate({'top':'-2550px'},500);
 					$('#overlay').fadeOut('slow');
@@ -161,7 +161,7 @@ $(function()
 </script>
 
 <div style="float:right;" id="small_step_number"><img src="<?php echo $base; ?>img/step1-nav-small.png" /></div>
-<div style="font-weight:bold;font-size:16px;color:#333;">Voicemail Wizard &raquo; Add New Voicemail</div>
+<div style="font-weight:bold;font-size:16px;color:#333;"><? echo $this->lang->line("go_voicemail_wizard"); ?> &raquo; <? echo $this->lang->line("go_add_new_voicemail"); ?></div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
 
@@ -176,16 +176,16 @@ $(function()
                 <table id="voicemailTable" style="width:100%;">
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        Voicemail ID:
+                        <? echo $this->lang->line("go_voicemail_id"); ?>:
                         </td>
                         <td>
                         <?=form_input('voicemail_id',null,'id="voicemail_id" maxlength="10" size="15"') ?>
-						<span id="aloading"></span>
+                                                <span id="aloading"></span>
                         </td>
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        Password:
+                        <? echo $this->lang->line("go_pass"); ?>:
                         </td>
                         <td>
                         <?=form_input('pass',null,'id="pass" maxlength="10" size="12"') ?>
@@ -193,7 +193,7 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        Name:
+                       <? echo $this->lang->line("go_name"); ?>:
                         </td>
                         <td>
                         <?=form_input('fullname',null,'id="fullname" maxlength="100" size="40"') ?>
@@ -201,15 +201,15 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        Active:
+                       <? echo $this->lang->line("go_active"); ?>:
                         </td>
                         <td>
-                        <?=form_dropdown('active',array('N'=>'NO','Y'=>'YES'),null,'id="active"') ?>
+                        <?=form_dropdown('active',array('N'=>$this->lang->line("go_active_no"),'Y'=>$this->lang->line("go_active_yes")),null,'id="active"') ?>
                         </td>
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        Email:
+                       <? echo $this->lang->line("go_email"); ?>:
                         </td>
                         <td>
                         <?=form_input('email',null,'id="email" maxlength="100" size="40"') ?>
@@ -222,4 +222,4 @@ $(function()
 	</tr>
 </table>
 <hr style="border:#DFDFDF 1px solid;" />
-<span id="saveButtons"><span id="submit" style="white-space: nowrap;">Submit</span></span>
+<span id="saveButtons"><span id="submit" style="white-space: nowrap;"><? echo $this->lang->line("go_submit"); ?> </span></span>

@@ -93,7 +93,7 @@ $NOW = date('Y-m-d');
 </script>
 
 <div style="float:right;" id="small_step_number"><img src="<?php echo $base; ?>img/step1of2-navigation-small.png" /></div>
-<div style="font-weight:bold;font-size:16px;color:#333;">Carrier Wizard &raquo; Add New Carrier</div>
+<div style="font-weight:bold;font-size:16px;color:#333;"><? echo $this->lang->line("go_carrier_wizard"); ?> &raquo; <? echo $this->lang->line("go_add_new_carrier"); ?></div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
 
@@ -103,9 +103,9 @@ $NOW = date('Y-m-d');
 			<div style="padding:0px 10px 0px 30px;" id="step_number"><img src="<?php echo $base; ?>img/step1-trans.png" /></div>
 		</td>
 		<td valign="top" style="padding-left:150px;">
-                       <label><strong>Carrier type:</strong><span> <?=form_dropdown('carrier_type',array('GOAUTODIAL'=>'GoAutoDial - JustGoVoIP','MANUAL'=>'Manual','COPY'=>'Copy Carrier'),null,'id="carrier_type"')?></span></label>
+                       <label><strong><? echo $this->lang->line("go_carrier_type"); ?>:</strong><span> <?=form_dropdown('carrier_type',array('GOAUTODIAL'=>'GoAutoDial - JustGoVoIP','MANUAL'=>'Manual','COPY'=>'Copy Carrier'),null,'id="carrier_type"')?></span></label>
 		</td>
 	</tr>
 </table>
 <hr style="border:#DFDFDF 1px solid;" />
-<span id="saveButtons"><span id="carrier" style="white-space: nowrap;">Next</span></span>
+<span id="saveButtons"><span id="carrier" style="white-space: nowrap;"><? echo $this->lang->line("go_next"); ?></span></span>

@@ -19,6 +19,7 @@ class Go_ingroup extends Controller {
         $this->load->model('goingroup');
         $this->load->library(array('session','userhelper','commonhelper'));
 	$this->lang->load('userauth', $this->session->userdata('ua_language'));
+	$this->load->helper('language');
 	$this->is_logged_in();
     }
 
@@ -29,7 +30,7 @@ class Go_ingroup extends Controller {
         $data['jsbodyloader'] = 'go_dashboard_body_jsloader.php';
 
 		$data['theme'] = $this->session->userdata('go_theme');
-		$data['bannertitle'] = $this->lang->line('go_inbound_banner');
+		$data['bannertitle'] = $this->lang->line('go_Inbound');
 		$data['adm']= 'wp-has-current-submenu';
 		$data['hostp'] = $_SERVER['SERVER_ADDR'];
 		$data['folded'] = 'folded';
@@ -63,7 +64,7 @@ class Go_ingroup extends Controller {
 			$message = $this->goingroup->insertingroup($accounts, $users, $group_id, $group_name, $group_color, $active, $web_form_address, $voicemail_ext, $next_agent_call, $fronter_display, $script_id, $get_call_launch, $user_group);
    
 			if($message !=null) {
-				print "<script type=\"text/javascript\">alert('GROUP NOT ADDED - Please go back and look at the data you entered');</script>";
+				print "<script type=\"text/javascript\">alert('{$this->lang->line("go_group_not_added")}');</script>";
 			} else {
 				header("Location: #");
 			}
@@ -119,7 +120,7 @@ class Go_ingroup extends Controller {
 			$message = $this->goingroup->insertdid($did_pattern,$did_description,$user, $user_group, $diddata, $db_column, $did_route);
 
 			if($message !=null) {
-				print "<script type=\"text/javascript\">alert('DID NOT ADDED - DID already exist.');</script>";
+				print "<script type=\"text/javascript\">alert('{$this->lang->line("go_did_not_added")}');</script>";
 			} else {
 				header("Location: #");
 			}
@@ -177,9 +178,10 @@ class Go_ingroup extends Controller {
 		}
 
         $data['go_main_content'] = 'go_ingroup/go_ingroup';
+	
         $this->load->view('includes/go_dashboard_template',$data);
 	}
-
+	
 	function go_ingroup_list()
 	{
 		$data['permissions'] = $this->commonhelper->getPermissions("campaign",$this->session->userdata("user_group"));
@@ -225,7 +227,7 @@ class Go_ingroup extends Controller {
 		$data['gouser'] = $this->session->userdata('user_name');
 		$data['page'] = $page;
 		$data['type'] = $type;
-		
+
 		$this->load->view('go_ingroup/go_ingroup_view',$data);
 	}
 	
@@ -295,6 +297,7 @@ class Go_ingroup extends Controller {
 		$data['call_menus'] = $this->goingroup->go_get_call_menus();
 		$data['call_times'] = $this->goingroup->go_get_call_times();
 		$data['gouser'] = $this->session->userdata('user_name');
+
 		$this->load->view('go_ingroup/go_ingroup_wizard',$data);
 	}
 	
@@ -350,9 +353,9 @@ class Go_ingroup extends Controller {
 		
 		if ($return || $exist_on_reserved_id)
 		{
-			$return = "<small style=\"color:red;\">Not Available.</small>";
+			$return = "<small style=\"color:red;\">{$this->lang->line('go_not_available')}</small>";
 		} else {
-			$return = "<small style=\"color:green;\">Available.</small>";
+			$return = "<small style=\"color:green;\">{$this->lang->line('go_available')}</small>";
 		}
 		
 		echo $return;

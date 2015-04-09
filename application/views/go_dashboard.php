@@ -763,38 +763,37 @@ echo form_hidden('account',$account);
 echo "<input type='hidden' value='$account' id='compid' name='compid'>";
 ?>
     <ol id="joyRideTipContent">
-      <li data-text="Next">
-        <h2>Welcome to GOadmin!</h2>
+      <li data-text="<?php echo lang('goDashboard_next'); ?>">
+        <h2><?php echo lang('goDashboard_welcomeToGOadmin'); ?></h2>
         <p>
-           This walk through will help you navigate the system easily or <a id="skipjoyride" onclick="skipjoyride()">Skip</a> this walk through.
+           <?php echo lang('goDashboard_thisWalkThroughWill'); ?> <a id="skipjoyride" onclick="skipjoyride()"> <?php echo lang('goDashboard_skip') ?> </a> <?php echo lang('goDashboard_thisWalkThrough'); ?>.
         </p>
       </li>
-      <li data-class="wp-menu-image" data-button="Next" class="custom" data-options="tipLocation:left;">
-        <h2>Application Menu</h2>
-        <p>Hover mouse to see details</p>
+      <li data-class="wp-menu-image" data-button="<?php echo lang('goDashboard_next'); ?>" class="custom" data-options="tipLocation:left;">
+        <h2><?php echo lang('goDashboard_appMenu'); ?></h2>
+        <p><?php echo lang('goDashboard_hoverMouse'); ?></p>
       </li>
-      <li data-id="payWithPayPalbalance" data-class="table-inside" data-button="Next" data-options="tipLocation:top;">
-        <h2>Load Credit(s)</h2>
-        <p>Click <a target="_new" href=" http://goautodial.org/projects/goautodialce/wiki/Hosted_Howto_Load_Credits_30">here</a> for how to load credit</p>
+      <li data-id="payWithPayPalbalance" data-class="table-inside" data-button="<?php echo lang('goDashboard_next'); ?>" data-options="tipLocation:top;">
+        <h2><?php echo lang('goDashboard_loadCredits'); ?></h2>
+        <p><?php echo lang('goDashboard_click'); ?> <a target="_new" href=" http://goautodial.org/projects/goautodialce/wiki/Hosted_Howto_Load_Credits_30"><?php echo lang('goDashboard_here'); ?></a> <?php echo lang('goDashboard_forHowToLoadCredit'); ?></p>
       </li> 
-      <li data-id="table_agents" data-button="Next" data-options="tipLocation:right">
-        <h2>Monitor/Barge</h2>
-        <p>Click <a target="_new" href="http://goautodial.org/projects/goautodialce/wiki/HowTo_Monitor_and_Barge_30">here</a> to monitor or barge live agent(s)</p>
+      <li data-id="table_agents" data-button="<?php echo lang('goDashboard_next'); ?>" data-options="tipLocation:right">
+        <h2><?php echo lang('goDashboard_monitorBarge'); ?></h2>
+        <p><?php echo lang('goDashboard_click'); ?> <a target="_new" href="http://goautodial.org/projects/goautodialce/wiki/HowTo_Monitor_and_Barge_30"><?php echo lang('goDashboard_here'); ?></a> <?php echo lang('goDashboard_toMonitor'); ?></p>
       </li>
-      <li data-id="callsTable" data-button="Next" data-options="tipLocation:left">
-        <h2>Active Calls</h2>
-        <p>Click to show active calls being placed</p>
+      <li data-id="callsTable" data-button="<?php echo lang('goDashboard_next'); ?>" data-options="tipLocation:left">
+        <h2><?php echo lang('goDashboard_activeCalls'); ?></h2>
+        <p><?php echo lang('goDashboard_clickToShowActiveCalls'); ?></p>
       </li>
       <!-- <li data-id="phones_list" data-button="Next" data-options="tipLocation:left">
         <h2>Phones</h2>
         <p>Click <a href=" http://goautodial.org/projects/goautodialce/wiki/Hosted_Howto_Configure_Softphone" target="_new">here</a> for how to configure your softphones</p>
       </li> -->
-      <li data-button="Close">
-        <h2>That's it!</h2>
-        <p>To get started ASAP please go over our tutorials here:
-           <a href="<http://goautodial.org/projects/goautodialce/wiki>" target="_new">Tutorials</a><br/>
-           <input type="checkbox" id="nextlog" name="nextlog" onclick="nextlog(this)"> Show this introduction help again next login?
-        </p>
+      <li data-button="<?php echo lang('goDashboard_close'); ?>">
+        <h2><?php echo lang('goDashboard_thatsIt'); ?></h2>
+        <p><?php echo lang('goDashboard_toGetStarted'); ?>
+           <a href="<http://goautodial.org/projects/goautodialce/wiki>" target="_new"><?php echo lang('goDashboard_tutorials'); ?></a><br/>
+           <input type="checkbox" id="nextlog" name="nextlog" onclick="nextlog(this)"> <?php echo lang('goDashboard_showThisIntro'); ?> </p>
       </li>
 
       <!-- <li data-id="numero5" data-button="Close">
@@ -814,11 +813,11 @@ echo "<input type='hidden' value='$account' id='compid' name='compid'>";
 
 					<!-- TODAY'S STATUS WIDGET -->
 					<div id="dashboard_todays_status" class="postbox">
-						<div class="handlediv" title="Click to toggle"><br></div>
-		    				<div class="actiondiv" title="Refresh this widget" onclick='javascript:todaysreload()'><br></div>
+						<div class="handlediv" title="<? echo lang('go_Clicktotoggle'); ?>"><br></div>
+		    				<div class="actiondiv" title="<? echo lang('go_Refreshthiswidget'); ?>" onclick='javascript:todaysreload()'><br></div>
 		    				<!-- <div class="widgetconfig" title="switch"><a id="switch-to-inbound">Inbd</a></div> -->
                                                 <h3 class="hndle">
-							<span class="tdstats">Today's Status
+							<span class="tdstats"><? echo lang('go_TodayStatus'); ?>
 								<span class="postbox-title-action">
 									<!--<a href="?edit=dashboard_server_statistics#dashboard_server_statistics" class="edit-box open-box">Configure</a>-->
 								</span>
@@ -864,7 +863,7 @@ echo "<input type='hidden' value='$account' id='compid' name='compid'>";
                                                 <div class="handlediv" title="Click to toggle"><br></div>
 		    				<div class="actiondiv" title="Refresh this widget" onclick='javascript:sippyreload()'><br></div>
                                                 <h3 class="hndle">
-                                                        <span class="tdstats">Account Information
+                                                        <span class="tdstats"><? echo lang('go_AccountInformation'); ?>
                                                                 <span class="postbox-title-action">
                                                                 </span>
                                                         </span>
@@ -889,10 +888,10 @@ echo "<input type='hidden' value='$account' id='compid' name='compid'>";
 
 					<!-- GO ANALYTICS -->
 					<div id="dashboard_analytics" class="postbox ">
-						<div class="handlediv" title="Click to toggle"><br></div>
-		    				<div class="actiondiv" title="Refresh this widget" onclick='javascript:analyticsreload()'><br></div>
+						<div class="handlediv" title="<? echo lang('go_Clicktotoggle'); ?>"><br></div>
+		    				<div class="actiondiv" title="<? echo lang('go_Refreshthiswidget'); ?>" onclick='javascript:analyticsreload()'><br></div>
                                                 <h3 class="hndle">
-							<span class="tdstats">GO Analytics
+							<span class="tdstats"><? echo lang('go_GOAnalytics'); ?>
 								<span class="postbox-title-action">
 									<!--<a href="?edit=dashboard_server_statistics#dashboard_server_statistics" class="edit-box open-box">Configure</a>-->
 								</span>
@@ -930,8 +929,8 @@ echo "<input type='hidden' value='$account' id='compid' name='compid'>";
 
 					<!-- OTHER NEWS -->
 					<div id="dashboard_goautodial_forum" class="postbox">
-						<div class="handlediv" title="Click to toggle"><br></div>
-		    				<div class="actiondiv" title="Refresh this widget" onclick='javascript:communityreload()'><br></div>
+						<div class="handlediv" title="<? echo lang('go_Clicktotoggle'); ?>"><br></div>
+		    				<div class="actiondiv" title="<? echo lang('go_Refreshthiswidget'); ?>" onclick='javascript:communityreload()'><br></div>
                                                 <h3 class="hndle">
 							<span class="tdstats">GoAutoDial Community & Forum
 								<span class="postbox-title-action">
@@ -1001,10 +1000,10 @@ echo "<input type='hidden' value='$account' id='compid' name='compid'>";
 
 					<!-- Agents & Leads Status -->
 					<div id="dashboard_agents_status" class="postbox ">
-						<div class="handlediv" title="Click to toggle"><br></div>
-		    				<div class="actiondiv" title="Refresh this widget" onclick='javascript:agentsnleadsreload()'><br></div>
+						<div class="handlediv" title="<? echo lang('go_Clicktotoggle'); ?>"><br></div>
+		    				<div class="actiondiv" title="<? echo lang('go_Refreshthiswidget'); ?>" onclick='javascript:agentsnleadsreload()'><br></div>
                                                 <h3 class="hndle">
-							<span class="tdstats">Agents & Leads Status
+							<span class="tdstats"><? echo lang('go_Agents_LeadsStatus'); ?>
 								<span class="postbox-title-action">
 									<!--<a href="?edit=dashboard_agents_status#dashboard_agents_status" class="edit-box open-box">Configure</a>-->
 								</span>
@@ -1030,10 +1029,10 @@ echo "<input type='hidden' value='$account' id='compid' name='compid'>";
 
 					<!-- Agents & Phones Info -->
 					<div id="agents_phones_logins" class="postbox ">
-						<div class="handlediv" title="Click to toggle"><br></div>
-		    			<div class="actiondiv" title="Refresh this widget" onclick='javascript:agentsnphonesreload()'><br></div>
+						<div class="handlediv" title="<? echo lang('go_Clicktotoggle'); ?>"><br></div>
+		    			<div class="actiondiv" title="<? echo lang('go_Refreshthiswidget'); ?>" onclick='javascript:agentsnphonesreload()'><br></div>
 						<h3 class="hndle">
-							<span class="tdstats">Agents & Phones
+							<span class="tdstats"><? echo lang('go_Agents_Phones'); ?>
 								<span class="postbox-title-action">
 									<!--<a href="?edit=dashboard_phone_logins#dashboard_phone_logins" class="edit-box open-box">Configure</a>-->
 								</span>
@@ -1072,10 +1071,10 @@ echo "<input type='hidden' value='$account' id='compid' name='compid'>";
 
 					<!-- CLUSTER STATUS -->
 					<div id="dashboard_cluster_status" class="postbox " style="<?=$hideDiv ?>">
-						<div class="handlediv" title="Click to toggle"><br></div>
-		    				<div class="actiondiv" title="Refresh this widget" onclick='javascript:clustersreload()'><br></div>
+						<div class="handlediv" title="<? echo lang('go_Clicktotoggle'); ?>"><br></div>
+		    				<div class="actiondiv" title="<? echo lang('go_Refreshthiswidget'); ?>" onclick='javascript:clustersreload()'><br></div>
                                                 <h3 class="hndle">
-							<span class="tdstats">Cluster Status
+							<span class="tdstats"><? echo lang('go_ClusterStatus'); ?>
 								<span class="postbox-title-action">
 									<!--<a href="?edit=dashboard_server_statistics#dashboard_server_statistics" class="edit-box open-box">Configure</a>-->
 								</span>
@@ -1083,7 +1082,7 @@ echo "<input type='hidden' value='$account' id='compid' name='compid'>";
 						</h3>
 						<div class="inside">
 
-							<div class="sub">Cluster Status</div>
+							<div class="sub"><? echo lang('go_ClusterStatus'); ?></div>
 							<div class="separate"></div>
 							<div class="table table_clusters" id="table_clusters"></div>
 
@@ -1094,10 +1093,10 @@ echo "<input type='hidden' value='$account' id='compid' name='compid'>";
 
 					<!-- SERVER'S STATISTICS -->
 					<div id="dashboard_server_statistics" class="postbox " style="<?=$hideDiv ?>">
-						<div class="handlediv" title="Click to toggle"><br></div>
-		    				<div class="actiondiv" title="Refresh this widget" onclick='javascript:serversreload()'><br></div>
+						<div class="handlediv" title="<? echo lang('go_Clicktotoggle'); ?>"><br></div>
+		    				<div class="actiondiv" title="<? echo lang('go_Refreshthiswidget'); ?>" onclick='javascript:serversreload()'><br></div>
                                                 <h3 class="hndle">
-							<span class="tdstats">Server Statistics
+							<span class="tdstats"><? echo lang('go_ServerStatistics'); ?>
 								<span class="postbox-title-action">
 									<!--<a href="?edit=dashboard_server_statistics#dashboard_server_statistics" class="edit-box open-box">Configure</a>-->
 								</span>
@@ -1105,19 +1104,19 @@ echo "<input type='hidden' value='$account' id='compid' name='compid'>";
 						</h3>
 						<div class="inside">
 
-							<div class="sub">System Vitals</div>
+							<div class="sub"><? echo lang('go_SystemVitals'); ?></div>
 							<div class="separate"></div>
 							<div class="table table_vitals" id="table_vitals"></div>
 
-							<div class="sub">Hardware</div>
+							<div class="sub"><? echo lang('go_Hardware'); ?></div>
 							<div class="separate"></div>
 							<div class="table table_hardware" id="table_hardware"></div>
 
-							<div class="sub">Memory Usage</div>
+							<div class="sub"><? echo lang('go_MemoryUsage'); ?></div>
 							<div class="separate"></div>
 							<div class="table table_memory" id="table_memory"></div>
 
-							<div class="sub">Filesystems</div>
+							<div class="sub"><? echo lang('go_Filesystems'); ?></div>
 							<div class="separate"></div>
 							<div class="table table_filesystems" id="table_filesystems"></div>
 
@@ -1129,8 +1128,8 @@ echo "<input type='hidden' value='$account' id='compid' name='compid'>";
 
                                         <!-- Control Panel-->
 					<div id="dashboard_controls" class="postbox " style="<?=$hideDiv ?>">
-						<div class="handlediv" title="Click to toggle"><br></div>
-		    				<div class="actiondiv" title="Refresh this widget" onclick='javascript:systemsreload()'><br></div>
+						<div class="handlediv" title="<? echo lang('go_Clicktotoggle'); ?>"><br></div>
+		    				<div class="actiondiv" title="<? echo lang('go_Refreshthiswidget'); ?>" onclick='javascript:systemsreload()'><br></div>
                                                 <h3 class="hndle">
 							<span class="tdstats">System Services
 								<span class="postbox-title-action">
@@ -1141,9 +1140,9 @@ echo "<input type='hidden' value='$account' id='compid' name='compid'>";
 						<div class="inside">
 
 							<table style="width:100%" cellpadding=0 cellspacing=0>
-								<tr style="font-weight:bold"><td>SERVICE</td><td>STATUS</td><td style="width:10%;">ACTION</td></tr>
+								<tr style="font-weight:bold"><td><? echo lang('go_SERVICE'); ?></td><td><? echo lang('go_STATUS'); ?></td><td style="width:10%;"><? echo lang('go_ACTION');  ?></td></tr>
 								<tr style="background-color:#E0F8E0">
-									<td style="padding:5px 0 5px 20px;width:50%;border-top:#D0D0D0 dashed 1px;">Asterisk ( Telephony )</td>
+									<td style="padding:5px 0 5px 20px;width:50%;border-top:#D0D0D0 dashed 1px;">Asterisk ( <? echo lang('go_Telephony'); ?> )</td>
 									<td style="border-top:#D0D0D0 dashed 1px;padding-right:5px;" colspan="2"><div id="asterisk_status" style="font-weight:bold;line-height: 26px;">&nbsp;</div></td>
 								</tr>
 								<tr style="background-color:#EFFBEF">
@@ -1277,7 +1276,7 @@ echo "</div>\n";
 <!-- Signup Overlay-->
 <div id="signupOverlay" style="display:none;"></div>
 <div id="signupBox">
-<a id="signupClosebox" class="toolTip" title="CLOSE"></a>
+<a id="signupClosebox" class="toolTip" title="<? echo lang('go_CLOSE');?>"></a>
 <div id="signupoverlayContent"></div>
 </div>
 <!-- end signup -->
@@ -1286,14 +1285,14 @@ echo "</div>\n";
 <!-- Overlay1 -->
 <div id="overlay" style="display:none;"></div>
 <div id="box">
-<a id="closebox" class="toolTip" title="CLOSE"></a>
+<a id="closebox" class="toolTip" title="<? echo lang('go_CLOSE');?>"></a>
 <div id="overlayContent"></div>
 </div>
 
 <!-- Overlay2 -->
 <div id="statusOverlay" style="display:none;"></div>
 <div id="statusBox">
-<a id="statusClosebox" class="toolTip" title="CLOSE"></a>
+<a id="statusClosebox" class="toolTip" title="<? echo lang('go_CLOSE');?>"></a>
 <div id="statusOverlayContent"></div>
 </div>
 
@@ -1315,8 +1314,8 @@ if (count($tenant_ids) > 0) {
 ?>
 <div id="overlayRealTime" style="display:none;z-index:97;"></div>
 <div id="boxRealTime" style="display:none;z-index:98;">
-<a id="closeboxRealTime" class="toolTip" title="CLOSE"></a>
-<div id="monitor_camp_banner" style="float: right;font-size: 11px;">Filter: <?=(count($tenant_ids) > 0) ? form_dropdown('monitor_tenants',$tenant_array,'ALL','id="monitor_tenants" class="monitor_tenants" style="font-size: 11px;"') : "" ?> <?=form_dropdown('monitor_agents',$camp_array,$selected_campaign,'id="monitor_agents" class="monitor_camp" style="font-size: 11px;"') ?></div>
+<a id="closeboxRealTime" class="toolTip" title="<? echo lang('go_CLOSE');?>"></a>
+<div id="monitor_camp_banner" style="float: right;font-size: 11px;"><? echo lang('go_Filter'); ?>: <?=(count($tenant_ids) > 0) ? form_dropdown('monitor_tenants',$tenant_array,'ALL','id="monitor_tenants" class="monitor_tenants" style="font-size: 11px;"') : "" ?> <?=form_dropdown('monitor_agents',$camp_array,$selected_campaign,'id="monitor_agents" class="monitor_camp" style="font-size: 11px;"') ?></div>
 <div id="overlayContentRealTime">
 </div>
 <span id="realTimeRowsPerPage" style="display:none">25</span>
@@ -1326,28 +1325,28 @@ if (count($tenant_ids) > 0) {
 <!-- Hopper Overlay -->
 <div id="hopperOverlay" style="display:none;"></div>
 <div id="hopperBox">
-<a id="hopperClosebox" class="toolTip" title="CLOSE"></a>
+<a id="hopperClosebox" class="toolTip" title="<? echo lang('go_CLOSE');?>"></a>
 <div id="hopperOverlayContent"></div>
 </div>
 
 <!-- Overlay for Barging/Listening -->
 <div id="overlayMonitor" style="display:none;z-index:99;"></div>
 <div id="boxMonitor" style="display:none;z-index:100;">
-<a id="closeboxMonitor" class="toolTip" title="CLOSE"></a>
+<a id="closeboxMonitor" class="toolTip" title="<? echo lang('go_CLOSE');?>"></a>
 <div id="overlayContentMonitor">
-<div style="text-align:center;font-weight:bold;font-size:14px;">BLIND MONITORING</div>
+<div style="text-align:center;font-weight:bold;font-size:14px;"><? echo lang('go_BLINDMONITORING');  ?></div>
 <br />
 <input type="hidden" id="server_ip">
 <input type="hidden" id="session_id">
 <table id="test" border=0 cellpadding="3" cellspacing="3" style="width:100%;">
     <tr>
-    	<td style="text-align:right;font-weight:bold;width:40%" nowrap>Agent:</td><td style="white-space:nowrap;">&nbsp;<span id="agent"></span></td>
+    	<td style="text-align:right;font-weight:bold;width:40%" nowrap><? echo lang('go_Agent_');?>:</td><td style="white-space:nowrap;">&nbsp;<span id="agent"></span></td>
     </tr>
     <tr>
-    	<td style="text-align:right;font-weight:bold;" nowrap>Monitor:</td><td><select id="monitor" name="monitor"><option>LISTEN</option><option>BARGE</option></select></td>
+    	<td style="text-align:right;font-weight:bold;" nowrap><? echo lang('go_Monitor'); ?>:</td><td><select id="monitor" name="monitor"><option>LISTEN</option><option>BARGE</option></select></td>
     </tr>
     <tr>
-    	<td style="text-align:right;font-weight:bold;" nowrap>Admin Phone:</td><td><input type="text" id="phone" name="phone" value="<?php echo $phone_login; ?>" size="10" maxlength="15" /><!--<select id="phone" name="phone"><option><? echo $phone_login; ?></option></select>--></td>
+    	<td style="text-align:right;font-weight:bold;" nowrap><? echo lang('go_AdminPhone'); ?>:</td><td><input type="text" id="phone" name="phone" value="<?php echo $phone_login; ?>" size="10" maxlength="15" /><!--<select id="phone" name="phone"><option><? echo $phone_login; ?></option></select>--></td>
     </tr>
     <tr>
     	<td style="text-align:right;font-weight:bold;" nowrap>&nbsp;</td><td><input type="button" id="bargeIn" name="bargeIn" value="SUBMIT" style="cursor:pointer;" /></td>

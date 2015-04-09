@@ -38,56 +38,56 @@ if ($calls_inbound_queue_today > 0) {
     text-align: right;
 }
 </style>
-<p class="sub">Calls</p>
+<p class="sub"><? echo lang('go_Calls'); ?> <? //echo $cal_december; ?></p>
 <table id="callsTable">
 	<tbody>
 	<tr  class="first">
 
-			<td class="o dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="Click to see calls being placed"><? echo $calls_ringing_today; ?></a></div></div></td>
-			<td class="t bold"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="Click to see calls being placed">Call(s) Ringing</a></td>
+			<td class="o dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo $calls_ringing_today; ?></a></div></div></td>
+			<td class="t bold"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo lang('go_CallsRinging'); ?></a></td>
 
 
 	</tr>
 	<tr style="display:none;">
 
 
-			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer;<?=$setOColor?>" onclick="callMonitoring()" title="Click to see calls being placed"><? echo $calls_outbound_queue_today; ?></a></div></div></td>
-			<td class="t "><a class="toolTip" style="cursor:pointer;<?=$setOColor?>" onclick="callMonitoring()" title="Click to see calls being placed">Call(s) in Outgoing Queue</a></td>
+			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer;<?=$setOColor?>" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo $calls_outbound_queue_today; ?></a></div></div></td>
+			<td class="t "><a class="toolTip" style="cursor:pointer;<?=$setOColor?>" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo lang('go_CallsinOutgoingQueue'); ?></a></td>
 
 
 	</tr>
 	<tr>
 
 
-			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer;<?=$setIColor?>" onclick="callMonitoring()" title="Click to see calls being placed"><? echo $calls_inbound_queue_today; ?></a></div></div></td>
-			<td class="t "><a class="toolTip" style="cursor:pointer;<?=$setIColor?>" onclick="callMonitoring()" title="Click to see calls being placed">Call(s) in Incoming Queue</a></td>
+			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer;<?=$setIColor?>" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo $calls_inbound_queue_today; ?></a></div></div></td>
+			<td class="t "><a class="toolTip" style="cursor:pointer;<?=$setIColor?>" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo lang('go_CallsinIncomingQueue'); ?></a></td>
 
 
 	</tr>
 	<tr>
 
 
-			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="Click to see calls being placed"><? echo $live_inbound_today; ?></a></div></div></td>
-			<td class="t"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="Click to see calls being placed">Live Inbound</a></td>
+			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo $live_inbound_today; ?></a></div></div></td>
+			<td class="t"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo lang('go_LiveInbound'); ?></a></td>
 
 
 
 	</tr>
 	<tr>
-			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="Click to see calls being placed"><? echo $live_outbound_today; ?></a></div></div></td>
-			<td class="r"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="Click to see calls being placed">Live Outbound</a></td>
+			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo $live_outbound_today; ?></a></div></div></td>
+			<td class="r"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo lang('go_LiveOutbound'); ?></a></td>
 	</tr>
 	<tr style="display:none">
-			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="Click to see calls being placed"><? echo $ibcalls_morethan_minute; ?></a></div></div></td>
-			<td class="r"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="Click to see calls being placed">IN Call(s) > a Minute</a></td>
+			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo $ibcalls_morethan_minute; ?></a></div></div></td>
+			<td class="r"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo lang('go_INCallsaMinute'); ?></a></td>
 	</tr>
 	<tr style="display:none">
-			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="Click to see calls being placed"><? echo $obcalls_morethan_minute; ?></a></div></div></td>
-			<td class="r"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="Click to see calls being placed">OUT Call(s) > a Minute</a></td>
+			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo $obcalls_morethan_minute; ?></a></div></div></td>
+			<td class="r"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo lang('go_OUTCallsaMinute'); ?></a></td>
 	</tr>
 	<tr>
-			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="Click to see calls being placed"><? echo $total_calls; ?></a></div></div></td>
-			<td class="r"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="Click to see calls being placed">Total Calls</a></td>
+			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo $total_calls; ?></a></div></div></td>
+			<td class="r"><a class="toolTip" style="cursor:pointer" onclick="callMonitoring()" title="<? echo lang('go_Clicktoseecallsbeingplaced'); ?>"><? echo lang('go_TotalCalls'); ?></a></td>
 	</tr>
 	</tbody>
 </table>

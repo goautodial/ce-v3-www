@@ -76,8 +76,8 @@ $NOW = date('Y-m-d');
                    carrier_name : {required:true}
            },
            messages:{
-                     carrier_id: {required:"* Required"},
-                     carrier_name: {required:"* Required"}
+                     carrier_id: {required:"* <? echo $this->lang->line("go_required"); ?>"},
+                     carrier_name: {required:"* <? echo $this->lang->line("go_required"); ?>"}
            },
            submitHandler:function(form){
 
@@ -119,7 +119,7 @@ $NOW = date('Y-m-d');
                              function(value,elem){
                                 return this.optional(elem) || !/[ \t]/.test(value);
                              },
-                             "Space are not allowed");
+                             "<? echo $this->lang->line('go_space'); ?>");
 
        $("#copy_carrier").submit();
 
@@ -160,13 +160,13 @@ $NOW = date('Y-m-d');
 		{
 			$('#aloading').load('<? echo $base; ?>index.php/go_carriers_ce/go_check_carrier/'+$(this).val());
 		} else {
-			$('#aloading').html("<small style=\"color:red;\">Minimum of 3 characters.</small>");
+			$('#aloading').html("<small style=\"color:red;\"><? echo $this->lang->line("go_min_3_char"); ?></small>");
 		}
 	});
 </script>
 
 <div style="float:right;" id="small_step_number"><img src="<?php echo $base; ?>img/step2of2-navigation-small.png" /></div>
-<div style="font-weight:bold;font-size:16px;color:#333;">Carrier Wizard &raquo; Add New Carrier</div>
+<div style="font-weight:bold;font-size:16px;color:#333;"><? echo $this->lang->line("go_carrier_wizard"); ?> &raquo; <? echo $this->lang->line("go_add_new_carrier"); ?></div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
 
@@ -179,16 +179,16 @@ $NOW = date('Y-m-d');
                    <form id="copy_carrier" method="post">
                      <table width="100%">
                          <tr>
-                             <td style="width: 100px;white-space: nowrap;"><strong>Carrier ID:</strong></td><td><?=form_input('carrier_id',null,'id="carrier_id"')?> <span id="aloading"></span></td>
+                             <td style="width: 100px;white-space: nowrap;"><strong><? echo $this->lang->line("go_carrier_id"); ?>:</strong></td><td><?=form_input('carrier_id',null,'id="carrier_id"')?> <span id="aloading"></span></td>
                          </tr>
                          <tr>
-                             <td style="width: 100px;white-space: nowrap;"><strong>Carrier Name:</strong></td><td><?=form_input('carrier_name',null,'id="carrier_name"')?></td>
+                             <td style="width: 100px;white-space: nowrap;"><strong><? echo $this->lang->line("go_carrier_name"); ?>:</strong></td><td><?=form_input('carrier_name',null,'id="carrier_name"')?></td>
                          </tr>
                          <tr>
-                             <td style="width: 100px;white-space: nowrap;"><strong>Server IP:</strong></td><td><?=form_dropdown('server_ip',$server,null,'id="server_ip"')?></td>
+                             <td style="width: 100px;white-space: nowrap;"><strong><? echo $this->lang->line("go_server_ip"); ?>:</strong></td><td><?=form_dropdown('server_ip',$server,null,'id="server_ip"')?></td>
                          </tr>
                          <tr>
-                             <td style="width: 100px;white-space: nowrap;"><strong>Source Carrier:</strong></td><td><?=form_dropdown('source_id',$carriers,null,'id="source_id"')?></td>
+                             <td style="width: 100px;white-space: nowrap;"><strong><? echo $this->lang->line("go_src_carrier"); ?>:</strong></td><td><?=form_dropdown('source_id',$carriers,null,'id="source_id"')?></td>
                          </tr>
                      </table>
                    </form>
@@ -196,4 +196,4 @@ $NOW = date('Y-m-d');
 	</tr>
 </table>
 <hr style="border:#DFDFDF 1px solid;" />
-<span id="saveButtons"><span id="cancel" style="white-space: nowrap;">Cancel</span> | <span id="submit" style="white-space: nowrap;">Submit</span></span>
+<span id="saveButtons"><span id="cancel" style="white-space: nowrap;"><? echo $this->lang->line("go_cancel"); ?></span> | <span id="submit" style="white-space: nowrap;"><? echo $this->lang->line("go_submit"); ?></span></span>

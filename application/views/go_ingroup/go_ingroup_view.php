@@ -296,7 +296,7 @@ $(function() {
 				if ($(this).val()!='<?=$group_settings->no_agent_action ?>')
 					no_agent_action_value = 'nbdy-avail-to-take-call|vm-goodbye';
 				action_values_array[0] = "<table border=0 style='width:100%'><tr class=trview><td style='width:355px;' align=right>Audio File: </td><td align=left>";
-				action_values_array[1] = '<input type="text" value="'+no_agent_action_value+'" maxlength="255" size="40" id="no_agent_action_value" name="no_agent_action_value"> <a href="javascript:launch_chooser(\'no_agent_action_value\',\'date\',800,document.getElementById(\'no_agent_action_value\').value);"><FONT color="blue">[ Audio Chooser ]</font></a><div id="divno_agent_action_value"></div>';
+				action_values_array[1] = '<input type="text" value="'+no_agent_action_value+'" maxlength="255" size="40" id="no_agent_action_value" name="no_agent_action_value"> <a href="javascript:launch_chooser(\'no_agent_action_value\',\'date\',800,document.getElementById(\'no_agent_action_value\').value);"><FONT color="blue">[Audio Chooser]</font></a><div id="divno_agent_action_value"></div>';
 				action_values_array[2] = "</td></tr></table>";
 				var action_values = action_values_array.join(" ");
 				$(".noAgentActionTR").html(action_values);
@@ -325,7 +325,7 @@ $(function() {
 				if ($(this).val()!='<?=$group_settings->no_agent_action ?>')
 					no_agent_action_value = '101';
 				action_values_array[0] = "<table border=0 style='width:100%'><tr class=trview><td style='width:355px;' align=right>Voicemail Box: </td><td align=left>";
-				action_values_array[1] = '<input type="text" value="'+no_agent_action_value+'" maxlength="10" size="12" id="no_agent_action_value" name="no_agent_action_value"> <a href="javascript:launch_vm_chooser(\'no_agent_action_value\',\'date\',600,document.getElementById(\'no_agent_action_value\').value);"><FONT color="blue">[ Voicemail Chooser ]</font></a><div id="divno_agent_action_value"></div>';
+				action_values_array[1] = '<input type="text" value="'+no_agent_action_value+'" maxlength="10" size="12" id="no_agent_action_value" name="no_agent_action_value"> <a href="javascript:launch_vm_chooser(\'no_agent_action_value\',\'date\',600,document.getElementById(\'no_agent_action_value\').value);"><FONT color="blue">[ '+ lang('go_VoicemailChooser') +' ]</font></a><div id="divno_agent_action_value"></div>';
 				action_values_array[2] = "</td></tr></table>";
 				var action_values = action_values_array.join(" ");
 				$(".noAgentActionTR").html(action_values);
@@ -475,30 +475,30 @@ function editIngroup(groupID) {
 	});
 }
 </script>
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">MODIFY IN-GROUP: <?php echo $group_settings->group_id; ?></div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><?php echo lang('go_MODIFYINGROUP'); ?>: <?php echo $group_settings->group_id; ?></div>
 <br />
 <table id="ingroupTable" border=0 cellpadding="0" cellspacing="0" style="width:95%; color:#000; margin-left:auto; margin-right:auto;">
     <tr>
-    	<td style="width:30px;border-top:0px;"><span class="ingroupTabs tabOn" id="tabSettings">Settings</span></td><td style="width:30px;border-top:0px;"><span class="ingroupTabs tabOff" id="tabAgents">Agents</span></td><td style="border-top:0px;width:90%;"><span id="searchUserSpan" style="float:right;display:none;"><span id="showAllUsers" style="display: none">[Clear Search]</span>&nbsp;<?=form_input('search_user',null,'id="search_user" size="15" maxlength="100" placeholder="Search User"'); ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_user_button" style="cursor: pointer;" /></span></td>
+    	<td style="width:30px;border-top:0px;"><span class="ingroupTabs tabOn" id="tabSettings"><?php echo lang('go_Settings'); ?></span></td><td style="width:30px;border-top:0px;"><span class="ingroupTabs tabOff" id="tabAgents"><?php echo lang('go_Agents'); ?></span></td><td style="border-top:0px;width:90%;"><span id="searchUserSpan" style="float:right;display:none;"><span id="showAllUsers" style="display: none">[<?php echo lang('go_ClearSearch'); ?>]</span>&nbsp;<?=form_input('search_user',null,'id="search_user" size="15" maxlength="100" placeholder="Search User"'); ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_user_button" style="cursor: pointer;" /></span></td>
     </tr>
 	<tr>
 		<td colspan=3>
 			<?=form_open('ingroups',array('id'=>'go_editingroup','name'=>'go_editingroup'),array('editlist'=>'editlist','editval'=>'','showvaledit'=>"{$group_settings->group_id}")) ?>
 			<table id="tabSettings_div" border=0 cellpadding="3" cellspacing="3" style="width:100%;border: 1px solid #DDDEDF;border-radius: 0px 5px 0px 0px;padding-top:5px;">
 				<tr>
-					<td style="text-align:right;font-weight:bold;" nowrap>Description:</td><td nowrap>&nbsp;<?=form_input('group_name',$group_settings->group_name,'id="group_name" size="30"'); ?></td>
+					<td style="text-align:right;font-weight:bold;" nowrap><?php echo lang('go_Description_'); ?></td><td nowrap>&nbsp;<?=form_input('group_name',$group_settings->group_name,'id="group_name" size="30"'); ?></td>
 				</tr>
 				<tr>
-					<td style="text-align:right;font-weight:bold;" nowrap>Color:</td><td nowrap>&nbsp;<?=form_input('group_color',$group_settings->group_color,'id="group_color" size="7" maxlength="7"'); ?></td>
+					<td style="text-align:right;font-weight:bold;" nowrap><?php echo lang('go_Color'); ?>:</td><td nowrap>&nbsp;<?=form_input('group_color',$group_settings->group_color,'id="group_color" size="7" maxlength="7"'); ?></td>
 				</tr>
 				<tr>
-					<td style="text-align:right;font-weight:bold;" nowrap>Status:</td><td nowrap>&nbsp;<?=form_dropdown('active',array('N'=>'N','Y'=>'Y'),$group_settings->active,'id="active"'); ?></td>
+					<td style="text-align:right;font-weight:bold;" nowrap><?php echo lang('go_Status_'); ?></td><td nowrap>&nbsp;<?=form_dropdown('active',array('N'=>'N','Y'=>'Y'),$group_settings->active,'id="active"'); ?></td>
 				</tr>
 				<tr>
-					<td style="text-align:right;font-weight:bold;" nowrap>Web Form:</td><td nowrap>&nbsp;<?=form_input('web_form_address',$group_settings->web_form_address,'id="web_form_address" size="70" maxlength="500"'); ?></td>
+					<td style="text-align:right;font-weight:bold;" nowrap><?php echo lang('go_WebForm_'); ?></td><td nowrap>&nbsp;<?=form_input('web_form_address',$group_settings->web_form_address,'id="web_form_address" size="70" maxlength="500"'); ?></td>
 				</tr>
 				<tr>
-					<td style="text-align:right;font-weight:bold;" nowrap>Next Agent Call:</td><td nowrap>&nbsp;<?=form_dropdown('next_agent_call',array('random'=>'random','oldest_call_start'=>'oldest_call_start','oldest_call_finish'=>'oldest_call_finish','overall_user_level'=>'overall_user_level','inbound_group_rank'=>'inbound_group_rank','campaign_rank'=>'campaign_rank','fewest_calls'=>'fewest_calls','fewest_calls_campaign'=>'fewest_calls_campaign','longest_wait_time'=>'longest_wait_time','ring_all'=>'ring_all'),$group_settings->next_agent_call,'id="next_agent_call"'); ?></td>
+					<td style="text-align:right;font-weight:bold;" nowrap><?php echo lang('go_NextAgentCall'); ?>:</td><td nowrap>&nbsp;<?=form_dropdown('next_agent_call',array('random'=>'random','oldest_call_start'=>'oldest_call_start','oldest_call_finish'=>'oldest_call_finish','overall_user_level'=>'overall_user_level','inbound_group_rank'=>'inbound_group_rank','campaign_rank'=>'campaign_rank','fewest_calls'=>'fewest_calls','fewest_calls_campaign'=>'fewest_calls_campaign','longest_wait_time'=>'longest_wait_time','ring_all'=>'ring_all'),$group_settings->next_agent_call,'id="next_agent_call"'); ?></td>
 				</tr>
 				<tr>
 					<?php
@@ -516,10 +516,10 @@ function editIngroup(groupID) {
 						$ctr--;
 					}
 					?>
-					<td style="text-align:right;font-weight:bold;" nowrap>Queue Priority:</td><td nowrap>&nbsp;<?=form_dropdown('queue_priority',$queueArray,$group_settings->queue_priority,'id="queue_priority"'); ?></td>
+					<td style="text-align:right;font-weight:bold;" nowrap><?php echo lang('go_QueuePriority'); ?>:</td><td nowrap>&nbsp;<?=form_dropdown('queue_priority',$queueArray,$group_settings->queue_priority,'id="queue_priority"'); ?></td>
 				</tr>
 				<tr>
-					<td style="text-align:right;font-weight:bold;" nowrap>Fronter Display:</td><td nowrap>&nbsp;<?=form_dropdown('fronter_display',array('N'=>'N','Y'=>'Y'),$group_settings->fronter_display,'id="fronter_display"'); ?></td>
+					<td style="text-align:right;font-weight:bold;" nowrap><?php echo lang('go_FronterDisplay'); ?>:</td><td nowrap>&nbsp;<?=form_dropdown('fronter_display',array('N'=>'N','Y'=>'Y'),$group_settings->fronter_display,'id="fronter_display"'); ?></td>
 				</tr>
 				<tr>
 					<?php
@@ -529,85 +529,85 @@ function editIngroup(groupID) {
 						$scriptArray[$script->script_id] = "{$script->script_id} - {$script->script_name}";
 					}
 					?>
-					<td style="text-align:right;font-weight:bold;" nowrap>Script:</td><td nowrap>&nbsp;<?=form_dropdown('ingroup_script',$scriptArray,$group_settings->ingroup_script,'id="ingroup_script"'); ?></td>
+					<td style="text-align:right;font-weight:bold;" nowrap><?php echo lang('go_script'); ?>:</td><td nowrap>&nbsp;<?=form_dropdown('ingroup_script',$scriptArray,$group_settings->ingroup_script,'id="ingroup_script"'); ?></td>
 				</tr>
 				<tr>
-					<td><span id="showAdvanceOptions" style="cursor:pointer;font-size:10px;color:#7A9E22;">[ <span id="plus_minus" style="white-space: pre;font-family: monospace;">+</span> ADVANCE SETTINGS ]</span></td>
-					<td align=right><span onclick="editIngroup('<?php echo $group_settings->group_id; ?>')" style='font-size:12px;color:#7A9E22;cursor:pointer;'>SUBMIT &nbsp;</span></td>
+					<td><span id="showAdvanceOptions" style="cursor:pointer;font-size:10px;color:#7A9E22;">[ <span id="plus_minus" style="white-space: pre;font-family: monospace;">+</span> <?php echo lang('go_ADVANCESETTINGS'); ?> ]</span></td>
+					<td align=right><span onclick="editIngroup('<?php echo $group_settings->group_id; ?>')" style='font-size:12px;color:#7A9E22;cursor:pointer;'><?php echo lang('go_SUBMIT'); ?> &nbsp;</span></td>
 				</tr>
 				<tr>
 					<td colspan="2">
 						<?php
 						echo "<TABLE width=\"95%\" class=\"tableadvace\" id=\"advanceid\">\n";
-						echo "<tr class=trview><td align=right>On-Hook Ring Time: </td><td align=left>".form_input('on_hook_ring_time',$group_settings->on_hook_ring_time,'id="on_hook_ring_time" size=5 maxlength=4')."</td></tr>\n";
-						echo "<tr class=trview><td align=right>Ignore List Script Override: </td><td align=left>".form_dropdown('ignore_list_script_override',array('N'=>'N','Y'=>'Y'),$group_settings->ignore_list_script_override,'id="ignore_list_script_override"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_OnHookRingTime').": </td><td align=left>".form_input('on_hook_ring_time',$group_settings->on_hook_ring_time,'id="on_hook_ring_time" size=5 maxlength=4')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_IgnoreListScriptOverride').": </td><td align=left>".form_dropdown('ignore_list_script_override',array('N'=>'N','Y'=>'Y'),$group_settings->ignore_list_script_override,'id="ignore_list_script_override"')."</td></tr>\n";
 		 
-						echo "<tr class=trview><td align=right>Get Call Launch: </td><td align=left>".form_dropdown('get_call_launch',array('NONE'=>'NONE','SCRIPT'=>'SCRIPT','WEBFORM'=>'WEBFORM','FORM'=>'FORM'),$group_settings->get_call_launch,'id="get_call_launch"')."</td></tr>";
+						echo "<tr class=trview><td align=right>".lang('go_GetCallLaunch').": </td><td align=left>".form_dropdown('get_call_launch',array('NONE'=>'NONE','SCRIPT'=>'SCRIPT','WEBFORM'=>'WEBFORM','FORM'=>'FORM'),$group_settings->get_call_launch,'id="get_call_launch"')."</td></tr>";
 		 
-						echo "<tr class=trview><td align=right>Transfer-Conf DTMF 1: </td><td align=left>".form_input('xferconf_a_dtmf',$group_settings->xferconf_a_dtmf,'id="xferconf_a_dtmf" size=20 maxlength=50')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_TransferConfDTMF')." 1: </td><td align=left>".form_input('xferconf_a_dtmf',$group_settings->xferconf_a_dtmf,'id="xferconf_a_dtmf" size=20 maxlength=50')."</td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>Transfer-Conf Number 1: </td><td align=left>".form_input('xferconf_a_number',$group_settings->xferconf_a_number,'id="xferconf_a_number" size=20 maxlength=50')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_TransferConfNumber')." 1: </td><td align=left>".form_input('xferconf_a_number',$group_settings->xferconf_a_number,'id="xferconf_a_number" size=20 maxlength=50')."</td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>Transfer-Conf DTMF 2: </td><td align=left>".form_input('xferconf_b_dtmf',$group_settings->xferconf_b_dtmf,'id="xferconf_b_dtmf" size=20 maxlength=50')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_TransferConfDTMF')." 2: </td><td align=left>".form_input('xferconf_b_dtmf',$group_settings->xferconf_b_dtmf,'id="xferconf_b_dtmf" size=20 maxlength=50')."</td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>Transfer-Conf Number 2: </td><td align=left>".form_input('xferconf_b_number',$group_settings->xferconf_b_number,'id="xferconf_b_number" size=20 maxlength=50')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_TransferConfNumber')." 2: </td><td align=left>".form_input('xferconf_b_number',$group_settings->xferconf_b_number,'id="xferconf_b_number" size=20 maxlength=50')."</td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>Transfer-Conf Number 3: </td><td align=left>".form_input('xferconf_c_number',$group_settings->xferconf_c_number,'id="xferconf_c_number" size=20 maxlength=50')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_TransferConfNumber')." 3: </td><td align=left>".form_input('xferconf_c_number',$group_settings->xferconf_c_number,'id="xferconf_c_number" size=20 maxlength=50')."</td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>Transfer-Conf Number 4: </td><td align=left>".form_input('xferconf_d_number',$group_settings->xferconf_d_number,'id="xferconf_d_number" size=20 maxlength=50')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_TransferConfNumber')." 4: </td><td align=left>".form_input('xferconf_d_number',$group_settings->xferconf_d_number,'id="xferconf_d_number" size=20 maxlength=50')."</td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>Transfer-Conf Number 5: </td><td align=left>".form_input('xferconf_e_number',$group_settings->xferconf_e_number,'id="xferconf_e_number" size=20 maxlength=50')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_TransferConfNumber')." 5: </td><td align=left>".form_input('xferconf_e_number',$group_settings->xferconf_e_number,'id="xferconf_e_number" size=20 maxlength=50')."</td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>Timer Action: </td><td align=left>".form_dropdown('timer_action',array('NONE'=>'NONE','D1_DIAL'=>'D1 DIAL','D2_DIAL'=>'D2 DIAL','D3_DIAL'=>'D3 DIAL','D4_DIAL'=>'D4 DIAL','D5_DIAL'=>'D5 DIAL','MESSAGE_ONLY'=>'MESSAGE ONLY','WEBFORM'=>'WEBFORM','HANGUP'=>'HANGUP','CALLMENU'=>'CALLMENU','EXTENSION'=>'EXTENSION','IN_GROUP'=>'IN GROUP'),$group_settings->timer_action,'id="timer_action"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_TimerAction')." : </td><td align=left>".form_dropdown('timer_action',array('NONE'=>'NONE','D1_DIAL'=>'D1 DIAL','D2_DIAL'=>'D2 DIAL','D3_DIAL'=>'D3 DIAL','D4_DIAL'=>'D4 DIAL','D5_DIAL'=>'D5 DIAL','MESSAGE_ONLY'=>'MESSAGE ONLY','WEBFORM'=>'WEBFORM','HANGUP'=>'HANGUP','CALLMENU'=>'CALLMENU','EXTENSION'=>'EXTENSION','IN_GROUP'=>'IN GROUP'),$group_settings->timer_action,'id="timer_action"')."</td></tr>\n";
 		
-						echo "<tr class='trview timerAction' style='display:none;'><td align=right>Timer Action Message: </td><td align=left>".form_input('timer_action_message',$group_settings->timer_action_message,'id="timer_action_message" size=50 maxlength=255')."</td></tr>\n";
+						echo "<tr class='trview timerAction' style='display:none;'><td align=right>".lang('go_TimerActionMessage')." : </td><td align=left>".form_input('timer_action_message',$group_settings->timer_action_message,'id="timer_action_message" size=50 maxlength=255')."</td></tr>\n";
 		
-						echo "<tr class='trview timerAction' style='display:none;'><td align=right>Timer Action Seconds: </td><td align=left>".form_input('timer_action_seconds',$group_settings->timer_action_seconds,'id="timer_action_seconds" size=10 maxlength=10')."</td></tr>\n";
+						echo "<tr class='trview timerAction' style='display:none;'><td align=right>".lang('go_TimerActionSeconds')." : </td><td align=left>".form_input('timer_action_seconds',$group_settings->timer_action_seconds,'id="timer_action_seconds" size=10 maxlength=10')."</td></tr>\n";
 		
-						echo "<tr class='trview timerAction' style='display:none;'><td align=right>Timer Action Destination: </td><td align=left>".form_input('timer_action_destination',$group_settings->timer_action_destination,'id="timer_action_destination" size=25 maxlength=30')."</td></tr>\n";
+						echo "<tr class='trview timerAction' style='display:none;'><td align=right>".lang('go_TimerActionDestination')." : </td><td align=left>".form_input('timer_action_destination',$group_settings->timer_action_destination,'id="timer_action_destination" size=25 maxlength=30')."</td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>Drop Call Seconds: </td><td align=left>".form_input('drop_call_seconds',$group_settings->drop_call_seconds,'id="drop_call_seconds" size=5 maxlength=4')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_DropCallSeconds')." : </td><td align=left>".form_input('drop_call_seconds',$group_settings->drop_call_seconds,'id="drop_call_seconds" size=5 maxlength=4')."</td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>Drop Action: </td><td align=left>".form_dropdown('drop_action',array('HANGUP'=>'HANGUP','MESSAGE'=>'MESSAGE','VOICEMAIL'=>'VOICEMAIL','IN_GROUP'=>'IN GROUP','CALLMENU'=>'CALLMENU'),$group_settings->drop_action,'id="drop_action"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_DropAction')." : </td><td align=left>".form_dropdown('drop_action',array('HANGUP'=>'HANGUP','MESSAGE'=>'MESSAGE','VOICEMAIL'=>'VOICEMAIL','IN_GROUP'=>'IN GROUP','CALLMENU'=>'CALLMENU'),$group_settings->drop_action,'id="drop_action"')."</td></tr>\n";
 		
-						echo "<tr class='trview dropActionExten'><td align=right>Drop Exten: </td><td align=left>".form_input('drop_exten',$group_settings->drop_exten,'id="drop_exten" size=10 maxlength=20')."</td></tr>\n";
+						echo "<tr class='trview dropActionExten'><td align=right>".lang('go_DropExten')." : </td><td align=left>".form_input('drop_exten',$group_settings->drop_exten,'id="drop_exten" size=10 maxlength=20')."</td></tr>\n";
 				
-						echo "<tr class='trview dropActionVoicemail'><td align=right>Voicemail: </td><td align=left>".form_input('voicemail_ext',$group_settings->voicemail_ext,'id="voicemail_ext" size=12 maxlength=10')." <a href=\"javascript:launch_vm_chooser('voicemail_ext','vm',500,document.getElementById('voicemail_ext').value);\"><FONT color=\"blue\">[ Voicemail Chooser ]</a><div id=\"divvoicemail_ext\"></div></td></tr>\n";
+						echo "<tr class='trview dropActionVoicemail'><td align=right>".lang('go_Voicemail')." : </td><td align=left>".form_input('voicemail_ext',$group_settings->voicemail_ext,'id="voicemail_ext" size=12 maxlength=10')." <a href=\"javascript:launch_vm_chooser('voicemail_ext','vm',500,document.getElementById('voicemail_ext').value);\"><FONT color=\"blue\">[ ".lang('go_VoicemailChooser')." ]</a><div id=\"divvoicemail_ext\"></div></td></tr>\n";
 		
-						echo "<tr class='trview dropActionTransferGroup'><td align=right>Drop Transfer Group: </td><td align=left>";
+						echo "<tr class='trview dropActionTransferGroup'><td align=right>".lang('go_DropTransferGroup')." : </td><td align=left>";
 						echo form_dropdown('drop_inbound_group',$ingroupArray,$group_settings->drop_inbound_group,'id="drop_inbound_group" style="width:400px;"');
 						echo "</td></tr>\n";
 		
-						echo "<tr class='trview dropActionCallMenu'><td align=right>Drop Call Menu: </td><td align=left>";
+						echo "<tr class='trview dropActionCallMenu'><td align=right>".lang('go_DropCallMenu')." : </td><td align=left>";
 						echo form_dropdown('drop_callmenu',$menuArray,$group_settings->drop_callmenu,'id="drop_callmenu" style="width:300px;"');
 						echo "</td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>Call Time: </td><td align=left>";
+						echo "<tr class=trview><td align=right>".lang('go_CallTime').": </td><td align=left>";
 						echo form_dropdown('call_time_id',$timeArray,$group_settings->call_time_id,'id="call_time_id"');
 						echo "</td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>After Hours Action: </td><td align=left>".form_dropdown('after_hours_action',array('HANGUP'=>'HANGUP','MESSAGE'=>'MESSAGE','EXTENSION'=>'EXTENSION','VOICEMAIL'=>'VOICEMAIL','IN_GROUP'=>'IN GROUP'),$group_settings->after_hours_action,'id="after_hours_action"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_AfterHoursAction')." : </td><td align=left>".form_dropdown('after_hours_action',array('HANGUP'=>'HANGUP','MESSAGE'=>'MESSAGE','EXTENSION'=>'EXTENSION','VOICEMAIL'=>'VOICEMAIL','IN_GROUP'=>'IN GROUP'),$group_settings->after_hours_action,'id="after_hours_action"')."</td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>After Hours Message Filename: </td><td align=left>".form_input('after_hours_message_filename',$group_settings->after_hours_message_filename,'id="after_hours_message_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('after_hours_message_filename','date',600,document.getElementById('after_hours_message_filename').value);\"><FONT color=\"blue\">[ Audio Chooser ]</font></a><div id=\"divafter_hours_message_filename\"></div> </td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_AfterHoursMessageFilename')." : </td><td align=left>".form_input('after_hours_message_filename',$group_settings->after_hours_message_filename,'id="after_hours_message_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('after_hours_message_filename','date',600,document.getElementById('after_hours_message_filename').value);\"><FONT color=\"blue\"> ".lang('go_AudioChooser')." </font></a><div id=\"divafter_hours_message_filename\"></div> </td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>After Hours Extension: </td><td align=left>".form_input('after_hours_exten',$group_settings->after_hours_exten,'id="after_hours_exten" size=10 maxlength=20')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_AfterHoursExtension')." : </td><td align=left>".form_input('after_hours_exten',$group_settings->after_hours_exten,'id="after_hours_exten" size=10 maxlength=20')."</td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>After Hours Voicemail: </td><td align=left>".form_input('after_hours_voicemail',$group_settings->after_hours_voicemail,'id="after_hours_voicemail" size=12 maxlength=10')." <a href=\"javascript:launch_vm_chooser('after_hours_voicemail','vm',700,document.getElementById('after_hours_voicemail').value);\"><FONT color=\"blue\">[ Voicemail Chooser ]</font></a><div id=\"divafter_hours_voicemail\"></div></td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_AfterHoursVoicemail')." : </td><td align=left>".form_input('after_hours_voicemail',$group_settings->after_hours_voicemail,'id="after_hours_voicemail" size=12 maxlength=10')." <a href=\"javascript:launch_vm_chooser('after_hours_voicemail','vm',700,document.getElementById('after_hours_voicemail').value);\"><FONT color=\"blue\">[ ".lang('go_VoicemailChooser')." ]</font></a><div id=\"divafter_hours_voicemail\"></div></td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>After Hours Transfer Group: </td><td align=left>";
+						echo "<tr class=trview><td align=right>".lang('go_AfterHoursTransferGroup')." : </td><td align=left>";
 						echo form_dropdown('afterhours_xfer_group',$ingroupArray,$group_settings->afterhours_xfer_group,'id="afterhours_xfer_group" style="width:400px;"');
 						echo "</td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>No Agents No Queueing: </td><td align=left>".form_dropdown('no_agent_no_queue',array('N'=>'N','Y'=>'Y','NO_PAUSED'=>'NO PAUSED'),$group_settings->no_agent_no_queue,'id="no_agent_no_queue"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_NoAgentsNoQueueing')." : </td><td align=left>".form_dropdown('no_agent_no_queue',array('N'=>'N','Y'=>'Y','NO_PAUSED'=>'NO PAUSED'),$group_settings->no_agent_no_queue,'id="no_agent_no_queue"')."</td></tr>\n";
 		
-						echo "<tr class=trview><td align=right>No Agent No Queue Action: </td><td align=left>".form_dropdown('no_agent_action',array('CALLMENU'=>'CALLMENU','INGROUP'=>'INGROUP','DID'=>'DID','MESSAGE'=>'MESSAGE','EXTENSION'=>'EXTENSION','VOICEMAIL'=>'VOICEMAIL'),$group_settings->no_agent_action,'id="no_agent_action"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_NoAgentNoQueueAction')." : </td><td align=left>".form_dropdown('no_agent_action',array('CALLMENU'=>'CALLMENU','INGROUP'=>'INGROUP','DID'=>'DID','MESSAGE'=>'MESSAGE','EXTENSION'=>'EXTENSION','VOICEMAIL'=>'VOICEMAIL'),$group_settings->no_agent_action,'id="no_agent_action"')."</td></tr>\n";
 						//put no agent action here
 						echo "<tr><td colspan=2>";
 						echo "<div class='noAgentActionTR'><table border=0 style='width:100%'><tr class=trview>";
 						switch($group_settings->no_agent_action)
 						{
 							case "CALLMENU":
-								echo "<td style='width:355px;' align=right>Call Menu: </td><td align=left>";
+								echo "<td style='width:355px;' align=right>".lang('go_CallMenu')." : </td><td align=left>";
 								echo form_dropdown('no_agent_action_value',$menuArray,$group_settings->no_agent_action_value,'id="no_agent_action_value" style="width:300px;"');
 								echo "</td>";
 								break;
@@ -617,32 +617,32 @@ function editIngroup(groupID) {
 								if (strlen($no_agent_action_value) < 1)
 									$no_agent_action_value = 'SALESLINE,CID,LB,998,TESTCAMP,1,,,,';
 								$action_value = explode(',',$no_agent_action_value);
-								echo "<td style='width:355px;' align=right>In-Group: </td><td align=left>";
+								echo "<td style='width:355px;' align=right>".lang('go_InGroup')." : </td><td align=left>";
 								echo form_dropdown('',$ingroupArray,$action_value[0],'id="action_value_group_id" style="width:400px;"');
 								echo "</td></tr>";
-								echo "<tr class=trview><td align=right>Handle Method: </td><td align=left>";
+								echo "<tr class=trview><td align=right>".lang('go_HandleMethod')." : </td><td align=left>";
 								echo form_dropdown('',$handleArray,$action_value[1],'id="action_value_handle_method"');
 								echo "</td></tr>";
-								echo "<tr class=trview><td align=right>Search Method: </td><td align=left>";
+								echo "<tr class=trview><td align=right>".lang('go_SearchMethod').": </td><td align=left>";
 								$seachArray = array('LB'=>'LB - Load Balance','LO'=>'LB - Load Balance Overflow','SO'=>'SO - Server Only');
 								echo form_dropdown('',$seachArray,$action_value[2],'id="action_value_search_method"');
 								echo "</td></tr>";
-								echo "<tr class=trview><td align=right>List ID: </td><td align=left>";
+								echo "<tr class=trview><td align=right>".lang('go_ListID_')." </td><td align=left>";
 								echo form_input('',$action_value[3],'id="action_value_list_id" size="5" maxlength="14"');
 								echo "</td></tr>";
-								echo "<tr class=trview><td align=right>Campaign ID: </td><td align=left>";
+								echo "<tr class=trview><td align=right>".lang('go_CampaignID_')." </td><td align=left>";
 								echo form_dropdown('',$campArray,$action_value[4],'id="action_value_campaign_id"');
 								echo "</td></tr>";
-								echo "<tr class=trview><td align=right>Phone Code: </td><td align=left>";
+								echo "<tr class=trview><td align=right>".lang('go_PhoneCode')." : </td><td align=left>";
 								echo form_input('',$action_value[5],'id="action_value_phone_code" size="5" maxlength="14"');
 								echo "</td></tr>";
-								echo "<tr style='display:none;'><td align=right>Value: </td><td align=left>";
+								echo "<tr style='display:none;'><td align=right>".lang('go_Value')." : </td><td align=left>";
 								echo form_input('no_agent_action_value',null,'id="no_agent_action_value"');
 								echo "</td>";
 								break;
 							
 							case "DID":
-								echo "<td style='width:355px;' align=right>Call Menu: </td><td align=left>";
+								echo "<td style='width:355px;' align=right>".lang('go_CallMenu')." : </td><td align=left>";
 								echo form_dropdown('no_agent_action_value',$didArray,$group_settings->no_agent_action_value,'id="no_agent_action_value" style="width:400px;"');
 								echo "</td>";
 								break;
@@ -651,9 +651,9 @@ function editIngroup(groupID) {
 								$no_agent_action_value = $group_settings->no_agent_action_value;
 								if (strlen($no_agent_action_value) < 1)
 									$no_agent_action_value = 'nbdy-avail-to-take-call|vm-goodbye';
-								echo "<td style='width:355px;' align=right>Audio File: </td><td align=left>";
+								echo "<td style='width:355px;' align=right>".lang('go_AudioFile_')."</td><td align=left>";
 								echo form_input('no_agent_action_value',$no_agent_action_value,'id="no_agent_action_value" size=40 maxlength=255');
-								echo ' <a href="javascript:launch_chooser(\'no_agent_action_value\',\'date\',800,document.getElementById(\'no_agent_action_value\').value);"><FONT color="blue">[ Audio Chooser ]</font></a><div id="divno_agent_action_value"></div>';
+								echo ' <a href="javascript:launch_chooser(\'no_agent_action_value\',\'date\',800,document.getElementById(\'no_agent_action_value\').value);"><FONT color="blue">[Audio Chooser]</font></a><div id="divno_agent_action_value"></div>';
 								echo "</td>";
 								break;
 							
@@ -662,13 +662,13 @@ function editIngroup(groupID) {
 								if (strlen($no_agent_action_value) < 1)
 									$no_agent_action_value = '8304,default';
 								$action_value = explode(',',$no_agent_action_value);
-								echo "<td style='width:355px;' align=right>Extension: </td><td align=left>";
+								echo "<td style='width:355px;' align=right>".lang('go_Extension')." : </td><td align=left>";
 								echo form_input('',$action_value[0],'id="action_value_extension" size=20 maxlength=255');
 								echo "</td></tr>";
-								echo "<tr class=trview><td style='width:355px;' align=right>Context: </td><td align=left>";
+								echo "<tr class=trview><td style='width:355px;' align=right>".lang('go_Context').": </td><td align=left>";
 								echo form_input('',$action_value[1],'id="action_value_context" size=20 maxlength=255');
 								echo "</td>";
-								echo "<tr style='display:none;'><td align=right>Value: </td><td align=left>";
+								echo "<tr style='display:none;'><td align=right>".lang('go_Value').": </td><td align=left>";
 								echo form_input('no_agent_action_value',null,'id="no_agent_action_value"');
 								echo "</td>";
 								break;
@@ -677,154 +677,154 @@ function editIngroup(groupID) {
 								$no_agent_action_value = $group_settings->no_agent_action_value;
 								if (strlen($no_agent_action_value) < 1)
 									$no_agent_action_value = '101';
-								echo "<td style='width:355px;' align=right>Voicemail Box: </td><td align=left>";
+								echo "<td style='width:355px;' align=right>".lang('go_VoicemailBox').": </td><td align=left>";
 								echo form_input('no_agent_action_value',$no_agent_action_value,'id="no_agent_action_value" size=10 maxlength=12');
-								echo ' <a href="javascript:launch_vm_chooser(\'no_agent_action_value\',\'date\',600,document.getElementById(\'no_agent_action_value\').value);"><FONT color="blue">[ Voicemail Chooser ]</font></a><div id="divno_agent_action_value"></div>';
+								echo ' <a href="javascript:launch_vm_chooser(\'no_agent_action_value\',\'date\',600,document.getElementById(\'no_agent_action_value\').value);"><FONT color="blue">[ '.lang('go_VoicemailChooser').' ]</font></a><div id="divno_agent_action_value"></div>';
 								echo "</td>";
 								break;
 						}
 						echo "</tr></table></div>";
 						echo "</td></tr>\n";
 						
-						echo "<tr class=trview><td align=right>Max Calls Method: </td><td align=left>".form_dropdown('max_calls_method',array('TOTAL'=>'TOTAL','IN_QUEUE'=>'IN QUEUE','DISABLED'=>'DISABLED'),$group_settings->max_calls_method,'id="max_calls_method"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_MaxCallsMethod')." : </td><td align=left>".form_dropdown('max__calls_method',array('TOTAL'=>'TOTAL','IN_QUEUE'=>'IN QUEUE','DISABLED'=>'DISABLED'),$group_settings->max_calls_method,'id="max_calls_method"')."</td></tr>\n";
 
-						echo "<tr class='trview showMaxCallsMethod'><td align=right>Max Calls Count: </td><td align=left>".form_input('max_calls_count',$group_settings->max_calls_count,'id="max_calls_count" size=5 maxlength=6')."</td></tr>\n";
+						echo "<tr class='trview showMaxCallsMethod'><td align=right>".lang('go_MaxCallsCount')." : </td><td align=left>".form_input('max_calls_count',$group_settings->max_calls_count,'id="max_calls_count" size=5 maxlength=6')."</td></tr>\n";
 
-						echo "<tr class='trview showMaxCallsMethod'><td align=right>Max Calls Action: </td><td align=left>".form_dropdown('max_calls_action',array('DROP'=>'DROP','AFTERHOURS'=>'AFTERHOURS','NO_AGENT_NO_QUEUE'=>'NO AGENT NO QUEUE'),$group_settings->max_calls_action,'id="max_calls_action"')."</td></tr>\n";
+						echo "<tr class='trview showMaxCallsMethod'><td align=right>".lang('go_MaxCallsAction')." : </td><td align=left>".form_dropdown('max_calls_action',array('DROP'=>'DROP','AFTERHOURS'=>'AFTERHOURS','NO_AGENT_NO_QUEUE'=>'NO AGENT NO QUEUE'),$group_settings->max_calls_action,'id="max_calls_action"')."</td></tr>\n";
 						
-						echo "<tr class=trview><td align=right>Welcome Message Filename: </td><td align=left>".form_input('welcome_message_filename',$group_settings->welcome_message_filename,'id="welcome_message_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('welcome_message_filename','date',800,document.getElementById('welcome_message_filename').value);\"><FONT color=\"blue\">[ Audio Chooser ]</font></a> <div id=\"divwelcome_message_filename\"></div> </td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_WelcomeMessageFilename')." : </td><td align=left>".form_input('welcome_message_filename',$group_settings->welcome_message_filename,'id="welcome_message_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('welcome_message_filename','date',800,document.getElementById('welcome_message_filename').value);\"><FONT color=\"blue\">".lang('go_AudioChooser')."</font></a> <div id=\"divwelcome_message_filename\"></div> </td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Play Welcome Message: </td><td align=left>".form_dropdown('play_welcome_message',array('ALWAYS'=>'ALWAYS','NEVER'=>'NEVER','IF_WAIT_ONLY'=>'IF WAIT ONLY','YES_UNLESS_NODELAY'=>'YES UNLESS NODELAY'),$group_settings->play_welcome_message,'id="play_welcome_message"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_PlayWelcomeMessage')." : </td><td align=left>".form_dropdown('play_welcome_message',array('ALWAYS'=>'ALWAYS','NEVER'=>'NEVER','IF_WAIT_ONLY'=>'IF WAIT ONLY','YES_UNLESS_NODELAY'=>'YES UNLESS NODELAY'),$group_settings->play_welcome_message,'id="play_welcome_message"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Music On Hold Context: </td><td align=left>".form_input('moh_context',$group_settings->moh_context,'id="moh_context" size=30 maxlength=50')." <a href=\"javascript:launch_moh_chooser('moh_context','moh',800,document.getElementById('moh_context').value);\"><FONT color=\"blue\">[ Moh Chooser ]</font></a> <div id=\"divmoh_context\"></div></td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_MusicOnHoldContext')." : </td><td align=left>".form_input('moh_context',$group_settings->moh_context,'id="moh_context" size=30 maxlength=50')." <a href=\"javascript:launch_moh_chooser('moh_context','moh',800,document.getElementById('moh_context').value);\"><FONT color=\"blue\">[ Moh Chooser ]</font></a> <div id=\"divmoh_context\"></div></td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>On Hold Prompt Filename: </td><td align=left>".form_input('onhold_prompt_filename',$group_settings->onhold_prompt_filename,'id="onhold_prompt_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('onhold_prompt_filename','date',800,document.getElementById('onhold_prompt_filename').value);\"><FONT color=\"blue\">[ Audio Chooser ]</font></a> <div id=\"divonhold_prompt_filename\"></div></td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_OnHoldPromptFilename')." : </td><td align=left>".form_input('onhold_prompt_filename',$group_settings->onhold_prompt_filename,'id="onhold_prompt_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('onhold_prompt_filename','date',800,document.getElementById('onhold_prompt_filename').value);\"><FONT color=\"blue\">".lang('go_AudioChooser')."</font></a> <div id=\"divonhold_prompt_filename\"></div></td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>On Hold Prompt Interval: </td><td align=left>".form_input('prompt_interval',$group_settings->prompt_interval,'id="prompt_interval" size=5 maxlength=5')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_OnHoldPromptInterval')." : </td><td align=left>".form_input('prompt_interval',$group_settings->prompt_interval,'id="prompt_interval" size=5 maxlength=5')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>On Hold Prompt No Block: </td><td align=left>".form_dropdown('onhold_prompt_no_block',array('N'=>'N','Y'=>'Y'),$group_settings->onhold_prompt_no_block,'id="onhold_prompt_no_block"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_OnHoldPromptNoBlock')." : </td><td align=left>".form_dropdown('onhold_prompt_no_block',array('N'=>'N','Y'=>'Y'),$group_settings->onhold_prompt_no_block,'id="onhold_prompt_no_block"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>On Hold Prompt Seconds: </td><td align=left>".form_input('onhold_prompt_seconds',$group_settings->onhold_prompt_seconds,'id="onhold_prompt_seconds" size=5 maxlength=5')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_OnHoldPromptSeconds')." : </td><td align=left>".form_input('onhold_prompt_seconds',$group_settings->onhold_prompt_seconds,'id="onhold_prompt_seconds" size=5 maxlength=5')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Play Place in Line: </td><td align=left>".form_dropdown('play_place_in_line',array('N'=>'N','Y'=>'Y'),$group_settings->play_place_in_line,'id="play_place_in_line"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_PlayPlaceinLine')." : </td><td align=left>".form_dropdown('play_place_in_line',array('N'=>'N','Y'=>'Y'),$group_settings->play_place_in_line,'id="play_place_in_line"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Play Estimated Hold Time: </td><td align=left>".form_dropdown('play_estimate_hold_time',array('N'=>'N','Y'=>'Y'),$group_settings->play_estimate_hold_time,'id="play_estimate_hold_time"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_PlayEstimatedHoldTime')." : </td><td align=left>".form_dropdown('play_estimate_hold_time',array('N'=>'N','Y'=>'Y'),$group_settings->play_estimate_hold_time,'id="play_estimate_hold_time"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Calculate Estimated Hold Seconds: </td><td align=left>".form_input('calculate_estimated_hold_seconds',$group_settings->calculate_estimated_hold_seconds,'id="calculate_estimated_hold_seconds" size=5 maxlength=5')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_CalculateEstimatedHoldSeconds')." : </td><td align=left>".form_input('calculate_estimated_hold_seconds',$group_settings->calculate_estimated_hold_seconds,'id="calculate_estimated_hold_seconds" size=5 maxlength=5')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Estimated Hold Time Minimum Filename: </td><td align=left>".form_input('eht_minimum_prompt_filename',$group_settings->eht_minimum_prompt_filename,'id="eht_minimum_prompt_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('eht_minimum_prompt_filename','date',800,document.getElementById('eht_minimum_prompt_filename').value);\"><FONT color=\"blue\"> [ Audio Chooser ]</font></a> <div id=\"diveht_minimum_prompt_filename\"></div> </td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_EstimatedHoldTimeMinimumFilename')." : </td><td align=left>".form_input('eht_minimum_prompt_filename',$group_settings->eht_minimum_prompt_filename,'id="eht_minimum_prompt_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('eht_minimum_prompt_filename','date',800,document.getElementById('eht_minimum_prompt_filename').value);\"><FONT color=\"blue\">".lang('go_AudioChooser')."</font></a> <div id=\"diveht_minimum_prompt_filename\"></div> </td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Estimated Hold Time Minimum Prompt No Block: </td><td align=left>".form_dropdown('eht_minimum_prompt_no_block',array('N'=>'N','Y'=>'Y'),$group_settings->eht_minimum_prompt_no_block,'id="eht_minimum_prompt_no_block"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_EstimatedHoldTimeMinimumPromptNoBlock')." : </td><td align=left>".form_dropdown('eht_minimum_prompt_no_block',array('N'=>'N','Y'=>'Y'),$group_settings->eht_minimum_prompt_no_block,'id="eht_minimum_prompt_no_block"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Estimated Hold Time Minimum Prompt Seconds: </td><td align=left>".form_input('eht_minimum_prompt_seconds',$group_settings->eht_minimum_prompt_seconds,'id="eht_minimum_prompt_seconds" size=5 maxlength=5')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_EstimatedHoldTimeMinimumPromptSeconds')." : </td><td align=left>".form_input('eht_minimum_prompt_seconds',$group_settings->eht_minimum_prompt_seconds,'id="eht_minimum_prompt_seconds" size=5 maxlength=5')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Wait Time Option: </td><td align=left>".form_dropdown('wait_time_option',array('NONE'=>'NONE','PRESS_STAY'=>'PRESS STAY','PRESS_VMAIL'=>'PRESS VMAIL','PRESS_EXTEN'=>'PRESS EXTEN','PRESS_CALLMENU'=>'PRESS CALLMENU','PRESS_CID_CALLBACK'=>'PRESS CID CALLBACK','PRESS_INGROUP'=>'PRESS INGROUP'),$group_settings->wait_time_option,'id="wait_time_option"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_WaitTimeOption')." : </td><td align=left>".form_dropdown('wait_time_option',array('NONE'=>'NONE','PRESS_STAY'=>'PRESS STAY','PRESS_VMAIL'=>'PRESS VMAIL','PRESS_EXTEN'=>'PRESS EXTEN','PRESS_CALLMENU'=>'PRESS CALLMENU','PRESS_CID_CALLBACK'=>'PRESS CID CALLBACK','PRESS_INGROUP'=>'PRESS INGROUP'),$group_settings->wait_time_option,'id="wait_time_option"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Wait Time Second Option: </td><td align=left>".form_dropdown('wait_time_second_option',array('NONE'=>'NONE','PRESS_STAY'=>'PRESS STAY','PRESS_VMAIL'=>'PRESS VMAIL','PRESS_EXTEN'=>'PRESS EXTEN','PRESS_CALLMENU'=>'PRESS CALLMENU','PRESS_CID_CALLBACK'=>'PRESS CID CALLBACK','PRESS_INGROUP'=>'PRESS INGROUP'),$group_settings->wait_time_second_option,'id="wait_time_second_option"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_WaitTimeSecondOption')." : </td><td align=left>".form_dropdown('wait_time_second_option',array('NONE'=>'NONE','PRESS_STAY'=>'PRESS STAY','PRESS_VMAIL'=>'PRESS VMAIL','PRESS_EXTEN'=>'PRESS EXTEN','PRESS_CALLMENU'=>'PRESS CALLMENU','PRESS_CID_CALLBACK'=>'PRESS CID CALLBACK','PRESS_INGROUP'=>'PRESS INGROUP'),$group_settings->wait_time_second_option,'id="wait_time_second_option"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Wait Time Third Option: </td><td align=left>".form_dropdown('wait_time_third_option',array('NONE'=>'NONE','PRESS_STAY'=>'PRESS STAY','PRESS_VMAIL'=>'PRESS VMAIL','PRESS_EXTEN'=>'PRESS EXTEN','PRESS_CALLMENU'=>'PRESS CALLMENU','PRESS_CID_CALLBACK'=>'PRESS CID CALLBACK','PRESS_INGROUP'=>'PRESS INGROUP'),$group_settings->wait_time_third_option,'id="wait_time_third_option"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_WaitTimeThirdOption')." : </td><td align=left>".form_dropdown('wait_time_third_option',array('NONE'=>'NONE','PRESS_STAY'=>'PRESS STAY','PRESS_VMAIL'=>'PRESS VMAIL','PRESS_EXTEN'=>'PRESS EXTEN','PRESS_CALLMENU'=>'PRESS CALLMENU','PRESS_CID_CALLBACK'=>'PRESS CID CALLBACK','PRESS_INGROUP'=>'PRESS INGROUP'),$group_settings->wait_time_third_option,'id="wait_time_third_option"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Wait Time Option Seconds: </td><td align=left>".form_input('wait_time_option_seconds',$group_settings->wait_time_option_seconds,'id="wait_time_option_seconds" size=5 maxlength=5')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_WaitTimeOptionSeconds')." : </td><td align=left>".form_input('wait_time_option_seconds',$group_settings->wait_time_option_seconds,'id="wait_time_option_seconds" size=5 maxlength=5')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Wait Time Option Extension: </td><td align=left>".form_input('wait_time_option_exten',$group_settings->wait_time_option_exten,'id="wait_time_option_exten" size=20 maxlength=20')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_WaitTimeOptionExtension')." : </td><td align=left>".form_input('wait_time_option_exten',$group_settings->wait_time_option_exten,'id="wait_time_option_exten" size=20 maxlength=20')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Wait Time Option Callmenu: </td><td align=left>";
+						echo "<tr class=trview><td align=right>".lang('go_WaitTimeOptionCallmenu')." : </td><td align=left>";
 						echo form_dropdown('wait_time_option_callmenu',$menuArray,$group_settings->wait_time_option_callmenu,'id="wait_time_option_callmenu" style="width:300px;"');
 						echo "</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Wait Time Option Voicemail: </td><td align=left>".form_input('wait_time_option_voicemail',$group_settings->wait_time_option_voicemail,'id="wait_time_option_voicemail" size=12 maxlength=10')." <a href=\"javascript:launch_vm_chooser('wait_time_option_voicemail','vm',1100,document.getElementById('wait_time_option_voicemail').value);\"><FONT color=\"blue\">[ Voicemail Chooser ]</font></a><div id=\"divwait_time_option_voicemail\"></div> </td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_WaitTimeOptionVoicemail')." : </td><td align=left>".form_input('wait_time_option_voicemail',$group_settings->wait_time_option_voicemail,'id="wait_time_option_voicemail" size=12 maxlength=10')." <a href=\"javascript:launch_vm_chooser('wait_time_option_voicemail','vm',1100,document.getElementById('wait_time_option_voicemail').value);\"><FONT color=\"blue\">[ ".lang('go_VoicemailChooser')." ]</font></a><div id=\"divwait_time_option_voicemail\"></div> </td></tr>\n";
 						
 						echo "<tr class=trview><td align=right>Wait Time Option Transfer In-Group: </td><td align=left>";
 						echo form_dropdown('wait_time_option_xfer_group',$ingroupArray,$group_settings->wait_time_option_xfer_group,'id="wait_time_option_xfer_group" style="width:400px;"');
 						echo "</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Wait Time Option Press Filename: </td><td align=left>".form_input('wait_time_option_press_filename',$group_settings->wait_time_option_press_filename,'id="wait_time_option_press_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('wait_time_option_press_filename','date',1200,document.getElementById('wait_time_option_press_filename').value);\"><FONT color=\"blue\">[ Audio Chooser ]</font></a> <div id=\"divwait_time_option_press_filename\"></div> </td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_WaitTimeOptionPressFilename')." : </td><td align=left>".form_input('wait_time_option_press_filename',$group_settings->wait_time_option_press_filename,'id="wait_time_option_press_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('wait_time_option_press_filename','date',1200,document.getElementById('wait_time_option_press_filename').value);\"><FONT color=\"blue\">".lang('go_AudioChooser')."</font></a> <div id=\"divwait_time_option_press_filename\"></div> </td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Wait Time Option Press No Block: </td><td align=left>".form_dropdown('wait_time_option_no_block',array('N'=>'N','Y'=>'Y'),$group_settings->wait_time_option_no_block,'id="wait_time_option_no_block"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_WaitTimeOptionPressNoBlock')." : </td><td align=left>".form_dropdown('wait_time_option_no_block',array('N'=>'N','Y'=>'Y'),$group_settings->wait_time_option_no_block,'id="wait_time_option_no_block"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Wait Time Option Press Filename Seconds: </td><td align=left>".form_input('wait_time_option_prompt_seconds',$group_settings->wait_time_option_prompt_seconds,'id="wait_time_option_prompt_seconds" size=5 maxlength=5')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_WaitTimeOptionPressFilenameSeconds')." : </td><td align=left>".form_input('wait_time_option_prompt_seconds',$group_settings->wait_time_option_prompt_seconds,'id="wait_time_option_prompt_seconds" size=5 maxlength=5')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Wait Time Option After Press Filename: </td><td align=left>".form_input('wait_time_option_callback_filename',$group_settings->wait_time_option_callback_filename,'id="wait_time_option_callback_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('wait_time_option_callback_filename','date',1300,document.getElementById('wait_time_option_callback_filename').value);\"><FONT color=\"blue\">[ Audio Chooser ]</font></a> <div id=\"divwait_time_option_callback_filename\"></div></td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_WaitTimeOptionAfterPressFilename')." : </td><td align=left>".form_input('wait_time_option_callback_filename',$group_settings->wait_time_option_callback_filename,'id="wait_time_option_callback_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('wait_time_option_callback_filename','date',1300,document.getElementById('wait_time_option_callback_filename').value);\"><FONT color=\"blue\">".lang('go_AudioChooser')."</font></a> <div id=\"divwait_time_option_callback_filename\"></div></td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Wait Time Option Callback List ID: </td><td align=left>".form_input('wait_time_option_callback_list_id',$group_settings->wait_time_option_callback_list_id,'id="wait_time_option_callback_list_id" size=14 maxlength=14')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_WaitTimeOptionCallbackListID')." : </td><td align=left>".form_input('wait_time_option_callback_list_id',$group_settings->wait_time_option_callback_list_id,'id="wait_time_option_callback_list_id" size=14 maxlength=14')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Wait Hold Option Priority: </td><td align=left>".form_dropdown('wait_hold_option_priority',array('WAIT'=>'WAIT','BOTH'=>'BOTH'),$group_settings->wait_hold_option_priority,'id="wait_hold_option_priority"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_WaitHoldOptionPriority')." : </td><td align=left>".form_dropdown('wait_hold_option_priority',array('WAIT'=>'WAIT','BOTH'=>'BOTH'),$group_settings->wait_hold_option_priority,'id="wait_hold_option_priority"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Estimated Hold Time Option: </td><td align=left>".form_dropdown('hold_time_option',array('NONE'=>'NONE','EXTENSION'=>'EXTENSION','CALL_MENU'=>'CALL_MENU','VOICEMAIL'=>'VOICEMAIL','IN_GROUP'=>'IN GROUP','CALLERID_CALLBACK'=>'CALLERID CALLBACK','DROP_ACTION'=>'DROP ACTION','PRESS_STAY'=>'PRESS STAY','PRESS_VMAIL'=>'PRESS VMAIL','PRESS_EXTEN'=>'PRESS EXTEN','PRESS_CALLMENU'=>'PRESS CALLMENU','PRESS_CID_CALLBACK'=>'PRESS CID CALLBACK','PRESS_INGROUP'=>'PRESS INGROUP'),$group_settings->hold_time_option,'id="hold_time_option"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_EstimatedHoldTimeOption')." : </td><td align=left>".form_dropdown('hold_time_option',array('NONE'=>'NONE','EXTENSION'=>'EXTENSION','CALL_MENU'=>'CALL_MENU','VOICEMAIL'=>'VOICEMAIL','IN_GROUP'=>'IN GROUP','CALLERID_CALLBACK'=>'CALLERID CALLBACK','DROP_ACTION'=>'DROP ACTION','PRESS_STAY'=>'PRESS STAY','PRESS_VMAIL'=>'PRESS VMAIL','PRESS_EXTEN'=>'PRESS EXTEN','PRESS_CALLMENU'=>'PRESS CALLMENU','PRESS_CID_CALLBACK'=>'PRESS CID CALLBACK','PRESS_INGROUP'=>'PRESS INGROUP'),$group_settings->hold_time_option,'id="hold_time_option"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Hold Time Second Option: </td><td align=left>".form_dropdown('hold_time_second_option',array('NONE'=>'NONE','PRESS_STAY'=>'PRESS STAY','PRESS_VMAIL'=>'PRESS VMAIL','PRESS_EXTEN'=>'PRESS EXTEN','PRESS_CALLMENU'=>'PRESS CALLMENU','PRESS_CID_CALLBACK'=>'PRESS CID CALLBACK','PRESS_INGROUP'=>'PRESS INGROUP'),$group_settings->hold_time_second_option,'id="hold_time_second_option"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_HoldTimeSecondOption')." : </td><td align=left>".form_dropdown('hold_time_second_option',array('NONE'=>'NONE','PRESS_STAY'=>'PRESS STAY','PRESS_VMAIL'=>'PRESS VMAIL','PRESS_EXTEN'=>'PRESS EXTEN','PRESS_CALLMENU'=>'PRESS CALLMENU','PRESS_CID_CALLBACK'=>'PRESS CID CALLBACK','PRESS_INGROUP'=>'PRESS INGROUP'),$group_settings->hold_time_second_option,'id="hold_time_second_option"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Hold Time Third Option: </td><td align=left>".form_dropdown('hold_time_third_option',array('NONE'=>'NONE','PRESS_STAY'=>'PRESS STAY','PRESS_VMAIL'=>'PRESS VMAIL','PRESS_EXTEN'=>'PRESS EXTEN','PRESS_CALLMENU'=>'PRESS CALLMENU','PRESS_CID_CALLBACK'=>'PRESS CID CALLBACK','PRESS_INGROUP'=>'PRESS INGROUP'),$group_settings->hold_time_third_option,'id="hold_time_third_option"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_HoldTimeThirdOption')." : </td><td align=left>".form_dropdown('hold_time_third_option',array('NONE'=>'NONE','PRESS_STAY'=>'PRESS STAY','PRESS_VMAIL'=>'PRESS VMAIL','PRESS_EXTEN'=>'PRESS EXTEN','PRESS_CALLMENU'=>'PRESS CALLMENU','PRESS_CID_CALLBACK'=>'PRESS CID CALLBACK','PRESS_INGROUP'=>'PRESS INGROUP'),$group_settings->hold_time_third_option,'id="hold_time_third_option"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Hold Time Option Seconds: </td><td align=left>".form_input('hold_time_option_seconds',$group_settings->hold_time_option_seconds,'id="hold_time_option_seconds" size=5 maxlength=5')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_HoldTimeOptionSeconds')." : </td><td align=left>".form_input('hold_time_option_seconds',$group_settings->hold_time_option_seconds,'id="hold_time_option_seconds" size=5 maxlength=5')."</td></tr>\n";
 
-						echo "<tr class=trview><td align=right>Hold Time Option Minimum: </td><td align=left>".form_input('hold_time_option_minimum',$group_settings->hold_time_option_minimum,'id="hold_time_option_minimum" size=5 maxlength=5')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_HoldTimeOptionMinimum')." : </td><td align=left>".form_input('hold_time_option_minimum',$group_settings->hold_time_option_minimum,'id="hold_time_option_minimum" size=5 maxlength=5')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Hold Time Option Extension: </td><td align=left>".form_input('hold_time_option_exten',$group_settings->hold_time_option_exten,'id="hold_time_option_exten" size=20 maxlength=20')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_HoldTimeOptionExtension')." : </td><td align=left>".form_input('hold_time_option_exten',$group_settings->hold_time_option_exten,'id="hold_time_option_exten" size=20 maxlength=20')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Hold Time Option Callmenu: </td><td align=left>";
+						echo "<tr class=trview><td align=right>".lang('go_HoldTimeOptionCallmenu')." : </td><td align=left>";
 						echo form_dropdown('hold_time_option_callmenu',$menuArray,$group_settings->hold_time_option_callmenu,'id="hold_time_option_callmenu" style="width:300px;"');
 						echo "</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Hold Time Option Voicemail: </td><td align=left>".form_input('hold_time_option_voicemail',$group_settings->hold_time_option_voicemail,'id="hold_time_option_voicemail" size=12 maxlength=10')." <a href=\"javascript:launch_vm_chooser('hold_time_option_voicemail','vm',1100,document.getElementById('hold_time_option_voicemail').value);\"><FONT color=\"blue\">[ Voicemail Chooser ]</font></a><div id=\"divhold_time_option_voicemail\"></div> </td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_HoldTimeOptionVoicemail')." : </td><td align=left>".form_input('hold_time_option_voicemail',$group_settings->hold_time_option_voicemail,'id="hold_time_option_voicemail" size=12 maxlength=10')." <a href=\"javascript:launch_vm_chooser('hold_time_option_voicemail','vm',1100,document.getElementById('hold_time_option_voicemail').value);\"><FONT color=\"blue\">[ Voicemail Chooser ]</font></a><div id=\"divhold_time_option_voicemail\"></div> </td></tr>\n";
 						
-						echo "<tr class=trview><td align=right>Hold Time Option Transfer In-Group: </td><td align=left>";
+						echo "<tr class=trview><td align=right>".lang('go_HoldTimeOptionTransferInGroup')." : </td><td align=left>";
 						echo form_dropdown('hold_time_option_xfer_group',$ingroupArray,$group_settings->hold_time_option_xfer_group,'id="hold_time_option_xfer_group" style="width:400px;"');
 						echo "</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Hold Time Option Press Filename: </td><td align=left>".form_input('hold_time_option_press_filename',$group_settings->hold_time_option_press_filename,'id="hold_time_option_press_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('hold_time_option_press_filename','date',1200,document.getElementById('hold_time_option_press_filename').value);\"><FONT color=\"blue\"><FONT color=\"blue\">[ Audio Chooser]</font></a> <div id=\"divhold_time_option_press_filename\"></div></td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_HoldTimeOptionPressFilename')." : </td><td align=left>".form_input('hold_time_option_press_filename',$group_settings->hold_time_option_press_filename,'id="hold_time_option_press_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('hold_time_option_press_filename','date',1200,document.getElementById('hold_time_option_press_filename').value);\"><FONT color=\"blue\"><FONT color=\"blue\">".lang('go_AudioChooser')."</font></a> <div id=\"divhold_time_option_press_filename\"></div></td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Hold Time Option Press No Block: </td><td align=left>".form_dropdown('hold_time_option_no_block',array('N'=>'N','Y'=>'Y'),$group_settings->hold_time_option_no_block,'id="hold_time_option_no_block"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_HoldTimeOptionPressNoBlock')." : </td><td align=left>".form_dropdown('hold_time_option_no_block',array('N'=>'N','Y'=>'Y'),$group_settings->hold_time_option_no_block,'id="hold_time_option_no_block"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Hold Time Option Press Filename Seconds: </td><td align=left>".form_input('hold_time_option_prompt_seconds',$group_settings->hold_time_option_prompt_seconds,'id="hold_time_option_prompt_seconds" size=5 maxlength=5')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_HoldTimeOptionPressFilenameSeconds')." : </td><td align=left>".form_input('hold_time_option_prompt_seconds',$group_settings->hold_time_option_prompt_seconds,'id="hold_time_option_prompt_seconds" size=5 maxlength=5')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Hold Time Option After Press Filename: </td><td align=left>".form_input('hold_time_option_callback_filename',$group_settings->hold_time_option_callback_filename,'id="hold_time_option_callback_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('hold_time_option_callback_filename','date',1300,document.getElementById('hold_time_option_callback_filename').value);\"><FONT color=\"blue\">[ Audio Chooser ]</font></a><div id=\"divhold_time_option_callback_filename\"></div> </td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_HoldTimeOptionAfterPressFilename')." : </td><td align=left>".form_input('hold_time_option_callback_filename',$group_settings->hold_time_option_callback_filename,'id="hold_time_option_callback_filename" size=30 maxlength=255')." <a href=\"javascript:launch_chooser('hold_time_option_callback_filename','date',1300,document.getElementById('hold_time_option_callback_filename').value);\"><FONT color=\"blue\">".lang('go_AudioChooser')."</font></a><div id=\"divhold_time_option_callback_filename\"></div> </td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Hold Time Option Callback List ID: </td><td align=left>".form_input('hold_time_option_callback_list_id',$group_settings->hold_time_option_callback_list_id,'id="hold_time_option_callback_list_id" size=14 maxlength=14')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_HoldTimeOptionCallbackListID')." : </td><td align=left>".form_input('hold_time_option_callback_list_id',$group_settings->hold_time_option_callback_list_id,'id="hold_time_option_callback_list_id" size=14 maxlength=14')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Agent Alert Filename: </td><td align=left>".form_input('agent_alert_exten',$group_settings->agent_alert_exten,'id="agent_alert_exten" size=30 maxlength=100')." <a href=\"javascript:launch_chooser('agent_alert_exten','date',1500,document.getElementById('agent_alert_exten').value);\"><FONT color=\"blue\">[ Audio Chooser ]</font></a> <div id=\"divagent_alert_exten\"></div></td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_AgentAlertFilename')." : </td><td align=left>".form_input('agent_alert_exten',$group_settings->agent_alert_exten,'id="agent_alert_exten" size=30 maxlength=100')." <a href=\"javascript:launch_chooser('agent_alert_exten','date',1500,document.getElementById('agent_alert_exten').value);\"><FONT color=\"blue\">".lang('go_AudioChooser')."</font></a> <div id=\"divagent_alert_exten\"></div></td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Agent Alert Delay: </td><td align=left>".form_input('agent_alert_delay',$group_settings->agent_alert_delay,'id="agent_alert_delay" size=6 maxlength=6')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_AgentAlertDelay')." : </td><td align=left>".form_input('agent_alert_delay',$group_settings->agent_alert_delay,'id="agent_alert_delay" size=6 maxlength=6')."</td></tr>\n";
 						
-						echo "<tr class=trview><td align=right>Default Transfer In-Group: </td><td align=left>";
+						echo "<tr class=trview><td align=right>".lang('go_DefaultTransferInGroup')." : </td><td align=left>";
 						echo form_dropdown('default_xfer_group',$ingroupArray,$group_settings->default_xfer_group,'id="default_xfer_group" style="width:400px;"');
 						echo "</td></tr>\n";
 						
-						echo "<tr class=trview><td align=right>Default Group Alias: </td><td align=left>";
+						echo "<tr class=trview><td align=right>".lang('go_DefaultGroupAlias')." : </td><td align=left>";
 						echo form_dropdown('default_group_alias',array(''=>'NONE'),$group_settings->default_group_alias,'id="default_group_alias"');
 						echo "</td></tr>\n";
 						
-						echo "<tr class=trview><td align=right>Dial In-Group CID: </td><td align=left>".form_input('dial_ingroup_cid',$group_settings->dial_ingroup_cid,'id="dial_ingroup_cid" size=20 maxlength=20')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_DialInGroupCID')." : </td><td align=left>".form_input('dial_ingroup_cid',$group_settings->dial_ingroup_cid,'id="dial_ingroup_cid" size=20 maxlength=20')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Hold Recall Transfer In-Group: </td><td align=left>";
+						echo "<tr class=trview><td align=right>".lang('go_HoldRecallTransferInGroup')." : </td><td align=left>";
 						echo form_dropdown('hold_recall_xfer_group',$ingroupArray,$group_settings->hold_recall_xfer_group,'id="hold_recall_xfer_group" style="width:400px;"');
 						echo "</td></tr>\n";
 
-						echo "<tr class=trview><td align=right>No Delay Call Route: </td><td align=left>".form_dropdown('no_delay_call_route',array('N'=>'N','Y'=>'Y'),$group_settings->no_delay_call_route,'id="no_delay_call_route"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_NoDelayCallRoute')." : </td><td align=left>".form_dropdown('no_delay_call_route',array('N'=>'N','Y'=>'Y'),$group_settings->no_delay_call_route,'id="no_delay_call_route"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>In-Group Recording Override: </td><td align=left>".form_dropdown('ingroup_recording_override',array('DISABLED'=>'DISABLED','NEVER'=>'NEVER','ONDEMAND'=>'ONDEMAND','ALLCALLS'=>'ALLCALLS','ALLFORCE'=>'ALLFORCE'),$group_settings->ingroup_recording_override,'id="ingroup_recording_override"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_InGroupRecordingOverride')." : </td><td align=left>".form_dropdown('ingroup_recording_override',array('DISABLED'=>'DISABLED','NEVER'=>'NEVER','ONDEMAND'=>'ONDEMAND','ALLCALLS'=>'ALLCALLS','ALLFORCE'=>'ALLFORCE'),$group_settings->ingroup_recording_override,'id="ingroup_recording_override"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>In-Group Recording Filename: </td><td align=left>".form_input('ingroup_rec_filename',$group_settings->ingroup_rec_filename,'id="ingroup_rec_filename" size=50 maxlength=50')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_InGroupRecordingFilename')." : </td><td align=left>".form_input('ingroup_rec_filename',$group_settings->ingroup_rec_filename,'id="ingroup_rec_filename" size=50 maxlength=50')."</td></tr>\n";
 						
-						echo "<tr class=trview><td align=right style='white-space:nowrap'>&nbsp;Stats Percent of Calls Answered Within X seconds 1: </td><td align=left>".form_input('answer_sec_pct_rt_stat_one',$group_settings->answer_sec_pct_rt_stat_one,'id="answer_sec_pct_rt_stat_one" size=5 maxlength=5')."</td></tr>\n";
+						echo "<tr class=trview><td align=right style='white-space:nowrap'>&nbsp;".lang('go_StatsPercentofCallsAnsweredWithinXseconds')." 1: </td><td align=left>".form_input('answer_sec_pct_rt_stat_one',$group_settings->answer_sec_pct_rt_stat_one,'id="answer_sec_pct_rt_stat_one" size=5 maxlength=5')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right style='white-space:nowrap'>&nbsp;Stats Percent of Calls Answered Within X seconds 2: </td><td align=left>".form_input('answer_sec_pct_rt_stat_one',$group_settings->answer_sec_pct_rt_stat_one,'id="answer_sec_pct_rt_stat_one" size=5 maxlength=5')."</td></tr>\n";
+						echo "<tr class=trview><td align=right style='white-space:nowrap'>&nbsp;".lang('go_StatsPercentofCallsAnsweredWithinXseconds')." 2: </td><td align=left>".form_input('answer_sec_pct_rt_stat_one',$group_settings->answer_sec_pct_rt_stat_one,'id="answer_sec_pct_rt_stat_one" size=5 maxlength=5')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Start Call URL: </td><td align=left>".form_input('start_call_url',$group_settings->start_call_url,'id="start_call_url" size=60 maxlength=2000')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_StartCallURL')." : </td><td align=left>".form_input('start_call_url',$group_settings->start_call_url,'id="start_call_url" size=60 maxlength=2000')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Dispo Call URL: </td><td align=left>".form_input('dispo_call_url',$group_settings->dispo_call_url,'id="dispo_call_url" size=60 maxlength=2000')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_DispoCallURL')." : </td><td align=left>".form_input('dispo_call_url',$group_settings->dispo_call_url,'id="dispo_call_url" size=60 maxlength=2000')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Add Lead URL: </td><td align=left>".form_input('add_lead_url',$group_settings->add_lead_url,'id="add_lead_url" size=60 maxlength=2000')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_AddLeadURL')." : </td><td align=left>".form_input('add_lead_url',$group_settings->add_lead_url,'id="add_lead_url" size=60 maxlength=2000')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>No Agent Call URL: </td><td align=left>".form_input('na_call_url',$group_settings->na_call_url,'id="na_call_url" size=60 maxlength=2000')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_NoAgentCallURL')." : </td><td align=left>".form_input('na_call_url',$group_settings->na_call_url,'id="na_call_url" size=60 maxlength=2000')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Extension Append CID: </td><td align=left>".form_dropdown('extension_appended_cidname',array('N'=>'N','Y'=>'Y'),$group_settings->extension_appended_cidname,'id="extension_appended_cidname"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_ExtensionAppendCID')." : </td><td align=left>".form_dropdown('extension_appended_cidname',array('N'=>'N','Y'=>'Y'),$group_settings->extension_appended_cidname,'id="extension_appended_cidname"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Uniqueid Status Display: </td><td align=left>".form_dropdown('uniqueid_status_display',array('DISABLED'=>'DISABLED','ENABLED'=>'ENABLED','ENABLED_PREFIX'=>'ENABLED PREFIX','ENABLED_PRESERVE'=>'ENABLED PRESERVE'),$group_settings->uniqueid_status_display,'id="uniqueid_status_display"')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_UniqueidStatusDisplay')." : </td><td align=left>".form_dropdown('uniqueid_status_display',array('DISABLED'=>'DISABLED','ENABLED'=>'ENABLED','ENABLED_PREFIX'=>'ENABLED PREFIX','ENABLED_PRESERVE'=>'ENABLED PRESERVE'),$group_settings->uniqueid_status_display,'id="uniqueid_status_display"')."</td></tr>\n";
 				
-						echo "<tr class=trview><td align=right>Uniqueid Status Prefix: </td><td align=left>".form_input('uniqueid_status_prefix',$group_settings->uniqueid_status_prefix,'id="uniqueid_status_prefix" size=10 maxlength=50')."</td></tr>\n";
+						echo "<tr class=trview><td align=right>".lang('go_UniqueidStatusPrefix')." : </td><td align=left>".form_input('uniqueid_status_prefix',$group_settings->uniqueid_status_prefix,'id="uniqueid_status_prefix" size=10 maxlength=50')."</td></tr>\n";
 						
-						echo "<tr><td><span style='font-size:10px;color:#7A9E22;cursor:pointer;' class='scrollTop'>TOP</span></td><td align=right><span onclick=\"editIngroup('{$group_settings->group_id}')\" style='font-size:12px;color:#7A9E22;cursor:pointer;'>SUBMIT &nbsp;</span></td></tr>\n";
+						echo "<tr><td><span style='font-size:10px;color:#7A9E22;cursor:pointer;' class='scrollTop'>TOP</span></td><td align=right><span onclick=\"editIngroup('{$group_settings->group_id}')\" style='font-size:12px;color:#7A9E22;cursor:pointer;'>".lang('go_SUBMIT')." &nbsp;</span></td></tr>\n";
 
 						echo "</TABLE>";
 						?>
@@ -1006,7 +1006,7 @@ function editpostdid(didid) {
 	});
 }
 </script>
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">MODIFY DID RECORD: <?php echo $group_settings->did_id; ?></div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><?php echo lang('goInbound_modifyDIDRecord'); ?> <?php echo $group_settings->did_id; ?></div>
 <br>
 <form  method="POST" id="go_editdidfrm" name="go_editdidfrm" method="POST">
 	<input type="hidden" id="selectval" name="selectval" value="">
@@ -1014,21 +1014,21 @@ function editpostdid(didid) {
 	<input type="hidden" id="didvals" name="didvals">
 <?php
 	echo "<center><TABLE width='100%' style='color:#333;'>\n";
-	echo "<tr><td align=right width='35%' style='font-weight:bold;'>DID Extension: </td><td align=left><input type=text name=did_pattern id=edid_pattern size=30 maxlength=50 value='{$group_settings->did_pattern}' onkeydown=\"return isAlphaNumericwospace(event.keyCode);\" onkeyup=\"KeyUp(event.keyCode);\"></td></tr>\n";
+	echo "<tr><td align=right width='35%' style='font-weight:bold;'>".lang('goInbound_didExtension').": </td><td align=left><input type=text name=did_pattern id=edid_pattern size=30 maxlength=50 value='{$group_settings->did_pattern}' onkeydown=\"return isAlphaNumericwospace(event.keyCode);\" onkeyup=\"KeyUp(event.keyCode);\"></td></tr>\n";
 	
-	echo "<tr><td align=right style='font-weight:bold;'>DID Description: </td><td align=left><input type=text name=did_description id=edid_description size=40 maxlength=50 value='{$group_settings->did_description}' onkeydown=\"return isAlphaNumericwspace(event.keyCode);\" onkeyup=\"KeyUp(event.keyCode);\"></td></tr>\n";
+	echo "<tr><td align=right style='font-weight:bold;'>".lang('goInbound_didDescription').": </td><td align=left><input type=text name=did_description id=edid_description size=40 maxlength=50 value='{$group_settings->did_description}' onkeydown=\"return isAlphaNumericwspace(event.keyCode);\" onkeyup=\"KeyUp(event.keyCode);\"></td></tr>\n";
 	
-	echo "<tr><td align=right style='font-weight:bold;'>Active: </td><td align=left>".form_dropdown('did_active',array('N'=>'N','Y'=>'Y'),$group_settings->did_active,'id="edid_active"')."</td></tr>\n";
+	echo "<tr><td align=right style='font-weight:bold;'>".lang('goInbound_active').": </td><td align=left>".form_dropdown('did_active',array('N'=>'N','Y'=>'Y'),$group_settings->did_active,'id="edid_active"')."</td></tr>\n";
 	
 	//echo "<tr style='display:none'><td align=right>Record Call: </td><td align=left><select size=1 name=record_call id=erecord_call><option>N</option><option>Y_QUEUESTOP</option><option>Y</option></select></td></tr>\n";
 	
-	echo "<tr><td align=right style='font-weight:bold;'>DID Route: </td><td align=left>".form_dropdown('did_route',array('AGENT'=>'Agent','IN_GROUP'=>'In-group','PHONE'=>'Phone','CALLMENU'=>'Call Menu / IVR','VOICEMAIL'=>'Voicemail','EXTEN'=>'Custom Extension'),$group_settings->did_route,'id="edid_route"')."</td></tr>\n";
+	echo "<tr><td align=right style='font-weight:bold;'>".lang('goInbound_didRoute').": </td><td align=left>".form_dropdown('did_route',array('AGENT'=>'Agent','IN_GROUP'=>'In-group','PHONE'=>'Phone','CALLMENU'=>'Call Menu / IVR','VOICEMAIL'=>'Voicemail','EXTEN'=>'Custom Extension'),$group_settings->did_route,'id="edid_route"')."</td></tr>\n";
 	
 	echo "<tr class='trview didExtensionGroup' style='display:none'><td align=right>Extension: </td><td align=left><input type=text name=extension id=eextension size=40 maxlength=50 value='{$group_settings->extension}'></td></tr>\n";
 	
 	echo "<tr class='trview didExtensionGroup' style='display:none'><td align=right>Extension Context: </td><td align=left><input type=text name=exten_context id=eexten_context size=40 maxlength=50 value='{$group_settings->exten_context}'></td></tr>\n";
 	
-	echo "<tr class='trview didVoicemailGroup' style='display:none'><td align=right>Voicemail Box: </td><td align=left><input type=text name=voicemail_ext id=didvoicemail_ext size=12 maxlength=10 value='{$group_settings->voicemail_ext}'> <a href=\"javascript:launch_vm_chooser('didvoicemail_ext','vm',500,document.getElementById('didvoicemail_ext').value);\"><FONT color=\"blue\" size=\"1\">[ Voicemail Chooser ]</a><div id=\"divdidvoicemail_ext\"></div></td></tr>\n";
+	echo "<tr class='trview didVoicemailGroup' style='display:none'><td align=right>Voicemail Box: </td><td align=left><input type=text name=voicemail_ext id=didvoicemail_ext size=12 maxlength=10 value='{$group_settings->voicemail_ext}'> <a href=\"javascript:launch_vm_chooser('didvoicemail_ext','vm',500,document.getElementById('didvoicemail_ext').value);\"><FONT color=\"blue\" size=\"1\">[ ".lang('go_VoicemailChooser')." ]</a><div id=\"divdidvoicemail_ext\"></div></td></tr>\n";
 	
 	echo "<tr class='trview didPhoneGroup' style='display:none'><td align=right>Phone Extension: </td><td align=left>";
 	echo form_dropdown('phone',$phoneArray,$group_settings->phone,'id="ephone" style="width:400px;"');
@@ -1042,15 +1042,15 @@ function editpostdid(didid) {
 	echo form_dropdown('menu_id',$menuArray,$group_settings->menu_id,'id="emenu_id" style="width:400px"');
 	echo "</td></tr>\n";
 	
-	echo "<tr class='trview didAgentGroup' style='display:none'><td align=right>Agent ID: </td><td align=left>";
+	echo "<tr class='trview didAgentGroup' style='display:none'><td align=right>".lang('goInbound_agentId').": </td><td align=left>";
 	echo form_dropdown('user',$userArray,$group_settings->user,'id="euser"');
 	echo "</td></tr>\n";
 	
-	echo "<tr class='trview didAgentAdvance' style='display:none'><td align=right>Agent Unavailable Action: </td><td align=left>";
+	echo "<tr class='trview didAgentAdvance' style='display:none'><td align=right>".lang('goInbound_agentUnavailableAction').": </td><td align=left>";
 	echo form_dropdown('user_unavailable_action',array('VOICEMAIL'=>'Voicemail','PHONE'=>'Phone','IN_GROUP'=>'In-group','EXTEN'=>'Custom Extension'),$group_settings->user_unavailable_action,'id="user_unavailable_action"');
 	echo "</td></tr>\n";
 	
-	echo "<tr class='trview didAgentAdvance' style='display:none'><td align=right>Agent Route Settings In-Group: </td><td align=left>";
+	echo "<tr class='trview didAgentAdvance' style='display:none'><td align=right>".lang('goInbound_agentRouteSettings').": </td><td align=left>";
 	echo form_dropdown('user_route_settings_ingroup',$ingroupArray,$group_settings->user_route_settings_ingroup,'id="euser_route_settings_ingroup"');
 	echo "</td></tr>\n";
 	
@@ -1077,9 +1077,9 @@ function editpostdid(didid) {
 	echo "<tr class='trview didInboundAdvance' style='display:none'><td align=right>In-Group Phone Code: </td><td align=left><input type=text name=phone_code id=ephone_code size=14 maxlength=14 value=\"{$group_settings->phone_code}\"></td></tr>\n";
 	
 	
-	echo "<tr class='didAdvanceSettings' style='display:none'><td align=right>Clean CID Number: </td><td align=left><input type=text name=filter_clean_cid_number id=efilter_clean_cid_number size=20 maxlength=20 value=\"{$group_settings->filter_clean_cid_number}\"></td></tr>\n";
+	echo "<tr class='didAdvanceSettings' style='display:none'><td align=right>".lang('goInbound_cleanCIDNumber').": </td><td align=left><input type=text name=filter_clean_cid_number id=efilter_clean_cid_number size=20 maxlength=20 value=\"{$group_settings->filter_clean_cid_number}\"></td></tr>\n";
 	
-	echo "<tr class='didAdvanceSettings' style='display:none'><td align=right>Filter Inbound Number: </td><td align=left>";
+	echo "<tr class='didAdvanceSettings' style='display:none'><td align=right>".lang('goInbound_filterInboundNumber').": </td><td align=left>";
 	echo form_dropdown('filter_inbound_number',array('DISABLED'=>'DISABLED','GROUP'=>'GROUP','URL'=>'URL'),$group_settings->filter_inbound_number,'id="efilter_inbound_number"');
 	echo "</td></tr>\n";
 	
@@ -1098,7 +1098,7 @@ function editpostdid(didid) {
 	
 	echo "<tr class='trview didExtensionFilter' style='display:none'><td align=right>Filter Extension Context: </td><td align=left><input type=text name=filter_exten_context id=efilter_exten_context size=40 maxlength=50 value=\"{$group_settings->filter_exten_context}\"></td></tr>\n";
 	
-	echo "<tr class='trview didVoicemailFilter' style='display:none'><td align=right>Filter Voicemail Box: </td><td align=left><input type=text name=filter_voicemail_ext id=efilter_voicemail_ext size=12 maxlength=10 value=\"{$group_settings->filter_voicemail_ext}\"> <a href=\"javascript:launch_vm_chooser('efilter_voicemail_ext','vm',500,document.getElementById('efilter_voicemail_ext').value);\"><FONT color=\"blue\" size=\"1\">[ Voicemail Chooser ]</a><div id=\"divefilter_voicemail_ext\"></div></td></tr>\n";
+	echo "<tr class='trview didVoicemailFilter' style='display:none'><td align=right>Filter Voicemail Box: </td><td align=left><input type=text name=filter_voicemail_ext id=efilter_voicemail_ext size=12 maxlength=10 value=\"{$group_settings->filter_voicemail_ext}\"> <a href=\"javascript:launch_vm_chooser('efilter_voicemail_ext','vm',500,document.getElementById('efilter_voicemail_ext').value);\"><FONT color=\"blue\" size=\"1\">[ ".lang('go_VoicemailChooser')." ]</a><div id=\"divefilter_voicemail_ext\"></div></td></tr>\n";
 	
 	echo "<tr class='trview didPhoneFilter' style='display:none'><td align=right>Filter Phone Extension: </td><td align=left><input type=text name=filter_phone id=efilter_phone size=20 maxlength=100 value=\"{$group_settings->filter_phone}\"></td></tr>\n";
 	
@@ -1145,10 +1145,10 @@ function editpostdid(didid) {
 	echo "<tr><td colspan=2></td></tr>";
 	echo "<tr>";
 	echo "<td align=\"right\" colspan=\"2\">";
-	echo "<div style=\"text-align:left;padding: 15px 0;font-size: 10px;cursor: pointer;color: #7A9E22;\" id=\"advDIDLink\">[ <pre id=\"advDIDLinkCross\" style='display:inline;'>+</pre> ADVANCE SETTINGS ]</div>";
+	echo "<div style=\"text-align:left;padding: 15px 0;font-size: 10px;cursor: pointer;color: #7A9E22;\" id=\"advDIDLink\">[ <pre id=\"advDIDLinkCross\" style='display:inline;'>+</pre>". lang('goInbound_advanceSettings')." ]</div>";
 	echo "<div style=\"border-top: 2px solid #DFDFDF;height:20px;vertical-align:middle; padding-top: 7px;\" align=\"right\">";
 ?>
-			<a id="searchcallhistory" style="cursor: pointer;" onclick="editpostdid('<?=$group_settings->did_id ?>');"><font color="#7A9E22">SAVE SETTINGS</font></a>
+			<a id="searchcallhistory" style="cursor: pointer;" onclick="editpostdid('<?=$group_settings->did_id ?>');"><font color="#7A9E22"><?php echo lang('goInbound_saveSettings'); ?></font></a>
 		</div>
 	</td>			  
 </tr>
@@ -1169,13 +1169,13 @@ $(function() {
 		{
 			editcallmenupost($("#menuvals").val());
 		} else {
-			alert('Menu ID should NOT be empty.');
+			alert('<? echo $this->lang->line('go_menu_id_should_nempty'); ?>');
 		}
 	});
 	
 	$("#finishCallMenuEdit").click(function(){
 		$('.advance_settings').hide();
-		$('#advance_link').html('[ + ADVANCE SETTINGS ]');
+		$('#advance_link').html('[ + <? echo $this->lang->line('go_adv_settings'); ?> ]');
 		$('#box').animate({'top':'-3550px'},500);
 		$('#overlay').fadeOut('slow');
 		$("html, body").animate({ scrollTop: 0 }, 500);
@@ -1233,7 +1233,7 @@ function checkoptionval(option,ctr)
 	
 	if (isExist)
 	{
-		alert('The option you selected is already in use.');
+		alert('<? echo $this->lang->line('go_option_sel_already_use'); ?>');
 	}
 }
 	
@@ -1259,7 +1259,7 @@ function editcallmenupost(callmenu)
 	});
 }
 </script>
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">MODIFY CALLMENU: <?php echo $group_settings->menu_id; ?></div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><? echo $this->lang->line('go_modify_callmenu'); ?>: <?php echo $group_settings->menu_id; ?></div>
 <br>
 <form  method="POST" id="go_editcallmenufrm" name="go_editcallmenufrm" method="POST">
 	<input type="hidden" id="menuvals" name="menuvals" value="<?=$group_settings->menu_id ?>">
@@ -1270,22 +1270,22 @@ function editcallmenupost(callmenu)
 			<td valign="top" colspan="2" align="center">
 				<table width="100%" style="color:#333">
 					<tr>
-						<td style="white-space: nowrap;text-align: right;font-weight:bold;">Menu ID: </td>
+						<td style="white-space: nowrap;text-align: right;font-weight:bold;"><? echo $this->lang->line('go_menu_id'); ?>: </td>
 						<td style="padding: 5px 0 5px 3px;">
 							<?=$group_settings->menu_id ?>
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;text-align: right;font-weight:bold;">Menu Name: </td>
+						<td style="white-space: nowrap;text-align: right;font-weight:bold;"><? echo $this->lang->line('go_menu_name'); ?>: </td>
 						<td>
 							<?=form_input('menu_name',$group_settings->menu_name,'id="edit_menu_name" size="30" maxlength="100"'); ?>
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;text-align: right;font-weight:bold;">Menu Prompt: </td>
+						<td style="white-space: nowrap;text-align: right;font-weight:bold;"><? echo $this->lang->line('go_menu_prompt'); ?>: </td>
 						<td>
 							<?=form_input('menu_prompt',$group_settings->menu_prompt,'id="edit_menu_prompt" size="30" maxlength="255"'); ?> 
-							<a href="javascript:launch_chooser('edit_menu_prompt','date',1200,document.getElementById('edit_menu_prompt').value,1);"><font color="blue" size="1">[ audio chooser ]</font></a>
+							<a href="javascript:launch_chooser('edit_menu_prompt','date',1200,document.getElementById('edit_menu_prompt').value,1);"><font color="blue" size="1">[ <? echo $this->lang->line('go_audio_chooser'); ?> ]</font></a>
 						</td>
 					</tr>
 					<tr style="display:none;" id="tbledit_menu_prompt">
@@ -1295,16 +1295,16 @@ function editcallmenupost(callmenu)
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;text-align: right;font-weight:bold;">Menu Timeout: </td>
+						<td style="white-space: nowrap;text-align: right;font-weight:bold;"><? echo $this->lang->line('go_menu_timeout'); ?>: </td>
 						<td>
 							<?=form_input('menu_timeout',$group_settings->menu_timeout,'id="edit_menu_timeout" size="5" maxlength="5"'); ?>
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;text-align: right;font-weight:bold;">Menu Timeout Prompt: </td>
+						<td style="white-space: nowrap;text-align: right;font-weight:bold;"><? echo $this->lang->line('go_menu_timeout_prompt'); ?>: </td>
 						<td>
 							<?=form_input('menu_timeout_prompt',$group_settings->menu_timeout_prompt,'id="edit_menu_timeout_prompt" size="30" maxlength="255"'); ?> 
-							<a href="javascript:launch_chooser('edit_menu_timeout_prompt','date',1200,document.getElementById('edit_menu_timeout_prompt').value,1);"><font color="blue" size="1">[ audio chooser ]</font></a>
+							<a href="javascript:launch_chooser('edit_menu_timeout_prompt','date',1200,document.getElementById('edit_menu_timeout_prompt').value,1);"><font color="blue" size="1">[ <? echo $this->lang->line('go_audio_chooser'); ?> ]</font></a>
 						</td>
 					</tr>
 					<tr style="display:none;" id="tbledit_menu_timeout_prompt">
@@ -1314,10 +1314,10 @@ function editcallmenupost(callmenu)
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;text-align: right;font-weight:bold;">Menu Invalid Prompt: </td>
+						<td style="white-space: nowrap;text-align: right;font-weight:bold;"><? echo $this->lang->line('go_menu_invalid_prompt'); ?>: </td>
 						<td>
 							<?=form_input('menu_invalid_prompt',$group_settings->menu_invalid_prompt,'id="edit_menu_invalid_prompt" size="30" maxlength="255"'); ?> 
-							<a href="javascript:launch_chooser('edit_menu_invalid_prompt','date',1200,document.getElementById('edit_menu_invalid_prompt').value,1);"><font color="blue" size="1">[ audio chooser ]</font></a>
+							<a href="javascript:launch_chooser('edit_menu_invalid_prompt','date',1200,document.getElementById('edit_menu_invalid_prompt').value,1);"><font color="blue" size="1">[ <? echo $this->lang->line('go_audio_chooser'); ?> ]</font></a>
 						</td>
 					</tr>
 					<tr style="display:none;" id="tbledit_menu_invalid_prompt">
@@ -1327,13 +1327,13 @@ function editcallmenupost(callmenu)
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;text-align: right;font-weight:bold;">Menu Repeat: </td>
+						<td style="white-space: nowrap;text-align: right;font-weight:bold;"><? echo $this->lang->line('go_menu_repeat'); ?>: </td>
 						<td>
 							<?=form_input('menu_repeat',$group_settings->menu_repeat,'id="edit_menu_repeat" size="3" maxlength="3"'); ?>
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;text-align: right;font-weight:bold;">Menu Time Check: </td>
+						<td style="white-space: nowrap;text-align: right;font-weight:bold;"><? echo $this->lang->line('go_menu_time_check'); ?>: </td>
 						<td>
 							<?php
 							$options = array('0 - No Time Check','1 - Time Check');
@@ -1342,7 +1342,7 @@ function editcallmenupost(callmenu)
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;text-align: right;font-weight:bold;">Call Time: </td>
+						<td style="white-space: nowrap;text-align: right;font-weight:bold;"><? echo $this->lang->line('go_call_time'); ?>: </td>
 						<td>
 							<?php
 							echo form_dropdown('call_time_id',$timeArray,$group_settings->call_time_id,'id="edit_call_time_id"');
@@ -1350,7 +1350,7 @@ function editcallmenupost(callmenu)
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;text-align: right;font-weight:bold;">Track Calls in Real-Time Report: </td>
+						<td style="white-space: nowrap;text-align: right;font-weight:bold;"><? echo $this->lang->line('go_track_calls_real_time_report'); ?>: </td>
 						<td>
 							<?php
 							$options = array('0 - No Realtime Tracking','1 - Realtime Tracking');
@@ -1359,7 +1359,7 @@ function editcallmenupost(callmenu)
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;text-align: right;font-weight:bold;">Tracking Group: </td>
+						<td style="white-space: nowrap;text-align: right;font-weight:bold;"><? echo $this->lang->line('go_tracking_group'); ?>: </td>
 						<td>
 							<?php
 							unset($ingroupArray['---NONE---']);
@@ -1369,14 +1369,14 @@ function editcallmenupost(callmenu)
 						</td>
 					</tr>
 					<tr>
-						<td style="white-space: nowrap;text-align: right;font-weight:bold;">Custom Dialplan Entry: </td>
+						<td style="white-space: nowrap;text-align: right;font-weight:bold;"><? echo $this->lang->line('go_custom_dialplan_entry'); ?>: </td>
 						<td>
 							<textarea id="edit_custom_dialplan_entry" name="custom_dialplan_entry" cols="60" rows="5" style="resize: none"><?=$group_settings->custom_dialplan_entry ?></textarea>
 						</td>
 					</tr>
 					<tr><td colspan="2" style="font-size:6px;">&nbsp;</td></tr>
 					<tr class="trview">
-						<td colspan="2" style="white-space: nowrap;text-align: center;font-weight:bold;padding: 5px 0 5px 3px;">Call Menu Options</td>
+						<td colspan="2" style="white-space: nowrap;text-align: center;font-weight:bold;padding: 5px 0 5px 3px;"><? echo $this->lang->line('go_call_menu_options_'); ?></td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -1390,7 +1390,7 @@ function editcallmenupost(callmenu)
 		<tr>
 			<td align="right" colspan="4">
 				<div style="border-top: 2px solid #DFDFDF;height:20px;vertical-align:middle; padding-top: 7px;" align="right">
-				<a id="submitCallMenuEdit" style="cursor: pointer;"><font color="#7A9E22">Save</font></a> | <a id="finishCallMenuEdit" style="cursor: pointer;"><font color="#7A9E22">Finish</font></a>
+				<a id="submitCallMenuEdit" style="cursor: pointer;"><font color="#7A9E22"><? echo $this->lang->line('go_save'); ?></font></a> | <a id="finishCallMenuEdit" style="cursor: pointer;"><font color="#7A9E22"><? echo $this->lang->line('go_finish'); ?></font></a>
 				</div>		
 						
 			</td>			  

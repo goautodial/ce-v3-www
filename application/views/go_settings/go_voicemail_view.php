@@ -34,7 +34,7 @@ $(function()
 		
 		if ($('#aloading').html().match(/Not Available/))
 		{
-			alert("Voicemail Not Available.");
+			alert("<? $this->lang->line("go_vm_not_available"); ?>");
 			isEmpty = 1;
 		}
 		
@@ -45,7 +45,7 @@ $(function()
 			function(data){
 				if (data=="SUCCESS")
 				{
-					alert(data);
+					alert("<? echo $this->lang->line("go_success_caps"); ?>");
 					
 					$('#box').animate({'top':'-2550px'},500);
 					$('#overlay').fadeOut('slow');
@@ -76,39 +76,39 @@ switch ($type)
 	
 	default:
 ?>
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">MODIFY VOICEMAIL BOX: <?php echo "{$vmail_info->voicemail_id}"; ?></div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><? echo strtoupper($this->lang->line("go_modify_voicemail_box")); ?>: <?php echo "{$vmail_info->voicemail_id}"; ?></div>
 <br />
 <form id="modifyVoicemail" method="POST">
 <table id="test" border=0 cellpadding="3" cellspacing="3" style="width:98%; color:#000; margin-left:auto; margin-right:auto;">
 	<tr>
 		<td style="text-align:right;width:40%;height:10px;">
-		Voicemail ID:
-		</td>
-		<td>
-		&nbsp;<span><?=$vmail_info->voicemail_id ?></span>
-		<?=form_hidden('voicemail_id',$vmail_info->voicemail_id,'id="voicemail_id"') ?>
-		<span id="aloading"></span>
-		</td>
-	</tr>
-	<tr>
-		<td style="text-align:right;width:40%;height:10px;">
-		Password:
-		</td>
-		<td>
-		<?=form_input('pass',$vmail_info->pass,'id="pass" maxlength="10" size="15"') ?>
-		</td>
-	</tr>
-	<tr>
-		<td style="text-align:right;width:40%;height:10px;">
-		Name:
-		</td>
-		<td>
-		<?=form_input('fullname',$vmail_info->fullname,'id="fullname" maxlength="100" size="40"') ?>
-		</td>
-	</tr>
-	<tr>
-		<td style="text-align:right;width:40%;height:10px;">
-		Email:
+                <? echo $this->lang->line("go_voicemail_id"); ?>:
+                </td>
+                <td>
+                &nbsp;<span><?=$vmail_info->voicemail_id ?></span>
+                <?=form_hidden('voicemail_id',$vmail_info->voicemail_id,'id="voicemail_id"') ?>
+                <span id="aloading"></span>
+                </td>
+        </tr>
+        <tr>
+                <td style="text-align:right;width:40%;height:10px;">
+                <? echo $this->lang->line("go_pass"); ?>:
+                </td>
+                <td>
+                <?=form_input('pass',$vmail_info->pass,'id="pass" maxlength="10" size="15"') ?>
+                </td>
+        </tr>
+        <tr>
+                <td style="text-align:right;width:40%;height:10px;">
+                <? echo $this->lang->line("go_name"); ?>:
+                </td>
+                <td>
+                <?=form_input('fullname',$vmail_info->fullname,'id="fullname" maxlength="100" size="40"') ?>
+                </td>
+        </tr>
+        <tr>
+                <td style="text-align:right;width:40%;height:10px;">
+                <? echo $this->lang->line("go_email"); ?>:
 		</td>
 		<td>
 		<?=form_input('email',$vmail_info->email,'id="email" maxlength="100" size="30"') ?>
@@ -116,31 +116,31 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:40%;height:10px;">
-		Active:
-		</td>
-		<td>
-		<?=form_dropdown('active',array('Y'=>'YES','N'=>'NO'),$vmail_info->active,'id="active"') ?>
-		</td>
-	</tr>
-	<tr>
-		<td style="text-align:right;width:40%;height:10px;white-space:nowrap;">
-		Delete Voicemail After Email:
-		</td>
-		<td>
-		<?=form_dropdown('delete_vm_after_email',array('Y'=>'YES','N'=>'NO'),$vmail_info->delete_vm_after_email,'id="delete_vm_after_email"') ?>
-		</td>
-	</tr>
-	<tr>
-		<td style="text-align:right;width:40%;height:10px;white-space:nowrap;">
-		New Messages:
-		</td>
-		<td style="font-weight:bold;">
-		&nbsp;<?=$vmail_info->messages ?>
-		</td>
-	</tr>
-	<tr>
-		<td style="text-align:right;width:40%;height:10px;white-space:nowrap;">
-		Old Messages:
+                <? echo $this->lang->line("go_active"); ?>:
+                </td>
+                <td>
+                <?=form_dropdown('active',array('Y'=>'YES','N'=>'NO'),$vmail_info->active,'id="active"') ?>
+                </td>
+        </tr>
+        <tr>
+                <td style="text-align:right;width:40%;height:10px;white-space:nowrap;">
+                <? echo $this->lang->line("go_del_voicemail_after_email"); ?>:
+                </td>
+                <td>
+                <?=form_dropdown('delete_vm_after_email',array('Y'=>'YES','N'=>'NO'),$vmail_info->delete_vm_after_email,'id="delete_vm_after_email"') ?>
+                </td>
+        </tr>
+        <tr>
+                <td style="text-align:right;width:40%;height:10px;white-space:nowrap;">
+                <? echo $this->lang->line("go_new_msg"); ?>:
+                </td>
+                <td style="font-weight:bold;">
+                &nbsp;<?=$vmail_info->messages ?>
+                </td>
+        </tr>
+        <tr>
+                <td style="text-align:right;width:40%;height:10px;white-space:nowrap;">
+                <? echo $this->lang->line("go_old_msg"); ?>:
 		</td>
 		<td style="font-weight:bold;">
 		&nbsp;<?=$vmail_info->old_messages ?>
@@ -150,7 +150,7 @@ switch ($type)
 		<td>&nbsp;</td><td>&nbsp;</td>
 	</tr>
 	<tr>
-    	<td></td><td style="text-align:right;"><span id="saveSettings" class="buttons">SAVE SETTINGS</span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
+    	<td></td><td style="text-align:right;"><span id="saveSettings" class="buttons"><? echo strtoupper($this->lang->line("go_save_settings")); ?></span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
     </tr>
 </table>
 </form>

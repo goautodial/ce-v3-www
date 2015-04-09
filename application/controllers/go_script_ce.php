@@ -18,6 +18,7 @@ class Go_script_ce extends Controller{
          $this->load->library(array('session','commonhelper'));
          $this->load->helper(array('html'));
 	 $this->lang->load('userauth', $this->session->userdata('ua_language'));
+	 $this->load->helper('language');
 	$this->is_logged_in();
     }
 
@@ -65,7 +66,9 @@ class Go_script_ce extends Controller{
         $data['user_level'] = $this->session->userdata('users_level');
 	
 	$data['theme'] = $this->session->userdata('go_theme');
-	$data['bannertitle'] = $this->lang->line('go_scripts_banner');
+	$banner= $this->lang->line('Script');
+	$data['bannertitle'] = $banner;
+	//$data['bannertitle'] = $this->lang->line('go_scripts_banner');
 	$data['adm']= 'wp-has-current-submenu';
 	$data['hostp'] = $_SERVER['SERVER_ADDR'];
 	$data['folded'] = 'folded';
@@ -98,9 +101,9 @@ class Go_script_ce extends Controller{
                                'agent_log_id'=>'agent_log_id','entry_list_id'=>'entry_list_id'
                               );
         $data['go_main_content'] = 'go_script/go_script_main_ce';
+
         $this->load->view('includes/go_dashboard_template.php',$data);
     }
-
 
     /*
      * collectscripts
@@ -110,6 +113,17 @@ class Go_script_ce extends Controller{
     function collectscripts(){
 	 $page = $this->uri->segment(3);
 	 $search = $this->uri->segment(4);
+    
+    	//languages
+	$go_FirstPage         = $this->lang->line('go_FirstPage');
+	$go_PreviousPage      = $this->lang->line('go_PreviousPage');
+	$go_PageNumber        = $this->lang->line('go_PageNumber');
+	$go_ViewAllPage       = $this->lang->line('go_ViewAllPage');
+	$go_NextPage          = $this->lang->line('go_NextPage');
+	$go_Lastpage          = $this->lang->line('go_Lastpage');
+	$go_ALL               = $this->lang->line('go_ALL');
+	$go_BacktoPaginatedView = $this->lang->line('go_BacktoPaginatedView');
+	$go_BACK		= $this->lang->line('go_BACK');	 
 	 
          #check session
          $userlevel = $this->session->userdata('users_level');
@@ -118,6 +132,8 @@ class Go_script_ce extends Controller{
          }
          $permissions = $this->commonhelper->getPermissions("script",$this->session->userdata("user_group"));
          if($permissions->script_read == "N"){
+	    $go_Youdonthavepermissiontoviewthisrecords = $this->lang->line('go_Youdonthavepermissiontoviewthisrecords');
+            //die("$go_Youdonthavepermissiontoviewthisrecords");
             die("You don't have permission to view this record(s)");
          }
 
@@ -168,29 +184,36 @@ class Go_script_ce extends Controller{
 	
 	 if ($pg['last'] > 1) {
 	     $pagelinks  = '<div style="cursor: pointer;font-weight: bold;padding-top: 10px;">';
-	     $pagelinks .= '<a title="Go to First Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
-	     $pagelinks .= '<a title="Go to Previous Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
+	     $pagelinks .= '<a title="'.$go_FirstPage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
+	     $pagelinks .= '<a title="'.$go_PreviousPage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
 	    
 	     for ($i=$pg['start'];$i<=$pg['end'];$i++) { 
 	         if ($i==$pg['page']) $current = 'color: #F00;cursor: default;'; else $current="";
 	    
-		 $pagelinks .= '<a title="Go to Page '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="changePage('.$i.')"><span>'.$i.'</span></a>';
+		 $pagelinks .= '<a title="'.$go_PageNumber.' '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="changePage('.$i.')"><span>'.$i.'</span></a>';
 	     }
 
-	     $pagelinks .= '<a title="View All Pages" style="vertical-align:text-top;padding: 0px 2px;" onclick="changePage(\'ALL\')"><span>ALL</span></a>';
-	     $pagelinks .= '<a title="Go to Next Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
-	     $pagelinks .= '<a title="Go to Last Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
+	     $pagelinks .= '<a title="'.$go_ViewAllPage.'" style="vertical-align:text-top;padding: 0px 2px;" onclick="changePage(\'ALL\')"><span>'.$go_ALL.'</span></a>';
+	     $pagelinks .= '<a title="'.$go_NextPage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
+	     $pagelinks .= '<a title="'.$go_Lastpage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
 	     $pagelinks .= '</div>';
 	 } else {
 	    if ($rp > 25) {
 		$pagelinks  = '<div style="cursor: pointer;font-weight: bold;padding-top:10px;">';
-		$pagelinks .= '<a title="Back to Paginated View" style="vertical-align:text-top;padding: 0px 2px;" onclick="changePage(1)"><span>BACK</span></a>';
+		$pagelinks .= '<a title="'.$go_BacktoPaginatedView.'" style="vertical-align:text-top;padding: 0px 2px;" onclick="changePage(1)"><span>'.$go_BACK.'</span></a>';
 		$pagelinks .= '</div>';
 	    } else {
 		$pagelinks = '';
 	    }
 	 }
-	 $pageinfo = "<span style='float:right;padding-top:10px;'>Displaying {$pg['istart']} to {$pg['iend']} of {$pg['total']} scripts</span>";
+	 
+	 //language
+	 $go_Display = $this->lang->line('go_Display');
+	 $go_to	     = $this->lang->line('go_to');
+	 $go_of	     = $this->lang->line('go_of');
+	 $go_scripts = $this->lang->line('go_scripts');
+
+	 $pageinfo = "<span style='float:right;padding-top:10px;'>$go_Display {$pg['istart']} $go_to {$pg['iend']} $go_of {$pg['total']} $go_scripts</span>";
 	 $data['pagelinks'] = $pagelinks;
 	 $data['pageinfo'] = $pageinfo;
 
@@ -264,8 +287,9 @@ class Go_script_ce extends Controller{
                  }
 
            } else {
-
-               die("Error: No script to process!");
+    	       $go_ErrorNoscripttoprocess = $this->lang->line('go_ErrorNoscripttoprocess');
+               //die("$go_ErrorNoscripttoprocess !");
+               die("".$this->lang->line('go_error_no_script_process')."");
 
            }
 
@@ -331,21 +355,27 @@ class Go_script_ce extends Controller{
                     $this->go_script->asteriskDB->trans_complete();
 
                     if($this->go_script->asteriskDB->trans_status === false){
-                         echo "Error: Something went wrong while deleting data";
+			$go_ErrorSomethingwentwrongwhiledeletingdata = $this->lang->line('go_ErrorSomethingwentwrongwhiledeletingdata');
+                         echo $go_ErrorSomethingwentwrongwhiledeletingdata;
+                         //echo "Error: Something went wrong while deleting data";
                     }else{
                          $queries = null;
                          foreach($this->go_script->asteriskDB->queries as $query){
                              $queries .= $query."\n";
                          }
                          $this->commonhelper->auditadmin('DELETE script',"Delete script script_id:".$_POST['scriptid'],$queries);
-                         echo "Success: Item deleted complete";
+                         $go_SuccessItemdeletedcomplete = $this->lang->line('go_SuccessItemdeletedcomplete');
+                         echo $go_SuccessItemdeletedcomplete;
+			 //echo "Success: Item deleted complete";
                     }
                }else{
-                    echo "Error: You are not allowed to delete this";
+		    $go_ErrorYouarenotallowedtodeletethis = $this->lang->line('go_ErrorYouarenotallowedtodeletethis');
+                    echo $go_ErrorYouarenotallowedtodeletethis;		
+                    //echo "Error: You are not allowed to delete this";
                }
                
           }else{
-               echo "Error: Empty scriptid";
+               echo $this->lang->line("go_error_empty_scriptid");
           }  
      }
 
@@ -408,6 +438,34 @@ class Go_script_ce extends Controller{
                $this->commonhelper->deletesession($_SERVER['REMOTE_ADDR']);
                #die( "Error: Session expired kindly re-login" );
           }
+
+	 //language
+	 $go_Advance = $this->lang->line('go_Advance');
+	 $go_ScriptType = $this->lang->line('go_ScriptType');
+	 $go_ScriptText_= $this->lang->line('go_ScriptText_');
+	 $go_ScriptName_= $this->lang->line('go_ScriptName_');
+	 $go_ScriptComments_=$this->lang->line('go_ScriptComments_');
+	 $go_Active_ = $this->lang->line('go_Active_');
+	 $go_ScriptID_ = $this->lang->line('go_ScriptID_');	 
+	 $go_Insert = $this->lang->line('go_Insert');
+	 $go_ChooseCampaign = $this->lang->line('go_ChooseCampaign');
+	 $go_Back = $this->lang->line('go_Back');
+	 $go_Next = $this->lang->line('go_Next');
+	 $go_CampaignID_ = $this->lang->line('go_CampaignID_');
+	 $go_ScriptPreview = $this->lang->line('go_ScriptPreview');
+	 $go_Save = $this->lang->line('go_Save');
+	 $go_Accounts = $this->lang->line('go_Accounts');
+	 $go_Language = $this->lang->line('go_Language');
+	 $go_Description_Comments = $this->lang->line('go_Description_Comments');
+	 $go_WelcomeMessage = $this->lang->line('go_WelcomeMessage');
+	 $go_Closing_EndMessage = $this->lang->line('go_Closing_EndMessage');
+	 $go_Post_EndURL = $this->lang->line('go_Post_EndURL');
+	 $go_URLDescription = $this->lang->line('go_URLDescription');
+	 $go_WouldyouliketoconfigureyoursurveyquestionsoryourLimeSurveysurveyinadvancemodenow = $this->lang->line('go_WouldyouliketoconfigureyoursurveyquestionsoryourLimeSurveysurveyinadvancemodenow');
+	 $go_Yes = $this->lang->line('go_Yes');
+	 $go_Later = $this->lang->line('go_Later');
+	 $go_ErrorEmptydatavariables = $this->lang->line('go_ErrorEmptydatavariables');	  
+	  
           if(!empty($_POST)){
                 if($_POST['script_type']=="default"){
                     $jsonResult = array();
@@ -415,7 +473,7 @@ class Go_script_ce extends Controller{
                         $userlevel = $this->session->userdata('users_level');
                         switch($_POST['step']){
                               case 1:
-                                    $type = array('default'=>'Default','advance'=>'Advance(limesurvey)');
+                                     $type = array('default'=>'Default','advance'=>''.$go_Advance.'(limesurvey)');
                                     $theElements = "
                                                     <div id='wizard-form-elems' class='scripts-values'>
                                                     ".form_open(null,"id='script-add-wizard'");
@@ -434,7 +492,7 @@ class Go_script_ce extends Controller{
                                          $theElements .="
                                                          </div>";
                                     }*/
-                                    $theElements .="     <div class='scripts-labels script-add-labels' ><strong>Script Type:</strong></div>
+                                    $theElements .="     <div class='scripts-labels script-add-labels' ><strong>$go_ScriptType</strong></div>
                                                          <div class='scripts-values script-add-values' >";
                                                                      if(array_key_exists('script_type',$type)){
                                                                           $selected = $_POST['script_type'];
@@ -452,7 +510,7 @@ class Go_script_ce extends Controller{
                                                                    'content'=>array('step'=>2,
                                                                                     'wizard_step'=>$this->config->item('base_url').'/img/step1-trans.png',
                                                                                     'wizard_form_elems'=>$theElements),
-                                                                   'action'=>array('actions'=>'<a onclick="next(this)" rel="2">Next</a>')
+                                                                   'action'=>array('actions'=>'<a onclick="next(this)" rel="2">'.$go_Next.'</a>')
                                                                   );
                                break;
                                case 2:
@@ -510,24 +568,24 @@ class Go_script_ce extends Controller{
 				     //james
                                     $theElements = "<div id='wizard-form-elems' class='scripts-values'>
                                                     ".form_open(null,"id='step2-wizard'")."
-                                                    <div class='scripts-labels script-add-labels' ><strong>Script ID:</strong></div>
+                                                    <div class='scripts-labels script-add-labels' ><strong>".$go_ScriptID_."</strong></div>
                                                     <div class='scripts-values script-add-values' >".$scriptId_elem."</div><br class='clear'/>
-                                                    <div class='scripts-labels script-add-labels' ><strong>Script Name:</strong></div>
+                                                    <div class='scripts-labels script-add-labels' ><strong>".$go_ScriptName_."</strong></div>
                                                     <div class='scripts-values script-add-values' >".form_input('script_name',
                                                                                                                   ((array_key_exists('script_name',$_POST))?$_POST['script_name']:''),
                                                                                                                  'id="script_name" size="25"')."</div>
-                                                    <div class='scripts-labels script-add-labels' ><strong>Script Comments:</strong></div>
+                                                    <div class='scripts-labels script-add-labels' ><strong>".$go_ScriptComments_."</strong></div>
                                                     <div class='scripts-values script-add-values' >".form_input('script_comments',
                                                                                                                 ((array_key_exists('script_comments',$_POST))?$_POST['script_comments']:''),
                                                                                                                 "size='35'")."</div>
-                                                    <div class='scripts-labels script-add-labels' ><strong>Active:</strong></div>
+                                                    <div class='scripts-labels script-add-labels' ><strong>".$go_Active_."</strong></div>
                                                     <div class='scripts-values script-add-values' >";
                                     $theElements .= form_dropdown('active',array('Y'=>'Yes','N'=>'No'),$_POST['active'],'id="active"');
                                     $theElements.= "</div>
-                                                    <div class='scripts-labels script-add-labels' ><strong>Script Text:</strong></div>
+                                                    <div class='scripts-labels script-add-labels' ><strong>".$go_ScriptText_."</strong></div>
                                                     <div class='scripts-values script-add-values' >";
                                     $theElements .=     form_dropdown(null,$fields,null);
-                                    $theElements .=  "  <a  onclick='updatetextarea(this)'>Insert</a><br/>";
+                                    $theElements .=  "  <a  onclick='updatetextarea(this)'>".$go_Insert."</a><br/>";
                                     $theElements .=     form_textarea(array('cols'=>'33',
                                                                             'rows'=>'10',
                                                                             'id'=>'script_text',
@@ -553,7 +611,7 @@ class Go_script_ce extends Controller{
                                                                    'content'=>array(
                                                                                     'wizard_step'=>$this->config->item('base_url').'/img/step2-trans.png',
                                                                                     'wizard_form_elems'=>$theElements),
-                                                                   'action'=>array('actions'=>'<a onclick="back(this)" rel="1">Back</a>&nbsp;|&nbsp;<a onclick="next(this)" rel="3">Next</a>'),
+                                                                   'action'=>array('actions'=>'<a onclick="back(this)" rel="1">'.$go_Back.'</a>&nbsp;|&nbsp;<a onclick="next(this)" rel="3">'.$go_Next.'</a>'),
                                                                    'step'=>2
                                                                   );
                                break;
@@ -588,18 +646,18 @@ class Go_script_ce extends Controller{
 
                                     $theElements = "<div id='wizard-form-elems' class='scripts-values'>
                                                     ".form_open(null,"id='step3-wizard'")."
-                                                    <div class='script-message'><strong><i>Script Preview</i></strong></div>
-                                                    <div class='scripts-labels script-add-labels' ><strong>Script ID:</strong></div>
+                                                    <div class='script-message'><strong><i>".$go_ScriptPreview."</i></strong></div>
+                                                    <div class='scripts-labels script-add-labels' ><strong>".$go_ScriptID_."</strong></div>
                                                     <div class='scripts-values script-add-values' ><span>".$_POST['script_id']."</span>".form_hidden('script_id',$_POST['script_id'])."</div><br class='clear'/>
-                                                    <div class='scripts-labels script-add-labels' ><strong>Script Name:</strong></div>
+                                                    <div class='scripts-labels script-add-labels' ><strong>".$go_ScriptName_."</strong></div>
                                                     <div class='scripts-values script-add-values' >".$_POST['script_name'].form_hidden('script_name',$_POST['script_name'])."</div><br class='clear'/>
-                                                    <div class='scripts-labels script-add-labels' ><strong>Script Comments:</strong></div>
+                                                    <div class='scripts-labels script-add-labels' ><strong>".$go_ScriptComments_."</strong></div>
                                                     <div class='scripts-values script-add-values' >".$_POST['script_comments'].form_hidden('script_comments',$_POST['script_comments'])."</div><br class='clear'/>
-                                                    <div class='scripts-labels script-add-labels' ><strong>Active:</strong></div>
+                                                    <div class='scripts-labels script-add-labels' ><strong>".$go_Active_."</strong></div>
                                                     <div class='scripts-values script-add-values' >".($_POST['active']=='Y'?'Yes':'No').form_hidden('active',$_POST['active'])."</div><br class='clear'/>
-                                                    <div class='scripts-labels script-add-labels' ><strong>Script Text:</strong></div>
+                                                    <div class='scripts-labels script-add-labels' ><strong>".$go_ScriptText_.":</strong></div>
                                                     <div class='scripts-values script-add-values' ><div class='corner-all'>$script_text</div>".form_hidden('script_text',$_POST['script_text'])."</div><br class='clear'/>
-                                                    <div class='scripts-labels script-add-labels' ><strong>Campaign Id</strong></div>
+                                                    <div class='scripts-labels script-add-labels' ><strong>".$go_CampaignID_."</strong></div>
                                                     <div class='scripts-values script-add-values' >".$_POST['campaign_id'].form_hidden('campaign_id',$_POST['campaign_id'])."</div><br class='clear'/>
                                                     <div>&nbsp;</div>
                                                     ".form_close()."
@@ -611,7 +669,7 @@ class Go_script_ce extends Controller{
                                                                    'content'=>array(
                                                                                     'wizard_step'=>$this->config->item('base_url').'/img/step3-trans.png',
                                                                                     'wizard_form_elems'=>$theElements),
-                                                                   'action'=>array('actions'=>'<a onclick="back(this)" rel="2">Back</a>&nbsp;|&nbsp;<a onclick="next(this)" rel="4">Save</a>'),
+                                                                   'action'=>array('actions'=>'<a onclick="back(this)" rel="2">'.$go_Back.'</a>&nbsp;|&nbsp;<a onclick="next(this)" rel="4">'.$go_Save.'</a>'),
                                                                    'step'=>3
                                                                   ); 
                               break;
@@ -634,12 +692,12 @@ class Go_script_ce extends Controller{
                         require_once($rootdir.'/classes/core/surveytranslator_ci.php');
                         switch($_POST['step']){
                             case 1:
-                                    $type = array('default'=>'Default','advance'=>'Advance(limesurvey)');
+                                    $type = array('default'=>'Default','advance'=>''.$go_Advance.'(limesurvey)');
                                     $theElements = "
                                                     <div id='wizard-form-elems' class='scripts-values'>
                                                     ".form_open(null,"id='script-add-wizard'");
                                     if($userlevel > 8){
-                                         $theElements .="<div class='scripts-labels script-add-labels' >Accounts</div>
+                                         $theElements .="<div class='scripts-labels script-add-labels' >".$go_Accounts."</div>
                                                          <div class='scripts-values script-add-values' >";
                                                                  $accounts = $this->commonhelper->hostedaccounts();
                                                                  if(array_key_exists('accounts',$_POST)){
@@ -653,7 +711,7 @@ class Go_script_ce extends Controller{
                                          $theElements .="
                                                          </div>";
                                     }
-                                    $theElements .="     <div class='scripts-labels script-add-labels' ><strong>Script Type:</strong></div>
+                                    $theElements .="     <div class='scripts-labels script-add-labels' ><strong>".$go_ScriptType."</strong></div>
                                                          <div class='scripts-values script-add-values' >";
                                                                      if(array_key_exists('script_type',$type)){
                                                                           $selected = $_POST['script_type'];
@@ -671,7 +729,7 @@ class Go_script_ce extends Controller{
                                                                    'content'=>array('step'=>2,
                                                                                     'wizard_step'=>$this->config->item('base_url').'/img/step1-trans.png',
                                                                                     'wizard_form_elems'=>$theElements),
-                                                                   'action'=>array('actions'=>'<a onclick="next(this)" rel="2">Next</a>')
+                                                                   'action'=>array('actions'=>'<a onclick="next(this)" rel="2">'.$go_Next.'</a>')
                                                                   );
                             break;
                             case '2':
@@ -703,11 +761,11 @@ class Go_script_ce extends Controller{
                                        $theElements = "
                                                        <div id='wizard-form-elems' class='scripts-values'>
                                                        ".form_open("id='step2-wizard'")."
-                                                       <div class='scripts-labels script-add-labels' ><strong>Script ID:</strong></div>
+                                                       <div class='scripts-labels script-add-labels' ><strong>".$go_ScriptID_."</strong></div>
                                                        <div class='scripts-values script-add-values' >".$scriptId_elem."</div><br class='clear'/>
-                                                       <div class='scripts-labels script-add-labels' ><strong>Script Name:</strong></div>
+                                                       <div class='scripts-labels script-add-labels' ><strong>".$go_ScriptName_."</strong></div>
                                                        <div class='scripts-values script-add-values' >".form_input('script_name',((array_key_exists('script_name',$_POST))?$_POST['script_name']:''),'size="25" id="script_name"')."</div>
-                                                       <div class='scripts-labels script-add-labels' ><strong>Language:</strong></div>
+                                                       <div class='scripts-labels script-add-labels' ><strong>".$go_Language."</strong></div>
                                                        <div class='scripts-values script-add-values' >";
                                                        $theElements .= "<select name='lang' id='lang'>";
                                                           foreach(getLanguageData(false,$clang) as $key=>$value){
@@ -742,7 +800,7 @@ class Go_script_ce extends Controller{
                                                                       'content'=>array(
                                                                                        'wizard_step'=>$this->config->item('base_url').'/img/step2-trans.png',
                                                                                        'wizard_form_elems'=>$theElements),
-                                                                      'action'=>array('actions'=>'<a onclick="back(this)" rel="1">Back</a>&nbsp;|&nbsp;<a onclick="next(this)" rel="2_1">Next</a>'),
+                                                                      'action'=>array('actions'=>'<a onclick="back(this)" rel="1">'.$go_Back.'</a>&nbsp;|&nbsp;<a onclick="next(this)" rel="2_1">'.$go_Next.'</a>'),
                                                                       'step'=>2
                                                                      );
                             break;
@@ -750,27 +808,27 @@ class Go_script_ce extends Controller{
                                        $theElements = "
                                                        <div id='wizard-form-elems' class='scripts-values'>
                                                        ".form_open(null,"id='step2-1-wizard'")."
-                                                       <div class='scripts-labels script-add-labels' ><strong>Script ID:</strong></div>
+                                                       <div class='scripts-labels script-add-labels' ><strong>".$go_ScriptID_."</strong></div>
                                                        <div class='scripts-values script-add-values' ><span>".$_POST['script_id']."</span>".form_hidden('script_id',((array_key_exists('script_id',$_POST))?$_POST['script_id']:''))."</div><br class='clear'/>
-                                                       <div class='scripts-labels script-add-labels' ><strong>Description/Comments:</strong></div>
+                                                       <div class='scripts-labels script-add-labels' ><strong>".$go_Description_Comments.":</strong></div>
                                                        <div class='scripts-values script-add-values' >".form_input('script_comments',((array_key_exists('script_comments',$_POST))?$_POST['script_comments']:''),'size="25"')."</div>
-                                                       <div class='scripts-labels script-add-labels' ><strong>Welcome Message:</strong></div>
+                                                       <div class='scripts-labels script-add-labels' ><strong>".$go_WelcomeMessage.":</strong></div>
                                                        <div class='scripts-values script-add-values' >";
                                        $theElements .=     form_input('welcome_message',((array_key_exists('welcome_message',$_POST))?$_POST['welcome_message']:''),'size="25"');
                                        $theElements .= "
                                                        </div><br/>
-                                                       <div class='scripts-labels script-add-labels' ><strong>Closing/End Message:</strong></div>
+                                                       <div class='scripts-labels script-add-labels' ><strong>".$go_Closing_EndMessage.":</strong></div>
                                                        <div class='scripts-values script-add-values'>
                                                             ";
                                        $theElements .=     form_input('end_message',((array_key_exists('end_message',$_POST))?$_POST['end_message']:''),'size="25"');
                                        $theElements .="     
                                                        </div>
-                                                       <div class='scripts-labels script-add-labels' ><strong>Post / End URL:</strong></div>
+                                                       <div class='scripts-labels script-add-labels' ><strong>".$go_Post_EndURL.":</strong></div>
                                                        <div class='scripts-values script-add-values'>";
                                        $theElements .=     form_input('survey_url',((array_key_exists('survey_url',$_POST))?$_POST['survey_url']:'http://'),'size="25"');
                                        $theElements .="     
                                                        </div>
-                                                       <div class='scripts-labels script-add-labels' ><strong>URL Description:</strong></div>
+                                                       <div class='scripts-labels script-add-labels' ><strong>".$go_URLDescription.":</strong></div>
                                                        <div class='scripts-values script-add-values'>";
                                        $theElements .=     form_input('survey_url_desc',((array_key_exists('survey_url_desc',$_POST))?$_POST['survey_url_desc']:''),'size="25"');
                                        $theElements .="     
@@ -785,7 +843,7 @@ class Go_script_ce extends Controller{
                                                                       'content'=>array(
                                                                                        'wizard_step'=>$this->config->item('base_url').'/img/step2.1-trans.png',
                                                                                        'wizard_form_elems'=>$theElements),
-                                                                      'action'=>array('actions'=>'<a onclick="back(this)" rel="2">Back</a>&nbsp;|&nbsp;<a onclick="next(this)" rel="3">Next</a>'),
+                                                                      'action'=>array('actions'=>'<a onclick="back(this)" rel="2">'.$go_Back.'</a>&nbsp;|&nbsp;<a onclick="next(this)" rel="3">'.$go_Next.'</a>'),
                                                                       'step'=>"2_1"
                                                                      );
                             break;
@@ -795,8 +853,7 @@ class Go_script_ce extends Controller{
                                        $theElements .= form_open(null,'id="script-save"');
                                                        $theElements .= "<div class='scripts-values shoutout'>
                                                                               <input type='hidden' name='script_id' value='".$_POST['script_id']."'>
-                                                                              Would you like to configure your 
-                                                                              survey questions or your LimeSurvey survey <br/> in advance mode now?
+										".$go_WouldyouliketoconfigureyoursurveyquestionsoryourLimeSurveysurveyinadvancemodenow."
                                                                         </div>";
                                        $theElements .=" <div>&nbsp;</div>";
                                        $theElements .= form_close();
@@ -808,7 +865,7 @@ class Go_script_ce extends Controller{
                                                                       'content'=>array(
                                                                                        'wizard_step'=>$this->config->item('base_url').'/img/step3-trans.png',
                                                                                        'wizard_form_elems'=>$theElements),
-                                                                      'action'=>array('actions'=>'<a onclick="back(this)" rel="2_1">Back</a>&nbsp;|&nbsp;<a rel="Now" onclick="next(this)">Yes</a>&nbsp;|&nbsp;<a rel="Later" onclick="next(this)">Later</a>'),
+                                                                      'action'=>array('actions'=>'<a onclick="back(this)" rel="2_1">'.$go_Back.'</a>&nbsp;|&nbsp;<a rel="Now" onclick="next(this)">'.$go_Yes.'</a>&nbsp;|&nbsp;<a rel="Later" onclick="next(this)">'.$go_Later.'</a>'),
                                                                       'step'=>3
                                                                      );
                             break;
@@ -826,7 +883,8 @@ class Go_script_ce extends Controller{
                 }
 
           }else{
-                echo "Error: Empty data variables!";
+		  echo $go_ErrorEmptydatavariables;
+                //echo "Error: Empty data variables!";
           }
      }
 
@@ -842,6 +900,9 @@ class Go_script_ce extends Controller{
               $this->commonhelper->deletesession($_SERVER['REMOTE_ADDR']);
               #die("Error: Session expired kindly re-login");
           }
+	 $go_SuccessNewlimesurveycreated = $this->lang->line('go_SuccessNewlimesurveycreated');
+	 $go_Erroronsavingdatacontactyoursupport = $this->lang->line('go_Erroronsavingdatacontactyoursupport');
+	 $go_Errornodatatoprocess = $this->lang->line('go_Errornodatatoprocess');	  
           if(!empty($postvars)){
  
               if($postvars['script_type'] == 'default'){
@@ -1083,13 +1144,16 @@ class Go_script_ce extends Controller{
                    // saving the script data
                    $result = $this->go_script->saveadvancescript($data);
                    if($result){
-                       die("Success: New limesurvey created");
+			 die(''.$this->lang->line("go_success_new_lime_survey").'');
+                       //die("Success: New limesurvey created");
                    }else{
-                       die("Error on saving data contact your support");
+			die(''.$this->lang->line("go_error_saving_data_support").'');
+                       //die("Error on saving data contact your support");
                    }
               }
           }else{
-             die("Error: no data to process");
+	       die(''.$this->lang->line("go_error_no_data_process").'');
+             //die("Error: no data to process");
           }
     }
 
@@ -1103,6 +1167,8 @@ class Go_script_ce extends Controller{
     function scriptid($scriptobj,$type){
 
         $userlevel = $this->session->userdata('users_level');
+	$go_AutoGenerated = $this->lang->line('go_AutoGenerated');
+	$go_Errorpassingnotanobjectvariable = $this->lang->line('go_Errorpassingnotanobjectvariable');		
         #if($userlevel > 8){
         #      $account_group = $_POST['accounts'];
         #}else{
@@ -1146,7 +1212,8 @@ class Go_script_ce extends Controller{
                                                                       array(array('id_table'=>'vicidial_scripts'),array('active'=>'1'))
                                                                      );
                   if($override->num_rows > 0){
-                          $scriptId_elem = "<span>Auto-Generated</span>";
+			    $scriptId_elem = "<span>".$go_AutoGenerated."</span>";
+                          //$scriptId_elem = "<span>Auto-Generated</span>";
                   } 
             }else{
                    $scriptId_elem = form_input('script_id',((array_key_exists('script_id',$_POST))?$_POST['script_id']:$account_group.'1'),'size="15" id="script_id" readonly');
@@ -1154,7 +1221,8 @@ class Go_script_ce extends Controller{
 
             return $scriptId_elem;
         } else {
-            die('Error: passing not an object variable');
+	    //die($go_Errorpassingnotanobjectvariable);
+            die(''.$this->lang->line("go_error_passing_not_obj_var").'');
         }
 
     }
@@ -1168,6 +1236,7 @@ class Go_script_ce extends Controller{
 
         $this->commonhelper->checkpermission("modify_scripts");
 
+	$go_ErrorPassingemptydatacontactyoursupport = $this->lang->line('go_ErrorPassingemptydatacontactyoursupport');
         // check if $_POST has value
         if(!empty($_POST)){
 
@@ -1265,8 +1334,8 @@ class Go_script_ce extends Controller{
 
 
         } else {
-
-           die ("Error: Passing empty data contact your support");
+	     //die ($go_ErrorPassingemptydatacontactyoursupport);
+           die ("".$this->lang->line("go_error_passing_empty_data")."");
 
         }
 
@@ -1283,6 +1352,12 @@ class Go_script_ce extends Controller{
         $this->commonhelper->checkpermission("modify_scripts");
         $rootdir = $this->config->item('lime_path');
         global $dbprefix, $connect, $clang, $databasetype, $databasetabletype, $uploaddir, $limedb, $link;
+ 
+ 	$go_ErrorPleaseclickyourquestion = $this->lang->line('go_ErrorPleaseclickyourquestion');
+	$go_ErrorYouhavenogroupinlimesurveycontactyoursupportplease = $this->lang->line('go_ErrorYouhavenogroupinlimesurveycontactyoursupportplease');
+	$go_ErrorSomethingwentwrongwhilesavingnewquestion = $this->lang->line('go_ErrorSomethingwentwrongwhilesavingnewquestion');
+	$go_SuccessSurveysuccessfullymodified = $this->lang->line('go_SuccessSurveysuccessfullymodified');
+	$go_ErrorEmptyrawdatainsavinglimesurveyconfigs = $this->lang->line('go_ErrorEmptyrawdatainsavinglimesurveyconfigs');
  
         $dbprefix = "lime_";
         $uploaddir = $this->config->item('lime_path')."/upload";
@@ -1362,7 +1437,7 @@ class Go_script_ce extends Controller{
                                                                 );
 
                          } else {
-
+				//die($go_ErrorPleaseclickyourquestion);
                               die("Error: Please click your question");
 
                          }
@@ -1405,7 +1480,7 @@ class Go_script_ce extends Controller{
                              $gid = $group[0]->gid;
  
                         } else {
-
+			       //die($go_ErrorYouhavenogroupinlimesurveycontactyoursupportplease);
                              die("Error: You have no group in limesurvey contact your support please");
 
                         }
@@ -1427,7 +1502,7 @@ class Go_script_ce extends Controller{
                              }
 
                         } else {
-         
+			     //die($go_ErrorSomethingwentwrongwhilesavingnewquestion);
                              die("Error : Something went wrong while saving new question");
 
                         }
@@ -1504,11 +1579,11 @@ class Go_script_ce extends Controller{
                      $this->go_script->updatetable($dbase,$table_name,$rawdata);
                  }
             }
-
-            echo "Success: Survey successfully modified" ;
+	      echo "$go_SuccessSurveysuccessfullymodified" ;
+            //echo "Success: Survey successfully modified" ;
 
         } else {
-
+	    //die("$go_ErrorEmptyrawdatainsavinglimesurveyconfigs");
             die("Error: Empty raw data in saving limesurvey configs");
 
         }
@@ -1550,18 +1625,24 @@ class Go_script_ce extends Controller{
           $actionType = $this->uri->segment(3);
           $permissions = $this->commonhelper->getPermissions("script",$this->session->userdata("user_group"));
 
+    	  $go_ErrorUnknownaction = $this->lang->line('go_ErrorUnknownaction');
+	  $go_WarningYoudonthavepermissionto = $this->lang->line('go_WarningYoudonthavepermissionto');
+	  $go_thisrecords = $this->lang->line('go_thisrecords');
+	  
           switch(strtolower($actionType)){
                case "create":
                case "update":
                case "delete":
                      $action = "script_".strtolower($actionType);
                break;
-               default: 
+               default:
+		     //die($go_ErrorUnknownaction);
                      die("Error: Unknown action");
                break;
           }
 
           if($permissions->$action == "N"){
+	     //die("$go_WarningYoudonthavepermissionto $actionType $go_thisrecords");
              die("Error: You don't have permission to $actionType this record(s)");
           }
 

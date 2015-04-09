@@ -79,7 +79,7 @@ $(function()
 		var action = $(this).attr('id');
 		if (selectedUserGroups.length<1)
 		{
-			alert('Please select a User Group.');
+			alert("<? echo $this->lang->line("go_pls_sel_ug"); ?>");
 		}
 		else
 		{
@@ -89,7 +89,7 @@ $(function()
 
 			if (action == 'delete')
 			{
-				var what = confirm('Are you sure you want to delete the selected User Group'+s+'?');
+				var what = confirm("<? echo $this->lang->line("go_del_con_ug"); ?>"+s+"?");
 				if (what)
 				{
 					$('#table_container').load('<? echo $base; ?>index.php/go_usergroup_ce/go_update_usergroup_list/'+action+'/'+selectedUserGroups+'/');
@@ -130,11 +130,11 @@ function changePage(pagenum)
 <table id="mainTable" class="tablesorter" style="width:100%;" cellpadding=0 cellspacing=0>
 	<thead>
 		<tr style="font-weight:bold;">
-			<th style="white-space:nowrap">&nbsp;USER GROUP</th>
-			<th style="white-space:nowrap">&nbsp;GROUP NAME</th>
-			<!--<th style="white-space:nowrap">&nbsp;TYPE</th>-->
-			<th style="white-space:nowrap">&nbsp;FORCED TIMECLOCK</th>
-			<th colspan="3" style="width:6%;text-align:center;" nowrap><span style="cursor:pointer;" id="selectAction">&nbsp;ACTION &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
+			<th style="white-space:nowrap">&nbsp;<? echo strtoupper($this->lang->line("go_user_group")); ?></th>
+			<th style="white-space:nowrap">&nbsp;<? echo strtoupper($this->lang->line("go_group_name")); ?></th>
+			<th style="white-space:nowrap">&nbsp;<? echo strtoupper($this->lang->line("go_type")); ?></th>
+			<th style="white-space:nowrap">&nbsp;<? echo strtoupper($this->lang->line("go_forced_timeclock")); ?></th>
+			<th colspan="3" style="width:6%;text-align:center;" nowrap><span style="cursor:pointer;" id="selectAction">&nbsp;<? echo strtoupper($this->lang->line("go_action")); ?> &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
 			<th style="width:2%;text-align:center;"><input type="checkbox" id="selectAll" /></th>
 		</tr>
 	</thead>
@@ -155,34 +155,29 @@ if (count($usergroups['list']) > 0) {
 		switch($list->forced_timeclock_login)
 		{
 			case "Y":
-				$forced_timeclock = "YES";
+				$forced_timeclock = "{$this->lang->line('go_yes')}";
 				break;
 			case "N":
-				$forced_timeclock = "NO";
+				$forced_timeclock = "{$this->lang->line('go_no')}";
 				break;
 			default:
-				$forced_timeclock = "ADMIN EXEMPT";
+				$forced_timeclock = "{$this->lang->line('go_admin_exempt')}";
 		}
 		
-		$acolor = ($status=="ACTIVE") ? "green" : "#F00";
-		//$group_type = ($this->commonhelper->checkIfTenant($list->user_group)) ? "Multi-Tenant" : "Default";
+		$acolor = ($status=="{$this->lang->line('go_active')}") ? "green" : "#F00";
+		$group_type = ($this->commonhelper->checkIfTenant($list->user_group)) ? "{$this->lang->line('go_multi_tenant')}" : "{$this->lang->line('go_default')}";
 		
 		echo "<tr style='background-color:$bgcolor;'>";
 		echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;<a onclick=\"modify('{$list->user_group}')\">{$list->user_group}</a></td>";
 		echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;<a onclick=\"modify('{$list->user_group}')\">{$list->group_name}</a></td>";
-		//echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;$group_type</td>";
+		echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;$group_type</td>";
 		echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;$forced_timeclock</td>";
-		if ($list->user_group=="ADMIN" || $list->user_group=="AGENTS" || $list->user_group=="SUPERVISOR") {
-			echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><span onclick=\"modify('{$list->user_group}')\" style='cursor:pointer;' class='toolTip' title='MODIFY USER GROUP<br />{$list->user_group}'><img src='{$base}img/edit.png' style='cursor:pointer;width:12px;' /></span></td><td align='center' style='border-top:#D0D0D0 dashed 1px;'><span><img src='{$base}img/delete.png' style='cursor:default;width:12px;' class='imgdisabled' /></span></td><td align='center' style='border-top:#D0D0D0 dashed 1px;'><span><img src='{$base}img/status_display_i_grayed.png' style='width:12px;' /></span></td>\n";
-			echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><input type='checkbox' disabled /></td>\n";
-		} else {
-			echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><span onclick=\"modify('{$list->user_group}')\" style='cursor:pointer;' class='toolTip' title='MODIFY USER GROUP<br />{$list->user_group}'><img src='{$base}img/edit.png' style='cursor:pointer;width:12px;' /></span></td><td align='center' style='border-top:#D0D0D0 dashed 1px;'><span onclick=\"delUserGroup('{$list->user_group}')\" style='cursor:pointer;' class='toolTip' title='DELETE USER GROUP<br />{$list->user_group}'><img src='{$base}img/delete.png' style='cursor:pointer;width:12px;' /></span></td><td align='center' style='border-top:#D0D0D0 dashed 1px;'><span><img src='{$base}img/status_display_i_grayed.png' style='width:12px;' /></span></td>\n";			
-			echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><input type='checkbox' id='delUserGroup[]' value='{$list->user_group}' /></td>\n";
-		}
+		echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><span onclick=\"modify('{$list->user_group}')\" style='cursor:pointer;' class='toolTip' title='{$this->lang->line("go_modify_ug")}<br />{$list->user_group}'><img src='{$base}img/edit.png' style='cursor:pointer;width:12px;' /></span></td><td align='center' style='border-top:#D0D0D0 dashed 1px;'><span onclick=\"delUserGroup('{$list->user_group}')\" style='cursor:pointer;' class='toolTip' title='{$this->lang->line("go_del_ug")}<br />{$list->user_group}'><img src='{$base}img/delete.png' style='cursor:pointer;width:12px;' /></span></td><td align='center' style='border-top:#D0D0D0 dashed 1px;'><span><img src='{$base}img/status_display_i_grayed.png' style='width:12px;' /></span></td>\n";
+		echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><input type='checkbox' id='delUserGroup[]' value='{$list->user_group}' /></td>\n";
 		echo "</tr>";
 	}
 } else {
-	echo "<tr style=\"background-color:#E0F8E0;\"><td style=\"border-top:#D0D0D0 dashed 1px;font-weight:bold;color:#FF0000;text-align:center;\" colspan=\"8\">No record(s) found.</td></tr>\n";
+	echo "<tr style=\"background-color:#E0F8E0;\"><td style=\"border-top:#D0D0D0 dashed 1px;font-weight:bold;color:#FF0000;text-align:center;\" colspan=\"8\">{$this->lang->line('no_record_found')}.</td></tr>\n";
 }
 ?>
 	</tbody>

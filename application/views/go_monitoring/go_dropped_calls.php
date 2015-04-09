@@ -24,7 +24,7 @@ $(function()
     $("#droppedCallsTableIn").tablesorter({widgets: ['zebra']});
 });
 </script>
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">ACTIVE CAMPAIGN STATISTICS</div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><? echo lang('go_ACTIVECAMPAIGNSTATISTICS'); ?></div>
 <br />
 <table id="droppedCallsTableOut" class="tablesorter" cellpadding="1" cellspacing="0" border="0" style="width:100%">
 <?
@@ -32,7 +32,7 @@ echo $dropped_calls_table_out;
 ?>
 </table>
 <br style="font-size:20px;" />
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">ACTIVE INGROUP STATISTICS</div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><? echo lang('go_ACTIVEINGROUPSTATISTICS'); ?></div>
 <br />
 <table id="droppedCallsTableIn" class="tablesorter" cellpadding="1" cellspacing="0" border="0" style="width:100%">
 <?

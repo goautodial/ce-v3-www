@@ -15,24 +15,24 @@
 
 ?>
 
-<p class="sub">Agents Resources</p>
+<p class="sub"><? echo lang('go_AgentsResources'); ?></p>
 <table>
 	<tbody>
 	<tr class="first">
-			<td class="b"><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="Click to monitor agents"><? echo $total_agents_call; ?></a></td>
-			<td class="t bold"><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="Click to monitor agents">Agent(s) on Call</a></td>
+			<td class="b"><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="<? echo lang('go_Clicktomonitoragents'); ?>"><? echo $total_agents_call; ?></a></td>
+			<td class="t bold"><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="<? echo lang('go_Clicktomonitoragents'); ?>"><? echo lang('go_AgentsonCall'); ?></a></td>
 	</tr>
 	<tr>
-			<td class="c"><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="Click to monitor agents"><? echo $total_agents_paused; ?></a></td>
-			<td class="r"><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="Click to monitor agents">Agent(s) on Paused</a></td>
+			<td class="c"><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="<? echo lang('go_Clicktomonitoragents'); ?>"><? echo $total_agents_paused; ?></a></td>
+			<td class="r"><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="<? echo lang('go_Clicktomonitoragents'); ?>"><? echo lang('go_AgentsonPaused'); ?></a></td>
 	</tr>
 	<tr>
-			<td class="c"><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="Click to monitor agents"><? echo $total_agents_wait_calls; ?></a></td>
-			<td class="r "><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="Click to monitor agents">Agent(s) Waiting</a></td>
+			<td class="c"><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="<? echo lang('go_Clicktomonitoragents'); ?>"><? echo $total_agents_wait_calls; ?></a></td>
+			<td class="r "><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="<? echo lang('go_Clicktomonitoragents'); ?>"><? echo lang('go_AgentsWaiting'); ?></a></td>
 	</tr>
 	<tr>
-			<td class="b"><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="Click to monitor agents"><? echo $total_agents_online; ?></a></td>
-			<td class="t bold"><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="Click to monitor agents">Total Agents Online</a></td>
+			<td class="b"><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="<? echo lang('go_Clicktomonitoragents'); ?>"><? echo $total_agents_online; ?></a></td>
+			<td class="t bold"><a class="cur_hand toolTip" style="cursor:pointer" onclick="agentMonitoring()" title="<? echo lang('go_Clicktomonitoragents'); ?>"><? echo lang('go_TotalAgentsOnline'); ?></a></td>
 	</tr>
 	</tbody>
 </table>

@@ -60,7 +60,7 @@ $(document).ready(function()
 		$('#showAllLists').show();
 		$('#search_submit').submit();
 	    } else {
-		alert("Please enter at least 3 characters to search.");
+		alert("<? echo $this->lang->line("go_entry_3_char_search"); ?>");
 	    }
 	});
 	
@@ -90,8 +90,7 @@ $(document).ready(function()
 		if (search.length > 2) {
 		    $('#showAllLists').show();
 		    $('#search_submit').submit();
-		} else {
-		    alert("Please enter at least 3 characters to search.");
+		} alert("<? echo $this->lang->line("go_entry_3_char_search"); ?>");
 		}
 	    }
 	});
@@ -100,6 +99,37 @@ $(document).ready(function()
 	    $('#search_list').val('<?=$search ?>');
 	    $('#showAllLists').show();
 	}
+	
+	$("#showLoading").submit(function(e) {
+	    var form = this;
+	    var wav_file = $('#audiofile').val();
+	    var valid_extensions = /(\.wav)$/i;
+	    e.preventDefault();
+		
+	    if (wav_file.length < 1)
+	    {
+		alert('<? echo $this->lang->line("go_pls_inc_wav_file"); ?>');
+	    }
+	    else
+	    {
+		if (valid_extensions.test(wav_file))
+		{
+		    $('#uploadOverlay').fadeIn('fast');
+		    $('#uploadBox').css({'width': '150px','margin-left': 'auto', 'margin-right': 'auto', 'padding-bottom': '20px'});
+		    $('#uploadBox').animate({
+			    top: "70px"
+		    }, 500);
+		    
+		    setTimeout(function () {
+			form.submit();
+		    }, 3000); // in milliseconds
+		}
+		else
+		{
+		    alert('<? echo $this->lang->line("go_err_uploading"); ?> '+wav_file+'.<br /><? echo $this->lang->line("go_pls_upload_audio"); ?>');
+		}
+	    }
+	});
     } 
 ); 
 </script>
@@ -239,7 +269,7 @@ $(document).ready(function()
 
 	function ShowProgress(good, bad, total, dup, post) {
 		parent.lead_count.document.open();
-		parent.lead_count.document.write('<html><body><table border=0 width=200 cellpadding=10 cellspacing=0 align=center valign=top><tr bgcolor="#000000"><th colspan=2><font face="arial, helvetica" size=3 color=white>Current file status:</font></th></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B>Good:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+good+'</B></font></td></tr><tr bgcolor="#990000"><td align=right><font face="arial, helvetica" size=2 color=white><B>Bad:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+bad+'</B></font></td></tr><tr bgcolor="#000099"><td align=right><font face="arial, helvetica" size=2 color=white><B>Total:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+total+'</B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B> &nbsp; </B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B> &nbsp; </B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B>Duplicate:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+dup+'</B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B>Postal Match:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+post+'</B></font></td></tr></table><body></html>');
+		parent.lead_count.document.write('<html><body><table border=0 width=200 cellpadding=10 cellspacing=0 align=center valign=top><tr bgcolor="#000000"><th colspan=2><font face="arial, helvetica" size=3 color=white><? echo $this->lang->line("go_current_file_status"); ?>:</font></th></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B><? echo $this->lang->line("go_good"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+good+'</B></font></td></tr><tr bgcolor="#990000"><td align=right><font face="arial, helvetica" size=2 color=white><B><? echo $this->lang->line("go_bad"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+bad+'</B></font></td></tr><tr bgcolor="#000099"><td align=right><font face="arial, helvetica" size=2 color=white><B><? echo $this->lang->line("go_total_small"); ?>Total:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+total+'</B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B> &nbsp; </B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B> &nbsp; </B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B><? echo $this->lang->line("go_duplicate"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+dup+'</B></font></td></tr><tr bgcolor="#009900"><td align=right><font face="arial, helvetica" size=2 color=white><B><? echo $this->lang->line("go_postal_match"); ?>:</B></font></td><td align=left><font face="arial, helvetica" size=2 color=white><B>'+post+'</B></font></td></tr></table><body></html>');
 		parent.lead_count.document.close();
 	}	
 	
@@ -410,7 +440,7 @@ $(document).ready(function()
 	
 	function deletepost(listID) {
 			
-				var confirmmessage=confirm("Confirm to delete "+listID+"?");
+				var confirmmessage=confirm("<? echo $this->lang->line("go_con_del"); ?> "+listID+"?");
 				if (confirmmessage==true){
 					
 					
@@ -422,7 +452,7 @@ $(document).ready(function()
                 				var count_listid = datas.length;
 
  								if(datas[0]=="SUCCESS") {
- 									alert(listID+" successfully deleted");
+ 									alert(listID+" <? echo $this->lang->line("go_success_del"); ?>");
 	             					location.reload();
  								}
  								
@@ -799,6 +829,29 @@ table.tablesorter .odd {
 	cursor: pointer;
 }
 
+#uploadOverlay {
+	background:transparent url(<?php echo $base; ?>img/images/go_list/overlay.png) repeat top left;
+	position:fixed;
+	top:0px;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	z-index:100;
+}
+
+#uploadBox {
+	position:absolute;
+	top:-2550px;
+	left:30%;
+	right:30%;
+	background-color: #FFF;
+	color:#7F7F7F;
+	padding:20px;
+
+	-webkit-border-radius: 7px;-moz-border-radius: 7px;border-radius: 7px;border:1px solid #90B09F;
+	z-index:101;
+}
+
 		</style>
 		<!-- end CSS section -->
 
@@ -808,7 +861,7 @@ table.tablesorter .odd {
 
 <div id='outbody' class="wrap">
     <div id="icon-voicefile" class="icon32"></div>
-    <div style="float: right;margin-top:15px;margin-right:25px;"><?=form_open(base_url().'audiostore',array('id'=>'search_submit')) ?><span id="showAllLists" style="display: none">[Clear Search]</span>&nbsp;<?=form_input('search_list',null,'id="search_list" size="40" maxlength="100" placeholder="Search '.$bannertitle.' (case sensitive)"') ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_list_button" style="cursor: pointer;" /><?=form_close() ?></div>
+    <div style="float: right;margin-top:15px;margin-right:25px;"><?=form_open(base_url().'audiostore',array('id'=>'search_submit')) ?><span id="showAllLists" style="display: none">[<? echo $this->lang->line("go_clear_search"); ?>]</span>&nbsp;<?=form_input('search_list',null,'id="search_list" size="40" maxlength="100" placeholder="'.$this->lang->line("go_search").' '.$bannertitle.' ('.$this->lang->line("go_case_sensitive").')"') ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_list_button" style="cursor: pointer;" /><?=form_close() ?></div>
     <h2 style=""><?=$bannertitle ?></h2>
     
     <div id="dashboard-widgets-wrap">
@@ -823,7 +876,7 @@ table.tablesorter .odd {
                             
                         </div>
                         <div class="hndle" >
-                            <span style="">&nbsp;<!--Voice Files--></span>
+                            <span style="">&nbsp;<!--Voice Files--> <img title="<? echo $this->lang->line("go_voice_files_tooltip"); ?>" class="toolTip" style="cursor:default;width:15px;" src="https://chicboy.goautodial.com/img/status_display_i.png"> </span>
                         
                        <!-- <span style="margin-left: 73%;">
 								<a id="activator" class="activator"  onClick="addlistoverlay();" style="text-decoration: none;" title="CREATE INGROUP"><b>Add New In-group</b>  <img src="http://192.168.100.112/img/cross.png" style="height:14px; vertical-align:middle"></a></span>-->
@@ -840,15 +893,15 @@ table.tablesorter .odd {
 			
 
 <?php if ($permissions->voicefile_upload!='N') { ?>
-<form method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data" id="showLoading">
 <input type="hidden" name="stage" value="upload">
 <!--<input type="hidden" name="sample_prompt" id=sample_prompt value="">-->
 
 <table align=center width="100%" border="0" cellpadding="5" cellspacing="0" >
-<tr><td align="center" colspan="2">We STRONGLY recommend uploading only 16bit Mono 8k PCM WAV audio files(.wav)</td></tr>
+<tr><td align="center" colspan="2"><? echo $this->lang->line("go_strongly_recommend"); ?></td></tr>
   <tr>
-        <td colspan="2" align="center"><B>Voice File to Upload:</B>
-        <input type="file" name="audiofile" value="" accept="audio/*"><input type="submit" name="submit" style="cursor:pointer;" value="UPLOAD"></td>
+        <td colspan="2" align="center"><B><? echo $this->lang->line("go_voice_file_upload"); ?>:</B>
+        <input type="file" name="audiofile" id="audiofile" value="" accept="audio/*"><input type="submit" name="uploadFile" style="cursor:pointer;" value="<? echo $this->lang->line("go_upload"); ?>"></td>
   </tr>
   <tr>
         <td align="center" colspan="2"></td>
@@ -858,6 +911,12 @@ table.tablesorter .odd {
  
 </table>
 </form>
+
+<!-- Overlay -->
+<div id="uploadOverlay" style="display:none;"></div>
+<div id="uploadBox">
+<div id="uploadOverlayContent"><center><img src="<? echo $base; ?>img/goloading.gif" /></center></div>
+</div>
 <?php } ?>
 
 <br>
@@ -865,11 +924,11 @@ table.tablesorter .odd {
 <table id="filestable" class="tablesorter" border="0" cellpadding="1" cellspacing="2" width="100%" bgcolor="white" >
 <thead>
 <tr align="left" class="nowrap">
-	<th class="thheader" align="center">No</th>
-        <th class="thheader" align="center"><b>FILENAME</b></th>
-        <th class="thheader" align="center"><b>DATE</b></th>
-        <th class="thheader" align="center"><b>SIZE</b></th>
-        <th class="thheader" align="center"><b>PLAY</b></th>
+	<th class="thheader" align="center"><? echo $this->lang->line("go_no"); ?></th>
+        <th class="thheader" align="center"><b><? echo $this->lang->line("go_filename"); ?></b></th>
+        <th class="thheader" align="center"><b><? echo $this->lang->line("go_date_caps"); ?></b></th>
+        <th class="thheader" align="center"><b><? echo $this->lang->line("go_size"); ?></b></th>
+        <th class="thheader" align="center"><b><? echo $this->lang->line("go_play"); ?></b></th>
 </tr>
 </thead>
 <?php
@@ -922,7 +981,7 @@ echo $voicefilestable;
 		
 					
 					<div id="listid_edit" align="left" class="title-header"> </div>
-					<div align="left" class="title-header"> Modify In-Group: <label id="egroup_id"></label></div>
+					<div align="left" class="title-header"> <? echo $this->lang->line("go_modify_ingroup"); ?>: <label id="egroup_id"></label></div>
 					
 					<div align="left">					
 					<!--<label class="modify-value">Change Date:</label>-->
@@ -947,7 +1006,7 @@ echo $voicefilestable;
 					
 						if ($Xmenus_selected < 1) 
 						{
-							$Xmenuslist .= "<option SELECTED value=\"---NONE---\">---NONE---</option>\n";
+							$Xmenuslist .= "<option SELECTED value=\"---{$this->lang->line("go_none")}---\">---{$this->lang->line("go_none")}---</option>\n";
 						}
 					
 					## ingroup pulldown
@@ -1009,44 +1068,44 @@ echo $voicefilestable;
 						  } // end foreach
 					
 					  		if ($Xgroups_selected < 1) 
-								{$Xgroups_menu .= "<option SELECTED value=\"---NONE---\">---NONE---</option>\n";}
+								{$Xgroups_menu .= "<option SELECTED value=\"---{$this->lang->line("go_none")}---\">---{$this->lang->line("go_none")}---</option>\n";}
 							else 
-								{$Xgroups_menu .= "<option value=\"---NONE---\">---NONE---</option>\n";}
+								{$Xgroups_menu .= "<option value=\"---{$this->lang->line("go_none")}---\">---{$this->lang->line("go_none")}---</option>\n";}
 							if ($Dgroups_selected < 1) 
-								{$Dgroups_menu .= "<option SELECTED value=\"---NONE---\">---NONE---</option>\n";}
+								{$Dgroups_menu .= "<option SELECTED value=\"---{$this->lang->line("go_none")}---\">---{$this->lang->line("go_none")}---</option>\n";}
 							else 
-								{$Dgroups_menu .= "<option value=\"---NONE---\">---NONE---</option>\n";}
+								{$Dgroups_menu .= "<option value=\"---{$this->lang->line("go_none")}---\">---{$this->lang->line("go_none")}---</option>\n";}
 							if ($Agroups_selected < 1) 
-								{$Agroups_menu .= "<option SELECTED value=\"---NONE---\">---NONE---</option>\n";}
+								{$Agroups_menu .= "<option SELECTED value=\"---{$this->lang->line("go_none")}---\">---{$this->lang->line("go_none")}---</option>\n";}
 							else 
-								{$Agroups_menu .= "<option value=\"---NONE---\">---NONE---</option>\n";}
+								{$Agroups_menu .= "<option value=\"---{$this->lang->line("go_none")}---\">---{$this->lang->line("go_none")}---</option>\n";}
 							if ($Tgroups_selected < 1) 
-								{$Tgroups_menu .= "<option SELECTED value=\"---NONE---\">---NONE---</option>\n";}
+								{$Tgroups_menu .= "<option SELECTED value=\"---{$this->lang->line("go_none")}---\">---{$this->lang->line("go_none")}---</option>\n";}
 							else 
-								{$Tgroups_menu .= "<option value=\"---NONE---\">---NONE---</option>\n";}
+								{$Tgroups_menu .= "<option value=\"---{$this->lang->line("go_none")}---\">---{$this->lang->line("go_none")}---</option>\n";}
 							if ($Hgroups_selected < 1) 
-								{$Hgroups_menu .= "<option SELECTED value=\"---NONE---\">---NONE---</option>\n";}
+								{$Hgroups_menu .= "<option SELECTED value=\"---{$this->lang->line("go_none")}---\">---{$this->lang->line("go_none")}---</option>\n";}
 							else 
-								{$Hgroups_menu .= "<option value=\"---NONE---\">---NONE---</option>\n";}
+								{$Hgroups_menu .= "<option value=\"---{$this->lang->line("go_none")}---\">---{$this->lang->line("go_none")}---</option>\n";}
 					
 		                echo "<center><TABLE width=100% class=\"tableeditingroup\">\n";
 
-		                echo "<tr><td>Description: </td><td align=left><input type=text name=group_name id=egroup_name size=30 maxlength=30></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_description")}: </td><td align=left><input type=text name=group_name id=egroup_name size=30 maxlength=30></td></tr>\n";
 
-		                echo "<tr><td>Color: </td><td align=left id=\"group_color_td\"><input class=color type=text name=group_color id=egroup_color size=7 maxlength=7></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_color")}: </td><td align=left id=\"group_color_td\"><input class=color type=text name=group_color id=egroup_color size=7 maxlength=7></td></tr>\n";
 
-		                echo "<tr><td>Active: </td><td align=left><select size=1 name=active id=eactive><option>Y</option><option>N</option></select></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_active")}: </td><td align=left><select size=1 name=active id=eactive><option>Y</option><option>N</option></select></td></tr>\n";
 
-		                echo "<tr><td>Web Form: </td><td align=left><input type=text id=eweb_form_address name=web_form_address size=70 maxlength=500></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_web_form")}: </td><td align=left><input type=text id=eweb_form_address name=web_form_address size=70 maxlength=500></td></tr>\n";
 
-		                echo "<tr><td>Next Agent Call: </td><td align=left><select size=1 name=next_agent_call id=enext_agent_call><option >random</option><option>oldest_call_start</option><option>oldest_call_finish</option><option>overall_user_level</option><option>inbound_group_rank</option><option>campaign_rank</option><option>fewest_calls</option><option>fewest_calls_campaign</option><option>longest_wait_time</option><option>ring_all</option></select></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_next_agent_call")}: </td><td align=left><select size=1 name=next_agent_call id=enext_agent_call><option >random</option><option>oldest_call_start</option><option>oldest_call_finish</option><option>overall_user_level</option><option>inbound_group_rank</option><option>campaign_rank</option><option>fewest_calls</option><option>fewest_calls_campaign</option><option>longest_wait_time</option><option>ring_all</option></select></td></tr>\n";
 		
-		                echo "<tr><td>Queue Priority: </td><td align=left><select size=1 name=queue_priority id=equeue_priority>\n";
+		                echo "<tr><td>{$this->lang->line("go_queue_priority")}: </td><td align=left><select size=1 name=queue_priority id=equeue_priority>\n";
 		                $n=99;
 		                while ($n>=-99) {
 		                        $dtl = 'Even';
-		                        if ($n<0) {$dtl = 'Lower';}
-		                        if ($n>0) {$dtl = 'Higher';}
+		                        if ($n<0) {$dtl = ''.$this->lang->line("go_lower").'';}
+		                        if ($n>0) {$dtl = ''.$this->lang->line("go_higher").'';}
 		                        if ($n == $queue_priority)
 		                                {echo "<option SELECTED value=\"$n\">$n - $dtl</option>\n";}
 		                        else
@@ -1055,12 +1114,12 @@ echo $voicefilestable;
 		                }
 		                echo "</select> </td></tr>\n";
 		                
-		                echo "<tr><td>On-Hook Ring Time: </td><td align=left><input type=text name=on_hook_ring_time id=eon_hook_ring_time size=5 maxlength=4 ></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_on_hook_ring_time")}: </td><td align=left><input type=text name=on_hook_ring_time id=eon_hook_ring_time size=5 maxlength=4 ></td></tr>\n";
 		
-		                echo "<tr><td>Fronter Display: </td><td align=left><select size=1 name=fronter_display id=efronter_display><option>Y</option><option>N</option></select></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_fronter_display")}: </td><td align=left><select size=1 name=fronter_display id=efronter_display><option>Y</option><option>N</option></select></td></tr>\n";
 		                
-		                echo "<tr><td>Script: </td><td align=left>";
-		                		$scripts_listS="<option value=\"\">NONE</option>\n";
+		                echo "<tr><td>{$this->lang->line("go_script")}: </td><td align=left>";
+		                		$scripts_listS="<option value=\"\">{$this->lang->line("go_none")}</option>\n";
 													foreach($scriptlists as $scriptlistsInfo){
 														$script_id = $scriptlistsInfo->script_id;
 														$script_name = $scriptlistsInfo->script_name;
@@ -1072,46 +1131,46 @@ echo $voicefilestable;
 						   echo "$scripts_listS";
 						   echo "</select></td></tr>";
 						  	
-						   echo "<tr><td>Ignore List Script Override: </td><td align=left><select size=1 name=ignore_list_script_override id=eignore_list_script_override><option>Y</option><option>N</option></select></td></tr>\n";
+						   echo "<tr><td>{$this->lang->line("go_ignore_list_script")}: </td><td align=left><select size=1 name=ignore_list_script_override id=eignore_list_script_override><option>Y</option><option>N</option></select></td></tr>\n";
 		
-						   echo "<tr><td>Get Call Launch: </td><td> <select name=get_call_launch id=eget_call_launch><option selected=\"\">NONE</option><option>SCRIPT</option>					<option>WEBFORM</option><option>FORM</option></select></td></tr>";
+						   echo "<tr><td>{$this->lang->line("go_get_call_launch")}: </td><td> <select name=get_call_launch id=eget_call_launch><option selected=\"\">{$this->lang->line("go_none")}</option><option>{$this->lang->line("go_script_caps")}</option>					<option>{$this->lang->line("go_webform")}</option><option>{$this->lang->line("go_form")}FORM</option></select></td></tr>";
 		
-		                echo "<tr><td>Transfer-Conf DTMF 1: </td><td align=left><input type=text name=xferconf_a_dtmf id=exferconf_a_dtmf size=20 maxlength=50></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_transfer_conf")} 1: </td><td align=left><input type=text name=xferconf_a_dtmf id=exferconf_a_dtmf size=20 maxlength=50></td></tr>\n";
 		
-		                echo "<tr><td>Transfer-Conf Number 1: </td><td align=left><input type=text name=xferconf_a_number id=exferconf_a_number size=20 maxlength=50></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_transfer_conf_number")} 1: </td><td align=left><input type=text name=xferconf_a_number id=exferconf_a_number size=20 maxlength=50></td></tr>\n";
 		
-		                echo "<tr><td>Transfer-Conf DTMF 2: </td><td align=left><input type=text name=xferconf_b_dtmf id=exferconf_b_dtmf size=20 maxlength=50></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_transfer_conf")} 2: </td><td align=left><input type=text name=xferconf_b_dtmf id=exferconf_b_dtmf size=20 maxlength=50></td></tr>\n";
 		
-		                echo "<tr><td>Transfer-Conf Number 2: </td><td align=left><input type=text name=xferconf_b_number id=exferconf_b_number size=20 maxlength=50></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_transfer_conf_number")} 2: </td><td align=left><input type=text name=xferconf_b_number id=exferconf_b_number size=20 maxlength=50></td></tr>\n";
 		
-		                echo "<tr><td>Transfer-Conf Number 3: </td><td align=left><input type=text name=xferconf_c_number id=exferconf_c_number size=20 maxlength=50></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_transfer_conf_number")} 3: </td><td align=left><input type=text name=xferconf_c_number id=exferconf_c_number size=20 maxlength=50></td></tr>\n";
 		
-		                echo "<tr><td>Transfer-Conf Number 4: </td><td align=left><input type=text name=xferconf_d_number id=exferconf_d_number size=20 maxlength=50></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_transfer_conf_number")} 4: </td><td align=left><input type=text name=xferconf_d_number id=exferconf_d_number size=20 maxlength=50></td></tr>\n";
 		
-		                echo "<tr><td>Transfer-Conf Number 5: </td><td align=left><input type=text name=xferconf_e_number id=exferconf_e_number size=20 maxlength=50></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_transfer_conf_number")} 5: </td><td align=left><input type=text name=xferconf_e_number id=exferconf_e_number size=20 maxlength=50></td></tr>\n";
 		
-		                echo "<tr><td>Timer Action: </td><td align=left><select size=1 name=timer_action id=etimer_action><option selected>NONE</option><option>D1_DIAL</option><option>D2_DIAL</option><option>D3_DIAL</option><option>D4_DIAL</option><option>D5_DIAL</option><option>MESSAGE_ONLY</option><option>WEBFORM</option><option>HANGUP</option><option>CALLMENU</option><option>EXTENSION</option><option>IN_GROUP</option></select></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_timer_action")}: </td><td align=left><select size=1 name=timer_action id=etimer_action><option selected>{$this->lang->line("go_none")}</option><option>{$this->lang->line("go_d1_dial")}</option><option>{$this->lang->line("go_d2_dial")}</option><option>{$this->lang->line("go_d3_dial")}</option><option>{$this->lang->line("go_d4_dial")}</option><option>{$this->lang->line("go_d5_dial")}</option><option>{$this->lang->line("go_message_only")}</option><option>{$this->lang->line("go_webform")}</option><option>{$this->lang->line("go_hangup")}</option><option>{$this->lang->line("go_callmenu")}</option><option>{$this->lang->line("go_exten")}</option><option>{$this->lang->line("go_in_group")}</option></select></td></tr>\n";
 		
-		                echo "<tr><td>Timer Action Message: </td><td align=left><input type=text name=timer_action_message id=etimer_action_message size=50 maxlength=255></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_timer_action_msg")}: </td><td align=left><input type=text name=timer_action_message id=etimer_action_message size=50 maxlength=255></td></tr>\n";
 		
-		                echo "<tr><td>Timer Action Seconds: </td><td align=left><input type=text name=timer_action_seconds id=etimer_action_seconds size=10 maxlength=10></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_timer_action_seconds")}: </td><td align=left><input type=text name=timer_action_seconds id=etimer_action_seconds size=10 maxlength=10></td></tr>\n";
 		
-		                echo "<tr><td>Timer Action Destination: </td><td align=left><input type=text name=timer_action_destination id=etimer_action_destination size=25 maxlength=30></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_timer_action_destination")}: </td><td align=left><input type=text name=timer_action_destination id=etimer_action_destination size=25 maxlength=30></td></tr>\n";
 		
-		                echo "<tr><td>Drop Call Seconds: </td><td align=left><input type=text name=drop_call_seconds id=edrop_call_seconds size=5 maxlength=4></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_drop_call_seconds")}: </td><td align=left><input type=text name=drop_call_seconds id=edrop_call_seconds size=5 maxlength=4></td></tr>\n";
 		
-		                echo "<tr><td>Drop Action: </td><td align=left><select size=1 name=drop_action id=edrop_action><option>HANGUP</option><option>MESSAGE</option><option>VOICEMAIL</option><option>IN_GROUP</option></select></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_drop_action")}: </td><td align=left><select size=1 name=drop_action id=edrop_action><option>{$this->lang->line("go_hangup")}:</option><option>{$this->lang->line("go_msg")}:MESSAGE</option><option>{$this->lang->line("go_voicemail")}</option><option>{$this->lang->line("go_in_group")}</option></select></td></tr>\n";
 		
-		                echo "<tr><td>Drop Exten: </td><td align=left><input type=text name=drop_exten id=edrop_exten size=10 maxlength=20></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_drop_exten")}: </td><td align=left><input type=text name=drop_exten id=edrop_exten size=10 maxlength=20></td></tr>\n";
 				
-		                echo "<tr><td>Voicemail: </td><td align=left><input type=text name=voicemail_ext id=evoicemail_ext size=12 maxlength=10> <a href=\"javascript:launch_vm_chooser('evoicemail_ext','vm',500,document.getElementById('evoicemail_ext').value);\"><FONT color=\"blue\">[ Voicemail Chooser ]</a><div id=\"divvoicemail_ext\"></div></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_vm")}: </td><td align=left><input type=text name=voicemail_ext id=evoicemail_ext size=12 maxlength=10> <a href=\"javascript:launch_vm_chooser('evoicemail_ext','vm',500,document.getElementById('evoicemail_ext').value);\"><FONT color=\"blue\">[ {$this->lang->line("go_vm_chooser")} ]</a><div id=\"divvoicemail_ext\"></div></td></tr>\n";
 		
-		                echo "<tr bgcolor=#99FFCC><td>Drop Transfer Group: </td><td align=left><select size=1 name=drop_inbound_group id=edrop_inbound_group>";
+		                echo "<tr bgcolor=#99FFCC><td>{$this->lang->line("go_drop_transfer_group")}: </td><td align=left><select size=1 name=drop_inbound_group id=edrop_inbound_group>";
 		                echo "$Dgroups_menu";
 		                echo "</select></td></tr>\n";
 		
 		
-		                echo "<tr><td>Call Time: </td><td align=left><select size=1 name=call_time_id id=ecall_time_id>\n";
+		                echo "<tr><td>{$this->lang->line("go_call_time")}: </td><td align=left><select size=1 name=call_time_id id=ecall_time_id>\n";
 
 		                foreach($calltimespulldown as $calltimespulldownInfo){
 			                	$call_time_id = $calltimespulldownInfo->call_time_id;
@@ -1125,127 +1184,127 @@ echo $voicefilestable;
 		                echo "<option selected value=\"$call_time_id\">$call_time_id - $call_timename_list[$call_time_id]</option>\n";
 		                echo "</select></td></tr>\n";
 		
-		                echo "<tr><td>After Hours Action: </td><td align=left><select size=1 name=after_hours_action id=eafter_hours_action><option>HANGUP</option><option>MESSAGE</option><option>EXTENSION</option><option>VOICEMAIL</option><option>IN_GROUP</option></select></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_after_hours_action")}: </td><td align=left><select size=1 name=after_hours_action id=eafter_hours_action><option>{$this->lang->line("go_hangup")}</option><option>{$this->lang->line("go_msg")}</option><option>{$this->lang->line("go_exten")}</option><option>{$this->lang->line("go_vm")}</option><option>{$this->lang->line("go_in_group")}IN_GROUP</option></select></td></tr>\n";
 		
-		                echo "<tr><td>After Hours Message Filename: </td><td align=left><input type=text name=after_hours_message_filename id=after_hours_message_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('after_hours_message_filename','date',600,document.getElementById('after_hours_message_filename').value);\"><FONT color=\"blue\">[ Audio Chooser ]</font></a><div id=\"divafter_hours_message_filename\"></div> </td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_after_hours_msg_filename")}: </td><td align=left><input type=text name=after_hours_message_filename id=after_hours_message_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('after_hours_message_filename','date',600,document.getElementById('after_hours_message_filename').value);\"><FONT color=\"blue\">[ {$this->lang->line("go_audio_chooser")} ]</font></a><div id=\"divafter_hours_message_filename\"></div> </td></tr>\n";
 		
-		                echo "<t><td>After Hours Extension: </td><td align=left><input type=text name=after_hours_exten id=eafter_hours_exten size=10 maxlength=20></td></tr>\n";
+		                echo "<t><td>{$this->lang->line("go_after_hours_exten")}: </td><td align=left><input type=text name=after_hours_exten id=eafter_hours_exten size=10 maxlength=20></td></tr>\n";
 		
-		                echo "<tr><td>After Hours Voicemail: </td><td align=left><input type=text name=after_hours_voicemail id=after_hours_voicemail size=12 maxlength=10> <a href=\"javascript:launch_vm_chooser('after_hours_voicemail','vm',700,document.getElementById('after_hours_voicemail').value);\"><FONT color=\"blue\">[ Voicemail Chooser ]</font></a><div id=\"divafter_hours_voicemail\"></div></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_after_hours_vm")}: </td><td align=left><input type=text name=after_hours_voicemail id=after_hours_voicemail size=12 maxlength=10> <a href=\"javascript:launch_vm_chooser('after_hours_voicemail','vm',700,document.getElementById('after_hours_voicemail').value);\"><FONT color=\"blue\">[ {$this->lang->line("go_vm_chooser")} ]</font></a><div id=\"divafter_hours_voicemail\"></div></td></tr>\n";
 		
-		                echo "<tr><td>After Hours Transfer Group: </td><td align=left><select size=1 name=afterhours_xfer_group id=afterhours_xfer_group>";
-		                echo "<option value=\"\">--NONE--</option>\n";
+		                echo "<tr><td>{$this->lang->line("go_after_hours_transfer_group")}: </td><td align=left><select size=1 name=afterhours_xfer_group id=afterhours_xfer_group>";
+		                echo "<option value=\"\">--{$this->lang->line("go_none")}--</option>\n";
 		                echo "$Agroups_menu";
 		                echo "</select></td></tr>\n";
 		
-		                echo "<tr><td>No Agents No Queueing: </td><td align=left><select size=1 name=no_agent_no_queue id=eno_agent_no_queue><option>Y</option><option>N</option><option>NO_PAUSED</option></select></td></tr>\n";
+		                echo "<tr><td>{$this->lang->line("go_no_agents_no_queueing")}: </td><td align=left><select size=1 name=no_agent_no_queue id=eno_agent_no_queue><option>Y</option><option>N</option><option>{$this->lang->line("go_no_paused")}</option></select></td></tr>\n";
 		
-		                echo "<tr><td>No Agent No Queue Action: </td><td align=left><select size=1 name=no_agent_action id=no_agent_action onChange=\"dynamic_call_action('no_agent_action','$no_agent_action','$no_agent_action_value','600');\"><option>CALLMENU</option><option>INGROUP</option><option>DID</option><option>MESSAGE</option><option>EXTENSION</option><option>VOICEMAIL</option></select>\n";				
+		                echo "<tr><td>{$this->lang->line("go_no_agent_no_queue_action")}: </td><td align=left><select size=1 name=no_agent_action id=no_agent_action onChange=\"dynamic_call_action('no_agent_action','$no_agent_action','$no_agent_action_value','600');\"><option>{$this->lang->line("go_callmenu")}</option><option>{$this->lang->line("go_ingroup")}</option><option>DID</option><option>{$this->lang->line("go_msg")}</option><option>{$this->lang->line("go_exten")}</option><option>{$this->lang->line("go_vm")}</option></select>\n";				
 						
-							echo "<tr><td>Welcome Message Filename: </td><td align=left><input type=text name=welcome_message_filename id=welcome_message_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('welcome_message_filename','date',800,document.getElementById('welcome_message_filename').value);\"><FONT color=\"blue\">[ Audio Chooser ]</font></a> <div id=\"divwelcome_message_filename\"></div> </td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_welcome_msg_filename")}: </td><td align=left><input type=text name=welcome_message_filename id=welcome_message_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('welcome_message_filename','date',800,document.getElementById('welcome_message_filename').value);\"><FONT color=\"blue\">[ {$this->lang->line("go_audio_chooser")} ]</font></a> <div id=\"divwelcome_message_filename\"></div> </td></tr>\n";
 					
-							echo "<tr><td>Play Welcome Message: </td><td align=left><select size=1 name=play_welcome_message id=eplay_welcome_message><option>ALWAYS</option><option>NEVER</option><option>IF_WAIT_ONLY</option><option>YES_UNLESS_NODELAY</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_play_welcome_msg")}: </td><td align=left><select size=1 name=play_welcome_message id=eplay_welcome_message><option>{$this->lang->line("go_always")}</option><option>{$this->lang->line("go_never")}</option><option>{$this->lang->line("go_if_wait_only")}</option><option>{$this->lang->line("go_yes_unless_nodelay")}</option></select></td></tr>\n";
 					
-							echo "<tr><td>Music On Hold Context: </td><td align=left><input type=text name=moh_context id=moh_context size=30 maxlength=50> <a href=\"javascript:launch_moh_chooser('moh_context','moh',800,document.getElementById('moh_context').value);\"><FONT color=\"blue\">[ Moh Chooser ]</font></a> <div id=\"divmoh_context\"></div></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_moh_context")}: </td><td align=left><input type=text name=moh_context id=moh_context size=30 maxlength=50> <a href=\"javascript:launch_moh_chooser('moh_context','moh',800,document.getElementById('moh_context').value);\"><FONT color=\"blue\">[ {$this->lang->line("go_moh_chooser")} ]</font></a> <div id=\"divmoh_context\"></div></td></tr>\n";
 					
-							echo "<tr><td>On Hold Prompt Filename: </td><td align=left><input type=text name=onhold_prompt_filename id=onhold_prompt_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('onhold_prompt_filename','date',800,document.getElementById('onhold_prompt_filename').value);\"><FONT color=\"blue\">[ Audio Chooser ]</font></a> <div id=\"divonhold_prompt_filename\"></div></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_on_hold_prompt_filename")}: </td><td align=left><input type=text name=onhold_prompt_filename id=onhold_prompt_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('onhold_prompt_filename','date',800,document.getElementById('onhold_prompt_filename').value);\"><FONT color=\"blue\">[ {$this->lang->line("go_audio_chooser")} ]</font></a> <div id=\"divonhold_prompt_filename\"></div></td></tr>\n";
 					
-							echo "<tr><td>On Hold Prompt Interval: </td><td align=left><input type=text name=prompt_interval id=prompt_interval size=5 maxlength=5></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_on_hold_prompt_interval")}: </td><td align=left><input type=text name=prompt_interval id=prompt_interval size=5 maxlength=5></td></tr>\n";
 					
-							echo "<tr><td>On Hold Prompt No Block: </td><td align=left><select size=1 name=onhold_prompt_no_block id=onhold_prompt_no_block><option>N</option><option>Y</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_on_hold_prompt_no_block")}: </td><td align=left><select size=1 name=onhold_prompt_no_block id=onhold_prompt_no_block><option>N</option><option>Y</option></select></td></tr>\n";
 					
-							echo "<tr><td>On Hold Prompt Seconds: </td><td align=left><input type=text name=onhold_prompt_seconds id=onhold_prompt_seconds size=5 maxlength=5></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_on_hold_prompt_seconds")}: </td><td align=left><input type=text name=onhold_prompt_seconds id=onhold_prompt_seconds size=5 maxlength=5></td></tr>\n";
 					
-							echo "<tr><td>Play Place in Line: </td><td align=left><select size=1 name=play_place_in_line id=play_place_in_line><option>Y</option><option>N</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_play_place_line")}: </td><td align=left><select size=1 name=play_place_in_line id=play_place_in_line><option>Y</option><option>N</option></select></td></tr>\n";
 					
-							echo "<tr><td>Play Estimated Hold Time: </td><td align=left><select size=1 name=play_estimate_hold_time id=play_estimate_hold_time><option>Y</option><option>N</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_play_estimated_hold_time")}: </td><td align=left><select size=1 name=play_estimate_hold_time id=play_estimate_hold_time><option>Y</option><option>N</option></select></td></tr>\n";
 					
-							echo "<tr><td>Calculate Estimated Hold Seconds: </td><td align=left><input type=text name=calculate_estimated_hold_seconds id=calculate_estimated_hold_seconds size=5 maxlength=5></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_calculate_estimated_hold_seconds")}: </td><td align=left><input type=text name=calculate_estimated_hold_seconds id=calculate_estimated_hold_seconds size=5 maxlength=5></td></tr>\n";
 					
-							echo "<tr><td>Estimated Hold Time Minimum Filename: </td><td align=left><input type=text name=eht_minimum_prompt_filename id=eht_minimum_prompt_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('eht_minimum_prompt_filename','date',800,document.getElementById('eht_minimum_prompt_filename').value);\"><FONT color=\"blue\"> [ Audio Chooser ]</font></a> <div id=\"diveht_minimum_prompt_filename\"></div> </td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_estimated_hold_time_min_filename")}: </td><td align=left><input type=text name=eht_minimum_prompt_filename id=eht_minimum_prompt_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('eht_minimum_prompt_filename','date',800,document.getElementById('eht_minimum_prompt_filename').value);\"><FONT color=\"blue\"> [ {$this->lang->line("go_audio_chooser")} ]</font></a> <div id=\"diveht_minimum_prompt_filename\"></div> </td></tr>\n";
 					
-							echo "<tr><td>Estimated Hold Time Minimum Prompt No Block: </td><td align=left><select size=1 name=eht_minimum_prompt_no_block id=eht_minimum_prompt_no_block><option>N</option><option>Y</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_estimated_hold_time_min_prompt_no_block")}: </td><td align=left><select size=1 name=eht_minimum_prompt_no_block id=eht_minimum_prompt_no_block><option>N</option><option>Y</option></select></td></tr>\n";
 					
-							echo "<tr><td>Estimated Hold Time Minimum Prompt Seconds: </td><td align=left><input type=text name=eht_minimum_prompt_seconds id=eht_minimum_prompt_seconds size=5 maxlength=5></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_estimated_hold_time_min_prompt_seconds")}: </td><td align=left><input type=text name=eht_minimum_prompt_seconds id=eht_minimum_prompt_seconds size=5 maxlength=5></td></tr>\n";
 					
-							echo "<tr><td>Wait Time Option: </td><td align=left><select size=1 name=wait_time_option id=wait_time_option><option>NONE</option><option>PRESS_STAY</option><option>PRESS_VMAIL</option><option>PRESS_EXTEN</option><option>PRESS_CALLMENU</option><option>PRESS_CID_CALLBACK</option><option>PRESS_INGROUP</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_wait_time_option")}: </td><td align=left><select size=1 name=wait_time_option id=wait_time_option><option>{$this->lang->line("go_none")}</option><option>{$this->lang->line("go_press_stay")}</option><option>{$this->lang->line("go_press_vmail")}</option><option>{$this->lang->line("go_press_exten")}</option><option>{$this->lang->line("go_press_callmenu")}</option><option>{$this->lang->line("go_press_cid_callback")}</option><option>{$this->lang->line("go_press_ingroup")}</option></select></td></tr>\n";
 					
-							echo "<tr><td>Wait Time Second Option: </td><td align=left><select size=1 name=wait_time_second_option id=wait_time_second_option><option>NONE</option><option>PRESS_STAY</option><option>PRESS_VMAIL</option><option>PRESS_EXTEN</option><option>PRESS_CALLMENU</option><option>PRESS_CID_CALLBACK</option><option>PRESS_INGROUP</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_wait_time_second_option")}: </td><td align=left><select size=1 name=wait_time_second_option id=wait_time_second_option><option>{$this->lang->line("go_none")}</option><option>{$this->lang->line("go_press_stay")}</option><option>{$this->lang->line("go_press_vmail")}</option><option>{$this->lang->line("go_press_exten")}</option><option>{$this->lang->line("go_press_callmenu")}</option><option>{$this->lang->line("go_press_cid_callback")}</option><option>{$this->lang->line("go_press_ingroup")}</option></select></td></tr>\n";
 					
-							echo "<tr><td>Wait Time Third Option: </td><td align=left><select size=1 name=wait_time_third_option id=wait_time_third_option><option>NONE</option><option>PRESS_STAY</option><option>PRESS_VMAIL</option><option>PRESS_EXTEN</option><option>PRESS_CALLMENU</option><option>PRESS_CID_CALLBACK</option><option>PRESS_INGROUP</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_wait_time_third_option")}: </td><td align=left><select size=1 name=wait_time_third_option id=wait_time_third_option><option>{$this->lang->line("go_none")}</option><option>{$this->lang->line("go_press_stay")}</option><option>{$this->lang->line("go_press_vmail")}</option><option>{$this->lang->line("go_press_exten")}</option><option>{$this->lang->line("go_press_callmenu")}</option><option>{$this->lang->line("go_press_cid_callback")}</option><option>{$this->lang->line("go_press_ingroup")}</option></select></td></tr>\n";
 					
-							echo "<tr><td>Wait Time Option Seconds: </td><td align=left><input type=text name=wait_time_option_seconds id=wait_time_option_seconds size=5 maxlength=5></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_wait_time_option_seconds")}: </td><td align=left><input type=text name=wait_time_option_seconds id=wait_time_option_seconds size=5 maxlength=5></td></tr>\n";
 					
-							echo "<tr><td>Wait Time Option Extension: </td><td align=left><input type=text name=wait_time_option_exten id=wait_time_option_exten size=20 maxlength=20></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_wait_time_option_exten")}: </td><td align=left><input type=text name=wait_time_option_exten id=wait_time_option_exten size=20 maxlength=20></td></tr>\n";
 					
-							echo "<tr><td>Wait Time Option Callmenu: </td><td align=left><select size=1 name=wait_time_option_callmenu id=wait_time_option_callmenu>\n";
-							echo "<option value=\"\">--NONE--</option>\n";
+							echo "<tr><td>{$this->lang->line("go_wait_time_option_callmenu")}: </td><td align=left><select size=1 name=wait_time_option_callmenu id=wait_time_option_callmenu>\n";
+							echo "<option value=\"\">--{$this->lang->line("go_none")}--</option>\n";
 							echo "$Xmenuslist";
 							echo "</select></td></tr>\n";
 					
-							echo "<tr><td>Wait Time Option Voicemail: </td><td align=left><input type=text name=wait_time_option_voicemail id=wait_time_option_voicemail size=12 maxlength=10> <a href=\"javascript:launch_vm_chooser('wait_time_option_voicemail','vm',1100,document.getElementById('wait_time_option_voicemail').value);\"><FONT color=\"blue\">[ Voicemail Chooser ]</font></a><div id=\"divwait_time_option_voicemail\"></div> </td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_wait_time_option_vm")}: </td><td align=left><input type=text name=wait_time_option_voicemail id=wait_time_option_voicemail size=12 maxlength=10> <a href=\"javascript:launch_vm_chooser('wait_time_option_voicemail','vm',1100,document.getElementById('wait_time_option_voicemail').value);\"><FONT color=\"blue\">[ {$this->lang->line("go_vm_chooser")} ]</font></a><div id=\"divwait_time_option_voicemail\"></div> </td></tr>\n";
 					
-							echo "<tr><td>Wait Time Option Transfer In-Group: </td><td align=left><select size=1 name=wait_time_option_xfer_group id=wait_time_option_xfer_group>";
-							echo "<option value=\"\">--NONE--</option>\n";
+							echo "<tr><td>{$this->lang->line("go_wait_time_option_transfer_in_group")}: </td><td align=left><select size=1 name=wait_time_option_xfer_group id=wait_time_option_xfer_group>";
+							echo "<option value=\"\">--{$this->lang->line("go_none")}--</option>\n";
 							echo "$Tgroups_menu";
 							echo "</select></td></tr>\n";
 					
-							echo "<tr><td>Wait Time Option Press Filename: </td><td align=left><input type=text name=wait_time_option_press_filename id=wait_time_option_press_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('wait_time_option_press_filename','date',1200,document.getElementById('wait_time_option_press_filename').value);\"><FONT color=\"blue\">[ Audio Chooser ]</font></a> <div id=\"divwait_time_option_press_filename\"></div> </td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_wait_time_option_press_filename")}: </td><td align=left><input type=text name=wait_time_option_press_filename id=wait_time_option_press_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('wait_time_option_press_filename','date',1200,document.getElementById('wait_time_option_press_filename').value);\"><FONT color=\"blue\">[ {$this->lang->line("go_audio_chooser")} ]</font></a> <div id=\"divwait_time_option_press_filename\"></div> </td></tr>\n";
 					
-							echo "<tr><td>Wait Time Option Press No Block: </td><td align=left><select size=1 name=wait_time_option_no_block id=wait_time_option_no_block><option>N</option><option>Y</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_wait_time_option_press_no_block")}: </td><td align=left><select size=1 name=wait_time_option_no_block id=wait_time_option_no_block><option>N</option><option>Y</option></select></td></tr>\n";
 					
-							echo "<tr><td>Wait Time Option Press Filename Seconds: </td><td align=left><input type=text name=wait_time_option_prompt_seconds id=wait_time_option_prompt_seconds size=5 maxlength=5></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_wait_time_option_press_filename_seconds")}: </td><td align=left><input type=text name=wait_time_option_prompt_seconds id=wait_time_option_prompt_seconds size=5 maxlength=5></td></tr>\n";
 					
-							echo "<tr><td>Wait Time Option After Press Filename: </td><td align=left><input type=text name=wait_time_option_callback_filename id=wait_time_option_callback_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('wait_time_option_callback_filename','date',1300,document.getElementById('wait_time_option_callback_filename').value);\"><FONT color=\"blue\">[ Audio Chooser ]</font></a> <div id=\"divwait_time_option_callback_filename\"></div></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_wait_time_option_after_press_filename")}: </td><td align=left><input type=text name=wait_time_option_callback_filename id=wait_time_option_callback_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('wait_time_option_callback_filename','date',1300,document.getElementById('wait_time_option_callback_filename').value);\"><FONT color=\"blue\">[ {$this->lang->line("go_audio_chooser")} ]</font></a> <div id=\"divwait_time_option_callback_filename\"></div></td></tr>\n";
 					
-							echo "<tr><td>Wait Time Option Callback List ID: </td><td align=left><input type=text name=wait_time_option_callback_list_id id=wait_time_option_callback_list_id size=14 maxlength=14></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_wait_time_option_callback_list_id")}: </td><td align=left><input type=text name=wait_time_option_callback_list_id id=wait_time_option_callback_list_id size=14 maxlength=14></td></tr>\n";
 					
-							echo "<tr><td>Wait Hold Option Priority: </td><td align=left><select size=1 name=wait_hold_option_priority id=wait_hold_option_priority><option>WAIT</option><option>BOTH</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_wait_hold_option_priority")}: </td><td align=left><select size=1 name=wait_hold_option_priority id=wait_hold_option_priority><option>{$this->lang->line("go_wait_caps")}</option><option>{$this->lang->line("go_both")}</option></select></td></tr>\n";
 					
-							echo "<tr><td>Estimated Hold Time Option: </td><td align=left><select size=1 name=hold_time_option id=hold_time_option><option>NONE</option><option>EXTENSION</option><option>CALL_MENU</option><option>VOICEMAIL</option><option>IN_GROUP</option><option>CALLERID_CALLBACK</option><option>DROP_ACTION</option><option>PRESS_STAY</option><option>PRESS_VMAIL</option><option>PRESS_EXTEN</option><option>PRESS_CALLMENU</option><option>PRESS_CID_CALLBACK</option><option>PRESS_INGROUP</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_estimated_hold_time_option")}: </td><td align=left><select size=1 name=hold_time_option id=hold_time_option><option>{$this->lang->line("go_none")}</option><option>{$this->lang->line("go_exten")}</option><option>{$this->lang->line("go_call_menu")}</option><option>{$this->lang->line("go_voicemail")}</option><option>{$this->lang->line("go_in_groups")}</option><option>{$this->lang->line("go_callerid_callback")}</option><option>{$this->lang->line("go_drop_actions")}</option><option>{$this->lang->line("go_press_stay")}</option><option>{$this->lang->line("go_press_vmail")}</option><option>{$this->lang->line("go_press_exten")}</option><option>{$this->lang->line("go_press_callmenu")}</option><option>{$this->lang->line("go_press_cid_callback")}</option><option>{$this->lang->line("go_press_ingroup")}</option></select></td></tr>\n";
 					
-							echo "<tr><td>Hold Time Second Option: </td><td align=left><select size=1 name=hold_time_second_option id=hold_time_second_option><option>NONE</option><option>PRESS_STAY</option><option>PRESS_VMAIL</option><option>PRESS_EXTEN</option><option>PRESS_CALLMENU</option><option>PRESS_CID_CALLBACK</option><option>PRESS_INGROUP</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_hold_time_second_option")}: </td><td align=left><select size=1 name=hold_time_second_option id=hold_time_second_option><option>{$this->lang->line("go_none")}</option><option>{$this->lang->line("go_press_stay")}</option><option>{$this->lang->line("go_press_vmail")}</option><option>{$this->lang->line("go_press_exten")}PRESS_EXTEN</option><option>{$this->lang->line("go_press_callmenu")}</option><option>{$this->lang->line("go_press_cid_callback")}</option><option>{$this->lang->line("go_press_ingroup")}</option></select></td></tr>\n";
 					
-							echo "<tr><td>Hold Time Third Option: </td><td align=left><select size=1 name=hold_time_third_option><option>NONE</option><option>PRESS_STAY</option><option>PRESS_VMAIL</option><option>PRESS_EXTEN</option><option>PRESS_CALLMENU</option><option>PRESS_CID_CALLBACK</option><option>PRESS_INGROUP</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_hold_time_third_option")}: </td><td align=left><select size=1 name=hold_time_third_option><option>{$this->lang->line("go_none")}</option><option>{$this->lang->line("go_press_stay")}</option><option>{$this->lang->line("go_press_vmail")}</option><option>{$this->lang->line("go_press_exten")}</option><option>{$this->lang->line("go_press_callmenu")}</option><option>{$this->lang->line("go_press_cid_callback")}</option><option>{$this->lang->line("go_press_ingroup")}</option></select></td></tr>\n";
 					
-							echo "<tr><td>Hold Time Option Seconds: </td><td align=left><input type=text name=hold_time_option_seconds id=hold_time_option_seconds size=5 maxlength=5></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_hold_time_option_seconds")}: </td><td align=left><input type=text name=hold_time_option_seconds id=hold_time_option_seconds size=5 maxlength=5></td></tr>\n";
 
-							echo "<tr><td>Hold Time Option Minimum: </td><td align=left><input type=text name=hold_time_option_minimum id=hold_time_option_minimum size=5 maxlength=5></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_hold_time_option_min")}: </td><td align=left><input type=text name=hold_time_option_minimum id=hold_time_option_minimum size=5 maxlength=5></td></tr>\n";
 					
-							echo "<tr><td>Hold Time Option Extension: </td><td align=left><input type=text name=hold_time_option_exten id=hold_time_option_exten size=20 maxlength=20></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_hold_time_option_exten")}: </td><td align=left><input type=text name=hold_time_option_exten id=hold_time_option_exten size=20 maxlength=20></td></tr>\n";
 					
-							echo "<tr><td>Hold Time Option Callmenu: </td><td align=left><select size=1 name=hold_time_option_callmenu id=hold_time_option_callmenu>\n";
-							echo "<option value=\"\">--NONE--</option>\n";
+							echo "<tr><td>{$this->lang->line("go_hold_time_option_callmenu")} </td><td align=left><select size=1 name=hold_time_option_callmenu id=hold_time_option_callmenu>\n";
+							echo "<option value=\"\">--{$this->lang->line("go_none")}--</option>\n";
 							echo "$Xmenuslist";
 							echo "</select></td></tr>\n";
 					
-							echo "<tr><td>Hold Time Option Voicemail: </td><td align=left><input type=text name=hold_time_option_voicemail id=hold_time_option_voicemail size=12 maxlength=10> <a href=\"javascript:launch_vm_chooser('hold_time_option_voicemail','vm',1100,document.getElementById('hold_time_option_voicemail').value);\"><FONT color=\"blue\">[ Voicemail Chooser ]</font></a><div id=\"divhold_time_option_voicemail\"></div> </td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_hold_time_option_vm")}: </td><td align=left><input type=text name=hold_time_option_voicemail id=hold_time_option_voicemail size=12 maxlength=10> <a href=\"javascript:launch_vm_chooser('hold_time_option_voicemail','vm',1100,document.getElementById('hold_time_option_voicemail').value);\"><FONT color=\"blue\">[ {$this->lang->line("go_vm_chooser")} ]</font></a><div id=\"divhold_time_option_voicemail\"></div> </td></tr>\n";
 					
-							echo "<tr><td>Hold Time Option Transfer In-Group: </td><td align=left><select size=1 name=hold_time_option_xfer_group id=hold_time_option_xfer_group>";
-							echo "<option value=\"\">--NONE--</option>\n";
+							echo "<tr><td>{$this->lang->line("go_hold_time_option_transfer_in_group")}: </td><td align=left><select size=1 name=hold_time_option_xfer_group id=hold_time_option_xfer_group>";
+							echo "<option value=\"\">--{$this->lang->line("go_none")}--</option>\n";
 							echo "$Tgroups_menu";
 							echo "</select></td></tr>\n";
 					
-							echo "<tr><td>Hold Time Option Press Filename: </td><td align=left><input type=text name=hold_time_option_press_filename id=hold_time_option_press_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('hold_time_option_press_filename','date',1200,document.getElementById('hold_time_option_press_filename').value);\"><FONT color=\"blue\"><FONT color=\"blue\">[ Audio Chooser]</font></a> <div id=\"divhold_time_option_press_filename\"></div></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_hold_time_option_press_filename")}: </td><td align=left><input type=text name=hold_time_option_press_filename id=hold_time_option_press_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('hold_time_option_press_filename','date',1200,document.getElementById('hold_time_option_press_filename').value);\"><FONT color=\"blue\"><FONT color=\"blue\">[ {$this->lang->line("go_audio_chooser")}]</font></a> <div id=\"divhold_time_option_press_filename\"></div></td></tr>\n";
 					
-							echo "<tr><td>Hold Time Option Press No Block: </td><td align=left><select size=1 name=hold_time_option_no_block id=hold_time_option_no_block><option>N</option><option>Y</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_hold_time_option_press_no_block")}: </td><td align=left><select size=1 name=hold_time_option_no_block id=hold_time_option_no_block><option>N</option><option>Y</option></select></td></tr>\n";
 					
-							echo "<tr><td>Hold Time Option Press Filename Seconds: </td><td align=left><input type=text name=hold_time_option_prompt_seconds id=hold_time_option_prompt_seconds size=5 maxlength=5></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_hold_time_option_press_filename_seconds")}: </td><td align=left><input type=text name=hold_time_option_prompt_seconds id=hold_time_option_prompt_seconds size=5 maxlength=5></td></tr>\n";
 					
-							echo "<tr><td>Hold Time Option After Press Filename: </td><td align=left><input type=text name=hold_time_option_callback_filename id=hold_time_option_callback_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('hold_time_option_callback_filename','date',1300,document.getElementById('hold_time_option_callback_filename').value);\"><FONT color=\"blue\">[ Audio Chooser ]</font></a><div id=\"divhold_time_option_callback_filename\"></div> </td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_hold_time_option_after_press_filename")}: </td><td align=left><input type=text name=hold_time_option_callback_filename id=hold_time_option_callback_filename size=30 maxlength=255> <a href=\"javascript:launch_chooser('hold_time_option_callback_filename','date',1300,document.getElementById('hold_time_option_callback_filename').value);\"><FONT color=\"blue\">[ {$this->lang->line("go_audio_chooser")} ]</font></a><div id=\"divhold_time_option_callback_filename\"></div> </td></tr>\n";
 					
-							echo "<tr><td>Hold Time Option Callback List ID: </td><td align=left><input type=text name=hold_time_option_callback_list_id id=hold_time_option_callback_list_id size=14 maxlength=14></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_hold_time_option_callback_list_id")}: </td><td align=left><input type=text name=hold_time_option_callback_list_id id=hold_time_option_callback_list_id size=14 maxlength=14></td></tr>\n";
 					
-							echo "<tr><td>Agent Alert Filename: </td><td align=left><input type=text name=agent_alert_exten id=agent_alert_exten size=30 maxlength=100> <a href=\"javascript:launch_chooser('agent_alert_exten','date',1500,document.getElementById('agent_alert_exten').value);\"><FONT color=\"blue\">[ Audio Chooser ]</font></a> <div id=\"divagent_alert_exten\"></div></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_agent_alert_filename")}: </td><td align=left><input type=text name=agent_alert_exten id=agent_alert_exten size=30 maxlength=100> <a href=\"javascript:launch_chooser('agent_alert_exten','date',1500,document.getElementById('agent_alert_exten').value);\"><FONT color=\"blue\">[ {$this->lang->line("go_audio_chooser")} ]</font></a> <div id=\"divagent_alert_exten\"></div></td></tr>\n";
 					
-							echo "<tr><td>Agent Alert Delay: </td><td align=left><input type=text name=agent_alert_delay id=agent_alert_delay size=6 maxlength=6></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_agent_alert_delay")}: </td><td align=left><input type=text name=agent_alert_delay id=agent_alert_delay size=6 maxlength=6></td></tr>\n";
 					
-							echo "<tr><td>Default Transfer Group: </td><td align=left><select size=1 name=default_xfer_group id=default_xfer_group>";
-							echo "<option value=\"\">--NONE--</option>\n";
+							echo "<tr><td>{$this->lang->line("go_default_transfer_group")}: </td><td align=left><select size=1 name=default_xfer_group id=default_xfer_group>";
+							echo "<option value=\"\">--{$this->lang->line("go_none")}--</option>\n";
 							echo "$Xgroups_menu";
 							echo "</select></td></tr>\n";
 						
-							echo "<tr><td align=left>Default Group Alias: </td><td align=left><select size=1 name=default_group_alias id=default_group_alias>";
+							echo "<tr><td align=left>{$this->lang->line("go_default_group_alias")}: </td><td align=left><select size=1 name=default_group_alias id=default_group_alias>";
 							## group alias pulldown
 							foreach($groupaliaspulldown as $groupaliaspulldownInfo) {
 								$group_alias_id = $groupaliaspulldownInfo->group_alias_id;
@@ -1254,41 +1313,41 @@ echo $voicefilestable;
 								$group_alias_menu .= "value=\"$group_alias_id\">$group_alias_id - $group_alias_name</option>\n";
 							}
 					
-							echo "<option value=\"\">--NONE--</option>";
+							echo "<option value=\"\">--{$this->lang->line("go_none")}--</option>";
 							echo "$group_alias_menu";
 							echo "</select></td></tr>\n";
 							
-							echo "<tr><td>Hold Recall Transfer In-Group: </td><td align=left><select size=1 name=hold_recall_xfer_group id=hold_recall_xfer_group>";
-							echo "<option value=\"\">--NONE--</option>\n";
+							echo "<tr><td>{$this->lang->line("go_hold_recall_transfer_in_group")}: </td><td align=left><select size=1 name=hold_recall_xfer_group id=hold_recall_xfer_group>";
+							echo "<option value=\"\">--{$this->lang->line("go_none")}--</option>\n";
 							echo "$Hgroups_menu";
 							echo "</select></td></tr>\n";
 					
-							echo "<tr><td>No Delay Call Route: </td><td align=left><select size=1 name=no_delay_call_route id=no_delay_call_route><option>Y</option><option>N</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_no_delay_call_route")}: </td><td align=left><select size=1 name=no_delay_call_route id=no_delay_call_route><option>Y</option><option>N</option></select></td></tr>\n";
 					
-							echo "<tr><td>In-Group Recording Override: </td><td align=left><select size=1 name=ingroup_recording_override id=ingroup_recording_override><option>DISABLED</option><option>NEVER</option><option>ONDEMAND</option><option>ALLCALLS</option><option>ALLFORCE</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_in_group_recording_override")}: </td><td align=left><select size=1 name=ingroup_recording_override id=ingroup_recording_override><option>{$this->lang->line("go_disabled")}</option><option>{$this->lang->line("go_never")}</option><option>{$this->lang->line("go_ondemand")}</option><option>{$this->lang->line("go_allcalls")}</option><option>{$this->lang->line("go_allforce")}</option></select></td></tr>\n";
 					
-							echo "<tr><td>In-Group Recording Filename: </td><td align=left><input type=text name=ingroup_rec_filename id=ingroup_rec_filename size=50 maxlength=50></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_in_group_recording_filename")}: </td><td align=left><input type=text name=ingroup_rec_filename id=ingroup_rec_filename size=50 maxlength=50></td></tr>\n";
 							
-							echo "<tr><td>Stats Percent of Calls Answered Within X seconds 1: </td><td align=left><input type=text name=answer_sec_pct_rt_stat_one id=answer_sec_pct_rt_stat_one size=5 maxlength=5 ></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_stats_percent_calls_answered")}1: </td><td align=left><input type=text name=answer_sec_pct_rt_stat_one id=answer_sec_pct_rt_stat_one size=5 maxlength=5 ></td></tr>\n";
 					
-							echo "<tr><td>Stats Percent of Calls Answered Within X seconds 2: </td><td align=left><input type=text name=answer_sec_pct_rt_stat_two id=answer_sec_pct_rt_stat_two size=5 maxlength=5></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_stats_percent_calls_answered")}2: </td><td align=left><input type=text name=answer_sec_pct_rt_stat_two id=answer_sec_pct_rt_stat_two size=5 maxlength=5></td></tr>\n";
 					
-							echo "<tr><td>Start Call URL: </td><td align=left><input type=text name=start_call_url id=start_call_url size=70 maxlength=2000 ></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_start_call_url")}: </td><td align=left><input type=text name=start_call_url id=start_call_url size=70 maxlength=2000 ></td></tr>\n";
 					
-							echo "<tr><td>Dispo Call URL: </td><td align=left><input type=text name=dispo_call_url id=dispo_call_url size=70 maxlength=2000 ></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_dispo_call_url")}: </td><td align=left><input type=text name=dispo_call_url id=dispo_call_url size=70 maxlength=2000 ></td></tr>\n";
 					
-							echo "<tr><td>Add Lead URL: </td><td align=left><input type=text name=add_lead_url id=add_lead_url size=70 maxlength=2000></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_add_lead_url")}: </td><td align=left><input type=text name=add_lead_url id=add_lead_url size=70 maxlength=2000></td></tr>\n";
 					
-							echo "<tr><td>Extension Append CID: </td><td align=left><select size=1 name=extension_appended_cidname id=extension_appended_cidname><option>Y</option><option>N</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_exten_append_cid")}: </td><td align=left><select size=1 name=extension_appended_cidname id=extension_appended_cidname><option>Y</option><option>N</option></select></td></tr>\n";
 					
-							echo "<tr><td>Uniqueid Status Display: </td><td align=left><select size=1 name=uniqueid_status_display id=uniqueid_status_display><option>DISABLED</option><option>ENABLED</option><option>ENABLED_PREFIX</option><option>ENABLED_PRESERVE</option></select></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_uniqueid_status_display")}: </td><td align=left><select size=1 name=uniqueid_status_display id=uniqueid_status_display><option>{$this->lang->line("go_disabled")}</option><option>{$this->lang->line("go_enabled")}</option><option>{$this->lang->line("go_enabled_prefix")}</option><option>{$this->lang->line("go_enabled_preserve")}</option></select></td></tr>\n";
 					
-							echo "<tr><td>Uniqueid Status Prefix: </td><td align=left><input type=text name=uniqueid_status_prefix id=uniqueid_status_prefix size=10 maxlength=50></td></tr>\n";
+							echo "<tr><td>{$this->lang->line("go_uniqueid_status_prefix")}: </td><td align=left><input type=text name=uniqueid_status_prefix id=uniqueid_status_prefix size=10 maxlength=50></td></tr>\n";
 							
 							
 				?>
 				<tr>					
-				  <td colspan="2" align="center"><input type="button" name="editSUBMIT" value="MODIFY" onclick="editpost(document.getElementById('showvaledit').value);">
+				  <td colspan="2" align="center"><input type="button" name="editSUBMIT" value="<? $this->lang->line("go_modify"); ?>" onclick="editpost(document.getElementById('showvaledit').value);">
 				</tr>
 				</table>
 				</form>
@@ -1297,7 +1356,7 @@ echo $voicefilestable;
 				<form  method="POST" id="agentrankform" name="agentrankform">
 				<?php
 					echo "<center>\n";
-					echo "<br><b><font color=black>AGENT RANKS FOR THIS INBOUND GROUP:</b></font><br>\n";
+					echo "<br><b><font color=black>{$this->lang->line("go_agent_ranks_inbound_group")}:</b></font><br>\n";
 					
 					echo "<TABLE width=\"60%\" cellspacing=3 class=\"tableeditingroup\" id=\"agentrankvalue\">\n";										
 				
@@ -1463,7 +1522,7 @@ echo $voicefilestable;
 											echo "  <tr bgcolor=#efefef>\r\n";
 											echo "    <td align=right><font class=standard>".strtoupper(eregi_replace("_", " ", $field)).": </font></td>\r\n";
 											echo "    <td align=center><select name='".$field."_field'>\r\n";
-											echo "     <option value='-1'>(none)</option>\r\n";
+											echo "     <option value='-1'>({$this->lang->line("go_nones")})</option>\r\n";
 
 											for ($j=0; $j<count($fieldrow); $j++) {
 												eregi_replace("\"", "", $fieldrow[$j]);
@@ -1499,7 +1558,7 @@ echo $voicefilestable;
 				
 
 									<div style="display: none;" class="demo-description">
-										<p>Click tabs to swap between content that is broken into logical sections.</p>
+										<p><? $this->lang->line("go_click_tabs_swap_logical_sections"); ?></p>
 									</div><!-- End demo-description -->							
 				
                             <div class="container">

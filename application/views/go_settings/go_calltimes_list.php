@@ -98,7 +98,7 @@ $(function()
 		var action = $(this).attr('id');
 		if (selectedCalltimes.length<1)
 		{
-			alert('Please select a Call Time.');
+			alert('<? echo $this->lang->line("go_pls_sel_call_time"); ?>');
 		}
 		else
 		{
@@ -108,14 +108,14 @@ $(function()
 
 			if (action == 'delete')
 			{
-				var what = confirm('Are you sure you want to delete the selected Call Time'+s+'?');
+				var what = confirm('<? echo $this->lang->line("go_del_sel_ct"); ?>'+s+'?');
 				if (what)
 				{
 					$.post("<?=$base?>index.php/go_calltimes_ce/go_get_calltimes/"+action+"/"+selectedCalltimes+"/",
 						function(data){
 						if (data=="SUCCESS")
 						{
-							alert("Success!\n\nSelected call times has been deleted.");
+							alert("<? echo $this->lang->line("go_success"); ?>!\n\n<? echo $this->lang->line("go_sel_ct_del"); ?>");
 							
 							location.reload();
 						} else {
@@ -146,7 +146,7 @@ $(function()
 		var action = $(this).attr('id');
 		if (selectedStateCalltimes.length<1)
 		{
-			alert('Please select a State Call Time.');
+			alert('<? echo $this->lang->line("go_pls_sel_state_call_time"); ?>');
 		}
 		else
 		{
@@ -156,14 +156,14 @@ $(function()
 
 			if (action == 'delete')
 			{
-				var what = confirm('Are you sure you want to delete the selected State Call Time'+s+'?');
+				var what = confirm('<? echo $this->lang->line("go_del_sel_state_ct"); ?>'+s+'?');
 				if (what)
 				{
 					$.post("<?=$base?>index.php/go_calltimes_ce/go_get_calltimes/"+action+"/"+selectedStateCalltimes+"/state/",
 						function(data){
 						if (data=="SUCCESS")
 						{
-							alert("Success!\n\nSelected state call times has been deleted.");
+							alert("<? echo $this->lang->line("go_success"); ?>!\n\n<? echo $this->lang->line("go_sel_state_ct_del"); ?>");
 							
 							location.reload();
 						} else {
@@ -224,12 +224,12 @@ function changePage(pagenum)
 <table id="mainTable" class="tablesorter" border="0" cellpadding="1" cellspacing="0" style="width:100%;">
 	<thead>
 		<tr style="font-weight:bold;">
-			<th style="white-space:nowrap">&nbsp;CALLTIME ID</th>
-			<th style="white-space:nowrap">&nbsp;CALLTIME NAME</th>
-			<th style="white-space:nowrap">&nbsp;DEFAULT START</th>
-			<th style="white-space:nowrap">&nbsp;DEFAULT STOP</th>
-			<th>&nbsp;GROUP</th>
-			<th style="width:6%;text-align:center;" nowrap><span style="cursor:pointer;" id="selectAction">&nbsp;ACTION &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
+                        <th style="white-space:nowrap">&nbsp;<? echo strtoupper($this->lang->line("go_call_time_id")); ?></th>
+                        <th style="white-space:nowrap">&nbsp;<? echo strtoupper($this->lang->line("go_call_time_name")); ?></th>
+                        <th style="white-space:nowrap">&nbsp;<? echo strtoupper($this->lang->line("go_default_start")); ?></th>
+                        <th style="white-space:nowrap">&nbsp;<? echo strtoupper($this->lang->line("go_default_stop")); ?></th>
+			<th>&nbsp;<? echo strtoupper($this->lang->line("go_group")); ?></th>
+			<th style="width:6%;text-align:center;" nowrap><span style="cursor:pointer;" id="selectAction">&nbsp;<? echo strtoupper($this->lang->line("go_action")); ?> &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
 			<th style="width:2%;text-align:center;"><input type="checkbox" id="selectAll" /></th>
 		</tr>
 	</thead>
@@ -247,7 +247,7 @@ function changePage(pagenum)
 				$x=0;
 			}
 			
-			$ugroup = ($list->user_group=="---ALL---") ? "ALL USER GROUPS" : $list->user_group;
+			$ugroup = ($list->user_group=="---{$this->lang->line('go_all')}---") ? "{$this->lang->line('go_all_user_groups')}" : $list->user_group;
 			$default_start = $list->ct_default_start;
 			$default_stop = $list->ct_default_stop;
 			//if (strlen($default_start) < 4 && $default_start != 0) { $default_start = "0".$default_start; }
@@ -261,14 +261,14 @@ function changePage(pagenum)
 			echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;{$default_start}</td>";
 			echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;{$default_stop}</td>";
 			echo "<td style='border-top:#D0D0D0 dashed 1px;white-space:nowrap;width:6%;'>&nbsp;$ugroup&nbsp;&nbsp;&nbsp;</td>";
-			echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><span onclick=\"modify('{$list->call_time_id}')\" style='cursor:pointer;margin:5px;' class='toolTip' title='MODIFY CALLTIME<br />{$list->call_time_id}'><img src='{$base}img/edit.png' style='cursor:pointer;width:12px;' /></span>
-			      <span onclick=\"delCalltimes('{$list->call_time_id}')\" style='cursor:pointer;margin:5px;' class='toolTip' title='DELETE CALLTIME<br />{$list->call_time_id}'><img src='{$base}img/delete.png' style='cursor:pointer;width:12px;' /></span>
+			echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><span onclick=\"modify('{$list->call_time_id}')\" style='cursor:pointer;margin:5px;' class='toolTip' title='{$this->lang->line('go_modify_ct')}<br />{$list->call_time_id}'><img src='{$base}img/edit.png' style='cursor:pointer;width:12px;' /></span>
+			      <span onclick=\"delCalltimes('{$list->call_time_id}')\" style='cursor:pointer;margin:5px;' class='toolTip' title='{$this->lang->line('go_del_ct')}<br />{$list->call_time_id}'><img src='{$base}img/delete.png' style='cursor:pointer;width:12px;' /></span>
 			      <span style='margin:5px;'><img src='{$base}img/status_display_i_grayed.png' style='width:12px;cursor:pointer;' /></span></td>\n";
 			echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><input type='checkbox' id='delCalltimes[]' value='{$list->call_time_id}' /></td>\n";
 			echo "</tr>";
 		}
 	} else {
-		echo "<tr style=\"background-color:#E0F8E0;\"><td style=\"border-top:#D0D0D0 dashed 1px;font-weight:bold;color:#FF0000;text-align:center;\" colspan=\"8\">No record(s) found.</td></tr>\n";
+		echo "<tr style=\"background-color:#E0F8E0;\"><td style=\"border-top:#D0D0D0 dashed 1px;font-weight:bold;color:#FF0000;text-align:center;\" colspan=\"8\">{$this->lang->line('no_record_found')}.</td></tr>\n";
 	}
 	?>
 	</tbody>
@@ -281,13 +281,13 @@ function changePage(pagenum)
 <table id="stateTable" class="tablesorter" border="0" cellpadding="1" cellspacing="0" style="width:100%;">
 	<thead>
         <tr style="font-weight:bold;">
-            <th style="width:12%">&nbsp;CALLTIME ID</th>
-            <th style="width:12%">&nbsp;CALLTIME STATE</th>
-            <th style="width:25%">&nbsp;CALLTIME NAME</th>
-			<th style="white-space:nowrap">&nbsp;DEFAULT START</th>
-			<th style="white-space:nowrap">&nbsp;DEFAULT STOP</th>
-			<th>&nbsp;GROUP</th>
-			<th style="width:6%;text-align:center;" nowrap><span style="cursor:pointer;" id="selectStateAction">&nbsp;ACTION &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
+            <th style="width:12%">&nbsp;<? echo strtoupper($this->lang->line("go_call_time_id")); ?></th>
+            <th style="width:12%">&nbsp;<? echo strtoupper($this->lang->line("go_call_time_state")); ?></th>
+            <th style="width:25%">&nbsp;<? echo strtoupper($this->lang->line("go_call_time_name")); ?></th>
+                        <th style="white-space:nowrap">&nbsp;<? echo strtoupper($this->lang->line("go_default_start")); ?></th>
+                        <th style="white-space:nowrap">&nbsp;<? echo strtoupper($this->lang->line("go_default_stop")); ?></th>
+			<th>&nbsp;<? echo strtoupper($this->lang->line("go_group")); ?></th>
+			<th style="width:6%;text-align:center;" nowrap><span style="cursor:pointer;" id="selectStateAction">&nbsp;<? echo strtoupper($this->lang->line("go_action")); ?> &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></th>
             <th style="width:2%;text-align:center;"><input type="checkbox" id="selectAllState" /></th>
         </tr>
     </thead>
@@ -305,7 +305,7 @@ function changePage(pagenum)
 				$x=0;
 			}
 			
-			$ugroup = ($list->user_group=="---ALL---") ? "ALL USER GROUPS" : $list->user_group;
+			$ugroup = ($list->user_group=="---{$this->lang->line("go_all")}---") ? "{$this->lang->line("go_all_user_groups_caps")}" : $list->user_group;
 			$default_start = $list->sct_default_start;
 			$default_stop = $list->sct_default_stop;
 			//if (strlen($default_start) < 4 && $default_start != 0) { $default_start = "0".$default_start; }
@@ -320,14 +320,14 @@ function changePage(pagenum)
 			echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;{$default_start}</td>";
 			echo "<td style='border-top:#D0D0D0 dashed 1px;'>&nbsp;{$default_stop}</td>";
 			echo "<td style='border-top:#D0D0D0 dashed 1px;white-space:nowrap;width:6%;'>&nbsp;$ugroup&nbsp;&nbsp;&nbsp;</td>";
-			echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><span onclick=\"modify('{$list->state_call_time_id}','state')\" style='cursor:pointer;margin:5px;' class='toolTip' title='MODIFY STATE CALLTIME<br />{$list->state_call_time_id}'><img src='{$base}img/edit.png' style='cursor:pointer;width:12px;' /></span>
-					  <span onclick=\"delCalltimes('{$list->state_call_time_id}','state')\" style='cursor:pointer;margin:5px;' class='toolTip' title='DELETE STATE CALLTIME<br />{$list->state_call_time_id}'><img src='{$base}img/delete.png' style='cursor:pointer;width:12px;' /></span>
+			echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><span onclick=\"modify('{$list->state_call_time_id}','state')\" style='cursor:pointer;margin:5px;' class='toolTip' title='{$this->lang->line('go_modify_sct')}<br />{$list->state_call_time_id}'><img src='{$base}img/edit.png' style='cursor:pointer;width:12px;' /></span>
+					  <span onclick=\"delCalltimes('{$list->state_call_time_id}','state')\" style='cursor:pointer;margin:5px;' class='toolTip' title='{$this->lang->line('go_del_sct')}<br />{$list->state_call_time_id}'><img src='{$base}img/delete.png' style='cursor:pointer;width:12px;' /></span>
 					  <span style='margin:5px;'><img src='{$base}img/status_display_i_grayed.png' style='width:12px;cursor:pointer;' /></span></td>\n";
 			echo "<td style='border-top:#D0D0D0 dashed 1px;' align='center'><input type='checkbox' id='delStateCalltimes[]' value='{$list->state_call_time_id}' /></td>\n";
 			echo "</tr>";
 		}
 	} else {
-		echo "<tr style=\"background-color:#E0F8E0;\"><td style=\"border-top:#D0D0D0 dashed 1px;font-weight:bold;color:#FF0000;text-align:center;\" colspan=\"8\">No record(s) found.</td></tr>\n";
+		echo "<tr style=\"background-color:#E0F8E0;\"><td style=\"border-top:#D0D0D0 dashed 1px;font-weight:bold;color:#FF0000;text-align:center;\" colspan=\"8\">{$this->lang->line("go_no_records_found")}.</td></tr>\n";
 	}
 	?>
     </tbody>

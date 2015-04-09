@@ -1,5 +1,7 @@
 Filename: changelog.txt
 
+1428552000 - Fixed some vulnerabilities and added multi-language feature (English, Filipino, Spanish and Italian) -- Dev Team <dev@goautodial.com>
+
 1421902800 - Fixed the bug on dbconnect.php files and added some .conf securities on .htaccess. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * agent/dbconnect.php

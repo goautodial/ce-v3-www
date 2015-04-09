@@ -29,6 +29,7 @@ class Go_site extends Controller
 		$this->email->initialize($config);
 		$this->load->library('encrypt');
 		$this->lang->load('userauth', $this->session->userdata('ua_language'));
+		$this->load->helper('language');		
 	}
 
 	function go_dashboard()
@@ -41,7 +42,8 @@ class Go_site extends Controller
 		$this->load->library('commonhelper');
 		$this->load->model('go_dashboard');
 		$callfunc = $this->go_dashboard->go_get_userfulname();
-		$data['bannertitle'] = $this->lang->line('go_dashboard_banner');
+		//$data['bannertitle'] = $this->lang->line('go_dashboard_banner');
+		$data['bannertitle'] = $this->lang->line('go_Dashboard');
 		$data['userfulname'] = $callfunc;
 		$callfunc = $this->go_dashboard->go_get_userinfo();
 		$data['uname'] = $callfunc->user;
@@ -218,8 +220,9 @@ class Go_site extends Controller
 	
 		}#count sippyinfo		
 		//}
-		$this->load->view('go_dashboard_sippy', $data);
 
+		$this->load->view('go_dashboard_sippy',$data);
+		
 		#### END BALANCE via SIPPY
 	
 	
@@ -266,7 +269,7 @@ class Go_site extends Controller
 	    $data['groupId'] = $this->go_reports->go_get_groupid();
 
 		$data['theme'] = $this->session->userdata('go_theme');
-		$data['bannertitle'] = 'Reports & Analytics';
+		$data['bannertitle'] = $this->lang->line("go_reports_analytics");
 		$data['rep']= 'wp-has-current-submenu';
 		$data['hostp'] = $_SERVER['SERVER_ADDR'];
 		$data['folded'] = 'folded';
@@ -495,6 +498,7 @@ class Go_site extends Controller
 		$data['inbound_sph'] = $callfunc;
 		$callfunc = $this->go_dashboard->go_outbound_sph();
 		$data['outbound_sph'] = $callfunc;
+
 		$this->load->view('go_dashboard_sales', $data);
 	}
 
@@ -518,6 +522,7 @@ class Go_site extends Controller
 		$data['obcalls_morethan_minute'] = $callfunc;
 		$callfunc = $this->go_dashboard->go_total_calls();
 		$data['total_calls'] = $callfunc;
+
 		$this->load->view('go_dashboard_calls', $data);
 	}
 
@@ -530,6 +535,7 @@ class Go_site extends Controller
 		$data['answered_calls_today'] = $callfunc->answers_today;
 		$callfunc = $this->go_dashboard->go_total_calls();
 		$data['total_calls'] = $callfunc;
+
 		$this->load->view('go_dashboard_drop_percentage', $data);
 	}
 
@@ -545,6 +551,7 @@ class Go_site extends Controller
 		$data['total_agents_wait_calls'] = $callfunc;
 		$callfunc = $this->go_dashboard->go_total_agents_online();
 		$data['total_agents_online'] = $callfunc;
+
 		$this->load->view('go_dashboard_agents', $data);
 	}
 
@@ -820,8 +827,6 @@ class Go_site extends Controller
 		$data['go_hopper_leads_warning_less_h_querycount'] = $callfunc['datacount'];
 		$data['go_hopper_leads_warning_less_h_queryval'] = $callfunc['dataval'];
 
-
-
 		$this->load->view('go_dashboard_leads', $data);
 	}
 
@@ -865,12 +870,14 @@ class Go_site extends Controller
 		$callfunc = $this->go_account_info->go_get_num_seats();
 		$data['num_seats'] = $callfunc;
 		$data['status'] = 'num_seats';
+
 		$this->load->view('go_account_get_logins', $data);
 	}
 
 	function go_account_get_urls()
 	{
 		$data['status'] = 'url_resources';
+
 		$this->load->view('go_account_get_logins', $data);
 	}
 
@@ -881,6 +888,7 @@ class Go_site extends Controller
 		$callfunc = $this->go_account_info->go_get_logins();
 		$data['go_get_datacount'] 	= $callfunc['datacount'];
 		$data['go_get_dataval'] 	= $callfunc['dataval'];
+
 		$this->load->view('go_account_get_logins', $data);
 	}
 
@@ -904,6 +912,7 @@ class Go_site extends Controller
 		$this->load->model('go_dashboard');
 		$callfunc = $this->go_dashboard->go_check_status();
 		$data['cluster_status'] = $callfunc;
+
 		$this->load->view('go_cluster_status', $data);
 	}
 	
@@ -915,7 +924,7 @@ class Go_site extends Controller
 		$data['show_me_more'] = $this->go_dashboard->go_show_me_more($type,$tenantID);
 		$data['usergroups'] = $this->go_dashboard->go_list_user_groups();
 		$data['groupSelected'] = (strlen($this->uri->segment(4)) > 0) ? $tenantID : "---ALL---";
-		
+
 		$this->load->view('go_widget_show_me_more', $data);
 	}
 
@@ -1113,7 +1122,7 @@ class Go_site extends Controller
 	    $data['user_level'] =		$this->userLevel;
 		if ($type=='agents')
 		{
-		    $this->load->view('go_monitoring/go_realtime',$data);
+			$this->load->view('go_monitoring/go_realtime',$data);
 		} else {
 			$this->load->view('go_monitoring/go_call_realtime',$data);
 		}
@@ -1132,6 +1141,7 @@ class Go_site extends Controller
 		$this->load->model('go_monitoring');
 		$data['dropped_calls_table_out'] = $this->go_monitoring->go_dropped_call_list_out();
 		$data['dropped_calls_table_in'] = $this->go_monitoring->go_dropped_call_list_in();
+
 		$this->load->view('go_monitoring/go_dropped_calls',$data);
 	}
 	
@@ -1347,7 +1357,7 @@ class Go_site extends Controller
         function cpanel(){
              $type = $this->uri->segment(3);
              $action = $this->uri->segment(4);
-	     if (! preg_match("/^(asterisk|mysql|httpd|nic|ftp|sshd)$/i",$type)) { die("Error: Unknown service: $type"); }
+	     if (! preg_match("/^(asterisk|mysql|httpd|nic|ftp|sshd)$/i",$type)) { die("".$this->lang->line("go_error_unknown_service").": $type"); }
 	     if (! preg_match("/^(Reload|Start)$/i",$action)) {
 		die("Warning: $action is not valid.");
 	     } else {

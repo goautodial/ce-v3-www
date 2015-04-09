@@ -18,6 +18,7 @@ class Go_campaign extends Model {
 	    parent::Model();
 	    $this->db = $this->load->database('dialerdb', true);
 	    $this->godb = $this->load->database('goautodialdb', true);
+	    $this->lang->load("goLanguage_spanish","spanish");
 	    //$this->a2db = $this->load->database('billingdb', true);
 	}
 
@@ -1532,23 +1533,35 @@ class Go_campaign extends Model {
 		$pg 	= $this->commonhelper->paging($page,$rp,$total,$limit);
 		$start	= (($page-1) * $rp);
 		if (strlen($displaywhat) < 1)
-			$displaywhat = "campaigns";
-	
+		{
+			$Display     = $this->lang->line('go_Display');
+			$displaywhat = $this->lang->line('go_Campaigns');
+			$to	     = $this->lang->line('go_to');
+			$of	     = $this->lang->line('go_of');
+		}
+		$go_FirstPage = $this->lang->line('go_FirstPage');
+		$go_PreviousPage = $this->lang->line('go_PreviousPage');
+		$go_PageNumber = $this->lang->line('go_PageNumber');
+		$go_ViewAllPage = $this->lang->line('go_ViewAllPage');
+		$go_NextPage = $this->lang->line('go_NextPage');
+		$go_Lastpage = $this->lang->line('go_Lastpage');
+		$go_ALL = $this->lang->line('go_ALL');	
+
 		if ($pg['last'] > 1) {
 			$pagelinks  = '<div style="cursor: pointer;font-weight: bold;">';
-			$pagelinks .= '<a title="Go to First Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
-			$pagelinks .= '<a title="Go to Previous Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
+			$pagelinks .= '<a title="'. $go_FirstPage .'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
+			$pagelinks .= '<a title="'. $go_PreviousPage .'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
 			
 			for ($i=$pg['start'];$i<=$pg['end'];$i++) { 
 			   if ($i==$pg['page']) $current = 'color: #F00;cursor: default;'; else $current="";
 			
-			$pagelinks .= '<a title="Go to Page '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="changePage('.$i.')"><span>'.$i.'</span></a>';
+			$pagelinks .= '<a title="'. $go_PageNumber.' '. $i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="changePage('.$i.')"><span>'.$i.'</span></a>';
 			
 			}
 	
-			$pagelinks .= '<a title="View All Pages" style="vertical-align:text-top;padding: 0px 2px;" onclick="changePage(\'ALL\')"><span>ALL</span></a>';
-			$pagelinks .= '<a title="Go to Next Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
-			$pagelinks .= '<a title="Go to Last Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
+			$pagelinks .= '<a title="'. $go_ViewAllPage .'" style="vertical-align:text-top;padding: 0px 2px;" onclick="changePage(\'ALL\')"><span>'. $go_ALL .'</span></a>';
+			$pagelinks .= '<a title="'. $go_NextPage .'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
+			$pagelinks .= '<a title="'. $go_Lastpage .'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
 			$pagelinks .= '</div>';
 		} else {
 			if ($rp > 25) {
@@ -1560,7 +1573,7 @@ class Go_campaign extends Model {
 			}
 		}
 		
-		$pageinfo = "Displaying {$pg['istart']} to {$pg['iend']} of {$pg['total']} $displaywhat";
+		$pageinfo = " {$this->lang->line('go_Display')} {$pg['istart']} {$this->lang->line('go_to')} {$pg['iend']} {$this->lang->line('go_of')} {$pg['total']} $displaywhat";
 		$return['links'] = $pagelinks;
 		$return['info'] = $pageinfo;
 		

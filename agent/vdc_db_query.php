@@ -586,63 +586,63 @@ else
 $LOCAL_GMT_OFF = $SERVER_GMT;
 $LOCAL_GMT_OFF_STD = $SERVER_GMT;
 
-##### Hangup Cause Dictionary #####
-$hangup_cause_dictionary = array(
-0 => "Unspecified. No other cause codes applicable.",
-1 => "Unallocated (unassigned) number.",
-2 => "No route to specified transit network (national use).",
-3 => "No route to destination.",
-6 => "Channel unacceptable.",
-7 => "Call awarded, being delivered in an established channel.",
-16 => "Normal call clearing.",
-17 => "User busy.",
-18 => "No user responding.",
-19 => "No answer from user (user alerted).",
-20 => "Subscriber absent.",
-21 => "Call rejected.",
-22 => "Number changed.",
-23 => "Redirection to new destination.",
-25 => "Exchange routing error.",
-27 => "Destination out of order.",
-28 => "Invalid number format (address incomplete).",
-29 => "Facilities rejected.",
-30 => "Response to STATUS INQUIRY.",
-31 => "Normal, unspecified.",
-34 => "No circuit/channel available.",
-38 => "Network out of order.",
-41 => "Temporary failure.",
-42 => "Switching equipment congestion.",
-43 => "Access information discarded.",
-44 => "Requested circuit/channel not available.",
-50 => "Requested facility not subscribed.",
-52 => "Outgoing calls barred.",
-54 => "Incoming calls barred.",
-57 => "Bearer capability not authorized.",
-58 => "Bearer capability not presently available.",
-63 => "Service or option not available, unspecified.",
-65 => "Bearer capability not implemented.",
-66 => "Channel type not implemented.",
-69 => "Requested facility not implemented.",
-79 => "Service or option not implemented, unspecified.",
-81 => "Invalid call reference value.",
-88 => "Incompatible destination.",
-95 => "Invalid message, unspecified.",
-96 => "Mandatory information element is missing.",
-97 => "Message type non-existent or not implemented.",
-98 => "Message not compatible with call state or message type non-existent or not implemented.",
-99 => "Information element / parameter non-existent or not implemented.",
-100 => "Invalid information element contents.",
-101 => "Message not compatible with call state.",
-102 => "Recovery on timer expiry.",
-103 => "Parameter non-existent or not implemented - passed on (national use).",
-111 => "Protocol error, unspecified.",
-127 => "Interworking, unspecified."
-);
+//##### Hangup Cause Dictionary #####
+//$hangup_cause_dictionary = array(
+//0 => "Unspecified. No other cause codes applicable.",
+//1 => "Unallocated (unassigned) number.",
+//2 => "No route to specified transit network (national use).",
+//3 => "No route to destination.",
+//6 => "Channel unacceptable.",
+//7 => "Call awarded, being delivered in an established channel.",
+//16 => "Normal call clearing.",
+//17 => "User busy.",
+//18 => "No user responding.",
+//19 => "No answer from user (user alerted).",
+//20 => "Subscriber absent.",
+//21 => "Call rejected.",
+//22 => "Number changed.",
+//23 => "Redirection to new destination.",
+//25 => "Exchange routing error.",
+//27 => "Destination out of order.",
+//28 => "Invalid number format (address incomplete).",
+//29 => "Facilities rejected.",
+//30 => "Response to STATUS INQUIRY.",
+//31 => "Normal, unspecified.",
+//34 => "No circuit/channel available.",
+//38 => "Network out of order.",
+//41 => "Temporary failure.",
+//42 => "Switching equipment congestion.",
+//43 => "Access information discarded.",
+//44 => "Requested circuit/channel not available.",
+//50 => "Requested facility not subscribed.",
+//52 => "Outgoing calls barred.",
+//54 => "Incoming calls barred.",
+//57 => "Bearer capability not authorized.",
+//58 => "Bearer capability not presently available.",
+//63 => "Service or option not available, unspecified.",
+//65 => "Bearer capability not implemented.",
+//66 => "Channel type not implemented.",
+//69 => "Requested facility not implemented.",
+//79 => "Service or option not implemented, unspecified.",
+//81 => "Invalid call reference value.",
+//88 => "Incompatible destination.",
+//95 => "Invalid message, unspecified.",
+//96 => "Mandatory information element is missing.",
+//97 => "Message type non-existent or not implemented.",
+//98 => "Message not compatible with call state or message type non-existent or not implemented.",
+//99 => "Information element / parameter non-existent or not implemented.",
+//100 => "Invalid information element contents.",
+//101 => "Message not compatible with call state.",
+//102 => "Recovery on timer expiry.",
+//103 => "Parameter non-existent or not implemented - passed on (national use).",
+//111 => "Protocol error, unspecified.",
+//127 => "Interworking, unspecified."
+//);
 
 
 #############################################
 ##### START SYSTEM_SETTINGS LOOKUP #####
-$stmt = "SELECT use_non_latin,timeclock_end_of_day,agentonly_callback_campaign_lock,alt_log_server_ip,alt_log_dbname,alt_log_login,alt_log_pass,tables_use_alt_log_db FROM system_settings;";
+$stmt = "SELECT use_non_latin,timeclock_end_of_day,agentonly_callback_campaign_lock,alt_log_server_ip,alt_log_dbname,alt_log_login,alt_log_pass,tables_use_alt_log_db,default_language FROM system_settings;";
 $rslt=mysql_query($stmt, $link);
 	if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'00001',$user,$server_ip,$session_name,$one_mysql_log);}
 if ($DB) {echo "$stmt\n";}
@@ -658,9 +658,29 @@ if ($qm_conf_ct > 0)
 	$alt_log_login =						$row[5];
 	$alt_log_pass =							$row[6];
 	$tables_use_alt_log_db =				$row[7];
+        $default_language = 					$row[8];
 	}
 ##### END SETTINGS LOOKUP #####
 ###########################################
+
+### Check for language file ###
+$img_lang = '';
+$selected_language = (!is_null($_SESSION['go_language'])) ? $_SESSION['go_language'] : $default_language;
+
+$stmtLang = "SELECT path FROM `{$GOLANGUANGEDB}`.go_language WHERE lang='{$selected_language}';";
+$rsltLang=mysql_query($stmtLang, $link);
+$rowLang=mysql_fetch_row($rsltLang);
+$lang_path = $rowLang[0];
+
+if (file_exists("lang/{$lang_path}.php"))
+	{
+	require("lang/{$lang_path}.php");
+        if (strtolower($selected_language) != 'en_us')
+                {
+                $img_lang = "_" . strtoupper($selected_language);
+                }
+	}
+###############################
 
 if ($non_latin < 1)
 	{
@@ -701,14 +721,14 @@ else
 
 	if( (strlen($user)<2) or (strlen($pass)<2) or ($auth==0))
 		{
-		echo "Invalid Username/Password: |$user|$pass|\n";
+		echo "{$lang['invalid_username_password']}: |$user|$pass|\n";
 		exit;
 		}
 	else
 		{
 		if( (strlen($server_ip)<6) or (!isset($server_ip)) or ( (strlen($session_name)<12) or (!isset($session_name)) ) )
 			{
-			echo "Invalid server_ip: |$server_ip|  or  Invalid session_name: |$session_name|\n";
+			echo "{$lang['invalid_server_ip']}: |$server_ip|  {$lang['or']}  {$lang['invalid_session_name']}: |$session_name|\n";
 			exit;
 			}
 		else
@@ -721,7 +741,7 @@ else
 			$SNauth=$row[0];
 			  if($SNauth==0)
 				{
-				echo "Invalid session_name: |$session_name|$server_ip|\n";
+				echo "{$lang['invalid_session_name']}: |$session_name|$server_ip|\n";
 				exit;
 				}
 			  else
@@ -737,7 +757,7 @@ if ($format=='debug')
 	echo "<html>\n";
 	echo "<head>\n";
 	echo "<!-- VERSION: $version     BUILD: $build    USER: $user   server_ip: $server_ip-->\n";
-	echo "<title>VICIDiaL Database Query Script";
+	echo "<title>{$lang['database_query_script']}";
 	echo "</title>\n";
 	echo "</head>\n";
 	echo "<BODY BGCOLOR=white marginheight=0 marginwidth=0 leftmargin=0 topmargin=0>\n";
@@ -764,7 +784,7 @@ if ($ACTION == 'LogiNCamPaigns')
                 $sess_agent_status = $rowagent[3];    
             
         if($agent_session_id!=null){
-            echo "<br><font size=2 color=red><b>Agent $user is currently in use or improper logout.<br>Contact Administrator.</b></font>";
+            echo "<br><font size=2 color=red><b>{$lang['agent']} $user {$lang['improper_logout']}<br>{$lang['contact_administrator']}</b></font>";
             exit;
         }
 
@@ -783,7 +803,7 @@ if ($ACTION == 'LogiNCamPaigns')
                 $usedphone = $rowvcphone[0];
                 
         if($usedphone!=null) {
-            echo "<br><font size=2 color=white><b>The phone login assigned to you is being used by: <br> Agent $usedphone.<br>Contact Administrator.</b></font>";
+            echo "<br><font size=2 color=white><b>{$lang['phone_being_used']}: <br> {$lang['agent']} $usedphone.<br>{$lang['contact_administrator']}</b></font>";
             exit;
         }
 
@@ -791,9 +811,9 @@ if ($ACTION == 'LogiNCamPaigns')
 	if ( (strlen($user)<1) )
 		{
 		echo "<select size=1 name=VD_campaign id=VD_campaign onFocus=\"login_allowable_campaigns()\">\n";
-		echo "<option value=\"invalid\">-- INVALID --</option>\n";
+		echo "<option value=\"invalid\">-- ".strtoupper($lang['invalid'])." --</option>\n";
 		echo "</select><br>\n";
-		echo "<font size=2 color=white><b>*REQUIRED: USERNAME/PASSWORD.</b></font>\n";
+		echo "<font size=2 color=white><b>*".strtoupper($lang['required']).": ".strtoupper($lang['username'])."/".strtoupper($lang['password']).".</b></font>\n";
 		exit;
 		}
 	else
@@ -811,17 +831,17 @@ if ($ACTION == 'LogiNCamPaigns')
 
 		if($VU_active==""){
 			echo "<select size=1 name=VD_campaign id=VD_campaign onFocus=\"login_allowable_campaigns()\">\n";
-			echo "<option value=\"invalid\">-- INVALID --</option>\n";
+			echo "<option value=\"invalid\">-- ".strtoupper($lang['invalid'])." --</option>\n";
 			echo "</select><br>\n";
-			echo "<font size=2 color=white><b>INVALID USERNAME/PASSWORD</b></font>\n";
+			echo "<font size=2 color=white><b>".strtoupper($lang['invalid'])." ".strtoupper($lang['username'])."/".strtoupper($lang['password'])."</b></font>\n";
 			exit;
 		}
 
 		if($VU_active=="N") {
 			echo "<select size=1 name=VD_campaign id=VD_campaign onFocus=\"login_allowable_campaigns()\">\n";
-			echo "<option value=\"\">-- AGENT: IN-ACTIVE --</option>\n";
+			echo "<option value=\"\">-- ".strtoupper($lang['agent'])."/: ".strtoupper($lang['inactive'])." --</option>\n";
 			echo "</select><br>\n";
-			echo "<font size=2 color=white><b>AGENT: IN-ACTIVE</b></font>\n";
+			echo "<font size=2 color=white><b>".strtoupper($lang['agent']).": ".strtoupper($lang['inactive'])."</b></font>\n";
 			exit;
 		}
 
@@ -887,7 +907,7 @@ if ($ACTION == 'LogiNCamPaigns')
 		if (!$authphone)
 			{
 			echo "<select size=1 name=VD_campaign id=VD_campaign onFocus=\"login_allowable_campaigns()\">\n";
-			echo "<option value=\"invalidphone\">-- PHONE LOGIN IN-ACTIVE --</option>\n";
+			echo "<option value=\"invalidphone\">-- ".strtoupper($lang['phone_login'])." ".strtoupper($lang['inactive'])." --</option>\n";
 			echo "</select>\n";
 			exit;
 			}
@@ -950,7 +970,7 @@ if ($ACTION == 'LogiNCamPaigns')
 		$shift_ok=0;
 		if ( (strlen($LOGgroup_shiftsSQL) < 3) and ($VU_shift_override_flag < 1) )
 			{
-			$VDdisplayMESSAGE = "<B>ERROR: There are no Shifts enabled for your user group</B>\n";
+			$VDdisplayMESSAGE = "<B>{$lang['error_no_shift_enabled']}</B>\n";
 			$VDloginDISPLAY=1;
 			}
 		else
@@ -1003,22 +1023,22 @@ if ($ACTION == 'LogiNCamPaigns')
 
 			if ( ($shift_ok < 1) and ($VU_shift_override_flag < 1) )
 				{
-				$VDdisplayMESSAGE = "<B>ERROR: You are not allowed to log in outside of your shift</B>\n";
+				$VDdisplayMESSAGE = "<B>{$lang['error_not_allowed_to_login']}</B>\n";
 				$VDloginDISPLAY=1;
 				}
 			}
 		if ($VDloginDISPLAY > 0)
 			{
 			$loginDATE = date("Ymd");
-			$VDdisplayMESSAGE.= "<BR><BR>MANAGER OVERRIDE:<BR>\n";
+			$VDdisplayMESSAGE.= "<BR><BR>{$lang['manager_override']}:<BR>\n";
 			$VDdisplayMESSAGE.= "<FORM ACTION=\"$PHP_SELF\" METHOD=POST>\n";
 			$VDdisplayMESSAGE.= "<INPUT TYPE=HIDDEN NAME=MGR_override VALUE=\"1\">\n";
 			$VDdisplayMESSAGE.= "<INPUT TYPE=HIDDEN NAME=relogin VALUE=\"YES\">\n";
 			$VDdisplayMESSAGE.= "<INPUT TYPE=HIDDEN NAME=VD_login VALUE=\"$user\">\n";
 			$VDdisplayMESSAGE.= "<INPUT TYPE=HIDDEN NAME=VD_pass VALUE=\"$pass\">\n";
-			$VDdisplayMESSAGE.= "Manager Login: <INPUT TYPE=TEXT NAME=\"MGR_login$loginDATE\" SIZE=10 MAXLENGTH=20><br>\n";
-			$VDdisplayMESSAGE.= "Manager Password: <INPUT TYPE=PASSWORD NAME=\"MGR_pass$loginDATE\" SIZE=10 MAXLENGTH=20><br>\n";
-			$VDdisplayMESSAGE.= "<INPUT TYPE=SUBMIT NAME=SUBMIT VALUE=SUBMIT></FORM><BR><BR><BR><BR>\n";
+			$VDdisplayMESSAGE.= "{$lang['manager_login']}: <INPUT TYPE=TEXT NAME=\"MGR_login$loginDATE\" SIZE=10 MAXLENGTH=20><br>\n";
+			$VDdisplayMESSAGE.= "{$lang['manager_password']}: <INPUT TYPE=PASSWORD NAME=\"MGR_pass$loginDATE\" SIZE=10 MAXLENGTH=20><br>\n";
+			$VDdisplayMESSAGE.= "<INPUT TYPE=SUBMIT NAME=SUBMIT VALUE={$lang['submit']}></FORM><BR><BR><BR><BR>\n";
 			echo "$VDdisplayMESSAGE";
 			exit;
 			}
@@ -1032,7 +1052,7 @@ if ($ACTION == 'LogiNCamPaigns')
 		$camps_to_print = mysql_num_rows($rslt);
 
 		echo "<select class=\"selectcss\" size=1 name=VD_campaign id=VD_campaign style=\"font-family: Arial, Helvetica, sans-serif; font-size: 12px;\">\n";
-		echo "<option value=\"\">-- PLEASE SELECT A CAMPAIGN --</option>\n";
+		echo "<option value=\"\">-- {$lang['please_select_campaign']} --</option>\n";
 
 		$o=0;
 		while ($camps_to_print > $o) 
@@ -1046,7 +1066,7 @@ if ($ACTION == 'LogiNCamPaigns')
 	else
 		{
 		echo "<select size=1 name=VD_campaign id=VD_campaign onFocus=\"login_allowable_campaigns()\" style=\"font-family: Arial, Helvetica, sans-serif; font-size: 12px;\">\n";
-		echo "<option value=\"\">-- YOU MUST LOG IN TO THE TIMECLOCK FIRST --</option>\n";
+		echo "<option value=\"\">-- {$lang['login_to_timeclock_first']} --</option>\n";
 		echo "</select>\n";
 		}
 
@@ -1071,7 +1091,7 @@ if ($ACTION == 'regCLOSER')
 	if ( (strlen($closer_choice)<1) || (strlen($user)<1) )
 		{
 		$channel_live=0;
-		echo "Group Choice $closer_choice is not valid\n";
+		echo "{$lang['group_choice']} $closer_choice {$lang['is_not_valid']}\n";
 		exit;
 		}
 	else
@@ -1210,7 +1230,7 @@ if ($ACTION == 'regCLOSER')
 			}
 
 		}
-	echo "Closer In Group Choice $closer_choice has been registered to user $user\n";
+	echo "{$lang['closer_ingroup_choice']} $closer_choice {$lang['has_been_registered_to_user']} $user\n";
 	}
 
 
@@ -1228,7 +1248,7 @@ if ($ACTION == 'regTERRITORY')
 	if ( (strlen($agent_territories)<1) || (strlen($user)<1) )
 		{
 		$channel_live=0;
-		echo "Territory Choice $agent_territories is not valid\n";
+		echo "{$lang['territory_choice']} $agent_territories {$lang['is_not_valid']}\n";
 		exit;
 		}
 	else
@@ -1268,7 +1288,7 @@ if ($ACTION == 'regTERRITORY')
 		$rslt=mysql_query($stmt, $link);
 				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'00256',$user,$server_ip,$session_name,$one_mysql_log);}
 		}
-	echo "Territory Choice $agent_territories has been registered to user $user\n";
+	echo "{$lang['territory_choice']} $agent_territories {$lang['has_been_registered_to_user']} $user\n";
 	}
 
 
@@ -1378,12 +1398,12 @@ if ($ACTION == 'UpdateFields')
 			}
 		else
 			{
-			echo "ERROR: no lead info in system: $lead_id\n";
+			echo "{$lang['error_no_lead_info_in_system']}: $lead_id\n";
 			}
 		}
 	else
 		{
-		echo "ERROR: no lead active for this agent\n";
+		echo "{$lang['error_no_lead_active_for_agent']}\n";
 		}
 	}
 

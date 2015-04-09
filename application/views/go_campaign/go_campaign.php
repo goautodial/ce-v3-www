@@ -974,7 +974,7 @@ function addNewStatus()
 </script>
 <div id='outbody' class="wrap">
 <div id="icon-campaign" class="icon32"></div>
-<div style="float: right;margin-top:15px;margin-right:25px;"><span id="showAllLists" style="display: none">[Clear Search]</span>&nbsp;<?=form_input('search_list',null,'id="search_list" maxlength="100" placeholder="Search '.$bannertitle.'"') ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_list_button" style="cursor: pointer;" /></div>
+<div style="float: right;margin-top:15px;margin-right:25px;"><span id="showAllLists" style="display: none">[<? echo lang('go_ClearSearch'); ?>]</span>&nbsp;<?=form_input('search_list',null,'id="search_list" maxlength="100" placeholder="'.lang('go_Search').' '.$bannertitle.'"') ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_list_button" style="cursor: pointer;" /></div>
 <h2><? echo $bannertitle; ?></h2>
 	<div id="dashboard-widgets-wrap">
 		<div id="dashboard-widgets" class="metabox-holder">
@@ -984,23 +984,23 @@ function addNewStatus()
 
 					<!-- GO REPORTS WIDGET -->
 					<div id="account_info_status" class="postbox">
-						<div class="rightdiv toolTip" id="add_campaign" title="Add New Campaign">
-							Add New Campaign <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
+						<div class="rightdiv toolTip" id="add_campaign" title="<? echo lang('go_AddNewCampTooltip'); ?>">
+							<?php echo lang('go_AddNewCampaign'); ?> <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
 						</div>
-						<div class="rightdiv toolTip" style="display:none;" id="add_status" title="Add New Status">
-							Add New Status <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
+						<div class="rightdiv toolTip" style="display:none;" id="add_status" title="<?php echo lang('go_AddNewStatusTooltip'); ?>">
+							<?php echo lang('go_AddNewStatus'); ?> <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
 						</div>
-						<div class="rightdiv toolTip" style="display:none;" id="add_lead_recycle" title="Add New Lead Recycle">
-							Add New Lead Recycle <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
+						<div class="rightdiv toolTip" style="display:none;" id="add_lead_recycle" title="<?php echo lang('go_AddNewLeadRecycleTooltip'); ?>">
+							<?php echo lang('go_AddNewLeadRecycle'); ?> <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
 						</div>
-						<div class="rightdiv toolTip" style="display:none;" id="add_pause_code" title="Add New Pause Code">
-							Add New Pause Code <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
+						<div class="rightdiv toolTip" style="display:none;" id="add_pause_code" title="<?php echo lang('go_AddNewPauseCodeTooltip'); ?>">
+							<?php echo lang('go_AddNewPauseCode'); ?> <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
 						</div>
-						<div class="rightdiv toolTip" style="display:none;" id="add_hotkey" title="Add New HotKey">
-							Add New HotKey <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
+						<div class="rightdiv toolTip" style="display:none;" id="add_hotkey" title="<?php echo lang('go_AddNewHotKeyTooltip'); ?>">
+							<?php echo lang('go_AddNewHotKey'); ?> <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
 						</div>
-						<div class="rightdiv toolTip" style="display:none;" id="add_filter" title="Add New Filter">
-							Add New Filter <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
+						<div class="rightdiv toolTip" style="display:none;" id="add_filter" title="<?php echo lang('go_AddNewFilterTooltip'); ?>">
+							<?php echo lang('go_AddNewFilter'); ?> <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
 						</div>
 						<div class="hndle">
 							<span><span id="title_bar" />&nbsp;<!--Campaign Listings--></span><!-- Title Bar -->
@@ -1009,7 +1009,7 @@ function addNewStatus()
 						</div>
 						<div class="inside">
 
-                            <div style="margin:<?php echo (preg_match("/^Windows/",$userOS)) ? "-23px" : "-22px"; ?> 0px -2px -10px;" id="request_tab"><span id="showList" class="tabtoggle menuOn">Campaigns</span><span id="showStatuses" class="tabtoggle menuOff">Dispositions</span><span id="showLeadRecycling" class="tabtoggle menuOff">Lead Recycling</span><span id="showPauseCodes" class="tabtoggle menuOff">Pause Codes</span><span id="showHotKeys" class="tabtoggle menuOff">HotKeys</span><span id="showFilters" class="tabtoggle menuOff">Lead Filters</span><span id="showRealtime" class="tabtoggle menuOff hidden">Real-time Monitoring</span><span id="request" style="display:none;">showList</span></div>
+                            <div style="margin:<?php echo (preg_match("/^Windows/",$userOS)) ? "-23px" : "-22px"; ?> 0px -2px -10px;" id="request_tab"><span id="showList" class="tabtoggle menuOn"><? echo lang('go_Campaigns'); ?></span><span id="showStatuses" class="tabtoggle menuOff"><? echo lang('go_Dispositions'); ?></span><span id="showLeadRecycling" class="tabtoggle menuOff"><? echo lang('go_LeadRecycling'); ?></span><span id="showPauseCodes" class="tabtoggle menuOff"><? echo lang('go_PauseCode'); ?></span><span id="showHotKeys" class="tabtoggle menuOff">HotKeys</span><span id="showFilters" class="tabtoggle menuOff"><? echo lang('go_LeadFilters'); ?></span><span id="showRealtime" class="tabtoggle menuOff hidden">Real-time Monitoring</span><span id="request" style="display:none;">showList</span></div>
 
 							<div class="table_campaigns">
                                 <div id="table_reports">
@@ -1062,93 +1062,93 @@ function addNewStatus()
 <!-- Overlay1 -->
 <div id="overlay" style="display:none;"></div>
 <div id="box">
-<a id="closebox" class="toolTip" title="CLOSE"></a>
+<a id="closebox" class="toolTip" title="<? echo lang('go_CLOSE'); ?>"></a>
 <div id="overlayContent"></div>
 </div>
 
 <!-- Overlay2 -->
 <div id="statusOverlay" style="display:none;"></div>
 <div id="statusBox">
-<a id="statusClosebox" class="toolTip" title="CLOSE"></a>
+<a id="statusClosebox" class="toolTip" title="<? echo lang('go_CLOSE'); ?>"></a>
 <div id="statusOverlayContent"></div>
 </div>
 
 <!-- Hopper Overlay -->
 <div id="hopperOverlay" style="display:none;"></div>
 <div id="hopperBox">
-<a id="hopperClosebox" class="toolTip" title="CLOSE"></a>
+<a id="hopperClosebox" class="toolTip" title="<? echo lang('go_CLOSE'); ?>"></a>
 <div id="hopperOverlayContent"></div>
 </div>
 
 <!-- Action Menu -->
 <div id='go_action_menu' class='go_action_menu'>
 <ul>
-<li class="go_action_submenu" title="Activate Selected" id="activate">Activate Selected</li>
-<li class="go_action_submenu" title="Deactivate Selected" id="deactivate">Deactivate Selected</li>
-<li class="go_action_submenu" title="Delete Selected" id="delete">Delete Selected</li>
+<li class="go_action_submenu toolTip" title="<? echo lang('go_ActivateSelected'); ?>" id="activate"> <? echo lang('go_ActivateSelected'); ?></li>
+<li class="go_action_submenu toolTip" title="<? echo lang('go_DeactivatedSelected'); ?>" id="deactivate"><? echo lang('go_DeactivatedSelected'); ?></li>
+<li class="go_action_submenu toolTip" title="<? echo lang('go_DeleteSelected'); ?>" id="delete"><? echo  lang('go_DeleteSelected'); ?></li>
 </ul>
 </div>
 
 <!-- Status Menu -->
 <div id='go_status_menu' class='go_action_menu'>
 <ul>
-<li class="go_status_submenu" title="Delete Selected" id="delete_status">Delete Selected</li>
+<li class="go_status_submenu" title="Delete Selected" id="delete_status"><? echo lang('go_DeleteSelected'); ?></li>
 </ul>
 </div>
 
 <!-- Campaign Status Menu -->
 <div id='go_camp_status_menu' class='go_action_menu'>
 <ul>
-<li class="go_camp_status_submenu" title="Delete Selected" id="delete_status">Delete Selected</li>
+<li class="go_camp_status_submenu" title="Delete Selected" id="delete_status"><? echo lang('go_DeleteSelected'); ?></li>
 </ul>
 </div>
 
 <!-- Lead Recycle Menu -->
 <div id='go_lead_recycle_menu' class='go_action_menu'>
 <ul>
-<li class="go_lead_recycle_submenu" title="Delete Selected" id="delete_status">Delete Selected</li>
+<li class="go_lead_recycle_submenu" title="Delete Selected" id="delete_status"><? echo lang('go_DeleteSelected'); ?></li>
 </ul>
 </div>
 
 <!-- Campaign Lead Recycle Menu -->
 <div id='go_camp_lead_recycle_menu' class='go_action_menu'>
 <ul>
-<li class="go_camp_lead_recycle_submenu" title="Delete Selected" id="delete_status">Delete Selected</li>
+<li class="go_camp_lead_recycle_submenu" title="Delete Selected" id="delete_status"><? echo lang('go_DeleteSelected'); ?></li>
 </ul>
 </div>
 
 <!-- Pause Codes Menu -->
 <div id='go_pausecodes_menu' class='go_action_menu'>
 <ul>
-<li class="go_pausecodes_submenu" title="Delete Selected" id="delete_status">Delete Selected</li>
+<li class="go_pausecodes_submenu" title="Delete Selected" id="delete_status"><? echo lang('go_DeleteSelected'); ?></li>
 </ul>
 </div>
 
 <!-- Campaign Pause Codes Menu -->
 <div id='go_camp_pausecodes_menu' class='go_action_menu'>
 <ul>
-<li class="go_camp_pausecodes_submenu" title="Delete Selected" id="delete_status">Delete Selected</li>
+<li class="go_camp_pausecodes_submenu" title="Delete Selected" id="delete_status"><? echo lang('go_DeleteSelected'); ?></li>
 </ul>
 </div>
 
 <!-- HotKeys Menu -->
 <div id='go_hotkeys_menu' class='go_action_menu'>
 <ul>
-<li class="go_hotkeys_submenu" title="Delete Selected" id="delete_status">Delete Selected</li>
+<li class="go_hotkeys_submenu" title="Delete Selected" id="delete_status"><? echo lang('go_DeleteSelected'); ?></li>
 </ul>
 </div>
 
 <!-- Campaign HotKeys Menu -->
 <div id='go_camp_hotkeys_menu' class='go_action_menu'>
 <ul>
-<li class="go_camp_hotkeys_submenu" title="Delete Selected" id="delete_status">Delete Selected</li>
+<li class="go_camp_hotkeys_submenu" title="Delete Selected" id="delete_status"><? echo lang('go_DeleteSelected'); ?></li>
 </ul>
 </div>
 
 <!-- Filters Menu -->
 <div id='go_filters_menu' class='go_action_menu'>
 <ul>
-<li class="go_filters_submenu" title="Delete Selected" id="delete_filters">Delete Selected</li>
+<li class="go_filters_submenu" title="Delete Selected" id="delete_filters"><? echo lang('go_DeleteSelected'); ?></li>
 </ul>
 </div>
 
@@ -1156,7 +1156,7 @@ function addNewStatus()
 <div id="showDebug" style="display: none"></div>
 
 <div id="hiddenToggle" style="display: none"></div>
-<div id="wizardSpan" style="display: none">false</div>
+<div id="wizardSpan" style="display: none"><? echo lang('go_false'); ?></div>
 <div class="clear" style="display: none"></div></div><!-- wpbody-content -->
 <div class="clear" style="display: none"></div></div><!-- wpbody -->
 <div class="clear" style="display: none"></div></div><!-- wpcontent -->

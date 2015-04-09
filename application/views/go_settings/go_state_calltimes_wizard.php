@@ -94,7 +94,7 @@ $(function()
 			//$('#aloading').empty().html('<img src="<? echo $base; ?>img/loading.gif" />');
 			$('#aloading').load('<? echo $base; ?>index.php/go_calltimes_ce/go_check_state_calltimes/'+$(this).val());
 		} else {
-			$('#aloading').html("<small style=\"color:red;\">Minimum of 3 characters.</small>");
+			$('#aloading').html("<small style=\"color:red;\"><? echo $this->lang->line("go_min_3_char"); ?>.</small>");
 		}
 	});
 	
@@ -143,7 +143,7 @@ $(function()
 		
 		if ($('#aloading').html().match(/Not Available/))
 		{
-			alert("State Call Time ID Not Available.");
+			alert("<? echo $this->lang->line("go_state_call_time_id_navailable"); ?>.");
 			$('#state_call_time_id').css('border','solid 1px red');
 			isEmpty = 1;
 		}
@@ -190,7 +190,7 @@ $(function()
 		
 		if ($('#aloading').html().match(/Not Available/))
 		{
-			alert("State Call Time ID Not Available.");
+			alert("<? echo $this->lang->line("go_state_call_not_avai"); ?>.");
 			isEmpty = 1;
 		}
 		
@@ -201,7 +201,7 @@ $(function()
 			function(data){
 				if (data=="SUCCESS")
 				{
-					alert("SUCCESS: Added New State Call Time ID.");
+					alert("<? echo $this->lang->line("go_success_added_new_state_ct"); ?>.");
 				
 					$('#box').animate({'top':'-2550px'},500);
 					$('#overlay').fadeOut('slow');
@@ -211,7 +211,7 @@ $(function()
 	
 				if (data=="FAILED")
 				{
-					alert("A state call time id already exist.");
+					alert("<? echo $this->lang->line("go_state_Call_exist"); ?>");
 				}
 			});
 		}
@@ -271,7 +271,7 @@ $(function()
 </script>
 
 <div style="float:right;" id="small_step_number"><img src="<?php echo $base; ?>img/step1of2-navigation-small.png" /></div>
-<div style="font-weight:bold;font-size:16px;color:#333;" id="header">State Call Times Wizard &raquo; Add New State Call Time</div>
+<div style="font-weight:bold;font-size:16px;color:#333;" id="header"><? echo $this->lang->line("go_state_ct_wizard"); ?> &raquo; <? echo $this->lang->line("go_add_new_state_ct"); ?></div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
 
@@ -286,7 +286,7 @@ $(function()
                 <table id="stepOne" style="width:100%;">
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        State Call Time ID:
+                        <? echo $this->lang->line("go_state_ct_time_id"); ?>:
                         </td>
                         <td>
                         <?=form_input('state_call_time_id',null,'id="state_call_time_id" maxlength="10" size="12"') ?>
@@ -295,7 +295,7 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        State Call Time State:
+                        <? echo $this->lang->line("go_state_ct_state"); ?>:
                         </td>
                         <td>
                         <?=form_input('state_call_time_state',null,'id="state_call_time_state" maxlength="2" size="3"') ?>
@@ -303,7 +303,7 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        State Call Time Name:
+                        <? echo $this->lang->line("go_state_ct"); ?>:
                         </td>
                         <td>
                         <?=form_input('state_call_time_name',null,'id="state_call_time_name" maxlength="30" size="25"') ?>
@@ -311,7 +311,7 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;white-space:nowrap;">
-                        State Call Time Comments:
+                        <? echo $this->lang->line("go_state_ct_comments"); ?>:
                         </td>
                         <td>
                         <?=form_input('state_call_time_comments',null,'id="state_call_time_comments" maxlength="255" size="40"') ?>
@@ -319,11 +319,11 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        User Group:
+                        <? echo $this->lang->line("go_user_group"); ?>:
                         </td>
                         <td>
                         <?php
-						$groupArray = array("---ALL---"=>"ALL USER GROUPS");
+						$groupArray = array("---{$this->lang->line("go_all")}---"=>strtoupper($this->lang->line("go_all_user_groups")));
 						foreach ($user_groups as $group)
 						{
 							$groupArray[$group->user_group] = "{$group->user_group} - {$group->group_name}";
@@ -339,46 +339,46 @@ $(function()
 							<table border="0" cellpadding="0" cellspacing="0" style="width:50%; margin-left:auto; margin-right:auto;">
 								<tr>
 									<td style="font-weight:bold;width: 10%;">&nbsp;</td>
-									<td style="font-weight:bold;">START</td>
-									<td style="font-weight:bold;">STOP</td>
+                                                                        <td style="font-weight:bold;"><? echo $this->lang->line("go_start"); ?></td>
+                                                                        <td style="font-weight:bold;"><? echo $this->lang->line("go_stop"); ?></td>
 								</tr>
 								<tr>
-									<td style="text-align: right;white-space: nowrap;">Default: &nbsp; </td>
-									<td><?=form_input('sct_default_start','0','id="ct_default_start" maxlength="4" size="5"') ?></td>
-									<td><?=form_input('sct_default_stop','0','id="ct_default_stop" maxlength="4" size="5"') ?></td>
-								</tr>
-								<tr>
-									<td style="text-align: right;white-space: nowrap;">Sunday: &nbsp; </td>
-									<td><?=form_input('sct_sunday_start','0','id="ct_sunday_start" maxlength="4" size="5"') ?></td>
-									<td><?=form_input('sct_sunday_stop','0','id="ct_sunday_stop" maxlength="4" size="5"') ?></td>
-								</tr>
-								<tr>
-									<td style="text-align: right;white-space: nowrap;">Monday: &nbsp; </td>
-									<td><?=form_input('sct_monday_start','0','id="ct_monday_start" maxlength="4" size="5"') ?></td>
-									<td><?=form_input('sct_monday_stop','0','id="ct_monday_stop" maxlength="4" size="5"') ?></td>
-								</tr>
-								<tr>
-									<td style="text-align: right;white-space: nowrap;">Tuesday: &nbsp; </td>
-									<td><?=form_input('sct_tuesday_start','0','id="ct_tuesday_start" maxlength="4" size="5"') ?></td>
-									<td><?=form_input('sct_tuesday_stop','0','id="ct_tuesday_stop" maxlength="4" size="5"') ?></td>
-								</tr>
-								<tr>
-									<td style="text-align: right;white-space: nowrap;">Wednesday: &nbsp; </td>
-									<td><?=form_input('sct_wednesday_start','0','id="ct_wednesday_start" maxlength="4" size="5"') ?></td>
-									<td><?=form_input('sct_wednesday_stop','0','id="ct_wednesday_stop" maxlength="4" size="5"') ?></td>
-								</tr>
-								<tr>
-									<td style="text-align: right;white-space: nowrap;">Thursday: &nbsp; </td>
-									<td><?=form_input('sct_thursday_start','0','id="ct_thursday_start" maxlength="4" size="5"') ?></td>
-									<td><?=form_input('sct_thursday_stop','0','id="ct_thursday_stop" maxlength="4" size="5"') ?></td>
-								</tr>
-								<tr>
-									<td style="text-align: right;white-space: nowrap;">Friday: &nbsp; </td>
-									<td><?=form_input('sct_friday_start','0','id="ct_friday_start" maxlength="4" size="5"') ?></td>
-									<td><?=form_input('sct_friday_stop','0','id="ct_friday_stop" maxlength="4" size="5"') ?></td>
-								</tr>
-								<tr>
-									<td style="text-align: right;white-space: nowrap;">Saturday: &nbsp; </td>
+                                                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_default"); ?>: &nbsp; </td>
+                                                                        <td><?=form_input('sct_default_start','0','id="ct_default_start" maxlength="4" size="5"') ?></td>
+                                                                        <td><?=form_input('sct_default_stop','0','id="ct_default_stop" maxlength="4" size="5"') ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_sun"); ?>: &nbsp; </td>
+                                                                        <td><?=form_input('sct_sunday_start','0','id="ct_sunday_start" maxlength="4" size="5"') ?></td>
+                                                                        <td><?=form_input('sct_sunday_stop','0','id="ct_sunday_stop" maxlength="4" size="5"') ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_mon"); ?>: &nbsp; </td>
+                                                                        <td><?=form_input('sct_monday_start','0','id="ct_monday_start" maxlength="4" size="5"') ?></td>
+                                                                        <td><?=form_input('sct_monday_stop','0','id="ct_monday_stop" maxlength="4" size="5"') ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_tues"); ?>: &nbsp; </td>
+                                                                        <td><?=form_input('sct_tuesday_start','0','id="ct_tuesday_start" maxlength="4" size="5"') ?></td>
+                                                                        <td><?=form_input('sct_tuesday_stop','0','id="ct_tuesday_stop" maxlength="4" size="5"') ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_wed"); ?>: &nbsp; </td>
+                                                                        <td><?=form_input('sct_wednesday_start','0','id="ct_wednesday_start" maxlength="4" size="5"') ?></td>
+                                                                        <td><?=form_input('sct_wednesday_stop','0','id="ct_wednesday_stop" maxlength="4" size="5"') ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_thurs"); ?>: &nbsp; </td>
+                                                                        <td><?=form_input('sct_thursday_start','0','id="ct_thursday_start" maxlength="4" size="5"') ?></td>
+                                                                        <td><?=form_input('sct_thursday_stop','0','id="ct_thursday_stop" maxlength="4" size="5"') ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_fri"); ?>: &nbsp; </td>
+                                                                        <td><?=form_input('sct_friday_start','0','id="ct_friday_start" maxlength="4" size="5"') ?></td>
+                                                                        <td><?=form_input('sct_friday_stop','0','id="ct_friday_stop" maxlength="4" size="5"') ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <td style="text-align: right;white-space: nowrap;"><? echo $this->lang->line("go_sat"); ?>: &nbsp; </td>
 									<td><?=form_input('sct_saturday_start','0','id="ct_saturday_start" maxlength="4" size="5"') ?></td>
 									<td><?=form_input('sct_saturday_stop','0','id="ct_saturday_stop" maxlength="4" size="5"') ?></td>
 								</tr>
@@ -392,4 +392,4 @@ $(function()
 	</tr>
 </table>
 <hr style="border:#DFDFDF 1px solid;" />
-<span id="saveButtons"><span id="back" style="white-space: nowrap;display: none;">Back</span><span class="separator"> | </span><span id="next" style="white-space: nowrap;">Next</span><span id="submit" style="white-space: nowrap;display: none;">Submit</span></span>
+<span id="saveButtons"><span id="back" style="white-space: nowrap;display: none;"><? echo $this->lang->line("go_back"); ?></span><span class="separator"> | </span><span id="next" style="white-space: nowrap;"><? echo $this->lang->line("go_next"); ?></span><span id="submit" style="white-space: nowrap;display: none;"><? echo $this->lang->line("go_submit"); ?></span></span>

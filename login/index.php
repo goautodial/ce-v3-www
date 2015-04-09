@@ -30,7 +30,7 @@ if (file_exists("/etc/goautodial.conf")) {
 } elseif (file_exists("{$_SERVER['DOCUMENT_ROOT']}/goautodial.conf")) {
 	$conf_path = "{$_SERVER['DOCUMENT_ROOT']}/goautodial.conf";
 } else {
-	die ("ERROR: 'goautodial.conf' file not found.");
+	die ($lang['go_conf_file_not_found']);
 }
 
 if ( file_exists($conf_path) )
@@ -57,7 +57,7 @@ if (file_exists("/etc/astguiclient.conf")) {
 } elseif (file_exists("{$_SERVER['DOCUMENT_ROOT']}/astguiclient.conf")) {
 	$conf_path = "{$_SERVER['DOCUMENT_ROOT']}/astguiclient.conf";
 } else {
-	die ("ERROR: 'astguiclient.conf' file not found.");
+	die ($lang['go_ast_file_not_found']);
 }
 
 if ( file_exists($conf_path) )
@@ -88,15 +88,14 @@ if ( file_exists($conf_path) )
 $link=mysql_connect("$VARDB_server:$VARDB_port", "$VARDB_user", "$VARDB_pass");
 if (!$link)
         {
-	die('MySQL connect ERROR: ' . mysql_error());
+	die($lang['go_mysql_connect_error'] . mysql_error());
         }
 mysql_select_db("$VARDB_database");
-
 
 $golink=mysql_connect("$GOdbHostname:$VARDB_port", "$GOdbUsername", "$GOdbPassword");
 if (!$golink)
         {
-	die('MySQL connect ERROR: ' . mysql_error());
+	die($lang['go_mysql_connect_error'] . mysql_error());
         }
 
 
@@ -142,6 +141,12 @@ if (isset($_GET["f_rtype_pass"])) {
         $f_rtype_pass=$_POST["f_rtype_pass"];
 }
 
+if (isset($_GET["sgo_language"])) {
+        $sgo_language = $_GET["sgo_language"];
+} elseif (isset($_POST["sgo_language"])) {
+        $sgo_language=$_POST["sgo_language"];
+}
+
 
 $stmt = "SELECT company_name,company_logo,login_button FROM `$GOdbDatabase`.`go_server_settings`";
 $rslt = mysql_query($stmt, $golink);
@@ -159,18 +164,54 @@ window.location = "https://"+window.location.host+"/login/"
 <?php
 }
 
+//multi_lang
+$query_defLang = "SELECT default_language FROM system_settings;";
+$rsltdefLang = mysql_query($query_defLang, $link);
+$cnt_defLang = mysql_num_rows($rsltdefLang);
 
+        if($cnt_defLang > 0) {
+                $rowDeflang=mysql_fetch_row($rsltdefLang);
+                $def_lang = $rowDeflang[0];
+        }
+
+$querylang = "SELECT lang,name FROM `$GOdbDatabase`.go_language;";
+$rsltlang=mysql_query($querylang, $golink);
+$cnt_lang = mysql_num_rows($rsltlang);
+
+        if ($cnt_lang > 0) {
+                $l = 0;
+                $LangLink = '';
+                while ($cnt_lang > $l) {
+                        $rowlang=mysql_fetch_row($rsltlang);
+                        $lowerlang = strtolower($rowlang[1]);
+                        $LangLink .= "<div id=\"flag-$rowlang[0]\" class=\"flags\" ><a href=\"?sgo_language=$lowerlang\" style=\"display: block; font-size: 10px;\"  title=\"$rowlang[1]\">&nbsp; </a></div>";
+                $l++;
+                }
+        }
+
+if(strlen($sgo_language) > 0) {
+$_SESSION['xsgo_language'] = $sgo_language;
+$vgo_language = $_SESSION['xsgo_language'];
+
+$settings_path = "{$_SERVER['DOCUMENT_ROOT']}/application/language/$sgo_language/login_lang.php";
+include($settings_path);
+} else {
+$vgo_language = "english";
+$settings_path = "{$_SERVER['DOCUMENT_ROOT']}/application/language/$vgo_language/login_lang.php";
+include($settings_path);
+}
 
 
 ?>
 
 <html>
 <head>
-<title><? echo $COMPANYNAME; ?> - Empowering the Next Generation Contact Centers</title>
+<title><? echo $COMPANYNAME; ?> - <? echo $lang['go_empowering_generation']; ?></title>
 <link rel="shortcut icon" href="../img/gologoico.ico" />
 <meta http-equiv="Content-Type"sdf content="text/html; charset=utf-8">
 
 <!--<link rel="stylesheet" type="text/css" href="css/style.css">-->
+<link rel="stylesheet" type="text/css" href="../css/go_select_language.php" />
 <link rel="stylesheet" type="text/css" media="screen" href="css/style.php">
 
 <script type="text/javascript">
@@ -189,13 +230,13 @@ $(document).ready(function(){
     	    var pass = $("input#user_pass").val();
     	
     	    if(name=="" || name==null) {
-    		alert("Please enter your username.");
+    		alert("<? echo $lang['go_pls_enter_username']; ?>");
     		$("#user_name").focus();
     		return false;	
     	    }
     	
     	    if(pass=="" || pass==null) {
-    		alert("Please enter you password.");
+    		alert("<? echo $lang['go_pls_enter_pass']; ?>");
     		$("#user_pass").focus();
     		return false;	
     	    }
@@ -212,7 +253,7 @@ $(document).ready(function(){
       		
 	   			if (data=="Authenticated"){
 					$('#messageid').css("color","green");
-					$('#messageid').text('Redirecting...').fadeIn('fast');
+					$('#messageid').text('<? echo $lang['go_redirecting'] ?>').fadeIn('fast');
 					window.location = "https://<?=$_SERVER['SERVER_NAME'];?>/dashboard";
 	   			} else {
 	   				$('#messageid').text(data).fadeIn('fast').fadeOut(3000);
@@ -317,11 +358,15 @@ $(document).ready(function(){
 			<a href="http://goautodial.com" title="GOautodial" taget="_new">
 				<img src="smalllogo.png" border="0" style="padding-top:2px">
 			</a>
+			&nbsp;&nbsp;
 		 </span>
 		 <span style="margin-right: 1%; font-size: 13px; margin-top: 8px; float: right;">
-				<a href="http://<?=$_SERVER['SERVER_NAME']?>/agent/" class="go_menu_list" style="color:#FFFFFF;text-decoration:none;"><b>Agent Login</b></a>
+				<a href="http://<?=$_SERVER['SERVER_NAME']?>/agent/" class="go_menu_list" style="color:#FFFFFF;text-decoration:none;"><b><? echo strtoupper($lang['go_agent_login']); ?></b></a>
 		 </span>
 	</div>
+                 <span style="margin-left: 1%;padding-top:5px;float:left;">
+		<? echo $LangLink; ?>
+		</span>
 <br><br><br><br>
 <center>
 <?
@@ -362,12 +407,12 @@ if($forgotpass==1) {
                                                         <tr>
                                                                 <!-- <td align="center" style="padding-left:35px;"> -->
                                                                 <td align="center">
-                                                                        <font color="black">Account Number / Web Login:</a>
+                                                                        <font color="black"><? echo $lang['go_account_number']; ?></a>
                                                                 </td>
                                                         </tr>
                                                         <tr>
                                                                 <td align="center">
-                                                                        <input class="form_input_button" type="text" title="Your Account Number/Web Login" name="f_accnt_web" id="f_accnt_web" size="30">
+                                                                        <input class="form_input_button" type="text" title="<? echo $lang['go_account_number']; ?>" name="f_accnt_web" id="f_accnt_web" size="30">
                                                                 </td>
                                                         </tr>
 							<tr>
@@ -375,7 +420,7 @@ if($forgotpass==1) {
 							</tr>
 							<tr>
 								<td align="center">
-									<input src="portal-forgot-button.png" title="Send to email" style="vertical-align: middle;width:130px;height:40px;" type="image">
+									<input src="portal-forgot-button.png" title="<? echo  $lang['go_send_email']; ?>" style="vertical-align: middle;width:130px;height:40px;" type="image">
 								</td>
 							</tr>
 					</table>
@@ -427,7 +472,7 @@ if($verifymail=="1") {
 
         if($struct=="0") {
 		echo "<div class=\"ce\">";
-		echo "<font color=\"red\" size=\"4\">The Account number does not exist.</font>";
+		echo "<font color=\"red\" size=\"4\">{$lang['go_the_account_does_not_exist'] }</font>";
                 echo "</div>";
 	} else {
 
@@ -456,22 +501,22 @@ if($verifymail=="1") {
 		#$tologinsippy = "https://dal.justgovoip.com/accounts.php";
 		$tologin = "https://".$_SERVER['SERVER_NAME']."/login/";
                 $to = "$sippyemail";
-                $headers = "From: noreply@justgocloud.com";
-                $subject = "JustGoCloud Admin Password retrival.";
+                $headers = "{$lang["go_from"]}: noreply@justgocloud.com";
+                $subject = "{$lang["go_justgocloud_admin_pass_ret"]}";
 
-                $message = "Please keep this email for your records. Your account information is as follows:
+                $message = "{$lang["go_pls_keep_this_email"] }:
 		
-		Account Number: $auth_accnt
+		{$lang["go_account_number"]}: $auth_accnt
 	        
-		JustGoCloud Admin URL: $tologin	
-		Web Admin Username: $goautouser
-		Web Admin Password: $goautopass
+		{$lang["go_justgocloud_admin_url"] }: $tologin	
+		{$lang["go_web_admin_username"] }: $goautouser
+		{$lang["go_admin_pass"] }: $goautopass
 
 		";
 		
 		mail($to,$subject,$message,$headers);
 		echo "<div class=\"ce\">";
-		echo "<font color=\"#428e00\" size=\"4\">Passwords sent to $sippyemail</font>";
+		echo "<font color=\"#428e00\" size=\"4\">{$lang["go_pass_sent"]} $sippyemail</font>";
 		echo "</div>";		
 	}
 
@@ -485,10 +530,11 @@ if($verifymail=="1") {
 ?>
 <div id="signupOverlay" style="display:none;"></div>
 <div id="signupBox">
-<a id="signupClosebox" class="toolTip" title="CLOSE"></a>
+<a id="signupClosebox" class="toolTip" title="<? echo $lang["go_close"];?>"></a>
 <div id="signupoverlayContent"></div>
 </div>
 <form name="form_login" id="form_login" method="POST" action="https://<?=$_SERVER['SERVER_NAME']?>/index.php" class="curvebox">
+<input type="hidden" name="ua_language" id="ua_language" value="<? echo $vgo_language; ?>">
 	<table align="center" border="0" cellpadding="0" cellspacing="0">
 		<tbody>
 			<tr>
@@ -506,29 +552,29 @@ if($verifymail=="1") {
 							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td align="left" style="padding-left:35px;">
-									<font color="black">Username:</font>
+									<font color="black"><? echo $lang["go_username"]; ?>:</font>
 								</td>
 							</tr>
 							<tr>
 								<td align="center">
-									<input class="form_input_button" type="text" title="Your username" name="user_name" id="user_name" size="30">
+									<input class="form_input_button" type="text" title="<? echo $lang["go_your_username"]; ?>" name="user_name" id="user_name" size="30">
 								</td>
 							</tr>
 							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td align="left" style="padding-left:35px;">
-									<font color="black">Password:</font>
+									<font color="black"><? echo $lang["go_password"];  ?>:</font>
 								</td>
 							</tr>
 							<tr>
 								<td align="center">
-									<input class="form_input_button" type="password" title="Your password" name="user_pass" id="user_pass" size="30">
+									<input class="form_input_button" type="password" title="<? echo $lang["go_your_pass"]; ?>" name="user_pass" id="user_pass" size="30">
 								</td>
 							</tr>
 							<tr><td>&nbsp;</td></tr>
 							<tr> 
 								<td align="center">
-									<input src="<?=$LOGINBUTTON?>" title="LOGIN" style="vertical-align: middle;width:130px;height:40px;" type="image">
+									<input src="<?=$LOGINBUTTON?>" title="<? echo $lang["go_login"]; ?>" style="vertical-align: middle;width:130px;height:40px;" type="image">
 								</td>
 							</tr>
 							<tr><td style="font-size:5px;">&nbsp;</td></tr>
@@ -563,9 +609,9 @@ if($verifymail=="1") {
 
  <div class='footer'>
    <table width="100%" >
-				<tr><td align="center" style="color: #6a6363; font-size: 10px;">GoAutoDial CE 3.0 comes with no guarantees or warranties of any sorts, either written or implied. The Distribution is released as <a href='../gplv2'>GPLv2</a>. Individual packages in the distribution come with their own licences.</td></tr>
-				<tr><td align="center" style="color: #6a6363; font-size: 10px;"><a href='http://goautodial.org'>GoAutoDial CE</a> &reg;, <a href='http://goautodial.com'>GoAutoDial</a> &reg;, <a href='http://justgocloud.com'>JustGoCloud</a> &reg; and <a href='http://justgovoip.com'>JustGoVoIP</a> &reg; are registered trademarks of GoAutoDial Inc.</td></tr>
-            			<tr><td align="center" style="color: #6a6363; font-size: 10px;">&copy; GoAutoDial Inc. 2010-2014 All Rights Reserved.</td></tr>
+				<tr><td align="center" style="color: #6a6363; font-size: 10px;"><? echo $lang["go_gad_ce"]; ?> <a href='../gplv2'>GPLv2</a>. <? echo $lang["go_ce1"]; ?></td></tr>
+				<tr><td align="center" style="color: #6a6363; font-size: 10px;"><a href='http://goautodial.org'>GoAutoDial CE</a> &reg;, <a href='http://goautodial.com'>GoAutoDial</a> &reg;, <a href='http://justgocloud.com'>JustGoCloud</a> &reg; <? echo $lang["go_and"]; ?> <a href='http://justgovoip.com'>JustGoVoIP</a> &reg; <? echo $lang["go_registered_trademark"]; ?></td></tr>
+            			<tr><td align="center" style="color: #6a6363; font-size: 10px;">&copy; <? echo $lang["go_gad_alr"]; ?></td></tr>
     </table>
    
 </div>

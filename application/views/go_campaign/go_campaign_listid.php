@@ -39,9 +39,9 @@ $(function()
 
 		if ($('#statuses_table').is(":hidden"))
 		{
-			$(this).html("<pre style=\"display:inline;\">[+]</pre> STATUSES WITHIN THE LIST");
+			$(this).html("<pre style=\"display:inline;\">[+]</pre> <? echo lang('go_STATUSESWITHINTHELIST'); ?>");
 		} else {
-			$(this).html("<pre style=\"display:inline;\">[-]</pre> STATUSES WITHIN THE LIST");
+			$(this).html("<pre style=\"display:inline;\">[-]</pre> <? echo lang('go_STATUSESWITHINTHELIST'); ?>");
 		}
 	});
 
@@ -51,9 +51,9 @@ $(function()
 
 		if ($('#timezones_table').is(":hidden"))
 		{
-			$(this).html("<pre style=\"display:inline;\">[+]</pre> TIMEZONES WITHIN THE LIST");
+			$(this).html("<pre style=\"display:inline;\">[+]</pre> <? echo lang('go_TIMEZONESWITHINTHELIST'); ?>");
 		} else {
-			$(this).html("<pre style=\"display:inline;\">[-]</pre> TIMEZONES WITHIN THE LIST");
+			$(this).html("<pre style=\"display:inline;\">[-]</pre> <? echo lang('go_TIMEZONESWITHINTHELIST'); ?>");
 		}
 	});
 });
@@ -161,10 +161,10 @@ A:hover {text-decoration: underline overline; color: red;}
 }
 </style>
 <center>
-    <div id="listid_edit" align="left" class="title-header">Modify List I.D. <?php echo $list_id; ?></div>
+    <div id="listid_edit" align="left" class="title-header"><? echo lang('go_ModifyListID'); ?> <?php echo $list_id; ?></div>
     <div align="left">
     <table width="100%">
-        <tr><td align="left"><div id="cdates">Change date: <?php echo $listid->list_changedate; ?></div></td><td align="right"><div id="lcdates">Last call date: <?php echo $listid->list_lastcalldate; ?></div></td></tr>
+        <tr><td align="left"><div id="cdates"><? echo lang('go_ChangeDate'); ?><?php echo $listid->list_changedate; ?></div></td><td align="right"><div id="lcdates"><? echo lang('go_LastCallDate'); ?> <?php echo $listid->list_lastcalldate; ?></div></td></tr>
     </table>
     
     
@@ -176,18 +176,18 @@ A:hover {text-decoration: underline overline; color: red;}
     <input type="hidden" name="showvaledit" id="showvaledit" value="">
     <table class="tableedit">
             <tr>
-                <td><br><label class="modify-value">Name:</label></td>
+                <td><br><label class="modify-value"><? echo lang('go_Name_'); ?></label></td>
                 <td><input type="text" name="list_name" id="listname_edit" size="30" maxlength="30" value="<?php echo $listid->list_name; ?>"></td>
             </tr>
             <tr>
-                <td><label class="modify-value">Description:</label></td>
+                <td><label class="modify-value"><? echo lang('go_Description_'); ?></label></td>
                 <td><input type="text" name="list_description" id="listdesc_edit" size="30" maxlength="255" value="<?php echo $listid->list_description; ?>"></td>
             </tr>
             <tr>
-                <td><label class="modify-value">Campaign:</label></td>
+                <td><label class="modify-value"><? echo lang('go_Campaign_'); ?></label></td>
                 <td>
                     <select size="1" id="campaign_id" name="campaign_id">
-                        <option>--- Select Campaign ---</option>
+                        <option disabled><? echo lang('go_SelectCampaign'); ?></option>
                         <?php
                     foreach($campaigns as $campaignInfo){
                                 $cid = $campaignInfo->campaign_id;
@@ -200,17 +200,17 @@ A:hover {text-decoration: underline overline; color: red;}
             </tr>
             
             <tr>
-                <td><label class="modify-value">Reset Times:</label> </td>
+                <td><label class="modify-value"><? echo lang('go_ResetTime_'); ?></label> </td>
                 <td><input type="text" name="reset_time" id="reset_time" size="30" maxlength="100" value="<?php echo $listid->reset_time; ?>"></td>
             </tr>
             <tr>
-                <td colspan="2"><label class="modify-value">Reset Lead-Called-Status:</label>
+                <td colspan="2"><label class="modify-value"><? echo lang('go_ResetLeadCalledStatus_'); ?></label>
                 <select size="1" name="reset_list" id="reset_list">
                         <option value="N">N</option>
                         <option value="Y">Y</option>
                     </select> 
                 &nbsp;&nbsp;&nbsp;
-                 <label class="modify-value">Active:</label>
+                 <label class="modify-value"><? echo lang('go_Active_'); ?></label>
                     <select size="1" name="active" id="active">
                         <option value="Y">Y</option>
                         <option value="N">N</option>
@@ -218,7 +218,7 @@ A:hover {text-decoration: underline overline; color: red;}
                 </td>
             </tr>
             <tr>
-                <td><label class="modify-value">Agent Script Override:</label> </td>
+                <td><label class="modify-value"><? echo lang('go_AgentScriptOverride_'); ?></label> </td>
                 <td>
                     <select size="1" name="agent_script_override" id="agent_script_override">
                         <?php
@@ -237,7 +237,7 @@ A:hover {text-decoration: underline overline; color: red;}
                 </td>
             </tr>
             <tr>
-                <td><label class="modify-value"><label class="modify-value">Campaign CID Override:</label> </td>
+                <td><label class="modify-value"><label class="modify-value"><? echo lang('go_CampaignCIDOverride_'); ?></label> </td>
                 <td><input type="text" name="campaign_cid_override" id="campaign_cid_override" size="20" maxlength="20" value="<?php echo $listid->campaign_cid_override; ?>"></td>
             </tr>
             <!-- <tr>
@@ -245,7 +245,7 @@ A:hover {text-decoration: underline overline; color: red;}
                 <td><input type="text" name="am_message_exten_override" id="am_message_exten_override" size="50" maxlength="100" value="<?=$eam_message_exten_override?>"></td>
             </tr> -->				
             <tr>
-                <td><label class="modify-value"><label class="modify-value">Drop Inbound Group Override:</label> </td>
+                <td><label class="modify-value"><label class="modify-value"><? echo $DropInboundGroupOverride_; ?></label> </td>
                 <td>
                     <select size="1" name="drop_inbound_group_override" id="drop_inbound_group_override">
                     <?php
@@ -260,36 +260,36 @@ A:hover {text-decoration: underline overline; color: red;}
                 </td>
             </tr>
             <tr>
-                <td><label class="modify-value">Web Form:</label> </td>
+                <td><label class="modify-value"><? echo lang('go_WebForm_'); ?></label> </td>
                 <td><input type="text" name="web_form_address" id="wbfrmadd_edit" size="50" maxlength="1055" value="<?php echo $listid->web_form_address; ?>"></td>
             </tr>
             <tr><td colspan="2"><table class="tableedit" width="100%"><tr><td></td></tr></table></td></tr>
             <tr>
-                <td colspan="2" align="center"> <br><label class="modify-value">Transfer-Conf Number Override</label> </td>
+                <td colspan="2" align="center"> <br><label class="modify-value"><? echo lang('go_TransferConfNumberOverride'); ?></label> </td>
             </tr>
             <tr>
                 <td colspan="2">
-                <label class="modify-value">Number 1:</label> <input type="text" name="xferconf_a_number" id="xfer1" size="20" maxlength="50" value="<?php echo $listid->xferconf_a_number; ?>">
-                <label class="modify-value">Number 4:</label> <input type="text" name="xferconf_d_number" id="xfer4" size="20" maxlength="50" value="<?php echo $listid->xferconf_d_number; ?>">
+                <label class="modify-value"><? echo lang('go_Number'); ?> 1:</label> <input type="text" name="xferconf_a_number" id="xfer1" size="20" maxlength="50" value="<?php echo $listid->xferconf_a_number; ?>">
+                <label class="modify-value"><? echo lang('go_Number'); ?> 4:</label> <input type="text" name="xferconf_d_number" id="xfer4" size="20" maxlength="50" value="<?php echo $listid->xferconf_d_number; ?>">
                 <br>
-                <label class="modify-value">Number 2:</label> <input type="text" name="xferconf_b_number" id="xfer2" size="20" maxlength="50" value="<?php echo $listid->xferconf_b_number; ?>">
-                <label class="modify-value">Number 5:</label> <input type="text" name="xferconf_e_number" id="xfer5" size="20" maxlength="50" value="<?php echo $listid->xferconf_e_number; ?>">
+                <label class="modify-value"><? echo lang('go_Number'); ?> 2:</label> <input type="text" name="xferconf_b_number" id="xfer2" size="20" maxlength="50" value="<?php echo $listid->xferconf_b_number; ?>">
+                <label class="modify-value"><? echo lang('go_Number'); ?> 5:</label> <input type="text" name="xferconf_e_number" id="xfer5" size="20" maxlength="50" value="<?php echo $listid->xferconf_e_number; ?>">
                 <br>
-                <label class="modify-value">Number 3:</label> <input type="text" name="xferconf_c_number" id="xfer3" size="20" maxlength="50" value="<?php echo $listid->xferconf_c_number; ?>">
+                <label class="modify-value"><? echo lang('go_Number'); ?> 3:</label> <input type="text" name="xferconf_c_number" id="xfer3" size="20" maxlength="50" value="<?php echo $listid->xferconf_c_number; ?>">
                 </td>
             </tr>
 
             <tr>
 				<td colspan="2" align="center">
 				<br />
-				<div id="statuses_within_list" style="cursor:pointer;"><pre style="display:inline;">[+]</pre> STATUSES WITHIN THIS LIST</div>
+				<div id="statuses_within_list" style="cursor:pointer;"><pre style="display:inline;">[+]</pre><? echo lang('go_STATUSESWITHINTHISLIST'); ?></div>
 				<div id="statuses_table" style="display:none">
 				<table width="500" cellpadding=0 cellspacing=0>
 				<tr style="font-weight:bold;">
-					<td>STATUS</td>
-					<td style="white-space:nowrap;">STATUS NAME</td>
-					<td>CALLED</td>
-					<td style="white-space:nowrap;">NOT CALLED</td>
+					<td><? echo lang('go_STATUS');?></td>
+					<td style="white-space:nowrap;"><? echo lang('go_STATUSNAME'); ?></td>
+					<td><? echo lang('go_CALLED'); ?> </td>
+					<td style="white-space:nowrap;"><? echo lang('go_NOTCALLED'); ?> </td>
 				</tr>
 				<?php
 				$totalN=0;
@@ -342,26 +342,26 @@ A:hover {text-decoration: underline overline; color: red;}
 				}
 				?>
 				<tr>
-					<td style="border-top:#D0D0D0 dashed 1px;">SUBTOTAL</td>
+					<td style="border-top:#D0D0D0 dashed 1px;"><? echo lang('go_SUBTOTAL'); ?></td>
 					<td style="border-top:#D0D0D0 dashed 1px;"></td>
 					<td style="border-top:#D0D0D0 dashed 1px;"><?=$totalY?></td>
 					<td style="border-top:#D0D0D0 dashed 1px;"><?=$totalN?></td>
 				</tr>
 				<tr style="background-color:#E0F8E0;">
-					<td style="border-top:#D0D0D0 dashed 1px;">TOTAL</td>
+					<td style="border-top:#D0D0D0 dashed 1px;"><? echo lang('go_TOTAL'); ?> </td>
 					<td style="border-top:#D0D0D0 dashed 1px;">&nbsp;</td>
 					<td style="border-top:#D0D0D0 dashed 1px;" colspan="2"><?=$totalAll?></td>
 				</tr>
 				</table>
 				</div>
 				<br />
-				<div id="timezones_within_list" style="cursor:pointer;"><pre style="display:inline;">[+]</pre> TIME ZONES WITHIN THIS LIST</div>
+				<div id="timezones_within_list" style="cursor:pointer;"><pre style="display:inline;">[+]</pre> <? echo lang('go_TIMEZONESWITHINTHISLIST'); ?></div>
 				<div id="timezones_table" style="display:none">
 				<table width="500" cellpadding=0 cellspacing=0>
 				<tr style="font-weight:bold;">
-					<td style="white-space:nowrap;">GMT OFFSET NOW (local time)</td>
-					<td>CALLED</td>
-					<td style="white-space:nowrap;">NOT CALLED</td>
+					<td style="white-space:nowrap;"><? echo lang('go_GMTOFFSETNOW'); ?></td>
+					<td><? echo lang('go_CALLED'); ?> </td>
+					<td style="white-space:nowrap;"><? echo lang('go_NOTCALLED'); ?></td>
 				</tr>
 				<?php
 				$totalN=0;
@@ -415,12 +415,12 @@ A:hover {text-decoration: underline overline; color: red;}
 				}
 				?>
 				<tr>
-					<td style="border-top:#D0D0D0 dashed 1px;">SUBTOTAL</td>
+					<td style="border-top:#D0D0D0 dashed 1px;"><? echo lang('go_SUBTOTAL'); ?></td>
 					<td style="border-top:#D0D0D0 dashed 1px;"><?=$totalY?></td>
 					<td style="border-top:#D0D0D0 dashed 1px;"><?=$totalN?></td>
 				</tr>
 				<tr style="background-color:#E0F8E0;">
-					<td style="border-top:#D0D0D0 dashed 1px;">TOTAL</td>
+					<td style="border-top:#D0D0D0 dashed 1px;"><? echo lang('go_TOTAL'); ?></td>
 					<td style="border-top:#D0D0D0 dashed 1px;" colspan="2"><?=$totalAll?></td>
 				</tr>
 				</table>
@@ -430,7 +430,7 @@ A:hover {text-decoration: underline overline; color: red;}
             
             <tr>
                 <td align="center" colspan="2"><br>
-                <input type="button" name="editSUBMIT" value="MODIFY" class="buttons" style="cursor:pointer;border:0px;color:#7A9E22;" onclick="editListID('<?php echo $list_id; ?>','<?php echo $listid->campaign_id; ?>');">
+                <input type="button" name="editSUBMIT" value="<? echo lang('go_MODIFY'); ?>" class="buttons" style="cursor:pointer;border:0px;color:#7A9E22;" onclick="editListID('<?php echo $list_id; ?>','<?php echo $listid->campaign_id; ?>');">
                 </td>
                 
             </tr>

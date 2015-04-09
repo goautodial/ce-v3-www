@@ -217,7 +217,7 @@ $(function()
 						$('#add_ingroup').hide();
 						$('#add_did').hide();
 						$('#add_ivr').show();
-						$('#search_ingroup').attr('placeholder','Search IVRs');
+						$('#search_ingroup').attr('placeholder','<? echo $this->lang->line('go_search'); ?> IVRs');
 						break;
 					
 					default:
@@ -732,7 +732,7 @@ function showRouteOptions(route,type)
 </script>
 <div id='outbody' class="wrap">
 <div id="icon-inbound" class="icon32"></div>
-<div style="float: right;margin-top:10px;margin-right:25px;"><span id="showAllLists" style="display: none">[Clear Search]</span>&nbsp;<?=form_input('search_ingroup',null,'id="search_ingroup" maxlength="100" placeholder="Search '.$bannertitle.'"') ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_ingroup_button" style="cursor: pointer;" /></div>
+<div style="float: right;margin-top:10px;margin-right:25px;"><span id="showAllLists" style="display: none">[<?php echo lang('go_ClearSearch'); ?>]</span>&nbsp;<?=form_input('search_ingroup',null,'id="search_ingroup" maxlength="100" placeholder="Search '.$bannertitle.'"') ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_ingroup_button" style="cursor: pointer;" /></div>
 <h2><? echo $bannertitle; ?></h2>
 	<div id="dashboard-widgets-wrap">
 		<div id="dashboard-widgets" class="metabox-holder">
@@ -742,14 +742,14 @@ function showRouteOptions(route,type)
 
 					<!-- GO REPORTS WIDGET -->
 					<div id="account_info_status" class="postbox">
-						<div class="rightdiv toolTip" id="add_ingroup" title="Add New In-group">
-                        	Add New In-group <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
+						<div class="rightdiv toolTip" id="add_ingroup" title="<? echo lang('go_AddNewIngroup'); ?>">
+                        	<? echo lang('go_AddNewIngroup'); ?> <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
 						</div>
-						<div class="rightdiv toolTip" style="display:none;" id="add_did" title="Add New DID">
-                        	Add New DID <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
+						<div class="rightdiv toolTip" style="display:none;" id="add_did" title="<? echo lang('go_AddNewDID'); ?>">
+                        	<? echo lang('go_AddNewDID'); ?> <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
 						</div>
-						<div class="rightdiv toolTip" style="display:none;" id="add_ivr" title="Add New Call Menu">
-                        	Add New Call Menu <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
+						<div class="rightdiv toolTip" style="display:none;" id="add_ivr" title="<? echo lang('go_AddNewCallMenu'); ?>">
+                        	<? echo lang('go_AddNewCallMenu'); ?> <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
 						</div>
 						<div class="hndle">
 							<span><span id="title_bar" />&nbsp;<!--Campaign Listings--></span><!-- Title Bar -->
@@ -758,7 +758,7 @@ function showRouteOptions(route,type)
 						</div>
 						<div class="inside">
 
-                            <div style="margin:<?php echo (preg_match("/^Windows/",$userOS)) ? "-23px" : "-22px"; ?> 0px -2px -10px;" id="request_tab"><span id="showList" class="tabtoggle menuOn">Ingroups</span><span id="showDIDs" class="tabtoggle menuOff">Phone Numbers (DIDs/TFNs)</span><span id="showIVRs" class="tabtoggle menuOff">Interactive Voice Response (IVR) Menus</span><span id="request" style="display:none;">showList</span></div>
+                            <div style="margin:<?php echo (preg_match("/^Windows/",$userOS)) ? "-23px" : "-22px"; ?> 0px -2px -10px;" id="request_tab"><span id="showList" class="tabtoggle menuOn">Ingroups</span><span id="showDIDs" class="tabtoggle menuOff"><?php echo lang('goInbound_phoneNumbersTab'); ?></span><span id="showIVRs" class="tabtoggle menuOff"><? echo $this->lang->line('go_ivr_menus'); ?></span><span id="request" style="display:none;"><?php echo lang('go_showList'); ?></span></div>
 
 							<div class="table_ingroups">
                                 <div id="table_reports">
@@ -811,32 +811,32 @@ function showRouteOptions(route,type)
 <!-- Overlay1 -->
 <div id="overlay" style="display:none;"></div>
 <div id="box">
-<a id="closebox" class="toolTip" title="CLOSE"></a>
+<a id="closebox" class="toolTip" title="<?php echo lang('go_CLOSE'); ?>"></a>
 <div id="overlayContent"></div>
 </div>
 
 <!-- Action Menu -->
 <div id='go_action_menu' class='go_action_menu'>
 <ul>
-<li class="go_action_submenu" title="Activate Selected" id="activate">Activate Selected</li>
-<li class="go_action_submenu" title="Deactivate Selected" id="deactivate">Deactivate Selected</li>
-<li class="go_action_submenu" title="Delete Selected" id="delete">Delete Selected</li>
+<li class="go_action_submenu" title="<?php echo lang('go_ActivateSelected'); ?>" id="activate"><?php echo lang('go_ActivateSelected'); ?></li>
+<li class="go_action_submenu" title="<?php echo lang('go_DeactivatedSelected'); ?>" id="deactivate"><?php echo lang('go_DeactivatedSelected'); ?></li>
+<li class="go_action_submenu" title="<?php echo lang('go_DeleteSelected'); ?>" id="delete"><?php echo lang('go_DeleteSelected'); ?></li>
 </ul>
 </div>
 
 <!-- DID Menu -->
 <div id='go_did_menu' class='go_did_menu'>
 <ul>
-<li class="go_did_submenu" title="Activate Selected" id="activate">Activate Selected</li>
-<li class="go_did_submenu" title="Deactivate Selected" id="deactivate">Deactivate Selected</li>
-<li class="go_did_submenu" title="Delete Selected" id="delete">Delete Selected</li>
+<li class="go_did_submenu" title="<?php echo lang('go_ActivateSelected'); ?>" id="activate"><?php echo lang('go_ActivateSelected'); ?></li>
+<li class="go_did_submenu" title="<?php echo lang('go_DeactivatedSelected'); ?>" id="deactivate"><?php echo lang('go_DeactivatedSelected'); ?></li>
+<li class="go_did_submenu" title="<?php echo lang('go_DeleteSelected'); ?>" id="delete"><?php echo lang('go_DeleteSelected'); ?></li>
 </ul>
 </div>
 
 <!-- Call Menu / IVR Menu -->
 <div id='go_ivr_menu' class='go_ivr_menu'>
 <ul>
-<li class="go_ivr_submenu" title="Delete Selected" id="delete">Delete Selected</li>
+<li class="go_ivr_submenu" title="<?php echo lang('go_DeleteSelected'); ?>" id="delete"><?php echo lang('go_DeleteSelected'); ?></li>
 </ul>
 </div>
 
@@ -844,7 +844,7 @@ function showRouteOptions(route,type)
 <div id="showDebug" style="display: none"></div>
 
 <div id="hiddenToggle" style="display: none"></div>
-<div id="wizardSpan" style="display: none">false</div>
+<div id="wizardSpan" style="display: none"><?php echo lang('go_false'); ?></div>
 <div class="clear" style="display: none"></div></div><!-- wpbody-content -->
 <div class="clear" style="display: none"></div></div><!-- wpbody -->
 <div class="clear" style="display: none"></div></div><!-- wpcontent -->

@@ -26,7 +26,7 @@ class Go_systemSettings_ce extends Controller{
 
 
      function index(){
-		if ($this->userLevel < 9) { die('Error: You do not have permission to view this page.'); }
+		if ($this->userLevel < 9) { die(''.$this->lang->line("go_err_permission_view").''); }
         $data['userfulname'] = $this->session->userdata('full_name');
         $data['cssloader'] = 'go_dashboard_cssloader.php';
         $data['jsheaderloader'] = 'go_dashboard_header_jsloader.php';
@@ -126,7 +126,7 @@ class Go_systemSettings_ce extends Controller{
                   $this->go_systemsettings->asteriskDB->where(array('active'=>'Y','active_asterisk_server'=>'Y','generate_vicidial_conf'=>'Y'));
                   $this->go_systemsettings->asteriskDB->update('servers',array('rebuild_conf_files'=>'Y'));
               }
-              echo "Success: Update successful!";
+              echo "{$this->lang->line('go_success_update')}";
           }
      }
 

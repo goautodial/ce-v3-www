@@ -14,15 +14,15 @@ $web_u_time = date('U');
 ?>
 <table border=0 cellpadding=0 cellspacing=0 style="width: 100%">
 	<tr style="font-weight:bold;color:#777777;">
-		<td style="white-space: nowrap; line-height: 20px;">&nbsp;SERVER ID&nbsp;</td>
-		<td style="white-space: nowrap;display:none;">&nbsp;DESCRIPTION&nbsp;</td>
-		<td style="white-space: nowrap;">&nbsp;SERVER IP&nbsp;</td>
-		<td style="white-space: nowrap;">&nbsp;STATUS&nbsp;</td>
-		<td style="white-space: nowrap;">&nbsp;LOAD&nbsp;</td>
-		<td style="white-space: nowrap; text-align: center;">&nbsp;CHANNELS&nbsp;</td>
-		<td style="white-space: nowrap;">&nbsp;DISK&nbsp;</td>
-		<td style="white-space: nowrap;">&nbsp;TIME&nbsp;</td>
-		<td style="white-space: nowrap;display:none;">VERSION</td>
+		<td style="white-space: nowrap; line-height: 20px;">&nbsp;<? echo lang('go_SERVERID'); ?>&nbsp;</td>
+		<td style="white-space: nowrap;display:none;">&nbsp;<? echo lang('go_DESCRIPTION'); ?>&nbsp;</td>
+		<td style="white-space: nowrap;">&nbsp;<? echo lang('go_SERVERIP'); ?>&nbsp;</td>
+		<td style="white-space: nowrap;">&nbsp;<? echo lang('go_STATUS'); ?>&nbsp;</td>
+		<td style="white-space: nowrap;">&nbsp;<? echo lang('go_LOAD'); ?>&nbsp;</td>
+		<td style="white-space: nowrap; text-align: center;">&nbsp;<? echo lang('go_CHANNELS'); ?>&nbsp;</td>
+		<td style="white-space: nowrap;">&nbsp;<? echo lang('go_DISK'); ?>&nbsp;</td>
+		<td style="white-space: nowrap;">&nbsp;<? echo lang('go_TIME'); ?>&nbsp;</td>
+		<td style="white-space: nowrap;display:none;"><? echo lang('go_VERSION'); ?></td>
 	</tr>
 <?php
 foreach ($cluster_status as $key => $cluster)

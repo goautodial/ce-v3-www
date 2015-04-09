@@ -39,26 +39,26 @@ $(function()
 </style>
 
 
-<p class="sub">Leads Resources</p> 							
+<p class="sub"><? echo lang('go_LeadsResources'); ?></p>
 <table>
 	<tbody>
 	<tr class="first">
 			<td class="b"><a class="cur_hand"><? echo $total_hopper_leads; ?></a></td>
-			<td class="t bold"><a class="cur_hand">Leads in Hopper</a></td>
+			<td class="t bold"><a class="cur_hand"><? echo lang('go_LeadsinHopper'); ?></a></td>
 	</tr>
 	<tr>
 			<td class="c"><a class="cur_hand"><? echo $total_dialable_leads; ?></a></td>
-			<td class="r"><a class="cur_hand">Dialable Leads</a></td>
+			<td class="r"><a class="cur_hand"><? echo lang('go_DialableLeads'); ?></a></td>
 	</tr>
 	<tr>
 			<td class="c"><a class="cur_hand"><? echo $total_leads; ?></a></td>
-			<td class="r "><a class="cur_hand">Total Active Leads</a></td>
+			<td class="r "><a class="cur_hand"><? echo lang('go_TotalActiveLeads'); ?></a></td>
 	</tr>
 	</tbody>
 </table>
 
 <br /><br />
-<p class="subs">Campaigns Resources</p>
+<p class="subs"><? echo lang('go_CampaignsResources'); ?></p>
 <table id='cpresource' class='cpresource'>
 	<tbody>
 		<tr class="first"></tr>
@@ -113,8 +113,8 @@ if ($go_hopper_leads_warning_less_h_querycount > 0) {
 
 		 <td class='dp'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
 		 <td class='showhide'>
-		 <a id='showmemore' class='showmore' onclick='javascript:showmemore()'>&nbsp;&raquo; Click here to show more... </a>
-		 <a style='display: none' id='hidemore' class='hidemore'>&nbsp;&raquo; Click here to hide... </a>
+		 <a id='showmemore' class='showmore' onclick='javascript:showmemore()'>&nbsp;&raquo; <? echo lang('go_Clickheretoshowmore'); ?>... </a>
+		 <a style='display: none' id='hidemore' class='hidemore'>&nbsp;&raquo; <? echo lang('go_Clickheretohide'); ?>... </a>
 
 		 </td>
 		</tr>

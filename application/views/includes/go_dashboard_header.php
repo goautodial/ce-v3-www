@@ -93,7 +93,7 @@ require_once($jsbodyloader);
              $thidThis = "";
           endif;?>
 	<div id="screen-options-link-wrap" <?=$hideThis?>>
-		<a href="#screen-options" id="show-settings-link" title="Settings" class="show-settings">
+		<a href="#screen-options" id="show-settings-link" title="<? echo $this->lang->line("go_settings"); ?>" class="show-settings">
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		</a>
@@ -104,7 +104,7 @@ require_once($jsbodyloader);
 
 
 	<div id="spotlight-open-link-wrap"  <?=$hideThis?>>		
-		<a href="#spotlight-open" id="spotlight-open-link" title="Search" class="show-settings">
+		<a href="#spotlight-open" id="spotlight-open-link" title="<? echo $this->lang->line("go_search"); ?>" class="show-settings">
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		</a>	
@@ -113,7 +113,7 @@ require_once($jsbodyloader);
 
 
 	<div id="notification-open-link-wrap" <?=$hideThis?>>		
-		<a href="#notification-open" id="notification-open-link" title="Notification" class="show-notification">
+		<a href="#notification-open" id="notification-open-link" title="<? echo $this->lang->line("go_notification"); ?>" class="show-notification">
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		</a>	
@@ -125,7 +125,7 @@ require_once($jsbodyloader);
 	<div id="wphead-info" <?=$hideThis?>>
 		<div id="user_info">
 			<div>
-				<a id="clockbox" ></a>&nbsp;<b>|</b>&nbsp;Hello, <a href="<?=$base?>users" title="Edit your profile"><? echo $userfulname ?></a>&nbsp;<b>|</b>&nbsp;<a href="<? echo $base; ?>logout" title="Logout">Logout</a>
+				<a id="clockbox" ></a>&nbsp;<b>|</b>&nbsp;<? echo $this->lang->line("go_hello"); ?>, <a href="<?=$base?>users" title="<? echo $this->lang->line("go_edit_profile"); ?>"><? echo $userfulname ?></a>&nbsp;<b>|</b>&nbsp;<a href="<? echo $base; ?>logout" title="<? echo $this->lang->line("go_logout"); ?>"><? echo $this->lang->line("go_logout"); ?></a>
 			</div>
 		</div>
 	</div>
@@ -136,7 +136,7 @@ require_once($jsbodyloader);
 	<div id="wphead-info" >
 		<div id="user_info">
 			<div>
-				<a href="<? echo $home;?>"  style="color:#FFFFFF;text-decoration:none;" title="Go Back">Go Back</a>
+				<a href="<? echo $home;?>"  style="color:#FFFFFF;text-decoration:none;" title="<? echo $this->lang->line("go_go_back"); ?>"><? echo $this->lang->line("go_go_back"); ?></a>
 			</div>
 		</div>
 	</div>
@@ -233,35 +233,35 @@ require_once($jsbodyloader);
 						
 						
 			<!--<b> &nbsp;&nbsp;&nbsp;Search: </b> <input size="25" id="inputString" name="inputString" onkeyup="lookup(this.value);" onblur="fill();" type="text">-->
-			<b> &nbsp;&nbsp;&nbsp;Search: </b> <input size="25" id="inputString" name="inputString"  type="text">
+			<b> &nbsp;&nbsp;&nbsp;<? echo $this->lang->line("go_search"); ?>: </b> <input size="25" id="inputString" name="inputString"  type="text">
 			
 			</div>
 			
 			<!-- Overlay for Agent View/Edit -->
 			<div id="overlayAgent" style="display:none;"></div>
 			<div id="boxAgent" style="display:none;">
-			<a id="closeboxAgent" class="toolTip" title="CLOSE"></a>
+			<a id="closeboxAgent" class="toolTip" title="<? echo strtoupper($this->lang->line("go_close")); ?>"></a>
 			<div id="overlayContentAgent">
-			<div style="text-align:center;font-weight:bold;font-size:14px;">Modify User</div>
+			<div style="text-align:center;font-weight:bold;font-size:14px;"><? echo $this->lang->line("go_modify_user"); ?></div>
 			<br />
 			<table id="test" border=0 cellpadding="3" cellspacing="3" style="width:100%;">
 				<tr>
-					<td style="text-align:right;font-weight:bold;width:40%" nowrap>Agent ID:</td><td>&nbsp;<span id="users_id_span"></span><input type="hidden" id="users_id" name="users_id" value="" /></td>
+					<td style="text-align:right;font-weight:bold;width:40%" nowrap><? echo $this->lang->line("go_agent_id"); ?>:</td><td>&nbsp;<span id="users_id_span"></span><input type="hidden" id="users_id" name="users_id" value="" /></td>
 				</tr>
 				<tr>
-					<td style="text-align:right;font-weight:bold;" nowrap>Password:</td><td><input type="text" id="users_pass" name="users_pass" value="" /></td>
+					<td style="text-align:right;font-weight:bold;" nowrap><? echo $this->lang->line("go_pass"); ?>:</td><td><input type="text" id="users_pass" name="users_pass" value="" /></td>
 				</tr>
 				<tr>
-					<td style="text-align:right;font-weight:bold;" nowrap>Full Name:</td><td><input type="text" id="users_full_name" name="users_full_name" value="" /></td>
+					<td style="text-align:right;font-weight:bold;" nowrap><? echo $this->lang->line("go_full_name"); ?>:</td><td><input type="text" id="users_full_name" name="users_full_name" value="" /></td>
 				</tr>
 				<tr>
-					<td style="text-align:right;font-weight:bold;" nowrap>Phone Login:</td><td><input type="text" id="users_phone_login" name="users_phone_login" value="" readonly="readonly" /></td>
+					<td style="text-align:right;font-weight:bold;" nowrap><? echo $this->lang->line("go_phone_login"); ?>:</td><td><input type="text" id="users_phone_login" name="users_phone_login" value="" readonly="readonly" /></td>
 				</tr>
 				<tr>
-					<td style="text-align:right;font-weight:bold;" nowrap>Phone Pass:</td><td><input type="text" id="users_phone_pass" name="users_phone_pass" value="" /></td>
+					<td style="text-align:right;font-weight:bold;" nowrap><? echo $this->lang->line("go_phone_pass"); ?>:</td><td><input type="text" id="users_phone_pass" name="users_phone_pass" value="" /></td>
 				</tr>
 				<tr>
-					<td style="text-align:right;font-weight:bold;" nowrap>Active:</td><td><select id="users_status"><option>N</option><option>Y</option></select></td>
+					<td style="text-align:right;font-weight:bold;" nowrap><? echo $this->lang->line("go_active"); ?>:</td><td><select id="users_status"><option>N</option><option>Y</option></select></td>
 				</tr>
 				<tr>
 					<td style="text-align:right;font-weight:bold;" nowrap>&nbsp;</td><td><input type="button" id="saveUser" name="saveUser" value="SUBMIT" style="cursor:pointer;" /></td>
@@ -284,58 +284,58 @@ require_once($jsbodyloader);
 	<div id="screen-dmeta">
 		<div style="display: none;" id="screen-options-wrap" class="hidden">
 			<form id="adv-settings" action="" method="post">
-				<h5>Show on screen</h5> 
+				<h5><? echo $this->lang->line("go_show_on_screen"); ?></h5> 
 				<div class="metabox-prefs">
 				<label for="dashboard_todays_status-hide">
 					<input class="hide-postbox-tog" name="dashboard_todays_status-hide" id="dashboard_todays_status-hide" value="dashboard_todays_status" checked="checked" type="checkbox">
-					Today's Status
+					<? echo $this->lang->line("go_todays_status"); ?>
 				</label>
 				<label for="dashboard_server_statistics-hide">
 					<input class="hide-postbox-tog" name="dashboard_server_statistics-hide" id="dashboard_server_statistics-hide" value="dashboard_server_statistics" checked="checked" type="checkbox">
-					Server Statistics
+					<? echo $this->lang->line("go_server_statistics"); ?>
 						<span class="postbox-title-action">
-							<a href="" class="edit-box open-box">Configure</a>
+							<a href="" class="edit-box open-box"><? echo $this->lang->line("go_configure"); ?></a>
 						</span>
 				</label>
 				<label for="dashboard_controls-hide">
 					<input class="hide-postbox-tog" name="dashboard_controls-hide" id="dashboard_controls-hide" value="dashboard_controls" checked="checked" type="checkbox">
-					System Services
+					<? echo $this->lang->line("go_system_services"); ?>
 						<span class="postbox-title-action">
-							<a href="" class="edit-box open-box">Configure</a>
+							<a href="" class="edit-box open-box"><? echo $this->lang->line("go_configure"); ?></a>
 						</span>
 				</label>
 				<label for="dashboard_clusters-hide">
 					<input class="hide-postbox-tog" name="dashboard_clusters-hide" id="dashboard_clusters-hide" value="dashboard_cluster_status" checked="checked" type="checkbox">
-					Cluster Status
+					<? echo $this->lang->line("go_cluster_status"); ?>
 						<span class="postbox-title-action">
-							<a href="" class="edit-box open-box">Configure</a>
+							<a href="" class="edit-box open-box"><? echo $this->lang->line("go_configure"); ?></a>
 						</span>
 				</label>
 				<label for="dashboard_accounts-hide">
                                         <input class="hide-postbox-tog" name="dashboard_accounts-hide" id="dashboard_accounts-hide" value="account_info_status" checked="checked" type="checkbox">
-                                        JustGOVoIP
+                                        <? echo $this->lang->line("go_justgovoip"); ?>
                                                 <span class="postbox-title-action">
-                                                        <a href="" class="edit-box open-box">Configure</a>
+                                                        <a href="" class="edit-box open-box"><? echo $this->lang->line("go_configure"); ?></a>
                                                 </span>
                                 </label>
 				<label for="dashboard_agents_status-hide">
 					<input class="hide-postbox-tog" name="dashboard_agents_status-hide" id="dashboard_agents_status-hide" value="dashboard_agents_status" checked="checked" type="checkbox">
-					Agent's Status
+					<? echo $this->lang->line("go_agents_status"); ?>
 						<span class="postbox-title-action">
-							<a href="?edit=dashboard_agents_status#dashboard_agents_status" class="edit-box open-box">Configure</a>
+							<a href="?edit=dashboard_agents_status#dashboard_agents_status" class="edit-box open-box"><? echo $this->lang->line("go_configure"); ?></a>
 						</span>
 				</label>
 				<label for="dashboard_plugins-hide" style="display:none;">
 					<input class="hide-postbox-tog" name="dashboard_plugins-hide" id="dashboard_plugins-hide" value="dashboard_plugins" checked="checked" type="checkbox">
-					Plugins
+					<? echo $this->lang->line("go_plugins"); ?>
 				</label>
 				<label for="agents_phones_logins-hide">
 					<input class="hide-postbox-tog" name="agents_phones_logins-hide" id="agents_phones_logins-hide" value="agents_phones_logins" checked="checked" type="checkbox">
-					Agents & Phones
+					<? echo $this->lang->line("go_agents_phones"); ?>
 				</label>
 				<label for="dashboard_analytics-hide">
 					<input class="hide-postbox-tog" name="dashboard_analytics-hide" id="dashboard_analytics-hide" value="dashboard_analytics" checked="checked" type="checkbox">
-					GO Analytics
+					<? echo $this->lang->line("go_analytics"); ?>
 				</label>
 				<?php
 				if ($bannertitle != 'GoAutoDial Project Page') {
@@ -343,16 +343,16 @@ require_once($jsbodyloader);
 				?>
 				 <label for="dashboard_goautodial_news-hide">
 					<input class="hide-postbox-tog" name="dashboard_goautodial_news-hide" id="dashboard_goautodial_news-hide" value="dashboard_goautodial_news" checked="checked" type="checkbox" disabled="disabled">
-					GOAutoDial News
+					 <? echo $this->lang->line("go_gad_news"); ?>
 						<span class="postbox-title-action">
-							<a href="?edit=dashboard_goautodial_news#dashboard_goautodial_news" class="edit-box open-box">Configure</a>
+							<a href="?edit=dashboard_goautodial_news#dashboard_goautodial_news" class="edit-box open-box"><? echo $this->lang->line("go_configure"); ?></a>
 						</span>
 				</label>
 				<label for="dashboard_goautodial_forum-hide">
 					<input class="hide-postbox-tog" name="dashboard_goautodial_forum-hide" id="dashboard_goautodial_forum-hide" value="dashboard_goautodial_forum" checked="checked" type="checkbox" disabled="disabled">
-					GOAutoDial Community & Forum
+					<? echo $this->lang->line("go_gad_community_forum"); ?>
 					<span class="postbox-title-action">
-						<a href="?edit=dashboard_goautodial_forum#dashboard_goautodial_forum" class="edit-box open-box">Configure</a>
+						<a href="?edit=dashboard_goautodial_forum#dashboard_goautodial_forum" class="edit-box open-box"><? echo $this->lang->line("go_configure"); ?></a>
 					</span>
 				</label>
 				<?php
@@ -363,8 +363,8 @@ require_once($jsbodyloader);
 				</div>
 
                                 <div style="width:50%;float:left;">
-				<h5>Screen Layout</h5>
-				<div class="columns-prefs">Number of Columns:
+				<h5><? echo $this->lang->line("go_screen_layout"); ?></h5>
+				<div class="columns-prefs"><? echo $this->lang->line("go_no_columns"); ?>:
 				<label>
 					<input name="screen_columns" value="1" type="radio"> 1
 				</label>
@@ -382,7 +382,7 @@ require_once($jsbodyloader);
 				</div>
                                 </div>
                                 <div style="float:left;width:auto;">
-                                    <h5>Introduction Help</h5>
+                                    <h5><? echo $this->lang->line("go_intro_help"); ?></h5>
                                     <label>
                                         <input class="hide-postbox-tog" name="walk" id="walk" value="1" type="checkbox">
                                      </label>

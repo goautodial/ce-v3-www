@@ -170,13 +170,20 @@ class Goingroup extends Model {
 		      
 		  $users_to_print = $listval->num_rows;
 		  
+		  $go_USER = $this->lang->line('go_USER');
+		  $go_TENANTID = $this->lang->line('go_TENANTID');
+		  $go_SELECTED = $this->lang->line('go_SELECTED');
+		  $go_CALLSTODAY = $this->lang->line('go_CALLSTODAY');
+		  $go_RANK = $this->lang->line('go_RANK');
+		  $go_GRADE = $this->lang->line('go_GRADE');
+		  
 		  $users_output  = "<TABLE width=\"100%\" cellspacing=0 cellspacing=0 class=\"tableeditingroup\" id=\"agentrankvalue\">\n";
-		  $users_output .= "<tr class=trview style='font-weight:bold'><td style='padding: 3px 0px;'> &nbsp; USER</td>";
+		  $users_output .= "<tr class=trview style='font-weight:bold'><td style='padding: 3px 0px;'> &nbsp; $go_USER </td>";
 		  if (!$this->commonhelper->checkIfTenant($user_group)){
-			   $users_output .= "<td style='padding: 3px 0px;'> &nbsp; TENANT ID</td>";
+			   $users_output .= "<td style='padding: 3px 0px;'> &nbsp; $go_TENANTID </td>";
 		  }
-		  $users_output .= "<td style='text-align:center'>SELECTED <input type=checkbox name=\"selectAllAgents\" id=\"selectAllAgents\" onclick=\"checkdatas();\">";
-		  $users_output .= "</td><td style='text-align:center'>RANK</td><td style='text-align:center'>GRADE</td><td style='text-align:center'>CALLS TODAY</td></tr>\n";	
+		  $users_output .= "<td style='text-align:center'> $go_SELECTED<input type=checkbox name=\"selectAllAgents\" id=\"selectAllAgents\" onclick=\"checkdatas();\">";
+		  $users_output .= "</td><td style='text-align:center'>$go_RANK </td><td style='text-align:center'>$go_GRADE</td><td style='text-align:center'>$go_CALLSTODAY</td></tr>\n";	
 		  $checkbox_count=0;
 		  $xxx = 0;
 		  
@@ -243,7 +250,8 @@ class Goingroup extends Model {
 		  if (strlen($pagelinks) > 0 || !is_null($pagelinks)) {
 	 		  $users_output .= "<div style='float:left;padding-top:5px;'>$pagelinks</div>";
 		  }
-		  $users_output .= "<input type=button name=submit value=SUBMIT onclick=\"checkdatas('$group_id');\" style=\"cursor:pointer;border:0px;color:#7A9E22;float:right;\"></td></tr>\n";
+		  $go_SUBMIT = $this->lang->line('go_SUBMIT');
+		  $users_output .= "<input type=button name=submit value=$go_SUBMIT onclick=\"checkdatas('$group_id');\" style=\"cursor:pointer;border:0px;color:#7A9E22;float:right;\"></td></tr>\n";
 		  $users_output .= "</TABLE>\n";
 
 		  return $users_output;     	
@@ -252,33 +260,41 @@ class Goingroup extends Model {
 	 function pagelinks($group_id,$page,$rp,$total,$limit)
 	 {
 		  $pg 	= $this->commonhelper->paging($page,$rp,$total,$limit);
-	  
+		    
+		$go_FirstPage = $this->lang->line('go_FirstPage');
+		$go_PreviousPage = $this->lang->line('go_PreviousPage');
+		$go_PageNumber = $this->lang->line('go_PageNumber');
+		$go_ViewAllPage = $this->lang->line('go_ViewAllPage');
+		$go_NextPage = $this->lang->line('go_NextPage');
+		$go_Lastpage = $this->lang->line('go_Lastpage');
+		$go_ALL = $this->lang->line('go_ALL');		    
+		    
 		  if ($pg['last'] > 1) {
 			   $pagelinks  = '<div style="cursor: pointer;font-weight: bold;padding-top:10px;">';
-			   $pagelinks .= '<a title="Go to First Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changeAgentRankPage(\''.$group_id.'\','.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
-			   $pagelinks .= '<a title="Go to Previous Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changeAgentRankPage(\''.$group_id.'\','.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
+			   $pagelinks .= '<a title="'.$go_FirstPage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changeAgentRankPage(\''.$group_id.'\','.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
+			   $pagelinks .= '<a title="'.$go_PreviousPage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changeAgentRankPage(\''.$group_id.'\','.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
 			   
 			   for ($i=$pg['start'];$i<=$pg['end'];$i++) { 
 					if ($i==$pg['page']) $current = 'color: #F00;cursor: default;'; else $current="";
 			   
-					$pagelinks .= '<a title="Go to Page '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="changeAgentRankPage(\''.$group_id.'\','.$i.')"><span>'.$i.'</span></a>';
+					$pagelinks .= '<a title="'.$go_PageNumber.' '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="changeAgentRankPage(\''.$group_id.'\','.$i.')"><span>'.$i.'</span></a>';
 			   }
 	   
-			   $pagelinks .= '<a title="View All Pages" style="vertical-align:text-top;padding: 0px 2px;" onclick="changeAgentRankPage(\''.$group_id.'\',\'ALL\')"><span>ALL</span></a>';
-			   $pagelinks .= '<a title="Go to Next Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changeAgentRankPage(\''.$group_id.'\','.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
-			   $pagelinks .= '<a title="Go to Last Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changeAgentRankPage(\''.$group_id.'\','.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
+			   $pagelinks .= '<a title="'.$go_ViewAllPage.'" style="vertical-align:text-top;padding: 0px 2px;" onclick="changeAgentRankPage(\''.$group_id.'\',\'ALL\')"><span>'.$go_ALL.'</span></a>';
+			   $pagelinks .= '<a title="'.$go_NextPage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changeAgentRankPage(\''.$group_id.'\','.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
+			   $pagelinks .= '<a title="'.$go_Lastpage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changeAgentRankPage(\''.$group_id.'\','.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
 			   $pagelinks .= '<input type=hidden id=currentPage value="'.$pg['page'].'" /></div>';
 		  } else {
 			   if ($rp > 25) {
 			        $pagelinks  = '<div style="cursor: pointer;font-weight: bold;padding-top:10px;">';
-			        $pagelinks .= '<a title="Back to Paginated View" style="vertical-align:text-top;padding: 0px 2px;" onclick="changeAgentRankPage(\''.$group_id.'\',1)"><span>BACK</span></a>';
+			        $pagelinks .= '<a title="'.$this->lang->line('go_to_back_pag').'" style="vertical-align:text-top;padding: 0px 2px;" onclick="changeAgentRankPage(\''.$group_id.'\',1)"><span>'.strtoupper($this->lang->line('go_back')).'</span></a>';
 			        $pagelinks .= '</div>';
 			   } else {
 			        $pagelinks = "";
 			   }
 		  }
 		  
-		  $pageinfo = "<span style='float:right;padding-top:10px;'>Displaying {$pg['istart']} to {$pg['iend']} of {$pg['total']} in-groups</span>";
+		  $pageinfo = "<span style='float:right;padding-top:10px;'>{$this->lang->line('go_Display')} {$pg['istart']} {$this->lang->line('go_to')} {$pg['iend']} {$this->lang->line('go_of')} {$pg['total']} in-groups</span>";
 		  
 		  $return['links'] = $pagelinks;
 		  $return['info'] = $pageinfo;
@@ -297,31 +313,31 @@ class Goingroup extends Model {
 	  
 		  if ($pg['last'] > 1) {
 			   $pagelinks  = '<div style="cursor: pointer;font-weight: bold;padding-top:10px;">';
-			   $pagelinks .= '<a title="Go to First Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage(\''.$type.'\','.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
-			   $pagelinks .= '<a title="Go to Previous Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage(\''.$type.'\','.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
+			   $pagelinks .= '<a title="'.$this->lang->line('go_to_1').'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage(\''.$type.'\','.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
+			   $pagelinks .= '<a title="'.$this->lang->line('go_to_prev_p').'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage(\''.$type.'\','.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
 			   
 			   for ($i=$pg['start'];$i<=$pg['end'];$i++) { 
 					if ($i==$pg['page']) $current = 'color: #F00;cursor: default;'; else $current="";
 			   
-					$pagelinks .= '<a title="Go to Page '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="changePage(\''.$type.'\','.$i.')"><span>'.$i.'</span></a>';
+					$pagelinks .= '<a title="'.$this->lang->line('go_to_page').' '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="changePage(\''.$type.'\','.$i.')"><span>'.$i.'</span></a>';
 			   }
 	   
-			   $pagelinks .= '<a title="View All Pages" style="vertical-align:text-top;padding: 0px 2px;" onclick="changePage(\''.$type.'\',\'ALL\')"><span>ALL</span></a>';
-			   $pagelinks .= '<a title="Go to Next Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage(\''.$type.'\','.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
-			   $pagelinks .= '<a title="Go to Last Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage(\''.$type.'\','.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
+			   $pagelinks .= '<a title="'.$this->lang->line('go_to_view_all').'" style="vertical-align:text-top;padding: 0px 2px;" onclick="changePage(\''.$type.'\',\'ALL\')"><span>ALL</span></a>';
+			   $pagelinks .= '<a title="'.$this->lang->line('go_to_next').'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage(\''.$type.'\','.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
+			   $pagelinks .= '<a title="'.$this->lang->line('go_to_last').'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage(\''.$type.'\','.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
 			   $pagelinks .= '<input type=hidden id=currentPage value="'.$pg['page'].'" /></div>';
 		  } else {
 			   if ($rp > 25) {
 			        $pagelinks  = '<div style="cursor: pointer;font-weight: bold;padding-top:10px;">';
-			        $pagelinks .= '<a title="Back to Paginated View" style="vertical-align:text-top;padding: 0px 2px;" onclick="changePage(\''.$type.'\',1)"><span>BACK</span></a>';
+			        $pagelinks .= '<a title="'.$this->lang->line('go_to_back_pag').'" style="vertical-align:text-top;padding: 0px 2px;" onclick="changePage(\''.$type.'\',1)"><span>'.strtoupper($this->lang->line('go_back')).'</span></a>';
 			        $pagelinks .= '</div>';
 			   } else {
 			        $pagelinks = "";
 			   }
 		  }
 		  
-		  $pageinfo = "<span style='float:right;padding-top:10px;'>Displaying {$pg['istart']} to {$pg['iend']} of {$pg['total']} in-groups</span>";
-		  
+		  //$pageinfo = "<span style='float:right;padding-top:10px;'>Displaying {$pg['istart']} to {$pg['iend']} of {$pg['total']} in-groups</span>";
+		  $pageinfo = "<span style='float:right;padding-top:10px;'>{$this->lang->line('go_Display')} {$pg['istart']} {$this->lang->line('go_to')} {$pg['iend']} {$this->lang->line('go_of')} {$pg['total']} in-groups</span>";
 		  $return['links'] = $pagelinks;
 		  $return['info'] = $pageinfo;
 		  

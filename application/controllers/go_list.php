@@ -20,6 +20,7 @@ class Go_list extends Controller{
 	$this->load->library(array('session','userhelper','commonhelper'));
 	$this->load->library("pagination");
 	$this->lang->load('userauth', $this->session->userdata('ua_language'));
+	$this->load->helper('language');
 	$this->is_logged_in();
     }
 
@@ -55,7 +56,7 @@ class Go_list extends Controller{
         $data['cssloader'] = 'go_dashboard_cssloader.php';
         $data['jsheaderloader'] = 'go_dashboard_header_jsloader.php';
         $data['jsbodyloader'] = 'go_dashboard_body_jsloader.php';
-        $data['bannertitle'] = $this->lang->line('go_lists_banner');
+        $data['bannertitle'] = $this->lang->line('go_Lists');
         $data['folded'] = 'folded';
         $data['go_main_content'] = 'go_list/go_list'; 
         $data['users'] = $users;
@@ -106,28 +107,32 @@ class Go_list extends Controller{
 	$start = (($page-1) * $rp);
 	if ($pg['last'] > 1) {
 	    $pagelinks  = '<div style="cursor: pointer;font-weight: bold;">';
-		    $pagelinks .= '<a href="'.$urllink.'/lists/'.$pg['first'].'#tabs-1" title="Go to First Page" style="vertical-align:baseline;padding: 0px 2px;" ><span><img src="'.base_url().'/img/first.gif"></span></a>';
-		    $pagelinks .= '<a href="'.$urllink.'/lists/'.$pg['prev'].'#tabs-1" title="Go to Previous Page" style="vertical-align:baseline;padding: 0px 2px;" ><span><img src="'.base_url().'/img/prev.gif"></span></a>';
+		    $pagelinks .= '<a href="'.$urllink.'/lists/'.$pg['first'].'#tabs-1" title="'. $this->lang->line('go_FirstPage') .'" style="vertical-align:baseline;padding: 0px 2px;" ><span><img src="'.base_url().'/img/first.gif"></span></a>';
+		    $pagelinks .= '<a href="'.$urllink.'/lists/'.$pg['prev'].'#tabs-1" title="'. $this->lang->line('go_PreviousPage') .'" style="vertical-align:baseline;padding: 0px 2px;" ><span><img src="'.base_url().'/img/prev.gif"></span></a>';
 
             for ($i=$pg['start'];$i<=$pg['end'];$i++) {
 		if ($i==$pg['page']) $current = 'color: #F00;cursor: default;'; else $current="";
-		    $pagelinks .= '<a href="'.$urllink.'/lists/'.$i.'#tabs-1" title="Go to Page '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'"><span>'.$i.'</span></a>';
+		    $pagelinks .= '<a href="'.$urllink.'/lists/'.$i.'#tabs-1" title="'.$this->lang->line('go_PageNumber').'" "'.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'"><span>'.$i.'</span></a>';
 	    }
 
 		    //$pagelinks .= '<a href="'.$urllink.'/lists/ALL#tabs-1" title="View All Pages" style="vertical-align:text-top;padding: 0px 2px;"><span>ALL</span></a>';
-		    $pagelinks .= '<a href="'.$urllink.'/lists/'.$pg['next'].'#tabs-1" title="Go to Next Page" style="vertical-align:baseline;padding: 0px 2px;"><span><img src="'.base_url().'/img/next.gif"></span></a>';
-		    $pagelinks .= '<a href="'.$urllink.'/lists/'.$pg['last'].'#tabs-1" title="Go to Last Page" style="vertical-align:baseline;padding: 0px 2px;"><span><img src="'.base_url().'/img/last.gif"></span></a>';
+		    $pagelinks .= '<a href="'.$urllink.'/lists/'.$pg['next'].'#tabs-1" title="'.$this->lang->line('go_NextPage').'" style="vertical-align:baseline;padding: 0px 2px;"><span><img src="'.base_url().'/img/next.gif"></span></a>';
+		    $pagelinks .= '<a href="'.$urllink.'/lists/'.$pg['last'].'#tabs-1" title="'.$this->lang->line('go_Lastpage').'" style="vertical-align:baseline;padding: 0px 2px;"><span><img src="'.base_url().'/img/last.gif"></span></a>';
 	    $pagelinks .= '</div>';
 	} else {
 	    if ($rp > 25) {
 		$pagelinks  = '<div style="cursor: pointer;font-weight: bold;">';
-		$pagelinks .= '<a href="'.$baseURL.'go_list#tabs-1" title="Back to Paginated View" style="vertical-align:text-top;padding: 0px 2px;"><span>BACK</span></a>';
+		$pagelinks .= '<a href="'.$baseURL.'go_list#tabs-1" title="'.$this->lang->line('go_BacktoPaginatedView').'" style="vertical-align:text-top;padding: 0px 2px;"><span>"'.$this->lang->line('go_BACK').'"</span></a>';
 		$pagelinks .= '</div>';
 	    } else {
 		$pagelinks = "";
 	    }
 	}
-	$pageinfo = "<span style='float:right;'>Displaying {$pg['istart']} to {$pg['iend']} of {$pg['total']} list ids</span>";
+	$Displaying = $this->lang->line('go_Display');
+	$go_to = $this->lang->line('go_to');
+	$go_of = $this->lang->line('go_of');
+	$go_listids = $this->lang->line('go_listids');
+	$pageinfo = "<span style='float:right;'> $Displaying {$pg['istart']} $go_to {$pg['iend']} $go_of {$pg['total']} $go_listids </span>";
 	
 	#$ingrouplists = $this->goingroup->getallingroup($accounts, $userlevel,$rp,$start);
 	$lists = $this->golist->getalllist($addedSQL,$allowedcampaign,$rp,$start);
@@ -830,6 +835,7 @@ class Go_list extends Controller{
 														if ($bad < 1000000)	{
 															if ( $list_id < 100 ) {
 																//print "<BR></b><font size=1 color=red>record $total BAD- PHONE : $phone_number ROW: |$lrow[0]| INVALID LIST ID</font><b>\n";
+
 															} else {
 																//print "<BR></b><font size=1 color=red>record $total BAD- PHONE: $phone_number ROW: |$lrow[0]| DUP: $dup_lead  $dup_lead_list</font><b>\n";
 															}
@@ -914,6 +920,7 @@ class Go_list extends Controller{
 							$genvalue = $this->session->userdata("user_name");
 						    $genlist = $this->golist->autogenlist($genvalue);
 							$data['allmine'] = $genlist;
+
 							$this->load->view('go_list/go_db_query',$data);
        					
 
@@ -926,22 +933,22 @@ class Go_list extends Controller{
 							$start2  = (($page2-1) * $rp2);
 							if ($pg2['last'] > 1) {
 							    $pagelinks  = '<div style="cursor: pointer;font-weight: bold;">';
-							    $pagelinks .= '<a href="'.$urllink.'/custom/'.$pg2['first'].'#tabs-2" title="Go to First Page" style="vertical-align:baseline;padding: 0px 2px;" ><span><img src="'.base_url().'/img/first.gif"></span></a>';
-							    $pagelinks .= '<a href="'.$urllink.'/custom/'.$pg2['prev'].'#tabs-2" title="Go to Previous Page" style="vertical-align:baseline;padding: 0px 2px;" ><span><img src="'.base_url().'/img/prev.gif"></span></a>';
+							    $pagelinks .= '<a href="'.$urllink.'/custom/'.$pg2['first'].'#tabs-2" title="'.$this->lang->line('go_FirstPage').'" style="vertical-align:baseline;padding: 0px 2px;" ><span><img src="'.base_url().'/img/first.gif"></span></a>';
+							    $pagelinks .= '<a href="'.$urllink.'/custom/'.$pg2['prev'].'#tabs-2" title="'.$this->lang->line('go_PreviousPage').'" style="vertical-align:baseline;padding: 0px 2px;" ><span><img src="'.base_url().'/img/prev.gif"></span></a>';
 						
 							    for ($i=$pg2['start'];$i<=$pg2['end'];$i++) {
 								if ($i==$pg2['page']) $current = 'color: #F00;cursor: default;'; else $current="";
-								    $pagelinks .= '<a href="'.$urllink.'/custom/'.$i.'#tabs-2" title="Go to Page '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'"><span>'.$i.'</span></a>';
+								    $pagelinks .= '<a href="'.$urllink.'/custom/'.$i.'#tabs-2" title="'.$this->lang->line('go_PageNumber').'" "'.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'"><span>'.$i.'</span></a>';
 							    }
 						
-							    $pagelinks .= '<a href="'.$urllink.'/custom/ALL#tabs-2" title="View All Pages" style="vertical-align:text-top;padding: 0px 2px;"><span>ALL</span></a>';
-							    $pagelinks .= '<a href="'.$urllink.'/custom/'.$pg2['next'].'#tabs-2" title="Go to Next Page" style="vertical-align:baseline;padding: 0px 2px;"><span><img src="'.base_url().'/img/next.gif"></span></a>';
-							    $pagelinks .= '<a href="'.$urllink.'/custom/'.$pg2['last'].'#tabs-2" title="Go to Last Page" style="vertical-align:baseline;padding: 0px 2px;"><span><img src="'.base_url().'/img/last.gif"></span></a>';
+							    $pagelinks .= '<a href="'.$urllink.'/custom/ALL#tabs-2" title="'.$this->lang->line('go_ViewAllPage').'" style="vertical-align:text-top;padding: 0px 2px;"><span>"'.$this->lang->line('go_ALL').'"</span></a>';
+							    $pagelinks .= '<a href="'.$urllink.'/custom/'.$pg2['next'].'#tabs-2" title="'.$this->lang->line('go_NextPage').'" style="vertical-align:baseline;padding: 0px 2px;"><span><img src="'.base_url().'/img/next.gif"></span></a>';
+							    $pagelinks .= '<a href="'.$urllink.'/custom/'.$pg2['last'].'#tabs-2" title="'.$this->lang->line('go_Lastpage').'" style="vertical-align:baseline;padding: 0px 2px;"><span><img src="'.base_url().'/img/last.gif"></span></a>';
 							    $pagelinks .= '</div>';
 							} else {
 							    if ($rp2 > 25) {
 								$pagelinks  = '<div style="cursor: pointer;font-weight: bold;">';
-								$pagelinks .= '<a href="'.$baseURL.'go_list" title="Back to Paginated View" style="vertical-align:text-top;padding: 0px 2px;"><span>BACK</span></a>';
+								$pagelinks .= '<a href="'.$baseURL.'go_list" title="'.$this->lang->line('go_BacktoPaginatedView').'" style="vertical-align:text-top;padding: 0px 2px;"><span>"'.$this->lang->line('go_BACK').'"</span></a>';
 								$pagelinks .= '</div>';
 							    } else {
 								$pagelinks = "";
@@ -956,6 +963,7 @@ class Go_list extends Controller{
 							$data['clist'] = $clist;
 							$dropactivecustom = $this->golist->getactivecustom($addedSQLcustom,$rp2,$start2);
 							$data['dropactivecustom'] = $dropactivecustom;
+
 				        	$this->load->view('includes/go_dashboard_template.php',$data);
 				        	
 
@@ -984,7 +992,7 @@ class Go_list extends Controller{
 		$this->load->view('go_list/go_values',$data);
 	}
 
-	function go_copycustomfield() { 
+	function go_copycustomfield() {
 		$this->load->view('go_list/go_copycustomfield',$data);
 	}
 
@@ -1059,7 +1067,7 @@ class Go_list extends Controller{
 
         $data['custeditview'] = $custeditview;
         $data['countfields'] = $countfields;
-		 
+	 
 		$this->load->view('includes/go_dashboard_template.php',$data);
 		//$this->load->view('go_list/go_customlist',$data);
 		
@@ -2161,6 +2169,7 @@ class Go_list extends Controller{
 		
 		$headers = trim($headers,",")."\n";
 		$data["csv"] = "{$headers}{$rows}";
+
                 $this->load->view("common_download",$data);
          }
     }

@@ -78,7 +78,7 @@ $(function()
 			$('#aloading').empty().html('<img src="<? echo $base; ?>img/loading.gif" />');
 			$('#aloading').load('<? echo $base; ?>index.php/go_servers_ce/go_check_server/'+$(this).val()+'/'+$('#server_ip').val());
 		} else {
-			$('#aloading').html("<small style=\"color:red;\">Minimum of 3 characters.</small>");
+			$('#aloading').html("<small style=\"color:red;\"><? echo $this->lang->line("go_min_3_char"); ?></small>");
 		}
 	});
 	
@@ -121,7 +121,7 @@ $(function()
 		
 		if ($('#aloading').html().match(/Not Available/))
 		{
-			alert("Server ID Not Available.");
+			alert("<? echo $this->lang->line("go_server_id_navailable"); ?>.");
 			isEmpty = 1;
 		}
 		
@@ -132,7 +132,7 @@ $(function()
 			function(data){
 				if (data=="SUCCESS")
 				{
-					alert(data);
+					alert("<? echo $this->lang->line("go_success_caps"); ?>");
 				
 					$('#box').animate({'top':'-2550px'},500);
 					$('#overlay').fadeOut('slow');
@@ -147,7 +147,7 @@ $(function()
 	$.validator.addMethod('IP4Checker', function(value) {
 	var ip = "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
 		return value.match(ip);
-	}, ' <small style="color:red;">Invalid IP address</small>');
+	}, ' <small style="color:red;"><? echo $this->lang->line("go_invalid_ip_add"); ?></small>');
 
 	$('#serverForm').validate({
 		rules: {
@@ -160,7 +160,7 @@ $(function()
 </script>
 
 <div style="float:right;" id="small_step_number"><img src="<?php echo $base; ?>img/step1-nav-small.png" /></div>
-<div style="font-weight:bold;font-size:16px;color:#333;">Server Wizard &raquo; Add New Server</div>
+<div style="font-weight:bold;font-size:16px;color:#333;"><? echo $this->lang->line("go_server_wizard"); ?> &raquo; <? echo $this->lang->line("go_add_new_server"); ?></div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
 
@@ -175,7 +175,7 @@ $(function()
                 <table id="serverTable" style="width:100%;">
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        <label class="modify-value">Server ID:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_server_id"); ?>:</label>
                         </td>
                         <td>
                         <?=form_input('server_id',null,'id="server_id" maxlength="10" size="10"') ?>
@@ -184,7 +184,7 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        <label class="modify-value">Server Description:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_server_desc"); ?>:</label>
                         </td>
                         <td>
                         <?=form_input('server_description',null,'id="server_description" maxlength="255" size="30"') ?>
@@ -192,7 +192,7 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">Server IP:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_server_ip"); ?>:</label>
                         </td>
                         <td>
                         <?=form_input('server_ip',null,'id="server_ip" maxlength="15" size="20"') ?>
@@ -200,7 +200,7 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">Active:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_active"); ?>:</label>
                         </td>
                         <td>
                         <?=form_dropdown('active',array('Y'=>'Y','N'=>'N'),null) ?>
@@ -208,7 +208,7 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">Asterisk Version:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_asterisk_version"); ?>:</label>
                         </td>
                         <td>
                         <?=form_input('asterisk_version',null,'id="asterisk_version" maxlength="20" size="20"') ?>
@@ -216,11 +216,11 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">User Group:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_user_group"); ?>:</label>
                         </td>
                         <td>
                         <?php
-						$groupArray = array("---ALL---"=>"ALL USER GROUPS");
+						$groupArray = array("---{$this->lang->line('go_all')}---"=> strtoupper($this->lang->line("go_all_user_groups")));
 						foreach ($user_groups as $group)
 						{
 							$groupArray[$group->user_group] = "{$group->user_group} - {$group->group_name}";
@@ -236,4 +236,4 @@ $(function()
 	</tr>
 </table>
 <hr style="border:#DFDFDF 1px solid;" />
-<span id="saveButtons"><span id="submit" style="white-space: nowrap;">Submit</span></span>
+<span id="saveButtons"><span id="submit" style="white-space: nowrap;"><? echo $this->lang->line("go_submit"); ?></span></span>

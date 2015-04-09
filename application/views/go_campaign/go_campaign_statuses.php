@@ -90,18 +90,18 @@ $(function()
 	$('#addNewCampStatus').click(function()
 	{
 		var campaign_id = '<?php echo "$campaign_id"; ?>';
-		var err_msg = 'Please fill-in the following:\n\n';
+		var err_msg = ' <? echo lang('go_Pleasefillinthefollowing'); ?><br/><br/>';
 		var err = 0;
 		
 		if ($('#status').val() == '')
 		{
-			err_msg += 'STATUS\n';
+			err_msg += '<? echo lang('go_STATUS'); ?><br />';
 			err++;
 		}
 			
 		if ($('#status_name').val() == '')
 		{
-			err_msg += 'STATUS NAME\n';
+			err_msg += '<? echo lang('go_STATUSNAME'); ?><br />';
 			err++;
 		}
 		
@@ -119,12 +119,12 @@ $(function()
 	$('#saveModifiedStatus').click(function()
 	{
 		var campaign_id = '<?php echo "$campaign_id"; ?>';
-		var err_msg = 'Please fill-in the following:<br /><br />';
+		var err_msg = '<? echo lang('go_Pleasefillinthefollowing'); ?><br /><br />';
 		var err = 0;
 
 		if ($('#status_name_mod').val() == '')
 		{
-			err_msg += 'STATUS NAME<br />';
+			err_msg += '<? echo lang('go_STATUSNAME'); ?><br />';
 			err++;
 		}		
 
@@ -246,10 +246,10 @@ $(function()
 		switch (update)
 		{
 			case 1:
-				var err_msg = "There is already a global-status in the system with this name:\n\n<?php echo $status; ?>";
+				var err_msg = '<? echo lang('go_Thereisalreadyaglobalstatusinthesystemwiththisname_'); ?><br /><br /><?php echo $status; ?>';
 				break;
 			case 2:
-				var err_msg = "There is already a campaign-status in the system with this name:\n\n<?php echo $status; ?>";
+				var err_msg = '<? echo lang('go_Thereisalreadyacampaignstatusinthesystemwiththisname_'); ?><br /><br /><?php echo $status; ?>';
 				break;
 		}
 		
@@ -312,7 +312,7 @@ if ($action!='modify_status' && $action!='modify_recycle' && $action!='modify_pa
 {
 ?>
 <input type="hidden" value="<?php echo $campaign_id; ?>" id="campaign_id_mod" />
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">CUSTOM STATUSES WITHIN THIS CAMPAIGN: <?php echo "$campaign_id"; ?></div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><?php echo lang('go_CUSTOMSTATUSESWITHINTHISCAMPAIGN'); ?> <?php echo "$campaign_id"; ?></div>
 <br />
 <table id="statusesTable" border="0" cellpadding="1" cellspacing="1" style="width:100%;color:#555;">
 	<tr>
@@ -331,10 +331,10 @@ if ($action!='modify_status' && $action!='modify_recycle' && $action!='modify_pa
    		<td>&nbsp;</td>
     </tr>
 	<tr style="font-weight:bold;">
-    	<td style="width:20%" valign="bottom">&nbsp;&nbsp;STATUS</td>
-        <td valign="bottom">&nbsp;&nbsp;STATUS NAME</td>
-        <td style="display:none;" valign="bottom">&nbsp;&nbsp;CATEGORY</td>
-        <td style="width:5%" align="center" valign="bottom" colspan="2" nowrap><span style="cursor:pointer;" id="selectCampStatusAction">&nbsp;ACTION &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></td>
+    	<td style="width:20%" valign="bottom">&nbsp;&nbsp;<? echo lang('go_STATUS'); ?></td>
+        <td valign="bottom">&nbsp;&nbsp;<? echo lang('go_STATUSNAME'); ?></td>
+        <td style="display:none;" valign="bottom">&nbsp;&nbsp;<? echo lang('go_CATEGORY'); ?></td>
+        <td style="width:5%" align="center" valign="bottom" colspan="2" nowrap><span style="cursor:pointer;" id="selectCampStatusAction">&nbsp;<? echo lang('go_ACTION'); ?> &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></td>
         <td style="width:2%" align="center" valign="bottom"><input type="checkbox" id="selectAllCampStatus" /></td>
     </tr>
     
@@ -363,15 +363,15 @@ if ($action!='modify_status' && $action!='modify_recycle' && $action!='modify_pa
 			echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span style=\"color:".(($status->not_interested=='Y') ? 'green">YES' : 'red">NO')."</td>\n";
 			echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span style=\"color:".(($status->unworkable=='Y') ? 'green">YES' : 'red">NO')."</td>\n";
 			echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span style=\"color:".(($status->scheduled_callback=='Y') ? 'green">YES' : 'red">NO')."</td>\n";
-			echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span onclick=\"modifyCampStatus('".$status->status."','$campaign_id')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"MODIFY CAMPAIGN STATUS<br />".$status->status."\"><img src=\"{$base}img/edit.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"delCampStatus('".$status->status."','$campaign_id')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"DELETE CAMPAIGN STATUS<br />".$status->status."\"><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></span></td>\n";
+			echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span onclick=\"modifyCampStatus('".$status->status."','$campaign_id')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"".lang('go_MODIFYCAMPAIGNSTATUS')."<br />".$status->status."\"><img src=\"{$base}img/edit.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"delCampStatus('".$status->status."','$campaign_id')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"".lang('go_DELETECAMPAIGNSTATUS')."<br />".$status->status."\"><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></span></td>\n";
 			echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><input type=\"checkbox\" id=\"delCampStatus[]\" value=\"".$status->status."\" /></td>\n";
 			echo "</tr>\n";
 		}
 	}
 	
 	echo "<tr>\n";
-	echo "<td style=\"border-top:#D0D0D0 dashed 1px;width:5%;\">&nbsp;<input type=\"text\" id=\"status\" name=\"status\" maxlength=\"6\" size=\"10\" class=\"addStatus\" placeholder=\"Status\" /></td>\n";
-	echo "<td style=\"border-top:#D0D0D0 dashed 1px;width:30%;\">&nbsp;<input type=\"text\" id=\"status_name\" name=\"status_name\" maxlength=\"25\" size=\"25\" class=\"addStatus\" placeholder=\"Status Name\" /></td>\n";
+	echo "<td style=\"border-top:#D0D0D0 dashed 1px;width:5%;\">&nbsp;<input type=\"text\" id=\"status\" name=\"status\" maxlength=\"6\" size=\"10\" class=\"addStatus\" placeholder=\"".lang('go_Status_')."\" /></td>\n";
+	echo "<td style=\"border-top:#D0D0D0 dashed 1px;width:30%;\">&nbsp;<input type=\"text\" id=\"status_name\" name=\"status_name\" maxlength=\"25\" size=\"25\" class=\"addStatus\" placeholder=\"".lang('go_StatusName_')."\" /></td>\n";
 	echo "<td style=\"border-top:#D0D0D0 dashed 1px;display:none;width:30%;\">&nbsp;<select id=\"category\" name=\"category\" class=\"addStatus\"><option value=\"UNDEFINED\">UNDEFINED</option>$categories</select></td>\n";
 	echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><select id=\"selectable\" name=\"selectable\" class=\"addStatus\"><option value=\"Y\">YES</option><option value=\"N\">NO</option></select></span></td>\n";
 	echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><select id=\"human_answered\" name=\"human_answered\" class=\"addStatus\"><option value=\"Y\">YES</option><option value=\"N\" selected>NO</option></select></td>\n";
@@ -383,7 +383,7 @@ if ($action!='modify_status' && $action!='modify_recycle' && $action!='modify_pa
 	echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><select id=\"scheduled_callback\" name=\"scheduled_callback\" class=\"addStatus\"><option value=\"Y\">YES</option><option value=\"N\" selected>NO</option></select></td>\n";
 //	echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;".$status->category."</td>\n";
 // 	echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\" colspan=\"3\"><input type=\"button\" id=\"addNewCampStatus\" value=\"ADD STATUS\" style=\"cursor:pointer;\" /></td>\n";
-	echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\" colspan=\"3\"><span id=\"addNewCampStatus\" class=\"buttons\">ADD STATUS</span></td>\n";
+	echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\" colspan=\"3\"><span id=\"addNewCampStatus\" class=\"buttons\">".lang('go_ADDSTATUS')."</span></td>\n";
 	echo "</tr>\n";
 	?>
 </table>
@@ -447,56 +447,56 @@ $(function()
 	});
 });
 </script>
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">MODIFY STATUS: <?php echo $status_view->status; ?></div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><? echo lang('go_MODIFYSTATUS_'); ?> <?php echo $status_view->status; ?></div>
 <br />
 <table border="0" cellpadding="1" cellspacing="1" style="width:100%;color:#555;">
 	<tr>
-    	<td style="text-align:right;">STATUS:&nbsp;</td>
+    	<td style="text-align:right;"><? echo lang('go_STATUS'); ?>:&nbsp;</td>
         <td><input type="text" id="status_mod" name="status_mod" maxlength="6" size="10" class="addStatusMod" value="<?php echo $status_view->status; ?>" readonly="readonly" /></td>
     </tr>
 	<tr>
-    	<td style="text-align:right;">STATUS NAME:&nbsp;</td>
+    	<td style="text-align:right;"><? echo lang('go_STATUSNAME'); ?>:&nbsp;</td>
         <td><input type="text" id="status_name_mod" name="status_name_mod" maxlength="25" size="25" class="addStatusMod" value="<?php echo $status_view->status_name; ?>" /></td>
     </tr>
 	<tr>
-    	<td style="text-align:right;">SELECTABLE:&nbsp;</td>
-        <td><select id="selectable_mod" name="selectable_mod" class="addStatusMod"><option value="Y">YES</option><option value="N">NO</option></select></td>
+    	<td style="text-align:right;"><? echo lang('go_SELECTABLE_'); ?>:&nbsp;</td>
+        <td><select id="selectable_mod" name="selectable_mod" class="addStatusMod"><option value="Y"><? echo lang('go_YES');?></option><option value="N"><? echo lang('go_NO');?></option></select></td>
+   </tr>
+	<tr>
+    	<td style="text-align:right;"><? echo lang('go_HUMANANSWERED_'); ?>:&nbsp;</td>
+        <td><select id="human_answered_mod" name="human_answered_mod" class="addStatusMod"><option value="Y"><? echo lang('go_YES');?></option><option value="N"><? echo lang('go_NO');?></option></select></td>
+    </tr>
+	<tr style="display:none;">
+    	<td style="text-align:right;"><? echo lang('go_CATEGORY'); ?>:&nbsp;</td>
+        <td><select id="category_mod" name="category_mod" class="addStatusMod"><option value="UNDEFINED"><? echo lang('go_UNDEFINED'); ?></option><?php $categories; ?></select></td>
     </tr>
 	<tr>
-    	<td style="text-align:right;">HUMAN ANSWERED:&nbsp;</td>
-        <td><select id="human_answered_mod" name="human_answered_mod" class="addStatusMod"><option value="Y">YES</option><option value="N">NO</option></select></td>
+    	<td style="text-align:right;"><? echo lang('go_SALE'); ?>:&nbsp;</td>
+        <td><select id="sale_mod" name="sale_mod" class="addStatusMod"><option value="Y"><? echo lang('go_YES');?></option><option value="N"><? echo lang('go_NO');?></option></select></td>
     </tr>
 	<tr>
-    	<td style="text-align:right;">CATEGORY:&nbsp;</td>
-        <td><select id="category_mod" name="category_mod" class="addStatusMod"><option value="UNDEFINED">UNDEFINED</option><?php $categories; ?></select></td>
+    	<td style="text-align:right;"><? echo lang('go_DNCfile'); ?>:&nbsp;</td>
+        <td><select id="dnc_mod" name="dnc_mod" class="addStatusMod"><option value="Y"><? echo lang('go_YES');?></option><option value="N"><? echo lang('go_NO');?></option></select></td>
     </tr>
 	<tr>
-    	<td style="text-align:right;">SALE:&nbsp;</td>
-        <td><select id="sale_mod" name="sale_mod" class="addStatusMod"><option value="Y">YES</option><option value="N">NO</option></select></td>
+    	<td style="text-align:right;"><? echo lang('go_CUSTOMERCONTACT'); ?>:&nbsp;</td>
+        <td><select id="customer_contact_mod" name="customer_contact_mod" class="addStatusMod"><option value="Y"><? echo lang('go_YES');?></option><option value="N"><? echo lang('go_NO');?></option></select></td>
     </tr>
 	<tr>
-    	<td style="text-align:right;">DNC:&nbsp;</td>
-        <td><select id="dnc_mod" name="dnc_mod" class="addStatusMod"><option value="Y">YES</option><option value="N">NO</option></select></td>
+    	<td style="text-align:right;"><? echo lang('go_NOTINTERESTED'); ?>:&nbsp;</td>
+        <td><select id="not_interested_mod" name="not_interested_mod" class="addStatusMod"><option value="Y"><? echo lang('go_YES');?></option><option value="N"><? echo lang('go_NO');?></option></select></td>
     </tr>
 	<tr>
-    	<td style="text-align:right;">CUSTOMER CONTACT:&nbsp;</td>
-        <td><select id="customer_contact_mod" name="customer_contact_mod" class="addStatusMod"><option value="Y">YES</option><option value="N">NO</option></select></td>
+    	<td style="text-align:right;"><? echo lang('go_UNWORKABLE'); ?>:&nbsp;</td>
+        <td><select id="unworkable_mod" name="unworkable_mod" class="addStatusMod"><option value="Y"><? echo lang('go_YES');?></option><option value="N"><? echo lang('go_NO');?></option></select></td>
     </tr>
 	<tr>
-    	<td style="text-align:right;">NOT INTERESTED:&nbsp;</td>
-        <td><select id="not_interested_mod" name="not_interested_mod" class="addStatusMod"><option value="Y">YES</option><option value="N">NO</option></select></td>
-    </tr>
-	<tr>
-    	<td style="text-align:right;">UNWORKABLE:&nbsp;</td>
-        <td><select id="unworkable_mod" name="unworkable_mod" class="addStatusMod"><option value="Y">YES</option><option value="N">NO</option></select></td>
-    </tr>
-	<tr>
-    	<td style="text-align:right;">SCHEDULED CALLBACK:&nbsp;</td>
-        <td><select id="scheduled_callback_mod" name="scheduled_callback_mod" class="addStatusMod"><option value="Y">YES</option><option value="N">NO</option></select></td>
+    	<td style="text-align:right;"><? echo lang('go_SCHEDULEDCALLBACK'); ?>:&nbsp;</td>
+        <td><select id="scheduled_callback_mod" name="scheduled_callback_mod" class="addStatusMod"><option value="Y"><? echo lang('go_YES');?></option><option value="N"><? echo lang('go_NO');?></option></select></td>
     </tr>
 	<tr>
     	<td style="text-align:right;">&nbsp;</td>
-        <td align="right"><span id="saveModifiedStatus" class="buttons" style="font-size:12px;">SAVE</span><!--<input type="button" id="saveModifiedStatus" value="SAVE" style="font-size:12px;cursor:pointer;" />--></td>
+        <td align="right"><span id="saveModifiedStatus" class="buttons" style="font-size:12px;"><? echo lang('go_SAVE');?></span><!--<input type="button" id="saveModifiedStatus" value="SAVE" style="font-size:12px;cursor:pointer;" />--></td>
     </tr>
 </table>
 <?php
@@ -544,16 +544,16 @@ $(function()
 });
 </script>
 <input type="hidden" value="<?php echo $campaign_id; ?>" id="campaign_id_mod" />
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">LEAD RECYCLING WITHIN THIS CAMPAIGN: <?php echo "$campaign_id"; ?></div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><? echo lang('go_LEADRECYCLINGWITHINTHISCAMPAIGN'); ?>: <?php echo "$campaign_id"; ?></div>
 <br />
 <table id="leadRecyclingTable" border="0" cellpadding="1" cellspacing="1" style="width:100%;color:#555;">
 	<tr style="font-weight:bold;">
-    	<td style="width:20%" valign="bottom">&nbsp;&nbsp;STATUS</td>
-        <td style="white-space: nowrap;">&nbsp;&nbsp;ATTEMPT DELAY</td>
-        <td style="white-space: nowrap;">&nbsp;&nbsp;MAXIMUM ATTEMPTS</td>
-        <td style="white-space: nowrap;">&nbsp;&nbsp;LEADS AT LIMIT</td>
-        <td style="white-space: nowrap;">&nbsp;&nbsp;ACTIVE</td>
-        <td style="width:5%" align="center" valign="bottom" colspan="3" nowrap><span style="cursor:pointer;" id="selectCampRecycleAction">&nbsp;ACTION &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></td>
+    	<td style="width:20%" valign="bottom">&nbsp;&nbsp;<? echo lang('go_STATUS'); ?></td>
+        <td style="white-space: nowrap;">&nbsp;&nbsp;<? echo lang('go_ATTEMPTDELAY'); ?></td>
+        <td style="white-space: nowrap;">&nbsp;&nbsp;<? echo lang('go_MAXIMUMATTEMPTS'); ?></td>
+        <td style="white-space: nowrap;">&nbsp;&nbsp;<? echo lang('go_LEADSATLIMIT'); ?></td>
+        <td style="white-space: nowrap;">&nbsp;&nbsp;<? echo lang('go_ACTIVE') ?></td>
+        <td style="width:5%" align="center" valign="bottom" colspan="3" nowrap><span style="cursor:pointer;" id="selectCampRecycleAction">&nbsp;<? echo  lang('go_ACTION'); ?> &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></td>
         <td style="width:2%" align="center" valign="bottom"><input type="checkbox" id="selectAllCampRecycling" /></td>
     </tr>
     
@@ -574,7 +574,7 @@ $(function()
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;".$list['attempt_maximum']."</td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\">&nbsp;&nbsp;".$list['leads_limit']."</td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span style=\"color:".(($list['active']=='Y') ? 'green">YES' : 'red">NO')."</td>\n";
-		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span onclick=\"modifyLeadRecycling('".$list['status']."','$campaign_id')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"MODIFY CAMPAIGN<br>LEAD RECYCLE STATUS<br>".$list['status']."\"><img src=\"{$base}img/edit.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"delLeadRecycling('".$list['status']."','$campaign_id')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"DELETE CAMPAIGN<br>LEAD RECYCLE STATUS<br>".$list['status']."\"><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><img src=\"{$base}img/status_display_i_grayed.png\" style=\"cursor:default;width:12px;\" /></span></td>\n";
+		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span onclick=\"modifyLeadRecycling('".$list['status']."','$campaign_id')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"".lang('go_MODIFYCAMPAIGN')."<br>". lang('go_LEADRECYCLESTATUS')." <br>".$list['status']."\"><img src=\"{$base}img/edit.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"delLeadRecycling('".$list['status']."','$campaign_id')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"".lang('go_DELETECAMPAIGN')."<br>".lang('go_LEADRECYCLESTATUS')."<br>".$list['status']."\"><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><img src=\"{$base}img/status_display_i_grayed.png\" style=\"cursor:default;width:12px;\" /></span></td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><input type=\"checkbox\" id=\"delCampLeadRecycling[]\" value=\"".$list['status']."\" /></td>\n";
 		echo "</tr>\n";
 	}
@@ -584,16 +584,16 @@ $(function()
 <br />
 <table style="margin-left:auto;margin-right:auto;">
 	<tr>
-		<td style="font-weight: bold;">Status:&nbsp;&nbsp;</td>
+		<td style="font-weight: bold;"><? echo lang('go_Status_'); ?>&nbsp;&nbsp;</td>
 		<td>&nbsp;<span id="spanLeadStatus"></span><input type="hidden" id="leadStatus" value="" /></td>
 	</tr>
 	<tr>
-		<td style="font-weight: bold;">Attempt Delay:&nbsp;&nbsp;</td>
+		<td style="font-weight: bold;"><? echo lang('go_AttemptDelay'); ?>:&nbsp;&nbsp;</td>
 		<td><input type="text" id="attemptDelay" value="" size="6" maxlength="3" /></td>
-		<td style="white-space: nowrap;"><font size="1" color="red">&nbsp;Should be from 2 to 720 mins (12 hrs).</font></td>
+		<td style="white-space: nowrap;"><font size="1" color="red"><? echo lang('go_Shouldbefrom2to720mins12hrs'); ?>.</font></td>
 	</tr>
 	<tr>
-		<td style="font-weight: bold;">Maximum Attempts:&nbsp;&nbsp;</td>
+		<td style="font-weight: bold;"><? echo lang('go_MaximumAttempts'); ?>:&nbsp;&nbsp;</td>
 		<td>
 			<select id="attemptMaximum">
 		<?php
@@ -606,11 +606,11 @@ $(function()
 		</td>
 	</tr>
 	<tr>
-		<td style="font-weight: bold;">Active:&nbsp;&nbsp;</td>
-		<td><select id="isActive"><option value="Y">YES</option><option value="N">NO</option></select></td>
+		<td style="font-weight: bold;"><? echo lang('go_Active_'); ?>&nbsp;&nbsp;</td>
+		<td><select id="isActive"><option value="Y"><? echo lang('go_YES'); ?> </option><option value="N"><? echo lang('go_NO'); ?></option></select></td>
 	</tr>
 	<tr>
-		<td colspan="2" style="text-align: right;"><a id="saveModifiedLeadRecycling" class="buttons" style="cursor: pointer">SAVE</a></td>
+		<td colspan="2" style="text-align: right;"><a id="saveModifiedPauseCodes" class="buttons" style="cursor: pointer"><? echo lang('go_SAVE'); ?></a></td>
 	</tr>
 </table>
 </div>
@@ -627,7 +627,7 @@ $(function()
 	$('#saveModifiedPauseCodes').click(function(e)
 	{
 		var camp = $('#campaign_id_mod').val();
-		var string = "pause_code="+$('#pause_code').val()+"&pause_code_name="+$('#pause_code_name').val()+"&billable="+$('#billable').val();
+		var string = "pause_code="+$('#pauseCodeID').val()+"&pause_code_name="+$('#pauseCodeName').val()+"&billable="+$('#isBillable').val();
 
 		$.post("<?php echo $base; ?>index.php/go_campaign_ce/go_pause_codes/save/"+camp+"/"+string, function(data)
 		{			
@@ -656,14 +656,14 @@ $(function()
 });
 </script>
 <input type="hidden" value="<?php echo $campaign_id; ?>" id="campaign_id_mod" />
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">PAUSE CODES WITHIN THIS CAMPAIGN: <?php echo "$campaign_id"; ?></div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><?  echo lang('go_PAUSECODESWITHINTHISCAMPAIGN'); ?>: <?php echo "$campaign_id"; ?></div>
 <br />
 <table id="pauseCodesTable" border="0" cellpadding="1" cellspacing="1" style="width:100%;color:#555;">
 	<tr style="font-weight:bold;">
-    	<td style="width:20%" valign="bottom">&nbsp;&nbsp;PAUSE CODE</td>
-        <td style="white-space: nowrap;">&nbsp;&nbsp;PAUSE CODE NAME</td>
-        <td style="white-space: nowrap;">&nbsp;&nbsp;BILLABLE</td>
-        <td style="width:5%" align="center" valign="bottom" colspan="3" nowrap><span style="cursor:pointer;" id="selectCampPauseCodeAction">&nbsp;ACTION &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></td>
+    	<td style="width:20%" valign="bottom">&nbsp;&nbsp;<? echo lang('go_PAUSECODE'); ?></td>
+        <td style="white-space: nowrap;">&nbsp;&nbsp;<? echo lang('go_PAUSECODENAME'); ?></td>
+        <td style="white-space: nowrap;">&nbsp;&nbsp;<? echo lang('go_BILLABLE'); ?></td>
+        <td style="width:5%" align="center" valign="bottom" colspan="3" nowrap><span style="cursor:pointer;" id="selectCampPauseCodeAction">&nbsp;<? echo lang('go_ACTION'); ?> &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></td>
         <td style="width:2%" align="center" valign="bottom"><input type="checkbox" id="selectAllCampPauseCodes" /></td>
     </tr>
     
@@ -681,8 +681,8 @@ $(function()
 		echo "<tr style=\"background-color:$bgcolor;\">\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;".$list['pause_code']."</td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;".str_replace("+"," ",$list['pause_code_name'])."</td>\n";
-		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;<span style=\"color:".(($list['billable']=='YES') ? 'green">YES' : 'red">NO')."</td>\n";
-		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span onclick=\"modifyCampPauseCodes('".$list['pause_code']."','$campaign_id')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"MODIFY CAMPAIGN<br>PAUSE CODE STATUS<br>".$list['pause_code']."\"><img src=\"{$base}img/edit.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"delCampPauseCodes('".$list['pause_code']."','$campaign_id')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"DELETE CAMPAIGN<br>PAUSE CODE STATUS<br>".$list['pause_code']."\"><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><img src=\"{$base}img/status_display_i_grayed.png\" style=\"cursor:default;width:12px;\" /></span></td>\n";
+		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;<span style=\"color:".(($list['billable']=='HALF' ? 'red">HALF' : ($list['billable']=='YES' ? 'green">YES' : 'red">NO')))."</td>\n";
+		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><span onclick=\"modifyCampPauseCodes('".$list['pause_code']."','$campaign_id')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"".lang('go_MODIFYCAMPAIGN')." <br>".lang('go_PAUSECODESTATUS')." <br>".$list['pause_code']."\"><img src=\"{$base}img/edit.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"delCampPauseCodes('".$list['pause_code']."','$campaign_id')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"".lang('go_DELETECAMPAIGN')." <br>".lang('go_PAUSECODESTATUS')."<br>".$list['pause_code']."\"><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><img src=\"{$base}img/status_display_i_grayed.png\" style=\"cursor:default;width:12px;\" /></span></td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><input type=\"checkbox\" id=\"delCampPauseCodes[]\" value=\"".$list['pause_code']."\" /></td>\n";
 		echo "</tr>\n";
 	}
@@ -692,20 +692,20 @@ $(function()
 <br />
 <table style="margin-left:auto;margin-right:auto;">
 	<tr>
-		<td style="font-weight: bold;">Pause Code:&nbsp;&nbsp;</td>
+		<td style="font-weight: bold;"><? echo lang('go_PauseCode'); ?>:&nbsp;&nbsp;</td>
 		<td>&nbsp;<span id="spanPauseCode"></span><input type="hidden" id="pauseCodeID" value="" /></td>
 	</tr>
 	<tr>
-		<td style="font-weight: bold;">Pause Code Name:&nbsp;&nbsp;</td>
+		<td style="font-weight: bold;"><? echo lang('go_PauseCodeName_'); ?>&nbsp;&nbsp;</td>
 		<td><input type="text" id="pauseCodeName" value="" size="25" maxlength="30" /></td>
 	</tr>
 	<tr>
-		<td style="font-weight: bold;">Billable:&nbsp;&nbsp;</td>
+		<td style="font-weight: bold;"><? echo lang('go_Billable_'); ?>&nbsp;&nbsp;</td>
 		<td>
 			<select id="isBillable">
-				<option value="YES">YES</option>
-				<option value="NO">NO</option>
-				<option value="HALF">HALF</option>
+				<option value="YES"><? echo lang('go_YES'); ?></option>
+				<option value="NO"><? echo lang('go_NO'); ?></option>
+				<option value="HALF"><? echo lang('go_HALF'); ?></option>
 			</select>
 		</td>
 	</tr>
@@ -746,14 +746,14 @@ $(function()
 });
 </script>
 <input type="hidden" value="<?php echo $campaign_id; ?>" id="campaign_id_mod" />
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">HOTKEYS WITHIN THIS CAMPAIGN: <?php echo "$campaign_id"; ?></div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><? echo lang('go_HOTKEYSWITHINTHISCAMPAIGN'); ?>: <?php echo "$campaign_id"; ?></div>
 <br />
 <table id="hotKeysTable" border="0" cellpadding="1" cellspacing="1" style="width:100%;color:#555;">
 	<tr style="font-weight:bold;">
-    	<td style="width:20%" valign="bottom">&nbsp;&nbsp;HOTKEY</td>
-        <td style="white-space: nowrap;">&nbsp;&nbsp;STATUS</td>
-        <td style="white-space: nowrap;">&nbsp;&nbsp;DESCRIPTION</td>
-        <td style="width:5%" align="center" valign="bottom" colspan="3" nowrap><span style="cursor:pointer;" id="selectCampHotKeysAction">&nbsp;ACTION &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></td>
+    	<td style="width:20%" valign="bottom">&nbsp;&nbsp;<? echo lang('go_HOTKEY'); ?></td>
+        <td style="white-space: nowrap;">&nbsp;&nbsp;<? echo lang('go_STATUS'); ?></td>
+        <td style="white-space: nowrap;">&nbsp;&nbsp;<? echo lang('go_DESCRIPTION'); ?></td>
+        <td style="width:5%" align="center" valign="bottom" colspan="3" nowrap><span style="cursor:pointer;" id="selectCampHotKeysAction">&nbsp;<? echo lang('go_ACTION');?> &nbsp;<img src="<?php echo $base; ?>img/arrow_down.png" />&nbsp;</span></td>
         <td style="width:2%" align="center" valign="bottom"><input type="checkbox" id="selectAllCampHotKeys" /></td>
     </tr>
     
@@ -772,7 +772,7 @@ $(function()
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;".$list['hotkey']."</td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;".$list['status']."</td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;&nbsp;".str_replace("+"," ",$list['status_name'])."</td>\n";
-		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><img src=\"{$base}img/edit.png\" class=\"grayedout\" style=\"cursor:default;width:12px;\" /></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"delCampHotKeys('".$list['hotkey']."','$campaign_id')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"DELETE CAMPAIGN<br>HOTKEY STATUS<br>".$list['status']."\"><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><img src=\"{$base}img/status_display_i_grayed.png\" style=\"cursor:default;width:12px;\" /></span></td>\n";
+		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><img src=\"{$base}img/edit.png\" class=\"grayedout\" style=\"cursor:default;width:12px;\" /></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><span onclick=\"delCampHotKeys('".$list['hotkey']."','$campaign_id')\" style=\"cursor:pointer;\" class=\"toolTip\" title=\"".lang('go_DELETECAMPAIGN')." <br>". lang('go_HOTKEYSTATUS')."<br>".$list['status']."\"><img src=\"{$base}img/delete.png\" style=\"cursor:pointer;width:12px;\" /></span></td><td align=\"center\" style=\"border-top:#D0D0D0 dashed 1px;\"><img src=\"{$base}img/status_display_i_grayed.png\" style=\"cursor:default;width:12px;\" /></span></td>\n";
 		echo "<td style=\"border-top:#D0D0D0 dashed 1px;\" align=\"center\"><input type=\"checkbox\" id=\"delCampHotKeys[]\" value=\"".$list['hotkey']."\" /></td>\n";
 		echo "</tr>\n";
 	}

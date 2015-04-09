@@ -24,13 +24,13 @@ class Go_settings_ce extends Controller{
 
 
      function index(){
-	  if ($this->userLevel < 9) { die('Error: You do not have permission to view this page.'); }
+	  if ($this->userLevel < 9) { die(''.$this->lang->line("go_err_permission_view").''); }
 	  $data['userfulname'] = $this->session->userdata('full_name');
 	  $data['cssloader'] = 'go_dashboard_cssloader.php';
 	  $data['jsheaderloader'] = 'go_dashboard_header_jsloader.php';
 	  $data['jsbodyloader'] = 'go_dashboard_body_jsloader.php';
 	  $data['theme'] = $this->session->userdata('go_theme');
-	  $data['bannertitle'] = $this->lang->line('go_settings_banner');
+	  $data['bannertitle'] = $this->lang->line('go_system_settings');
 	  //$data['adm']= 'wp-has-current-submenu';
 	  $data['hostp'] = $_SERVER['SERVER_ADDR'];
 	  $data['folded'] = 'folded';
@@ -50,6 +50,14 @@ class Go_settings_ce extends Controller{
 	  $this->go_systemsettings->getserversettings();
 	  $server_settings = $this->go_systemsettings->query_result();
 	  $data['server_settings'] = $server_settings->result();
+	  
+	  $this->go_systemsettings->getlanguages();
+	  $languages = $this->go_systemsettings->query_result();
+	  if($languages->num_rows() > 0){
+	      foreach($languages->result() as $lang){
+		  $data['languages'][$lang->lang] = "{$lang->name}";
+	      }
+	  }
      
 	  $adl=1;
 	  while($adl < 1000)
@@ -127,7 +135,7 @@ class Go_settings_ce extends Controller{
 		   $this->go_systemsettings->asteriskDB->where(array('active'=>'Y','active_asterisk_server'=>'Y','generate_vicidial_conf'=>'Y'));
 		   $this->go_systemsettings->asteriskDB->update('servers',array('rebuild_conf_files'=>'Y'));
 	       }
-	       echo "Success: Update successful!";
+	       echo "{$this->lang->line('go_success_update')}";
           }
      }
 

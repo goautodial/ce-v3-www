@@ -185,19 +185,19 @@ $(function()
 		{
 			$('#did_pattern').css('border','1px solid red');
 			$('#did_pattern').focus();
-			alert('Please input the your DID/TFN Extension.\nShould not be empty.');
+			alert('<? echo lang('go_PleaseinputtheyourDIDTFNExtension'); ?>\n <? echo lang('go_Shouldnotbeempty'); ?> ');
 			isEmpty = 1;
 		}
 		
 		if (step < 2 && $('#dloading').html().match(/Not Available/))
 		{
-			alert("DID/TFN Not Available.");
+			alert("<? echo lang('go_go_DIDTFNNotAvailable'); ?>");
 			isEmpty = 1;
 		}
 		
 		if (step < 2 && $('#campaign_name').val().length < 6)
 		{
-			alert("Campaign Name should be at least 6 characters in length.");
+			alert("<? echo lang('go_CampaignNameatleast6characters'); ?>");
 			isEmpty = 1;
 		}
 
@@ -215,7 +215,7 @@ $(function()
 				}
 			}
 	
-			if ($(this).text() != 'Finish')
+			if ($(this).text() != '<? echo lang('go_SaveandFinish'); ?>')
 			{
 				step++;
 				$('#stepNumber').text(step);
@@ -273,7 +273,7 @@ $(function()
 	
 				if ((step==2 && (campaign_type=='Outbound' || campaign_type=='Blended')) || (step==2 && campaign_type=='Survey') || (step==3 && campaign_type=='Copy'))
 				{
-					$(this).html('Next');
+					$(this).html('<? echo lang('go_Next');  ?>');
 					$('#back').css('display','inline');
 					$('#back_pipe').css('display','inline');
 				}
@@ -286,7 +286,7 @@ $(function()
 	
 				if ((step==3 && (campaign_type=='Outbound' || campaign_type=='Blended')) || (step==2 && campaign_type=='Inbound') || (step==4 && campaign_type=='Survey' || campaign_type=='Copy'))
 				{
-					$(this).html('Finish');
+					$(this).html('<? echo lang('go_SaveandFinish'); ?>');
 					$(this).css('width', '50px');
 	// 				$('#back').css('display','none');
 	// 				$('#back_pipe').css('display','none');
@@ -477,7 +477,7 @@ $(function()
 
 			if ((step==2 && (campaign_type=='Outbound' || campaign_type=='Blended')) || (step==3 && campaign_type=='Survey' || campaign_type=='Copy'))
 			{
-				$('#next').html('Skip');
+				$('#next').html('<? echo lang('go_Skip'); ?>');
 				$('#modify').css('display','none');
 				$('#modify_pipe').css('display','none');
 			}
@@ -535,7 +535,7 @@ $(function()
 	{
 		if ($(this).val().length < 3)
 		{
-			alert('Campaign ID must be between 3 to 8 characters.');
+			alert('<? echo lang('go_CampaignID3to8characters'); ?>');
 		}
 	});
 	
@@ -546,7 +546,7 @@ $(function()
 		
 		if ($(this).val().length < 1)
 		{
-			alert('Campaign Name should not be empty.');
+			alert('<? echo lang('go_CampaignNameshouldnotbeempty');  ?>');
 		}
 	});
 	
@@ -596,7 +596,7 @@ $(function()
 </script>
 
 <div style="float:right;" id="small_step_number"><img src="<?php echo $base; ?>img/step1of3-navigation-small.png" /></div>
-<div id="campTitle" style="font-weight:bold;font-size:16px;color:#333;">Campaign Wizard &raquo; Outbound</div>
+<div id="campTitle" style="font-weight:bold;font-size:16px;color:#333;"><? echo lang('go_CampaignWizard'); ?> &raquo; <? echo lang('go_Outbound'); ?> </div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
 
@@ -610,7 +610,7 @@ $(function()
                 <table id="campTable" style="width:100%;">
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        Campaign Type:
+                        <? echo lang('go_CampaignType_'); ?>
                         </td>
                         <td>
                         <select id="campaign_type">
@@ -624,17 +624,17 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        Campaign ID:
+                        <? echo lang('go_CampaignID_'); ?>
                         </td>
                         <td>
                         <input type="text" id="campaign_id" maxlength="8" size="15" readonly="readonly" value="<?=$campaign_id?>" />
-						<input type="checkbox" id="autoCampID" /> <small><font size="1" color="red">(check to edit campaign id and name)</font></small><br />
+						<input type="checkbox" id="autoCampID" /> <small><font size="1" color="red">(<? echo lang('go_checktoeditcampaignidandname'); ?>)</font></small><br />
 						<span id="aloading"></span>
                         </td>
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        Campaign Name:
+                        <? echo lang('go_CampaignName_'); ?>
                         </td>
                         <td>
                         <input type="text" id="campaign_name" maxlength="40" size="35" readonly="readonly" value="Outbound Campaign - <?=$NOW?>" />
@@ -642,29 +642,29 @@ $(function()
                     </tr>
                     <tr class="showFirst" style="display:none;">
                         <td style="text-align:right;width:250px;font-weight:bold;">
-                        DID/TFN Extension:
+                        <? echo lang('go_DIDTFN_Extension_'); ?>
                         </td>
                         <td>
-                        <input type="text" id="did_pattern" size="20" value="" /> <span id="dloading"></span> <small style="color:red">(accepts only numbers)</small>
+                        <input type="text" id="did_pattern" size="20" value="" /> <span id="dloading"></span> <small style="color:red">(<? echo lang('go_acceptsonlynumbers');  ?>)</small>
                         </td>
                     </tr>
                     <tr class="callRoute" style="display:none;">
                         <td style="text-align:right;width:250px;">
-                        Call Route:
+                        <? echo lang('go_CallRoute'); ?>
                         </td>
                         <td>
                         <select id="call_route">
                             <option value="NONE"></option>
-                            <option value="INGROUP">INGROUP (campaign)</option>
-                            <option value="IVR">IVR (call menu)</option>
-                            <option value="AGENT">AGENT</option>
-                            <option value="VOICEMAIL">VOICEMAIL</option>
+                            <option value="INGROUP"><? echo lang('go_INGROUPcampaign'); ?></option>
+                            <option value="IVR"><? echo lang('go_IVRcallmenu'); ?></option>
+                            <option value="AGENT"><? echo lang('go_AGENT'); ?></option>
+                            <option value="VOICEMAIL"><? echo lang('go_VOICEMAIL'); ?></option>
                         </select>
                         </td>
                     </tr>
                     <tr class="copyCampaign" style="display:none;">
                         <td style="text-align:right;width:250px;">
-                        Copy From:
+                        <? echo lang('go_CopyFrom_'); ?>
                         </td>
                         <td>
                         <select id="copy_from">
@@ -674,18 +674,18 @@ $(function()
                     </tr>
                     <tr class="survey" style="display:none;">
                         <td style="text-align:right;width:250px;">
-                        Survey Type:
+                        <? echo lang('go_SurveyType_'); ?>
                         </td>
                         <td>
                         <select id="survey_type">
-                            <option value="BROADCAST">VOICE BROADCAST</option>
-                            <option value="PRESS1">SURVEY PRESS1</option>
+                            <option value="BROADCAST"><? echo lang('go_VOICEBROADCAST'); ?></option>
+                            <option value="PRESS1"><? echo lang('go_SURVEYPRESS1'); ?></option>
                         </select>
                         </td>
                     </tr>
                     <tr class="survey" style="display:none;">
                         <td style="text-align:right;width:250px;">
-                        Number of Channels:
+                        <? echo lang('go_NumberofChannels_'); ?>
                         </td>
                         <td>
                         <select id="num_channels">
@@ -700,11 +700,11 @@ $(function()
                     </tr>
                     <tr class="showAgent" style="display:none;">
                         <td style="text-align:right;width:250px;">
-                        Agent:
+                        <? echo lang('go_Agent_'); ?>
                         </td>
                         <td>
                         <select id="agent">
-                        	<option value="NONE">NONE</option>
+                        	<option value="NONE"><? echo lang('go_NONE'); ?></option>
 							<?php
                             foreach ($list_agents as $agent)
                             {
@@ -716,7 +716,7 @@ $(function()
                     </tr>
                     <tr class="showEmail" style="display:none;">
                         <td style="text-align:right;width:250px;">
-                        Email:
+                        <? echo lang('go_Email_'); ?>
                         </td>
                         <td>
                         <input type="text" id="email_address" name="email_address" value="" />
@@ -724,7 +724,7 @@ $(function()
                     </tr>
                     <tr class="showSecond" style="display:none;">
                         <td style="text-align:right;width:250px;">
-                        Group Color:
+                        <? echo lang('go_GroupColor_'); ?>
                         </td>
                         <td>
                         <input type="text" id="group_color" name="group_color" class="color" value="FFFFFF" />
@@ -748,4 +748,4 @@ $(function()
     </tr>
 </table>
 <hr style="border:#DFDFDF 1px solid;" />
-<span id="saveButtons"><span id="back" style="display:none;white-space: nowrap;">Back</span><span id="back_pipe" style="display:none;white-space: nowrap;"> | </span><span id="next" style="white-space: nowrap;">Next</span><span id="modify_pipe" style="display:none;white-space: nowrap;"> | </span><span id="modify" style="display:none;white-space: nowrap;">Modify</span></span>
+<span id="saveButtons"><span id="back" style="display:none;white-space: nowrap;"><? echo lang('go_Back'); ?></span><span id="back_pipe" style="display:none;white-space: nowrap;"> | </span><span id="next" style="white-space: nowrap;"><? echo lang('go_Next'); ?></span><span id="modify_pipe" style="display:none;white-space: nowrap;"> | </span><span id="modify" style="display:none;white-space: nowrap;"><? echo lang('go_Modify'); ?></span></span>

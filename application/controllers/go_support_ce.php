@@ -96,7 +96,7 @@ class Go_support_ce extends Controller{
 
                 } else {
 
-                     die("Error : Are you a registered user?");
+                     die("".$this->lang->line("go_error_registered_user")."");
 
                 }
 
@@ -142,7 +142,7 @@ class Go_support_ce extends Controller{
 
                     if(preg_match("/error/",$result)){
 
-                        die("Error: Something went wrong please contact your support");
+                        die("".$this->lang->line('go_error_pls_contact_support')."");
 
                     }
 
@@ -153,7 +153,7 @@ class Go_support_ce extends Controller{
 
           } else {
 
-                die("Admin account? Please use our freshdesk");
+                die("".$this->lang->line('go_pls_use_freshdesk')."");
 
           }
 
@@ -197,7 +197,7 @@ class Go_support_ce extends Controller{
                           '"Content-Type: application/xml; charset=UTF-8" '.
                           '-d xml="<helpdesk-ticket><email>'.$_POST['accntemail'].'</email>'.$attachThis.'<subject>'.$_POST['subject']." [Account No. ".$_POST['accountNum'].']</subject><description>'.preg_replace('/(\n)/','&#10;',$_POST['description']).'</description></helpdesk-ticket>" '.
                           "-kX POST ".$this->config->item("freshdesk_sub_url")."/helpdesk/tickets.xml'");
-           echo('New ticket submited');
+           echo(''.$this->lang->line("go_new_ticket_submited").'');
 
         }
 
@@ -215,7 +215,7 @@ class Go_support_ce extends Controller{
                             '-d xml="<helpdesk-note><user_id>'.$_POST['requesterid'].'</user_id><body>'.$_POST['note'].'</body><private>false</private></helpdesk-note>" '.
                             "-kX POST ".$this->config->item("freshdesk_sub_url")."/helpdesk/tickets/".$_POST['id']."/notes.xml'"
                            );
-             echo ('Added new note successful');
+             echo (''.$this->lang->line("go_added_new_note").'');
         }
 
 

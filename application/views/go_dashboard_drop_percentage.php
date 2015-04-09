@@ -29,29 +29,29 @@ $dropped_percentage = ($dropped_percentage > 0) ? round($dropped_percentage,2) :
     text-align: right;
 }
 </style>
-<p class="sub">Dropped Call Percentage</p>
+<p class="sub"><? echo lang('go_DroppedCallPercentage'); ?></p>
 <table id="dropCallsTable">
 	<tbody>
 	<tr  class="first">
 
-			<td class="o dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer;font-size:50px;" onclick="droppedCalls()" title="Click to see the list of campaign dropped percentage"><? echo $dropped_percentage; ?></a></div></div></td>
-			<td class="t bold"><a class="toolTip" style="cursor:pointer" onclick="droppedCalls()" title="Click to see the list of campaign dropped percentage">% Dropped Percentage</a></td>
+			<td class="o dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer;font-size:50px;" onclick="droppedCalls()" title="<? echo lang('go_Clicktoseethelistof');?> <? echo lang('go_DroppedPercentage'); ?>"><? echo $dropped_percentage; ?></a></div></div></td>
+			<td class="t bold"><a class="toolTip" style="cursor:pointer" onclick="droppedCalls()" title="<? echo lang('go_Clicktoseethelistof');?> <? echo lang('go_DroppedPercentage'); ?>">% <? echo lang('go_DroppedPercentage'); ?></a></td>
 
 
 	</tr>
 	<tr>
 
 
-			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="droppedCalls()" title="Click to see the list of campaign dropped calls"><? echo ($dropped_calls_today > 0) ? $dropped_calls_today : "0"; ?></a></div></div></td>
-			<td class="t "><a class="toolTip" style="cursor:pointer" onclick="droppedCalls()" title="Click to see the list of campaign dropped calls">Dropped Calls</a></td>
+			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="droppedCalls()" title="<? echo lang('go_Clicktoseethelistof');?> <? echo lang('go_DroppedCalls'); ?>"><? echo ($dropped_calls_today > 0) ? $dropped_calls_today : "0"; ?></a></div></div></td>
+			<td class="t "><a class="toolTip" style="cursor:pointer" onclick="droppedCalls()" title="<? echo lang('go_Clicktoseethelistof');?> <? echo lang('go_DroppedCalls'); ?>"><? echo lang('go_DroppedCalls'); ?></a></td>
 
 
 	</tr>
 	<tr>
 
 
-			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="droppedCalls()" title="Click to see the list of campaign answered calls"><? echo ($answered_calls_today > 0) ? $answered_calls_today : "0"; ?></a></div></div></td>
-			<td class="t "><a class="toolTip" style="cursor:pointer" onclick="droppedCalls()" title="Click to see the list of campaign answered calls">Answered Calls</a></td>
+			<td class="c dropTD"><div class="tdcon1"><div class="tdcon2"><a class="toolTip" style="cursor:pointer" onclick="droppedCalls()" title="<? echo lang('go_Clicktoseethelistof');?> <? echo lang('go_AnsweredCalls'); ?>"><? echo ($answered_calls_today > 0) ? $answered_calls_today : "0"; ?></a></div></div></td>
+			<td class="t "><a class="toolTip" style="cursor:pointer" onclick="droppedCalls()" title="<? echo lang('go_Clicktoseethelistof');?> <? echo lang('go_AnsweredCalls'); ?>"><? echo lang('go_AnsweredCalls'); ?></a></td>
 
 
 	</tr>

@@ -41,7 +41,7 @@ $(function()
 		if (err > 0)
 		{
 			if (!notAvail)
-				alert('Please compose an SQL query.');
+				alert('<? echo lang('go_PleasecomposeanSQLquery'); ?>');
 		}
 		else
 		{
@@ -337,7 +337,7 @@ $(function()
 			{
 				$('#floading_mod').load('<? echo $base; ?>index.php/go_campaign_ce/go_sql_filters/check/'+$(this).val());
 			} else {
-				$('#floading_mod').html("<small style=\"color:red;\">Minimum of 3 characters.</small>");
+				$('#floading_mod').html("<small style=\"color:red;\"><?php echo lang('go_minimumChar'); ?></small>");
 			}
 		}
 	});
@@ -376,40 +376,40 @@ $(function()
 	font-weight:bold;
 }
 </style>
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">MODIFY LEAD FILTER: <?php echo "{$filter[0]->lead_filter_id}"; ?></div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><? echo lang('go_MODIFYLEADFILTER_'); ?> <?php echo "{$filter[0]->lead_filter_id}"; ?></div>
 <br />
 <table id="test" border=0 cellpadding="3" cellspacing="3" style="width:95%; color:#000; margin-left:auto; margin-right:auto;">
 	<tr>
-	    	<td style="text-align:right;width: 40%;" nowrap>Lead Filter ID:</td>
+	    	<td style="text-align:right;width: 40%;" nowrap><? echo lang('go_LeadFilterID_'); ?></td>
 		<td>&nbsp;<?php echo "{$filter[0]->lead_filter_id}"; ?><?=form_input('lead_filter_id_mod',$filter[0]->lead_filter_id,'id="lead_filter_id_mod" style="display:none;" class="filtersForm_mod"') ?></td>
 	</tr>
 	<tr>
-		<td style="text-align:right;width: 40%;" nowrap>Lead Filter Name:</td>
+		<td style="text-align:right;width: 40%;" nowrap><? echo lang('go_LeadFilterName_'); ?></td>
 		<td>&nbsp;<?=form_input('lead_filter_name_mod',$filter[0]->lead_filter_name,'id="lead_filter_name_mod" maxlength="30" class="filtersForm_mod"') ?></td>
 	</tr>
 	<tr>
-		<td style="text-align:right;width: 40%;" nowrap>Lead Filter Comments:</td>
+		<td style="text-align:right;width: 40%;" nowrap><? echo lang('go_LeadFilterComments_'); ?></td>
 		<td>&nbsp;<?=form_input('lead_filter_comments_mod',$filter[0]->lead_filter_comments,'id="lead_filter_comments_mod" maxlength="255" class="filtersForm_mod"') ?></td>
 	</tr>
 	<tr>
-		<td style="text-align:right;width: 40%;" nowrap>User Group:</td>
+		<td style="text-align:right;width: 40%;" nowrap><? echo lang('go_UserGroup_'); ?></td>
 		<td>&nbsp;<?=form_dropdown('user_group_mod',$user_groups,$filter[0]->user_group,'id="user_group_mod" class="filtersForm_mod"') ?></td>
 	</tr>
 	<tr>
-		<td align="right"><label class="modify-value">Fields:</label></td>
+		<td align="right"><label class="modify-value"><? echo lang('go_Fields_'); ?></label></td>
 		<td style="white-space:nowrap;">
 			<?=form_dropdown('fields_to_filter_mod',$fields_to_filter,null,'id="fields_to_filter_mod"'); ?>
 		</td>
 	</tr>
 	<tr class="dateOptions" style="display:none;">
-		<td align="right"><label class="modify-value">Filter Options:</label></td>
+		<td align="right"><label class="modify-value"><? echo lang('go_FilterOptions_'); ?></label></td>
 		<td>
 			<?=form_radio('filter_sql_date_mod','single',TRUE,'id="filter_sql_single"'); ?> SINGLE &nbsp; 
 			<?=form_radio('filter_sql_date_mod','range',FALSE,'id="filter_sql_range"'); ?> RANGE
 		</td>
 	</tr>
 	<tr class="countOptions" style="display:none;">
-		<td align="right"><label class="modify-value">Filter Options:</label></td>
+		<td align="right"><label class="modify-value"><? echo lang('go_FilterOptions_'); ?></label></td>
 		<td>
 			<?=form_radio('filter_sql_oper_mod','=',TRUE,'id="filter_sql_eq"'); ?> = &nbsp; 
 			<?=form_radio('filter_sql_oper_mod','>',FALSE,'id="filter_sql_gt"'); ?> &gt; &nbsp; 
@@ -420,21 +420,21 @@ $(function()
 		</td>
 	</tr>
 	<tr class="otherOptions" style="display:none;">
-		<td align="right"><label class="modify-value">Filter Options:</label></td>
+		<td align="right"><label class="modify-value"><? echo lang('go_FilterOptions_'); ?></label></td>
 		<td>
 			<?=form_radio('filter_sql_other_mod','IN',TRUE,'id="filter_sql_in"'); ?> IN &nbsp; 
 			<?=form_radio('filter_sql_other_mod','NOT IN',FALSE,'id="filter_sql_notin"'); ?> NOT IN
 		</td>
 	</tr>
 	<tr class="dateOptions" style="display:none;">
-		<td align="right"><label class="modify-value">Filter by Date:</label></td>
+		<td align="right"><label class="modify-value"><? echo lang('go_FilterbyDate'); ?></label></td>
 		<td style="white-space:nowrap;">
 			<?=form_input('filter_by_date_mod',date("Y-m-d"),'id="filter_by_date_mod" class="datepicker" size="15" maxlength="10" readonly="readonly"'); ?> <span class="date_range" style="display:none;">to</span>
 			<?=form_input('filter_by_end_date_mod',date("Y-m-d"),'id="filter_by_end_date_mod" placeholder="End Date" class="datepicker date_range" style="display:none;" size="15" maxlength="10" readonly="readonly"'); ?>
 		</td>
 	</tr>
 	<tr class="countOptions" style="display:none;">
-		<td align="right"><label class="modify-value">Filter by Called Count:</label></td>
+		<td align="right"><label class="modify-value"><? echo lang('go_FilterbyCalledCount_'); ?></label></td>
 		<td style="white-space:nowrap;">
 			<?php
 			for($i=0;$i<=50;$i++)
@@ -446,19 +446,19 @@ $(function()
 		</td>
 	</tr>
 	<tr class="countryOptions" style="display:none;">
-		<td align="right"><label class="modify-value">Filter by Country Code:</label></td>
+		<td align="right"><label class="modify-value"><? echo $FilterbyCountryCode;  ?></label></td>
 		<td style="white-space:nowrap;">
 			<?=form_dropdown('filter_by_country_mod',$countrycodes,'USA_1','id="filter_by_country_mod" multiple="multiple" size="10"'); ?>
 		</td>
 	</tr>
 	<tr class="areaOptions" style="display:none;">
-		<td align="right"><label class="modify-value">Filter by Area Code:</label></td>
+		<td align="right"><label class="modify-value"><? echo $FilterbyAreaCode; ?></label></td>
 		<td style="white-space:nowrap;">
 			<?=form_dropdown('filter_by_areacode_mod',$areacodes,'USA_201','id="filter_by_areacode_mod" multiple="multiple" size="10"'); ?>
 		</td>
 	</tr>
 	<tr class="tzOptions" style="display:none;">
-		<td align="right"><label class="modify-value">Filter by Timezone:</label></td>
+		<td align="right"><label class="modify-value"><? echo lang('go_FilterbyTimezone'); ?></label></td>
 		<td style="white-space:nowrap;">
 			<?php
 			$TZ = array('12.75'=>'12.75','12.00'=>'12.00','11.00'=>'11.00','10.00'=>'10.00','9.50'=>'9.50',
@@ -474,19 +474,19 @@ $(function()
 		</td>
 	</tr>
 	<tr class="stateOptions" style="display:none;">
-		<td align="right"><label class="modify-value">Filter by State:</label></td>
+		<td align="right"><label class="modify-value"><? echo lang('go_FilterbyState_'); ?></label></td>
 		<td style="white-space:nowrap;">
 			<?=form_dropdown('filter_by_state_mod',$states,'USA_AK','id="filter_by_state_mod" multiple="multiple" size="10" style="width:300px;"'); ?>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="modify-value">SQL Preview:</label></td>
+		<td align="right"><label class="modify-value"><? echo lang('go_SQLPreview_'); ?></label></td>
 		<td style="white-space:nowrap;">
 			<?=form_input('filter_sql_preview_mod',null,'id="filter_sql_preview_mod" size="55" readonly="readonly"'); ?>
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="modify-value">Filter Options:</label></td>
+		<td align="right"><label class="modify-value"><? echo lang('go_FilterOptions_'); ?></label></td>
 		<td>
 			<?=form_button('filter_sql_insert_mod','INSERT','id="filter_sql_insert_mod" disabled="disabled"'); ?> &nbsp; 
 			<span id="filter_sql_span_mod" style="display:none;"><?=form_radio('filter_sql_div_mod','AND',FALSE,'id="filter_sql_and"'); ?> AND &nbsp; 
@@ -494,17 +494,17 @@ $(function()
 		</td>
 	</tr>
 	<tr>
-		<td align="right"><label class="modify-value">Filter SQL:<br /><small><a id="clear_filter_mod">Clear SQL</a></small>&nbsp;&nbsp;&nbsp;</label></td>
+		<td align="right"><label class="modify-value"><? echo lang('go_FilterSQL_'); ?><br /><small><a id="clear_filter_mod"><? echo lang('go_ClearSQL'); ?></a></small>&nbsp;&nbsp;&nbsp;</label></td>
 		<td>
 			<textarea name="lead_filter_sql_mod" id="lead_filter_sql_mod" rows="10" cols="50" class="filtersForm_mod" style="resize:vertical;"><?php echo $filter[0]->lead_filter_sql ?></textarea><br />
-			<small style="color:red;">* Disclaimer: Improper use may result in service disruption.<br /><span style="visibility:hidden;"><small>* Disclaimer: </small></span>Use at your own risk.</small>
+			<small style="color:red;"><? echo lang('go_Disclamer1'); ?><br /><span style="visibility:hidden;"><small><? echo lang('go_Disclamer2'); ?></small></span><? echo lang('go_Disclamer3'); ?></small>
 		</td>
 	</tr>
 	<tr>
     	<td>&nbsp;</td><td>&nbsp;</td>
     </tr>
 	<tr>
-    	<td><span id="advance_link" style="cursor:pointer;font-size:9px;display:none;">[ + ADVANCE SETTINGS ]</span><input type="hidden" id="isAdvance" value="0" /></td><td style="text-align:right;"><span id="saveSettings_mod" class="buttons">SAVE SETTINGS</span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
+    	<td><span id="advance_link" style="cursor:pointer;font-size:9px;display:none;"><? echo lang('go_plusADVANCESETTINGS'); ?></span><input type="hidden" id="isAdvance" value="0" /></td><td style="text-align:right;"><span id="saveSettings_mod" class="buttons"><? echo lang('go_SAVESETTINGS'); ?></span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
     </tr>
 </table>
 <br style="font-size:9px;" />

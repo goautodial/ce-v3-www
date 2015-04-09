@@ -29,13 +29,13 @@ class Go_calltimes_ce extends Controller {
 
 	function index()
 	{
-		if ($this->userLevel < 9) { die('Error: You do not have permission to view this page.'); }
+		if ($this->userLevel < 9) { die(''.$this->lang->line("go_err_permission_view").''); }
 		$data['cssloader'] = 'go_dashboard_cssloader.php';
 		$data['jsheaderloader'] = 'go_dashboard_header_jsloader.php';
 		$data['jsbodyloader'] = 'go_dashboard_body_jsloader.php';
 
 		$data['theme'] = $this->session->userdata('go_theme');
-		$data['bannertitle'] = $this->lang->line('go_calltimes_banner');
+		$data['bannertitle'] = $this->lang->line('go_ct_banner');
 		$data['sys']= 'wp-has-current-submenu';
 		$data['hostp'] = $_SERVER['SERVER_ADDR'];
 		$data['folded'] = 'folded';
@@ -251,9 +251,9 @@ class Go_calltimes_ce extends Controller {
 		
 		if ($return)
 		{
-			$return = "<small style=\"color:red;\">Not Available.</small>";
+			$return = "<small style=\"color:red;\">{$this->lang->line('go_not_available')}.</small>";
 		} else {
-			$return = "<small style=\"color:green;\">Available.</small>";
+			$return = "<small style=\"color:green;\">{$this->lang->line('go_available')}.</small>";
 		}
 		
 		echo $return;
@@ -268,9 +268,9 @@ class Go_calltimes_ce extends Controller {
 		
 		if ($return)
 		{
-			$return = "<small style=\"color:red;\">Not Available.</small>";
+			$return = "<small style=\"color:red;\">{$this->lang->line('go_not_available')}.</small>";
 		} else {
-			$return = "<small style=\"color:green;\">Available.</small>";
+			$return = "<small style=\"color:green;\">{$this->lang->line('go_available')}.</small>";
 		}
 		
 		echo $return;

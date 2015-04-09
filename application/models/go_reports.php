@@ -444,7 +444,7 @@ class Go_reports extends Model {
 						}
 	
 					}
-				if ($DB) {echo "Done gathering $i records, analyzing...<BR>\n";}
+				if ($DB) {echo "{$this->lang->line("go_done_gathering")} $i {$this->lang->line("go_records_analyzing")}<BR>\n";}
 				##### END Gather all agent time records and parse through them in PHP to save on DB load
 			
 				############################################################################
@@ -454,9 +454,9 @@ class Go_reports extends Model {
 				##### BEGIN print the output to screen or put into file output variable
 				if ($file_download > 0)
 					{
-					$file_output  = "CAMPAIGN,$campaignID - ".$resultu->campaign_name."\n";
-					$file_output .= "DATE RANGE,$fromDate TO $toDate\n\n";
-					$file_output .= "USER,ID,CALLS,TIME CLOCK,AGENT TIME,WAIT,TALK,DISPO,PAUSE,WRAPUP,CUSTOMER,$sub_statusesFILE\n";
+                                        $file_output  = "{$this->lang->line("go_campaign")},$campaignID - ".$resultu->campaign_name."\n";
+                                        $file_output .= "{$this->lang->line("go_date_range_caps")},$fromDate {$this->lang->line("go_to")} $toDate\n\n";
+                                        $file_output .= "{$this->lang->line("go_user_id_c_tc_at_w_t_d_p_w_c")},$sub_statusesFILE\n";
 					}
 				##### END print the output to screen or put into file output variable
 			
@@ -506,7 +506,7 @@ class Go_reports extends Model {
 						}
 					if ($user_name_found < 1)
 						{
-						$RAWname =		"NOT IN SYSTEM";
+						$RAWname =		"{$this->lang->line("go_not_system")}";
 						$Sname[$m] =	$RAWname;
 						}
 			
@@ -720,7 +720,7 @@ class Go_reports extends Model {
 	
 				if ($file_download > 0)
 					{
-					$file_output .= "TOTALS,AGENTS: $TOT_AGENTS,$TOTcalls,$TOTtimeTC,$TOTALtime,$TOTwait,$TOTtalk,$TOTdispo,$TOTpause,$TOTdead,$TOTcustomer,$SUMstatusesFILE\n";
+					$file_output .= "{$this->lang->line("go_total_agents")}: $TOT_AGENTS,$TOTcalls,$TOTtimeTC,$TOTALtime,$TOTwait,$TOTtalk,$TOTdispo,$TOTpause,$TOTdead,$TOTcustomer,$SUMstatusesFILE\n";
 					}
 				############################################################################
 				##### END formatting data for output section
@@ -796,9 +796,9 @@ class Go_reports extends Model {
 				
 				if ($file_download > 0)
 					{
-					$file_output  = "CAMPAIGN,$campaignID - ".$resultu->campaign_name."\n";
-					$file_output .= "DATE RANGE,$fromDate TO $toDate\n\n";
-					$file_output .= "USER NAME,ID,CALLS,AGENT TIME,PAUSE,PAUSE AVG,WAIT,WAIT AVG,TALK,TALK AVG,DISPO,DISPO AVG,WRAPUP,WRAPUP AVG,CUSTOMER,CUST AVG$statusesFILE\n";
+                                        $file_output  = "{$this->lang->line("go_campaign")},$campaignID - ".$resultu->campaign_name."\n";
+                                        $file_output .= "{$this->lang->line("go_date_range_caps")},$fromDate {$this->lang->line("go_to_caps")} $toDate\n\n";
+                                        $file_output .= "{$this->lang->line("go_user_name_id_c_at_p_a_w_t_t")}$statusesFILE\n";
 					}
 				
 				### BEGIN loop through each user ###
@@ -1031,7 +1031,7 @@ class Go_reports extends Model {
 				
 				if ($file_download > 0)
 					{
-					$file_output .= "TOTALS,AGENTS: $TOT_AGENTS,$TOTcalls,$TOTtime_MS,$TOTtotPAUSE_MS,$TOTavgPAUSE_MS,$TOTtotWAIT_MS,$TOTavgWAIT_MS,$TOTtotTALK_MS,$TOTavgTALK_MS,$TOTtotDISPO_MS,$TOTavgDISPO_MS,$TOTtotDEAD_MS,$TOTavgDEAD_MS,$TOTtotCUSTOMER_MS,$TOTavgCUSTOMER_MS$SUMstatusesFILE\n";
+					$file_output .= "{$this->lang->line("go_total_agents")}: $TOT_AGENTS,$TOTcalls,$TOTtime_MS,$TOTtotPAUSE_MS,$TOTavgPAUSE_MS,$TOTtotWAIT_MS,$TOTavgWAIT_MS,$TOTtotTALK_MS,$TOTavgTALK_MS,$TOTtotDISPO_MS,$TOTavgDISPO_MS,$TOTtotDEAD_MS,$TOTavgDEAD_MS,$TOTtotCUSTOMER_MS,$TOTavgCUSTOMER_MS$SUMstatusesFILE\n";
 					}
 				
 				$sub_statuses='-';
@@ -1076,7 +1076,7 @@ class Go_reports extends Model {
 					}
 				
 				if ($file_download > 0) {
-					$file_output .= "\n\nUSER NAME,ID,TOTAL,NONPAUSE,PAUSE,$sub_statusesFILE\n";
+					$file_output .= "\n\n{$this->lang->line("go_user_name_id_t_np_p")},$sub_statusesFILE\n";
 				}
 				
 				### BEGIN loop through each user ###
@@ -1236,7 +1236,7 @@ class Go_reports extends Model {
 					$TOTtotTOTAL_MS =		$this->go_sec_convert($TOTtotTOTAL,'H'); 
 				
 					if ($file_download > 0) {
-						$file_output .= "TOTALS,AGENTS: $TOT_AGENTS,$TOTtotTOTAL_MS,$TOTtotNONPAUSE_MS,$TOTtotPAUSE_MS,$SUMsub_statusesFILE\n";
+						$file_output .= "{$this->lang->line("go_total_agents")}: $TOT_AGENTS,$TOTtotTOTAL_MS,$TOTtotNONPAUSE_MS,$TOTtotPAUSE_MS,$SUMsub_statusesFILE\n";
 					}
 					
 				$return['TOPsorted_output']		= $TOPsorted_output;
@@ -1280,9 +1280,9 @@ class Go_reports extends Model {
 			}
 			
 			if ($pageTitle=="dispo") {
-				$list_ids[0] = "ALL";
-				$total_all=($list_ids[0] == "ALL") ? 'ALL List IDs under '.$campaignID : 'List ID(s): '.implode(',',$list_ids);
-				if (isset($list_ids) && $list_ids[0] == "ALL") {
+                                $list_ids[0] = "{$this->lang->line("go_all")}";
+                                $total_all=($list_ids[0] == "{$this->lang->line("go_all")}") ? ''.$this->lang->line("go_all_list_ids").' '.$campaignID : ''.$this->lang->line("go_list_ids").': '.implode(',',$list_ids);
+                                if (isset($list_ids) && $list_ids[0] == "{$this->lang->line("go_all")}") {
 					$query = $this->reportsdb->query("SELECT list_id FROM vicidial_lists WHERE campaign_id='$campaignID' ORDER BY list_id");
 	
 					foreach ($query->result() as $i => $row) {
@@ -1343,7 +1343,7 @@ class Go_reports extends Model {
 		
 				$TOPsorted_output = "<center>\n";
 				$TOPsorted_output .= "<TABLE align=center cellpadding=1 cellspacing=1 style=\"width:50%;border:#D0D0D0 solid 1px; -moz-border-radius:5px; -khtml-border-radius:5px; -webkit-border-radius:5px; border-radius:5px;\">\n";
-				$TOPsorted_output .= "<tr style=\"background-color:#FFFFFF\"><td align=center class=\"style3\"><strong>Status</strong></td><td align=center class=\"style3\"><strong>Status Name</strong></td>";
+				$TOPsorted_output .= "<tr style=\"background-color:#FFFFFF\"><td align=center class=\"style3\"><strong>{$this->lang->line("go_status")}</strong></td><td align=center class=\"style3\"><strong>{$this->lang->line("go_status_name")}</strong></td>";
 				$first = $all_called_first;
 				while ($first <= $all_called_last)
 					{
@@ -1354,7 +1354,7 @@ class Go_reports extends Model {
 					$TOPsorted_output .= "<td align=center class=\"style3\" $AB><strong>&nbsp;$first$Fplus&nbsp;</strong></td>";
 					$first++;
 					}
-				$TOPsorted_output .= "<td align=center class=\"style3\" nowrap><strong>&nbsp;Sub Total&nbsp;</strong></td></tr>\n";
+				$TOPsorted_output .= "<td align=center class=\"style3\" nowrap><strong>&nbsp;{$this->lang->line("go_sub_total")}&nbsp;</strong></td></tr>\n";
 		
 				$sts=0;
 				$statuses_called_to_print = count($status);
@@ -1404,7 +1404,7 @@ class Go_reports extends Model {
 	//					}
 					}
 		
-				$TOPsorted_output .= "<tr><td align=center colspan=2 align=center class=\"style3\" nowrap style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;<b>TOTAL for ".$total_all."&nbsp;</td>";
+				$TOPsorted_output .= "<tr><td align=center colspan=2 align=center class=\"style3\" nowrap style=\"border-top:#D0D0D0 dashed 1px;\">&nbsp;<b>{$this->lang->line("go_total_for")} ".$total_all."&nbsp;</td>";
 				$first = $all_called_first;
 				while ($first <= $all_called_last)
 					{
@@ -1425,8 +1425,8 @@ class Go_reports extends Model {
 			}
 			
 			if ($pageTitle == "sales_agent") {
-				$list_ids = "ALL";
-				$list_id_query=(isset($list_ids) && $list_ids != "ALL") ? "and vlog.list_id IN ('".implode("','",$list_ids)."')" : "";
+				$list_ids = "{$this->lang->line("go_all")}";
+				$list_id_query=(isset($list_ids) && $list_ids != "{$this->lang->line("go_all")}") ? "and vlog.list_id IN ('".implode("','",$list_ids)."')" : "";
 				
 				 $query = $this->reportsdb->query("SELECT status FROM vicidial_statuses WHERE sale='Y'");
 				 foreach ($query->result() as $status)
@@ -1462,9 +1462,9 @@ class Go_reports extends Model {
 						group by us.full_name");
 				$numO = $query->num_rows();
 				
-				$file_output  = "CAMPAIGN,$campaignID - ".$resultu->campaign_name."\n";
-				$file_output .= "DATE RANGE,$fromDate TO $toDate\n\n";
-				$file_output .= "OUTBOUND SALES\nAGENTS NAME,AGENTS ID,SALES COUNT\n";
+                                $file_output  = "{$this->lang->line("go_campaign")},$campaignID - ".$resultu->campaign_name."\n";
+                                $file_output .= "{$this->lang->line("go_date_range_caps")},$fromDate {$this->lang->line("go_to_caps")} $toDate\n\n";
+                                $file_output .= "{$this->lang->line("go_outbound_sales_an_aid_sc")}";
 				if ($numO) {
 					$total_sales=0;
 					foreach($query->result() as $row) {
@@ -1487,9 +1487,9 @@ class Go_reports extends Model {
 					}
 				}
 				if ($total_out_sales < 1) {
-					$file_output .= "No Records Found";
+					$file_output .= "{$this->lang->line("go_no_records_found")}";
 				} else {
-					$file_output .= "TOTAL,,$total_out_sales\n\n";
+					$file_output .= "{$this->lang->line("go_total")},,$total_out_sales\n\n";
 				}
 				
 				// Inbound Sales
@@ -1540,7 +1540,7 @@ class Go_reports extends Model {
 						group by us.full_name");
 				$numI = $query->num_rows();
 				
-				$file_output .= "INBOUND SALES\nAGENTS NAME,AGENTS ID,SALES COUNT\n";
+				$file_output .= "{$this->lang->line("go_inbound_sales_an_ai_sc")}";
 				if ($numI) {
 					$total_sales=0;
 	
@@ -1564,9 +1564,9 @@ class Go_reports extends Model {
 					}
 				}
 				if ($total_in_sales < 1) {
-					$file_output .= "No Records Found";
+					$file_output .= "{$this->lang->line("go_no_records_found")}";
 				} else {
-					$file_output .= "TOTAL,,$total_in_sales";
+					$file_output .= "{$this->lang->line("go_total")},,$total_in_sales";
 				}
 				
 				$return['TOPsorted_output']		= $TOPsorted_output;
@@ -1577,8 +1577,8 @@ class Go_reports extends Model {
 			}
 			
 			if ($pageTitle == "sales_tracker") {
-				$list_ids = "ALL";
-				$list_id_query=(isset($list_ids) && $list_ids != "ALL") ? "and vlo.list_id IN ('".implode("','",$list_ids)."')" : "";
+				$list_ids = "{$this->lang->line("go_all")}";
+				$list_id_query=(isset($list_ids) && $list_ids != "{$this->lang->line("go_all")}") ? "and vlo.list_id IN ('".implode("','",$list_ids)."')" : "";
 				
 				if ($return['request']=='outbound') {
 				
@@ -1618,9 +1618,9 @@ class Go_reports extends Model {
 					$TOPsorted_output = $query->result();
 					
 					if ($file_download > 0) {
-						$file_output  = "CAMPAIGN,$campaignID - ".$resultu->campaign_name."\n";
-						$file_output .= "DATE RANGE,$fromDate TO $toDate\n\n";
-						$file_output .= "OUTBOUND SALES\nCALL DATE & TIME,AGENT,PHONE NUMBER,FIRST NAME,LAST NAME,ADDRESS,CITY,STATE,POSTAL CODE,EMAIL,ALT NUMBER,COMMENTS\n";
+                                                $file_output  = "{$this->lang->line("go_campaign")},$campaignID - ".$resultu->campaign_name."\n";
+                                                $file_output .= "{$this->lang->line("go_date_range")},$fromDate {$this->lang->line("go_to_caps")} $toDate\n\n";
+                                                $file_output .= "{$this->lang->line("go_outbound_sales_cdt_a_pn_f_l_a_c_s_p_e_an_c")}";
 						
 						foreach ($TOPsorted_output as $row) {
 							$file_output .=$row->call_date.",".$row->agent.",".$row->phone_number.",".$row->first_name.",".$row->last_name.",".$row->address.",".$row->city.",".$row->state.",".$row->postal.",".$row->email.",".$row->alt_phone.",".$row->comments."\n";
@@ -1678,9 +1678,9 @@ class Go_reports extends Model {
 					$TOPsorted_output = $query->result();
 					
 					if ($file_download > 0) {
-						$file_output  = "CAMPAIGN,$campaignID - ".$resultu->campaign_name."\n";
-						$file_output .= "DATE RANGE,$fromDate TO $toDate\n\n";
-						$file_output .= "INBOUND SALES\nCALL DATE & TIME,AGENT,PHONE NUMBER,FIRST NAME,LAST NAME,ADDRESS,CITY,STATE,POSTAL CODE,EMAIL,ALT NUMBER,COMMENTS\n";
+                                                $file_output  = "{$this->lang->line("go_campaign")},$campaignID - ".$resultu->campaign_name."\n";
+                                                $file_output .= "{$this->lang->line("go_date_range_caps")},$fromDate {$this->lang->line("go_to_caps")} $toDate\n\n";
+                                                $file_output .= "{$this->lang->line("go_outbound_sales_cdt_a_pn_f_l_a_c_s_p_e_an_c")}";
 						
 						foreach ($TOPsorted_output as $row) {
 							$file_output .=$row->call_date.",".$row->agent.",".$row->phone_number.",".$row->first_name.",".$row->last_name.",".$row->address.",".$row->city.",".$row->state.",".$row->postal.",".$row->email.",".$row->alt_phone.",".$row->comments."\n";
@@ -1697,13 +1697,13 @@ class Go_reports extends Model {
 				$TOPsorted_output = $query->result();
 				
 				if ($file_download > 0) {
-					$file_output  = "INBOUND CAMPAIGN,$campaignID - ".$resultu->campaign_name."\n";
-					$file_output .= "DATE RANGE,$fromDate TO $toDate\n\n";
-					$file_output .= "DATE,AGENT ID,PHONE NUMBER,TIME,CALL DURATION (IN SEC),DISPOSITION\n";
+                                        $file_output  = "{$this->lang->line("go_inbound_camp")},$campaignID - ".$resultu->campaign_name."\n";
+                                        $file_output .= "{$this->lang->line("go_date_range_caps")},$fromDate {$this->lang->line("go_to_caps")} $toDate\n\n";
+                                        $file_output .= "{$this->lang->line("go_date_aid_pn_t_cd_d")}";
 					
 					foreach ($TOPsorted_output as $row) {
 						list($ldate, $ltime) = split(' ',$row->call_date);
-						$phone_number = ($row->phone_number != "") ? $row->phone_number : "NOT REGISTERED";
+						$phone_number = ($row->phone_number != "") ? $row->phone_number : "{$this->lang->line("go_not_registered")}";
 						
 						$file_output .= "$ldate,".$row->user.",$phone_number,$ltime,".$row->length_in_sec.",".$row->status."\n";
 					}
@@ -1772,7 +1772,7 @@ class Go_reports extends Model {
 						   }
 						$i++;
 						}
-					if ( (ereg("--NONE--",$campaign_string) ) or (strlen($campaign_SQL) < 1) )
+					if ( (ereg("--{$this->lang->line("go_none")}--",$campaign_string) ) or (strlen($campaign_SQL) < 1) )
 						{
 						//$campaign_SQL = "campaign_id IN('')";
 						$campaign_SQL = "";
@@ -1794,7 +1794,7 @@ class Go_reports extends Model {
 						   }
 						$i++;
 						}
-					if ( (ereg("--NONE--",$group_string) ) or ($group_ct < 1) )
+					if ( (ereg("--{$this->lang->line("go_none")}--",$group_string) ) or ($group_ct < 1) )
 						{
 						//$group_SQL = "campaign_id IN('')";
 						$group_SQL = "";
@@ -1803,7 +1803,12 @@ class Go_reports extends Model {
 					else
 						{
 						$group_SQL = eregi_replace(",$",'',$group_SQL);
-						$group_SQL = "and vl.campaign_id IN($group_SQL)";
+                                                if($group_SQL!=NULL){
+                                                $group_SQL = "and vl.campaign_id IN($group_SQL)";
+                                                }
+                                                else {
+                                                $group_SQL = "and vl.campaign_id IN('$group_SQL')";
+                                                }
 						$RUNgroup++;
 						}
 						
@@ -1817,7 +1822,7 @@ class Go_reports extends Model {
 						$list_SQL .= "'$list_id[$i]',";
 						$i++;
 						}
-					if ( (ereg("--ALL--",$list_string) ) or ($list_ct < 1) )
+					if ( (ereg("--{$this->lang->line("go_all")}--",$list_string) ) or ($list_ct < 1) )
 						{
 						$list_SQL = "";
 						}
@@ -1834,7 +1839,7 @@ class Go_reports extends Model {
 						$status_SQL .= "'$status[$i]',";
 						$i++;
 						}
-					if ( (ereg("--ALL--",$status_string) ) or ($status_ct < 1) )
+					if ( (ereg("--{$this->lang->line("go_all")}--",$status_string) ) or ($status_ct < 1) )
 						{
 						$status_SQL = "";
 						}
@@ -1844,9 +1849,9 @@ class Go_reports extends Model {
 						$status_SQL = "and vl.status IN($status_SQL)";
 						}
 					
-					if ($export_fields == 'EXTENDED')
+					if ($export_fields == "{$this->lang->line("go_extended")}")
 						{
-						$export_fields_SQL = ",entry_date,called_count,last_local_call_time,modify_date,called_since_last_reset";
+						$export_fields_SQL = ",entry_date,vi.called_count,last_local_call_time,modify_date,called_since_last_reset";
 						$EFheader = ",entry_date,called_count,last_local_call_time,modify_date,called_since_last_reset";
 						}
 	
@@ -1857,7 +1862,7 @@ class Go_reports extends Model {
 						$outbound_to_print = $query->num_rows();
 						if ($outbound_to_print < 1)
 							{
-							$err_nooutbcalls = "There are no outbound calls during this time period for these parameters.";
+							$err_nooutbcalls = "{$this->lang->line("go_no_outbound_calls")}";
 				// 			exit;
 							}
 						else
@@ -1873,7 +1878,7 @@ class Go_reports extends Model {
 								$export_vicidial_id[$k] =	$row['uniqueid'];
 								$export_entry_list_id[$k] =	$row['entry_list_id'];
 								$export_fieldsDATA='';
-								if ($export_fields == 'EXTENDED')
+								if ($export_fields == "{$this->lang->line("go_extended")}")
 									{$export_fieldsDATA = $row['entry_date'].",".$row['called_count'].",".$row['last_local_call_time'].",".$row['modify_date'].",".$row['called_since_last_reset'].",";}
 								$export_rows[$k] = $row['call_date'].",".$row['phone_number'].",".$row['status'].",".$row['user'].",\"".$row['full_name']."\",".$row['campaign_id'].",\"".$row['vendor_lead_code']."\",".$row['source_id'].",".$row['list_id'].",".$row['gmt_offset_now'].",\"".$row['phone_code']."\",\"".$row['phone_number']."\",\"".$row['title']."\",\"".$row['first_name']."\",\"".$row['middle_initial']."\",\"".$row['last_name']."\",\"".$row['address1']."\",\"".$row['address2']."\",\"".$row['address3']."\",\"".$row['city']."\",\"".$row['state']."\",\"".$row['province']."\",\"".$row['postal_code']."\",\"".$row['country_code']."\",\"".$row['gender']."\",\"".$row['date_of_birth']."\",\"".$row['alt_phone']."\",\"".$row['email']."\",\"".$row['security_phrase']."\",\"".$row['comments']."\",".$row['lenght_in_sec'].",\"".$row['user_group']."\",\"".$row['alt_dial']."\",\"".$row['rank']."\",\"".$row['owner']."\",".$row['lead_id'].",$export_fieldsDATA";
 								$k++;
@@ -1882,27 +1887,27 @@ class Go_reports extends Model {
 							}
 						}
 						
-					if ($header_row=='YES')
-						{
-						$RFheader = '';
-						$NFheader = '';
-						$CFheader = '';
-						$EXheader = '';
-						if ($rec_fields=='ID')
-							{$RFheader = ",recording_id";}
-						if ($rec_fields=='FILENAME')
-							{$RFheader = ",recording_filename";}
-						if ($rec_fields=='LOCATION')
-							{$RFheader = ",recording_location";}
-						if ($rec_fields=='ALL')
-							{$RFheader = ",recording_id,recording_filename,recording_location";}
-						if ($export_fields=='EXTENDED')
-							{$EXheader = ",uniqueid,caller_code,server_ip,hangup_cause,dialstatus,channel,dial_time,answered_time,cpd_result";}
-						if ($call_notes=='YES')
-							{$NFheader = ",call_notes";}
-						//if ( ($custom_fields_enabled > 0) and ($custom_fields=='YES') )
-						//	{$CFheader = ",custom_fields";}
-						if ( ($custom_fields_enabled > 0) and ($custom_fields=='YES') )
+                                        if ($header_row=="{$this->lang->line("go_yes")}")
+                                                {
+                                                $RFheader = '';
+                                                $NFheader = '';
+                                                $CFheader = '';
+                                                $EXheader = '';
+                                                if ($rec_fields=="{$this->lang->line("go_id")}")
+                                                        {$RFheader = ",recording_id";}
+                                                if ($rec_fields=="{$this->lang->line("go_filename")}")
+                                                        {$RFheader = ",recording_filename";}
+                                                if ($rec_fields=="{$this->lang->line("go_location")}")
+                                                        {$RFheader = ",recording_location";}
+                                                if ($rec_fields=="{$this->lang->line("go_all")}")
+                                                        {$RFheader = ",recording_id,recording_filename,recording_location";}
+                                                if ($export_fields=="{$this->lang->line("go_extended")}")
+                                                        {$EXheader = ",uniqueid,caller_code,server_ip,hangup_cause,dialstatus,channel,dial_time,answered_time,cpd_result";}
+                                                if ($call_notes=="{$this->lang->line("go_yes")}")
+                                                        {$NFheader = ",call_notes";}
+                                                //if ( ($custom_fields_enabled > 0) and ($custom_fields=='YES') )
+                                                //      {$CFheader = ",custom_fields";}
+                                                if ( ($custom_fields_enabled > 0) and ($custom_fields=="{$this->lang->line("go_yes")}") )
 						   {
 						      $x = 1;
 						      while ($k > $x) {
@@ -1937,7 +1942,7 @@ class Go_reports extends Model {
 						$inbound_to_print = $query->num_rows();
 						if ( ($inbound_to_print < 1) and ($outbound_calls < 1) )
 							{
-							$err_noinbcalls = "There are no inbound calls during this time period for these parameters.";
+							$err_noinbcalls = "{$this->lang->line("go_no_outbound_calls")}";
 				// 			exit;
 							}
 						else
@@ -1953,7 +1958,7 @@ class Go_reports extends Model {
 								$export_entry_list_id[$k] =	$row['entry_list_id'];
 								$export_uniqueid[$k] =		$row['uniqueid'];
 								$export_fieldsDATA='';
-								if ($export_fields == 'EXTENDED')
+								if ($export_fields == "{$this->lang->line("go_extended")}")
 									{$export_fieldsDATA = $row['entry_date'].",".$row['called_count'].",".$row['last_local_call_time'].",".$row['modify_date'].",".$row['called_since_last_reset'].",";}
 								$export_rows[$k] = $row['call_date'].",\"".$row['phone_number']."\",\"".$row['status']."\",\"".$row['user']."\",\"".$row['full_name']."\",".$row['campaign_id'].",\"".$row['vendor_lead_code']."\",\"".$row['source_id']."\",".$row['list_id'].",".$row['gmt_offset_now'].",\"".$row['phone_code']."\",\"".$row['phone_number']."\",\"".$row['title']."\",\"".$row['first_name']."\",\"".$row['middle_initial']."\",\"".$row['last_name']."\",\"".$row['address1']."\",\"".$row['address2']."\",\"".$row['address3']."\",\"".$row['city']."\",\"".$row['state']."\",\"".$row['province']."\",\"".$row['postal_code']."\",\"".$row['country_code']."\",\"".$row['gender']."\",\"".$row['date_of_birth']."\",\"".$row['alt_phone']."\",\"".$row['email']."\",\"".$row['security_phrase']."\",\"".$row['comments']."\",".$row['lenght_in_sec'].",\"".$row['user_group']."\",".$row['queue_seconds'].",\"".$row['rank']."\",\"".$row['owner']."\",".$row['lead_id'].",$export_fieldsDATA";
 								$k++;
@@ -1996,7 +2001,7 @@ class Go_reports extends Model {
 							}
 			
 						$rec_data='';
-						if ( (($rec_fields=='ID') or ($rec_fields=='FILENAME') or ($rec_fields=='LOCATION') or ($rec_fields=='ALL')) && $i > 0 )
+                                                if ( (($rec_fields=="{$this->lang->line("go_id")}") or ($rec_fields=="{$this->lang->line("go_filename")}") or ($rec_fields=="{$this->lang->line("go_location")}") or ($rec_fields=="{$this->lang->line("go_all")}")) && $i > 0 )
 							{
 							$rec_id='';
 							$rec_filename='';
@@ -2016,20 +2021,20 @@ class Go_reports extends Model {
 							//$rec_id = preg_replace("/.$/",'',$rec_id);
 							//$rec_filename = preg_replace("/.$/",'',$rec_filename);
 							//$rec_location = preg_replace("/.$/",'',$rec_location);
-							if ($rec_fields=='ID')
-								{$rec_data = ",$rec_id";}
-							if ($rec_fields=='FILENAME')
-								{$rec_data = ",$rec_filename";}
-							if ($rec_fields=='LOCATION')
-								{$rec_data = ",$rec_location";}
-							if ($rec_fields=='ALL')
+                                                        if ($rec_fields=="{$this->lang->line("go_id")}")
+                                                                {$rec_data = ",$rec_id";}
+                                                        if ($rec_fields=="{$this->lang->line("go_filename")}")
+                                                                {$rec_data = ",$rec_filename";}
+                                                        if ($rec_fields=="{$this->lang->line("go_location")}")
+                                                                {$rec_data = ",$rec_location";}
+                                                        if ($rec_fields=="{$this->lang->line("go_all")}")
 								{$rec_data = ",$rec_id,\"$rec_filename\",\"$rec_location\"";}
 							}
 			
 						$extended_data_a='';
 						$extended_data_b='';
 						$extended_data_c='';
-						if ($export_fields=='EXTENDED')
+						if ($export_fields=="{$this->lang->line("go_extended")}")
 							{
 							$extended_data = ",$export_uniqueid[$i]";
 							if (strlen($export_uniqueid[$i]) > 0)
@@ -2072,7 +2077,7 @@ class Go_reports extends Model {
 							}
 			
 						$notes_data='';
-						if ($call_notes=='YES')
+						if ($call_notes=="{$this->lang->line("go_yes")}")
 							{
 							if (strlen($export_vicidial_id[$i]) > 0)
 								{
@@ -2089,7 +2094,8 @@ class Go_reports extends Model {
 							$notes_data =	",\"$notes_data\"";
 							}
 			
-						if ( ($custom_fields_enabled > 0) and ($custom_fields=='YES') )
+						if ( ($custom_fields_enabled > 0) and ($custom_fields=="{$this->lang->line("go_yes")}") )
+
 							{
 							$CF_list_id = $export_list_id[$i];
 							if ($export_entry_list_id[$i] > 99)
@@ -2162,7 +2168,7 @@ class Go_reports extends Model {
 					$Dstatus[$row->status] = $row->status;
 					$TOPsorted_output .= "<td nowrap style=\"text-transform:uppercase;\"><div align=\"center\" class=\"style4\">&nbsp;".$row->status."&nbsp;</div></td>";
 				}
-				$TOPsorted_output .= "<td nowrap><div align=\"center\" class=\"style3\"><strong>&nbsp;SUB-TOTAL&nbsp;</strong></td></tr>";
+				$TOPsorted_output .= "<td nowrap><div align=\"center\" class=\"style3\"><strong>&nbsp;{$this->lang->line("go_sub_total_caps")}&nbsp;</strong></td></tr>";
 	
 				if (count($agent)>0)
 				{

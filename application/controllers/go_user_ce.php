@@ -20,9 +20,10 @@ class Go_user_ce extends Controller{
 	$this->db = $this->load->database('dialerdb', true);
         $this->godb = $this->load->database('goautodialdb', true);
         $this->lang->load('userauth', $this->session->userdata('ua_language'));
-
+	$this->load->helper('language');
         $this->load->helper(array('html'));
 	$this->is_logged_in();
+
     }
 
     /*
@@ -32,10 +33,10 @@ class Go_user_ce extends Controller{
      * author : Franco E. Hora <info@goautodial.com>
      */
     function index(){
-
+        $DataLang = $this->goUser_language();
         $permissions = $this->commonhelper->getPermissions("user",$this->session->userdata("user_group"));
         if($permissions->user_read == "N"){
-            die("You don't have permission to view this record(s)");
+            die(''.$this->lang->line("go_err_permission_view").'');
         }
  
         # check if segment 3 has value
@@ -81,10 +82,230 @@ class Go_user_ce extends Controller{
 	$data['page'] = $page;
 	$data['search_list'] = $search;
 
- 
+        $data = $DataLang + $data;
         $this->load->view('go_user/go_user_listall_ce.php',$data);
 
     }
+
+
+function goUser_language(){
+    $data['goUsers_users'] = $this->lang->line('goUsers_users');
+    $data['goUsers_searchUsers'] = $this->lang->line('goUsers_searchUsers');
+    $data['goUsers_agentId'] = $this->lang->line('goUsers_agentId');
+    $data['goUsers_agentName'] = $this->lang->line('goUsers_agentName');
+    $data['goUsers_level'] = $this->lang->line('goUsers_level');
+    $data['goUsers_status'] = $this->lang->line('goUsers_status');
+    $data['goUsers_action'] = $this->lang->line('goUsers_action');
+    $data['goUsers_actionEnabledSelected'] = $this->lang->line('goUsers_actionEnabledSelected');
+    $data['goUsers_actionDisabledSelected'] = $this->lang->line('goUsers_actionDisabledSelected');
+    $data['goUsers_actionDeleteSelected'] = $this->lang->line('goUsers_actionDeleteSelected');
+    $data['goUsers_addNewUser'] = $this->lang->line('goUsers_addNewUser');
+    $data['goUsers_displaying'] = $this->lang->line('goUsers_displaying');
+    $data['goUsers_tooltip_agentId'] = $this->lang->line('goUsers_tooltip_agentId');
+    $data['goUsers_tooltip_modifyUser'] = $this->lang->line('goUsers_tooltip_modifyUser');
+    $data['goUsers_tooltip_level'] = $this->lang->line('goUsers_tooltip_level');
+    $data['goUsers_tooltip_actionEdit'] = $this->lang->line('goUsers_tooltip_actionEdit');
+    $data['goUsers_tooltip_actionDelete'] = $this->lang->line('goUsers_tooltip_actionDelete');
+    $data['goUsers_tooltip_actionIcon'] = $this->lang->line('goUsers_tooltip_actionIcon');
+    $data['goUsers_wizard'] = $this->lang->line('goUsers_wizard');
+    $data['goUsers_step1'] = $this->lang->line('goUsers_step1');
+    $data['goUsers_wizardType'] = $this->lang->line('goUsers_wizardType');
+    $data['goUsers_addNewUser'] = $this->lang->line('goUsers_addNewUser');
+    $data['goUsers_next'] = $this->lang->line('goUsers_next');
+    $data['goUsers_step2'] = $this->lang->line('goUsers_step2');
+    $data['goUsers_currentUsers'] = $this->lang->line('goUsers_currentUsers');
+    $data['goUsers_addSeats'] = $this->lang->line('goUsers_addSeats');
+    $data['goUsers_cancel'] = $this->lang->line('goUsers_cancel');
+    $data['goUsers_warning'] = $this->lang->line('goUsers_warning');
+    $data['goUsers_wizard2'] = $this->lang->line('goUsers_wizard2');
+    $data['goUsers_step3'] = $this->lang->line('goUsers_step3');
+    $data['goUsers_userGroup'] = $this->lang->line('goUsers_userGroup');
+    $data['goUsers_userId'] = $this->lang->line('goUsers_userId');
+    $data['goUsers_password'] = $this->lang->line('goUsers_password');
+    $data['goUsers_fullName'] = $this->lang->line('goUsers_fullName');
+    $data['goUsers_active'] = $this->lang->line('goUsers_active');
+    $data['goUsers_activeYes'] = $this->lang->line('goUsers_activeYes');
+    $data['goUsers_activeNo'] = $this->lang->line('goUsers_activeNo');
+    $data['goUsers_back'] = $this->lang->line('goUsers_back');
+    $data['goUsers_save'] = $this->lang->line('goUsers_save');
+    $data['goUsers_success'] = $this->lang->line('goUsers_success');
+    $data['goUsers_ok'] = $this->lang->line('goUsers_ok');
+    $data['goUsers_modify'] = $this->lang->line('goUsers_modify');
+    $data['goUsers_phoneLogin'] = $this->lang->line('goUsers_phoneLogin');
+    $data['goUsers_phonePassword'] = $this->lang->line('goUsers_phonePassword');
+    $data['goUsers_hotkeys'] = $this->lang->line('goUsers_hotkeys');
+    $data['goUsers_update'] = $this->lang->line('goUsers_update');
+    $data['goUsers_updateSuccessful'] = $this->lang->line('goUsers_updateSuccessful');
+    $data['goUsers_modifySameUserLevel'] = $this->lang->line('goUsers_modifySameUserLevel');
+    $data['goUsers_userLevel'] = $this->lang->line('goUsers_userLevel');
+    $data['goUsers_deleteQuestion'] = $this->lang->line('goUsers_deleteQuestion');
+    $data['goUsers_successDelete'] = $this->lang->line('goUsers_successDelete');
+    $data['goUsers_selectDateRange'] = $this->lang->line('goUsers_selectDateRange');
+    $data['goUsers_phoneExtension'] = $this->lang->line('goUsers_phoneExtension');
+    $data['goUsers_agentIsInCampaign'] = $this->lang->line('goUsers_agentIsInCampaign');
+    $data['goUsers_hangupLastCallAt'] = $this->lang->line('goUsers_hangupLastCallAt');
+    $data['goUsers_closerGroups'] = $this->lang->line('goUsers_closerGroups');
+    $data['goUsers_agentTalkTimeAndStatus'] = $this->lang->line('goUsers_agentTalkTimeAndStatus');
+    $data['goUsers_count'] = $this->lang->line('goUsers_count');
+    $data['goUsers_otherStaticsInfo'] = $this->lang->line('goUsers_otherStaticsInfo');
+    $data['goUsers_agentLoginLogouts'] = $this->lang->line('goUsers_agentLoginLogouts');
+    $data['goUsers_outboundCallThisTime'] = $this->lang->line('goUsers_outboundCallThisTime');
+    $data['goUsers_inboundCloserCalls'] = $this->lang->line('goUsers_inboundCloserCalls');
+    $data['goUsers_agentActivity'] = $this->lang->line('goUsers_agentActivity');
+    $data['goUsers_recording'] = $this->lang->line('goUsers_recording');
+    $data['goUsers_manualOutbound'] = $this->lang->line('goUsers_manualOutbound');
+    $data['goUsers_leadSearch'] = $this->lang->line('goUsers_leadSearch');
+    $data['goUsers_agentLoginLogoutTime'] = $this->lang->line('goUsers_agentLoginLogoutTime');
+    $data['goUsers_event'] = $this->lang->line('goUsers_event');
+    $data['goUsers_date'] = $this->lang->line('goUsers_date');
+    $data['goUsers_time'] = $this->lang->line('goUsers_time');
+    $data['goUsers_campaign'] = $this->lang->line('goUsers_campaign');
+    $data['goUsers_computer'] = $this->lang->line('goUsers_computer');
+    $data['goUsers_totalCalls'] = $this->lang->line('goUsers_totalCalls');
+    $data['goUsers_perPage'] = $this->lang->line('goUsers_perPage');
+    $data['goUsers_dateTime'] = $this->lang->line('goUsers_dateTime');
+    $data['goUsers_length'] = $this->lang->line('goUsers_length');
+    $data['goUsers_phone'] = $this->lang->line('goUsers_phone');
+    $data['goUsers_group'] = $this->lang->line('goUsers_group');
+    $data['goUsers_list'] = $this->lang->line('goUsers_list');
+    $data['goUsers_lead'] = $this->lang->line('goUsers_lead');
+    $data['goUsers_hangupReason'] = $this->lang->line('goUsers_hangupReason');
+    $data['goUsers_waits'] = $this->lang->line('goUsers_waits');
+    $data['goUsers_agents'] = $this->lang->line('goUsers_agents');
+    $data['goUsers_pause'] = $this->lang->line('goUsers_pause');
+    $data['goUsers_wait'] = $this->lang->line('goUsers_wait');
+    $data['goUsers_talk'] = $this->lang->line('goUsers_talk');
+    $data['goUsers_disposition'] = $this->lang->line('goUsers_disposition');
+    $data['goUsers_dead'] = $this->lang->line('goUsers_dead');
+    $data['goUsers_customer'] = $this->lang->line('goUsers_customer');
+    $data['goUsers_pauseCode'] = $this->lang->line('goUsers_pauseCode');
+    $data['goUsers_seconds'] = $this->lang->line('goUsers_seconds');
+    $data['goUsers_recid'] = $this->lang->line('goUsers_recid');
+    $data['goUsers_filename'] = $this->lang->line('goUsers_filename');
+    $data['goUsers_location'] = $this->lang->line('goUsers_location');
+    $data['goUsers_callType'] = $this->lang->line('goUsers_callType');
+    $data['goUsers_server'] = $this->lang->line('goUsers_server');
+    $data['goUsers_callerId'] = $this->lang->line('goUsers_callerId');
+    $data['goUsers_type'] = $this->lang->line('goUsers_type');
+    $data['goUsers_results'] = $this->lang->line('goUsers_results');
+    $data['goUsers_query'] = $this->lang->line('goUsers_query');
+    $data['goUsers_leadInformation'] = $this->lang->line('goUsers_leadInformation');
+    $data['goUsers_leadId'] = $this->lang->line('goUsers_leadId');
+    $data['goUsers_listId'] = $this->lang->line('goUsers_listId');
+    $data['goUsers_address'] = $this->lang->line('goUsers_address');
+    $data['goUsers_phoneCode'] = $this->lang->line('goUsers_phoneCode');
+    $data['goUsers_phoneNumber'] = $this->lang->line('goUsers_phoneNumber');
+    $data['goUsers_city'] = $this->lang->line('goUsers_city');
+    $data['goUsers_state'] = $this->lang->line('goUsers_state');
+    $data['goUsers_postalCode'] = $this->lang->line('goUsers_postalCode');
+    $data['goUsers_comment'] = $this->lang->line('goUsers_comment');
+    $data['goUsers_forceLogout'] = $this->lang->line('goUsers_forceLogout');
+    $data['goUsers_tooltip_goToFirstPage'] = $this->lang->line('goUsers_tooltip_goToFirstPage');
+    $data['goUsers_tooltip_goToPreviousPage'] = $this->lang->line('goUsers_tooltip_goToPreviousPage');
+    $data['goUsers_tooltip_goToPage'] = $this->lang->line('goUsers_tooltip_goToPage');
+    $data['goUsers_tooltip_goToNextPage'] = $this->lang->line('goUsers_tooltip_goToNextPage');
+    $data['goUsers_tooltip_goToLastPage'] = $this->lang->line('goUsers_tooltip_goToLastPage');
+    $data['goUsers_tooltip_backToPaginatedView'] = $this->lang->line('goUsers_tooltip_backToPaginatedView');
+    $data['goUsers_generatePhoneLogins'] = $this->lang->line('goUsers_generatePhoneLogins');
+    $data['goUsers_agentLoginLogoutTime'] = $this->lang->line('goUsers_agentLoginLogoutTime');
+    $data['goUsers_outboundCallsForThisTimePeriod'] = $this->lang->line('goUsers_outboundCallsForThisTimePeriod');
+    $data['goUsers_inboundCloserCallsForThisTimePeriod'] = $this->lang->line('goUsers_inboundCloserCallsForThisTimePeriod');
+    $data['goUsers_agentActivityForThisTime'] = $this->lang->line('goUsers_agentActivityForThisTime');
+    $data['goUsers_recordingForThisTimePeriod'] = $this->lang->line('goUsers_recordingForThisTimePeriod');
+    $data['goUsers_manualOutboundCallsForThisTimePeriod'] = $this->lang->line('goUsers_manualOutboundCallsForThisTimePeriod');
+    $data['goUsers_leadSearchesForThisTimePeriod'] = $this->lang->line('goUsers_leadSearchesForThisTimePeriod');
+    $data['goUsers_userStatus'] = $this->lang->line('goUsers_userStatus');
+    $data['goUsers_agentLoggedInAtServer'] = $this->lang->line('goUsers_agentLoggedInAtServer');
+    $data['goUsers_inSession'] = $this->lang->line('goUsers_inSession');
+    $data['goUsers_fromPhone'] = $this->lang->line('goUsers_fromPhone');
+    $data['goUsers_agentIsInCampaign'] = $this->lang->line('goUsers_agentIsInCampaign');
+    $data['goUsers_hangupLastCallAt'] = $this->lang->line('goUsers_hangupLastCallAt');
+    $data['goUsers_closerGroups'] = $this->lang->line('goUsers_closerGroups');
+    $data['goUsers_emergencyLogout'] = $this->lang->line('goUsers_emergencyLogout');
+    $data['goUsers_selectDateRange'] = $this->lang->line('goUsers_selectDateRange');
+    $data['goUsers_agentTalkTimeAndStatus'] = $this->lang->line('goUsers_agentTalkTimeAndStatus');
+    $data['goUsers_outboundCallsForThisTimePeriod1k'] = $this->lang->line('goUsers_outboundCallsForThisTimePeriod1k');
+    $data['goUsers_inboundCloserCallsForThisTimePeriod1k'] = $this->lang->line('goUsers_inboundCloserCallsForThisTimePeriod1k');
+    $data['goUsers_agentActivityForThisTimePeriod1k'] = $this->lang->line('goUsers_agentActivityForThisTimePeriod1k');
+    $data['goUsers_recordingForThisTimePeriod'] = $this->lang->line('goUsers_recordingForThisTimePeriod');
+    $data['goUsers_manualOutboundCallsForThisTimePeriod'] = $this->lang->line('goUsers_manualOutboundCallsForThisTimePeriod');
+    $data['goUsers_dialed'] = $this->lang->line('goUsers_dialed');
+    $data['goUsers_callerId'] = $this->lang->line('goUsers_callerId');
+    $data['goUsers_alias'] = $this->lang->line('goUsers_alias');
+    $data['goUsers_preset'] = $this->lang->line('goUsers_preset');
+    $data['goUsers_c3hu'] = $this->lang->line('goUsers_c3hu');
+    $data['goUsers_leadSearchesForThisTimePeriod1k'] = $this->lang->line('goUsers_leadSearchesForThisTimePeriod1k');
+    $data['g0Users_close'] = $this->lang->line('goUsers_close');
+    $data['goUsers_fullName'] = $this->lang->line('goUsers_fullName');
+    $data['goUsers_additionalSeats'] = $this->lang->line('goUsers_additionalSeats');
+
+    $data['goUsers_successDeleteBatch'] = $this->lang->line('goUsers_successDeleteBatch');
+    $data['goUsers_errorOneOrMoreOfThePhoneLogin'] = $this->lang->line('goUsers_errorOneOrMoreOfThePhoneLogin');
+    $data['goUsers_errorEmptyData'] = $this->lang->line('goUsers_errorEmptyData');
+    $data['goUsers_errorEmptyServerInformation'] = $this->lang->line('goUsers_errorEmptyServerInformation');
+    $data['goUsers_errorSomethingWentWrongToYourData'] = $this->lang->line('goUsers_errorSomethingWentWrongToYourData');
+    $data['goUsers_errorSomethingWentWrongEitherOnSaving'] = $this->lang->line('goUsers_errorSomethingWentWrongEitherOnSaving');
+    $data['goUsers_errorSomethingWentWrongInSavingData'] = $this->lang->line('goUsers_errorSomethingWentWrongInSavingData');
+    $data['goUsers_errorEmptyRawDataKindlyCheckYourData'] = $this->lang->line('goUsers_errorEmptyRawDataKindlyCheckYourData');
+    $data['goUsers_thereIsNoDataToBeProcess'] = $this->lang->line('goUsers_thereIsNoDataToBeProcess');
+    $data['goUsers_cantReloadAsteriskSorry'] = $this->lang->line('goUsers_cantReloadAsteriskSorry');
+    $data['goUsers_ohNoSomethingWentWrongOnReloadingAsterisk'] = $this->lang->line('goUsers_ohNoSomethingWentWrongOnReloadingAsterisk');
+    $data['goUsers_errorYouAreNotAllowedToModifyUser'] = $this->lang->line('goUsers_errorYouAreNotAllowedToModifyUser');
+    $data['goUsers_errorYouAreNotAllowedToDeleteUser'] = $this->lang->line('goUsers_errorYouAreNotAllowedToDeleteUser');
+    $data['goUsers_gotProblemInRetrievingGroups'] = $this->lang->line('goUsers_gotProblemInRetrievingGroups');
+    $data['goUsers_userAddedToActiveGroup'] = $this->lang->line('goUsers_userAddedToActiveGroup');
+    $data['goUsers_errorNoUserIsLoggedIn'] = $this->lang->line('goUsers_errorNoUserIsLoggedIn');
+    $data['goUsers_errorNoUserIdPassed'] = $this->lang->line('goUsers_errorNoUserIdPassed');
+    $data['goUsers_destroySessionAndRedirectToLogin'] = $this->lang->line('goUsers_destroySessionAndRedirectToLogin');
+    $data['goUsers_emergencyLogoutComplete'] = $this->lang->line('goUsers_emergencyLogoutComplete');
+    $data['goUsers_problemInAttempt'] = $this->lang->line('goUsers_problemInAttempt');
+    $data['goUsers_isNotLoggedIn'] = $this->lang->line('goUsers_isNotLoggedIn');
+    $data['goUsers_errorSomethingWentWrongWhileSavingUser'] = $this->lang->line('goUsers_errorSomethingWentWrongWhileSavingUser');
+    $data['goUsers_successBatchActionComplete'] = $this->lang->line('goUsers_successBatchActionComplete');
+    $data['goUsers_errorNoUsersSelected'] = $this->lang->line('goUsers_errorNoUsersSelected');
+    $data['goUsers_successUserCopyComplete'] = $this->lang->line('goUsers_successUserCopyComplete');
+    $data['goUsers_errorUnknownAction'] = $this->lang->line('goUsers_errorUnknownAction');
+    $data['goUsers_youDontHavePermissionTo'] = $this->lang->line('goUsers_youDontHavePermissionTo');
+    $data['goUsers_thisRecords'] = $this->lang->line('goUsers_thisRecords');
+    $data['goUsers_errorSessionExpiredPleaseRelogin'] = $this->lang->line('goUsers_errorSessionExpiredPleaseRelogin');
+    $data['goUsers_errorOnly150Agents'] = $this->lang->line('goUsers_errorOnly150Agents');
+    $data['goUsers_youDontHavePermissionToViewThisRecords'] = $this->lang->line('goUsers_youDontHavePermissionToViewThisRecords');
+    $data['goUsers_somethingWentWrongContactYourSupport'] = $this->lang->line('goUsers_somethingWentWrongContactYourSupport');
+    $data['goUsers_invalidUserFormat'] = $this->lang->line('goUsers_invalidUserFormat');
+    $data['goUsers_invalidPassword'] = $this->lang->line('goUsers_invalidPassword');
+    $data['goUsers_errorUserGroupMustNotBeEmpty'] = $this->lang->line('goUsers_errorUserGroupMustNotBeEmpty');
+    $data['goUsers_errorConditionsAreEmptyOrNotAnArray'] = $this->lang->line('goUsers_errorConditionsAreEmptyOrNotAnArray');
+    $data['goUsers_errorTableNotExistOrFieldsetEmpty'] = $this->lang->line('goUsers_errorTableNotExistOrFieldsetEmpty');
+    $data['goUsers_conditionsMustBeAnArray'] = $this->lang->line('goUsers_conditionsMustBeAnArray');
+    $data['goUsers_somethingWentWrongSorry'] = $this->lang->line('goUsers_somethingWentWrongSorry');
+    $data['goUsers_errorOnUpdatingUser'] = $this->lang->line('goUsers_errorOnUpdatingUser');
+    $data['goUsers_updateSuccessful'] = $this->lang->line('goUsers_updateSuccessful');    
+    $data['goUsers_groupConfiguration'] = $this->lang->line('goUsers_groupConfiguration');
+    $data['goUsers_groupName'] = $this->lang->line('goUsers_groupName');
+    $data['goUsers_groupLevel'] = $this->lang->line('goUsers_groupLevel');
+    $data['goUsers_addAccess'] = $this->lang->line('goUsers_addAccess');
+    $data['goUsers_removeAccess'] = $this->lang->line('goUsers_removeAccess');    
+    $data['goUsers_somethingWentWrongOnCreatingNewGroup'] = $this->lang->line('goUsers_somethingWentWrongOnCreatingNewGroup');
+    $data['goUsers_somethingWentWrongOnSavingNewGroup'] = $this->lang->line('goUsers_somethingWentWrongOnSavingNewGroup');
+    $data['goUsers_saved'] = $this->lang->line('goUsers_saved');
+    $data['goUsers_fieldsAreEmpty'] = $this->lang->line('goUsers_fieldsAreEmpty');
+    $data['goUsers_wrongConditionFormat'] = $this->lang->line('goUsers_wrongConditionFormat');    
+    $data['goUsers_itemDeleted'] = $this->lang->line('goUsers_itemDeleted');
+    $data['goUsers_mustHaveConditionToDeleteAnItem'] = $this->lang->line('goUsers_mustHaveConditionToDeleteAnItem');
+    $data['goUsers_errorOnPassingUserAccountOrUserGroup'] = $this->lang->line('goUsers_errorOnPassingUserAccountOrUserGroup');
+    $data['goUsers_displaying'] = $this->lang->line('goUsers_displaying');
+    $data['goUsers_to'] = $this->lang->line('goUsers_to');    
+    $data['goUsers_of'] = $this->lang->line('goUsers_of');
+    $data['goUsers_users'] = $this->lang->line('goUsers_users');
+    $data['goUsers_warning1'] = $this->lang->line('goUsers_warning1');
+    $data['goUsers_warning2'] = $this->lang->line('goUsers_warning2');
+    $data['goUsers_clearSearch'] = $this->lang->line('goUsers_clearSearch');
+    $data[''] = $this->lang->line('');
+    return $data;
+}
+
+
+
 
     /*
      * adduser
@@ -115,10 +336,20 @@ class Go_user_ce extends Controller{
      * @author: Franco E. Hora <info@goautodial.com>
      */
     function resetwizard(){
+          $goErrorSessionExpired = $this->lang->line('goUsers_errorSessionExpiredPleaseRelogin');
+           $goCancel = $this->lang->line('goUsers_cancel');
+           $goNext = $this->lang->line('goUsers_next');
+           $goUsergroup = $this->lang->line('goUsers_userGroup');
+           $goCurrentusers = $this->lang->line('goUsers_currentUsers');
+           $goAdditionalseats = $this->lang->line('goUsers_additionalSeats');
+           $goGeneratephonelogins = $this->lang->line('goUsers_generatePhoneLogins');
+           $goWarning1 = $this->lang->line('goUsers_warning1');
+           $goWarning2 = $this->lang->line('goUsers_warning2');
+           $goPhonelogins = $this->lang->line('goUsers_phoneLogins');
            
            $userlevel = $this->session->userdata('users_level');
            if(empty($userlevel)){
-                die("Error: Session expired please re-login");
+                die($goErrorSessionExpired);
            }
 
            #if($userlevel > 8){
@@ -146,7 +377,7 @@ class Go_user_ce extends Controller{
 					  $hideDiv = 'style="display:none;"';
 					  $accnt_group = $this->session->userdata('user_group');
 				  }
-                  $display .= "<div class='boxleftside' $hideDiv><strong>User Group:</strong></div>";
+                  $display .= "<div class='boxleftside' $hideDiv><strong>$goUsergroup:</strong></div>";
                   #if($userlevel < 9){
                   #    $display .= "<div class='boxrightside'><span>".$_POST[0]['accountNum']."</span></div>";
                   #} else {
@@ -158,7 +389,7 @@ class Go_user_ce extends Controller{
                   #}else{
                   #    $display .= "<div class='boxrightside'><span id='comp_name'>&nbsp;</span>".form_hidden('hidcompany',$_POST[0]['hidcompany'])."</div>";
                   #}
-                  $display .= "<div class='boxleftside'><strong>Current Users:</strong></div>";
+                  $display .= "<div class='boxleftside'><strong>$goCurrentusers:</strong></div>";
                   #if($userlevel < 9){
                       $display .= "<div class='boxrightside'><span>".$wizardrow[0]->lastnum."</span>".
                                               form_hidden(array('hidcount'=>$_POST[0]['hidcount']))."</div><br class='clear'/>";
@@ -166,21 +397,21 @@ class Go_user_ce extends Controller{
                   #    $display .= "<div class='boxrightside'><span id='count'>&nbsp;</span>".
                   #                            form_hidden(array('hidcount'=>$_POST[0]['hidcount']))."</div>";
                   #}
-                  $display .= "<div class='boxleftside'><strong>Additional Seats:</strong></div>";
+                  $display .= "<div class='boxleftside'><strong>$goAdditionalseats:</strong></div>";
                   $display .= "<div class='boxrightside'>".form_dropdown('txtSeats',array(1=>1,2=>2,3=>3,4=>4,5=>5,
                                                                                           6=>6,7=>7,8=>8,9=>9,10=>10,
                                                                                           11=>11,12=>12,13=>13,14=>14,15=>15,
                                                                                           16=>16,17=>17,18=>18,19=>19,20=>20),1,'class="txtSeats" onchange="checkPhoneIfExist()"').
                                             form_hidden('skip','skip')."</div><br class='clear'/>";
-		  $display .= "<div class='boxleftside'><span><strong>Generate Phone Login(s):</strong></span></div>";
+		  $display .= "<div class='boxleftside'><span><strong>$goGeneratephonelogins:</strong></span></div>";
 		  $display .= "<div class='boxrightside'>".form_dropdown('generate_phone',array('No','Yes'),0,"class='generate_phone' onChange='generatePhone();'")."</div><br class='clear'/>";
-		  $display .= "<div class='boxleftside generate_phone_class'><span><strong>Phone Login:</strong></span></div>";
+		  $display .= "<div class='boxleftside generate_phone_class'><span><strong>$goGeneratephonelogins:</strong></span></div>";
 		  $display .= "<div class='boxrightside generate_phone_class'>".form_input("start_phone_exten",null,"class='start_phone_exten' maxlength='10' size='12' onkeydown='digitsOnly(event)' onkeyup='checkPhoneIfExist()' placeholder='eg. 8001'")."&nbsp;<span class='eloading' style='font-size: 10px;'></span></div><br class='clear generate_phone'/>";
            $display .= form_close();
            $wizardDisplay['display'] = array('breadcrumb'=>$this->config->item('base_url').'/img/step2of2-navigation-small.png',
                                              'content'=>array('left'=>$this->config->item('base_url').'/img/step2-trans.png',
                                                               'right'=>$display),
-                                             'action'=>'<a onclick="cancelWizard(this)">Cancel</a>&nbsp;|&nbsp; <a onclick="next(this)">Next</a>');
+                                             'action'=>'<a onclick="cancelWizard(this)">'.$goCancel.'</a>&nbsp;|&nbsp; <a onclick="next(this)">'.$goNext.'</a>');
            echo json_encode($wizardDisplay);
     }
 
@@ -192,7 +423,18 @@ class Go_user_ce extends Controller{
      * @author: Franco E. Hora <info@goautodial.com> 
      */
     function userwizard(){
-
+         $goUsergroup = $this->lang->line('goUsers_userGroup');
+         $goUserid = $this->lang->line('goUsers_userId');
+         $goPassword = $this->lang->line('goUsers_password');
+         $goFullname = $this->lang->line('goUsers_fullName');
+         $goPhoneLogin = $this->lang->line('goUsers_phoneLogin');
+         $goPhonePassword = $this->lang->line('goUsers_phonePassword');
+         $goActive = $this->lang->line('goUsers_active');
+         $goBack = $this->lang->line('goUsers_back');
+         $goSave = $this->lang->line('goUsers_save');
+         $goErrorOnly105Agents = $this->lang->line('goUsers_errorOnly150Agents');
+         $goErrorOneOrMoreOfThePhoneLogins = $this->lang->line('goUsers_errorOneOrMoreOfThePhoneLogin');
+         $goErrorEmptyData = $this->lang->line('goUsers_errorEmptyData');
          $username = $this->session->userdata('user_name');
          $userslevel = $this->session->userdata('users_level');
 	 $usergroup = $this->session->userdata('user_group');
@@ -228,7 +470,7 @@ class Go_user_ce extends Controller{
                if($userslevel < 9){
                   # meaning you are in client mode
                   if($totalagent > 150){
-                      die("Error: Only 150 agents are allowed.\n Please contact our Support Team to add more agents \n Thanks");;
+                      die($goErrorOnly105Agents);;
                   }
                }
                #$campaigns = $this->commonhelper->getallowablecampaign($account_group,true,array('campaign_name NOT LIKE "%Survey%"'));
@@ -266,24 +508,24 @@ class Go_user_ce extends Controller{
 					$userID = "{$_POST['accountNum']}_";
 				    }
 				    $f_userID = str_replace("_","",$userID);
-                                   $display .= "<div class='boxleftside'><strong>User Group:</strong></div>";
+                                   $display .= "<div class='boxleftside'><strong>$goUsergroup:</strong></div>";
                                    $display .= "<div class='boxrightside'><span style='line-height:23px;'>".$_POST['accountNum']."</span>".form_hidden("group$i-accountNum",$_POST['accountNum'])."</div><br class='clear'/>";
-                                   $display .= "<div class='boxleftside'><strong>User ID:</strong></div>";
+                                   $display .= "<div class='boxleftside'><strong>$goUserid:</strong></div>";
                                    $display .= "<div class='boxrightside'>".form_input("group$i-user","{$f_userID}$lastDigit","id='group$i-user' maxlength='15' $readonly")."</div><br class='clear'/>";#"<input type='checkbox' checked='checked' onclick='formatuser(this)'></div><br class='clear'/>";
-                                   $display .= "<div class='boxleftside'><strong>Password:</strong></div>";
+                                   $display .= "<div class='boxleftside'><strong>$goPassword:</strong></div>";
                                    $display .= "<div class='boxrightside'>".form_input("group$i-pass",$this->commonhelper->get_system_settings('default_server_password'),"id='group$i-pass'")."</div><br class='clear'/>";
 				   if ($_POST['generate_phone'])
 				   {
-					$display .= "<div class='boxleftside generate_phone'><strong>Phone Login:</strong></div>";
+					$display .= "<div class='boxleftside generate_phone'><strong>$goPhoneLogin:</strong></div>";
 					$display .= "<div class='boxrightside generate_phone'><span style='line-height:23px;'>$f_phone</span>".form_hidden("group$i-phone_login","$f_phone","id='group$i-phone_login'")."</div><br class='clear'/>";
-					$display .= "<div class='boxleftside generate_phone'><strong>Phone Password:</strong></div>";
+					$display .= "<div class='boxleftside generate_phone'><strong>$goPhonePassword:</strong></div>";
 					$display .= "<div class='boxrightside generate_phone'>".form_input("group$i-phone_pass",$this->commonhelper->get_system_settings('default_phone_login_password'),"id='group$i-phone_pass' maxlength='10' size='12' $readonly")."</div><br class='clear'/>";
 				   }
-                                   $display .= "<div class='boxleftside'><strong>Full Name:</strong></div>";
+                                   $display .= "<div class='boxleftside'><strong>$goFullname:</strong></div>";
                                    $display .= "<div class='boxrightside'>".form_input("group$i-full_name",$_POST['hidcompany']."{$userID}$lastDigit ","id='group$i-full_name'")."</div><br class='clear'/>";
                                    //$display .= "<div class='boxleftside'><strong>Phone Login</strong></div>";
                                    //$display .= "<div class='boxrightside'>".form_input("group$i-phone_login","{$f_userID}$lastDigit","id='group$i-phone_login' readonly='readonly'")."</div>";
-                                   $display .= "<div class='boxleftside'><strong>Active:</strong></div>";
+                                   $display .= "<div class='boxleftside'><strong>$goActive:</strong></div>";
                                    $display .= "<div class='boxrightside'>".form_dropdown("group$i-active",array('Y'=>'Yes','N'=>'No'),"id='group$i-active'")."</div><br class='clear'/>";
                                    if($_POST['txtSeats'] > 3){
                                         $savethisinfo["group$i-accountNum"] = $_POST['accountNum'];
@@ -309,13 +551,13 @@ class Go_user_ce extends Controller{
                $wizardDisplay['display'] = array('breadcrumb'=>$this->config->item("base_url").'/img/step3-navigation-small.png',
                                                  'content'=>array('left'=>$this->config->item('base_url')."/img/step3-trans.png",
                                                                   'right'=>$display),
-                                                 'action'=>'<a onclick="resetwizard()">Back</a> | <a onclick="autogen()">Save</a>');
+                                                 'action'=>'<a onclick="resetwizard()">'.$goBack.'</a> | <a onclick="autogen()">'.$goSave.'</a>');
                echo json_encode($wizardDisplay);
 	    } else {
-		echo "Error: One or more of the phone login specified already exist.";
+		echo $goErrorOneOrMoreOfThePhoneLogins;
 	    }
          }else{
-              echo "Error: empty data";
+              echo $goErrorEmptyData;
          }
     }
 
@@ -328,6 +570,12 @@ class Go_user_ce extends Controller{
 
     function autogenuser(){
 
+        $goSuccess = $this->lang->line('goUsers_success');
+        $goErrorEmptyServerInformation = $this->lang->line('goUsers_errorEmptyServerInformation');
+        $goErrorSomethingWentWrongToYourData = $this->lang->line('goUsers_errorSomethingWentWrongToYourData');
+        $goErrorSomethingWentWrongEitherOnSaving = $this->lang->line('goUsers_errorSomethingWentWrongEitherOnSaving');
+        $goErrorSomethingWentWrongInSavingData = $this->lang->line('goUsers_errorSomethingWentWrongInSavingData');
+        $goErrorEmptyRawDataKindlyCheckYourData = $this->lang->line('goUsers_errorEmptyRawDataKindlyCheckYourData');
 
         $username = $this->session->userdata('user_name');
         $userlevel = $this->session->userdata('users_level');
@@ -350,7 +598,7 @@ class Go_user_ce extends Controller{
              $serverinfo = $serverdata->result();
              $server_ip = $serverinfo[0]->server_ip;
         } else {
-             die("Error: Empty server information");
+             die($goErrorEmptyServerInformation);
         }
         if(array_key_exists("skip",$_POST)){
 
@@ -400,15 +648,15 @@ class Go_user_ce extends Controller{
                      #$this->gouser->asteriskDB->update('a2billing_generate',array('status'=>'Y'));
                      $this->gouser->asteriskDB->update('servers',array('rebuild_conf_files'=>'Y'));
                  }else{
-                     die("Error: Something went wrong to your data");
+                     die($goErrorSomethingWentWrongToYourData);
                  }
              }
 
              #$result = $this->reloadasterisk($issaved);
              if($result){
-                die('Success: New User(s) successfully created');
+                die($goSuccess);
              }else{
-                die('Error: Something went wrong either on saving or on reloading asterisk');
+                die($goErrorSomethingWentWrongEitherOnSaving);
              }
 
         } else {
@@ -470,7 +718,7 @@ class Go_user_ce extends Controller{
                          #$this->gouser->asteriskDB->update('a2billing_generate',array('status'=>'Y'));
                          $this->gouser->asteriskDB->update('servers',array('rebuild_conf_files'=>'Y'));
                      } else {
-                         die("Error: Something went wrong in saving data");
+                         die($goErrorSomethingWentWrongInSavingData);
                      }
                  }
                  #$result = $this->reloadasterisk($isSaved);
@@ -479,10 +727,10 @@ class Go_user_ce extends Controller{
                  } else {
                      die("Error: Something went wrong in reloading asterisk or saving User");
                  }*/
-                 die("Success: New User(s) successfully created");
+                 die($goSuccess);
 
             } else {
-                die("Error: Empty raw data kindly check your data");
+                die($goErrorEmptyRawDataKindlyCheckYourData);
             }
 
         }
@@ -640,7 +888,8 @@ class Go_user_ce extends Controller{
      */
     function savingprocess($data=null){
 
-
+$goErrorSomethingWentWrongToYourData = $this->lang->line('goUsers_errorSomethingWentWrongToYourData');
+$goThereIsNoDataToBeProcess = $this->lang->line('goUsers_thereIsNoDataToBeProcess');
         if(!is_null($data)){
 
 
@@ -694,7 +943,7 @@ class Go_user_ce extends Controller{
 	    #milo
          
         }else{
-           die('There is no data to be process');
+           die($goThereIsNoDataToBeProcess);
         }
 
     }
@@ -738,7 +987,8 @@ class Go_user_ce extends Controller{
      * @param : $reload > check if 1 reload asterisk
      */
     function reloadasterisk($reload){
-
+$goCantReloadAsteriskSorry = $this->lang->line('goUsers_cantReloadAsteriskSorry');
+$goOhNoSomethingWentWrongOnReloadingAsterisk = $this->lang->line('goUsers_ohNoSomethingWentWrongOnReloadingAsterisk');
        if($reload){ 
          $collectserver = $this->gouser->asteriskDB->get('servers'); 
          $servers = $collectserver->result();
@@ -753,10 +1003,10 @@ class Go_user_ce extends Controller{
 		$wrets=fgets($socket,128);
                 return true;
          }else{
-              die("Can't reload asterisk sorry");
+              die($goCantReloadAsteriskSorry);
          }
        }else{
-           die('Oh no something went wrong on reloading asterisk');
+           die($goOhNoSomethingWentWrongOnReloadingAsterisk);
        }
          
 
@@ -845,7 +1095,7 @@ class Go_user_ce extends Controller{
      */
     function go_users(){
 
-
+        $DataLang = $this->goUser_language();
         $username = $this->session->userdata('user_name');
         if(empty($username)){
            $this->commonhelper->deletesession($_SERVER['REMOTE_ADDR']);
@@ -883,7 +1133,8 @@ class Go_user_ce extends Controller{
         $data['jsbodyloader'] = 'go_dashboard_body_jsloader.php';
 
 	$data['theme'] = $this->session->userdata('go_theme');
-	$data['bannertitle'] = 'Users';
+        $data['bannertitle'] = $this->lang->line('goUsers_users');
+	//$data['bannertitle'] = 'Users';
 	$data['adm']= 'wp-has-current-submenu';
 	$data['hostp'] = $_SERVER['SERVER_ADDR'];
 	$data['folded'] = 'folded';
@@ -892,6 +1143,7 @@ class Go_user_ce extends Controller{
 	$data['togglestatus'] = $togglestatus;			
 
         #$data['go_main_content'] = 'go_user/go_user_main';
+        $data = $DataLang + $data;
         $data['go_main_content'] = 'go_user/go_user_main_ce';
         #collectusers
 		if (!$this->commonhelper->checkIfTenant($this->session->userdata('user_group')))
@@ -970,7 +1222,7 @@ class Go_user_ce extends Controller{
      * @author : Franco E. Hora <info@goautodial.com>
      */
     function updateuser(){
-
+$goErrorYouAreNotAllowedToModifyUser = $this->lang->line('goUsers_errorYouAreNotAllowedToModifyUser');
         $username = $this->session->userdata('user_name');
         if(empty($username)){
             $this->commonhelper->deletesession($_SERVER['REMOTE_ADDR']);
@@ -992,7 +1244,7 @@ class Go_user_ce extends Controller{
 
             $this->load->view('go_user/json_text.php',$result);
         }else{
-            die("Error: You are not allowed to modify user"); 
+            die($goErrorYouAreNotAllowedToModifyUser); 
         }
     }
 
@@ -1002,7 +1254,8 @@ class Go_user_ce extends Controller{
      * @author : Franco E. Hora <info@goautodial.com>
      */  
     function deleteuser($passuserid=null){
-
+        $goDelete = $this->lang->line('goUsers_successDelete');
+        $goErrorYouAreNotAllowedToDeleteUser = $this->lang->line('goUsers_errorYouAreNotAllowedToDeleteUser');
         $username = $this->session->userdata('user_name');
         if(empty($username)){
             $this->commonhelper->deletesession($_SERVER['REMOTE_ADDR']);
@@ -1029,9 +1282,9 @@ class Go_user_ce extends Controller{
 	     
 	     $this->commonhelper->auditadmin('DELETE',"DELETED user: {$passuserid}{$vicidial_user}");
 
-             echo "Success: User(s) deleted";
+             echo $goDelete;
         }else{
-            die("Error: You are not allowed to delete this user");
+            die($goErrorYouAreNotAllowedToDeleteUser);
         }
 
     }
@@ -1044,7 +1297,7 @@ class Go_user_ce extends Controller{
      * @author: Franco E. Hora
      */
     function advancemodifyuser(){
- 
+          $goGotProblemInRetrievingGroups = $this->lang->line('goUsers_gotProblemInRetrievingGroups');
         # set user access here
         #if(){
             $data['info'] = $this->gouser->retrievedata('vicidial_users',array('user'=>$_POST['userid']));
@@ -1055,7 +1308,7 @@ class Go_user_ce extends Controller{
             if(!empty($viciusergroups)){
                $data['usergroups']  = $viciusergroups;
             }else{
-               die('Got problem in retrieving groups contact your administrator');
+               die($goGotProblemInRetrievingGroups);
             }
             # set allowedaccess
             $allowedtouser = unserialize($this->session->userdata('useraccess'));
@@ -1119,13 +1372,14 @@ class Go_user_ce extends Controller{
      * @author: Franco E. Hora <info@goautodial.com> 
      */
      function updategousers(){
+$goUserAddedToActiveGroup = $this->lang->line('goUsers_userAddedToActiveGroup');
          $vUserid = $this->uri->segment(3);
          if($vUserid != 'undefined'){
              $this->gouser->asteriskDB->trans_start();
                  $this->gouser->asteriskDB->where('vicidial_user_id',$vUserid);
                  $this->gouser->asteriskDB->update('go_users',$_POST);
              $this->gouser->asteriskDB->trans_complete();
-             echo "User added to active group";
+             echo $goUserAddedToActiveGroup;
          }
      }
 
@@ -1134,14 +1388,14 @@ class Go_user_ce extends Controller{
       * check settings 
       */
      function getsettings(){
-     
+         $goErrorNoUserIsLoggedIn = $this->lang->line('goUsers_errorNoUserIsLoggedIn');
          $userlogged = $this->session->userdata('user_name');
 
          if(!is_null($userlogged) && !empty($userlogged)){
               $slavedbexist = $this->gouser->retrievedata('system_settings',array(),$fields);        
               return $slavedbexist;
          }else{
-             die('Error no user is logged in');
+             die($goErrorNoUserIsLoggedIn);
          }
      }
 
@@ -1152,6 +1406,7 @@ class Go_user_ce extends Controller{
       * @author: Franco E. Hora <info@goautodial.com>
       */
      function userinfo(){
+         $goErrorNoUserIdPassed = $this->lang->line('goUsers_errorNoUserIdPassed');
          $username = $this->session->userdata('user_name');
          if(empty($username)){
               $this->commonhelper->deletesession($_SERVER['REMOTE_ADDR']);
@@ -1182,7 +1437,7 @@ class Go_user_ce extends Controller{
                 }
                 echo json_encode(array($userinfo,$liveagent));
              }else{
-                die("Error: No user id passed");
+                die($goErrorNoUserIdPassed);
              }
          }else{
              $this->commonhelper->deletesession($_SERVER['REMOTE_ADDR']);
@@ -1200,6 +1455,7 @@ class Go_user_ce extends Controller{
          # user status first part
          # check if you still have session
          $userlogged = $this->session->userdata('user_name');
+         $goDestroySessionAndRedirectToLogin = $this->lang->line('goUsers_destroySessionAndRedirectToLogin');
          if(isset($userlogged)){
              $araw = date('r');
              $userpass = $this->session->userdata('user_pass');
@@ -1210,7 +1466,7 @@ class Go_user_ce extends Controller{
              #$this->commonhelper->writetofile('/var/www/html/extrafiles/','project_auth_entries.txt',"VICIDIAL|GOOD|$araw|$userlogged|$userpass|$ip|$browser|".$data['loggeduserinfo'][0]->full_name."|\n"); 
          }else{
              # $this->commonhelper->writetofile('/var/www/html/extrafiles/','project_auth_entries.txt',"VICIDIAL|FAIL|$araw|$userlogged|$userpass|$ip|$browser|\n"); 
-              die('destroy session and redirect to login');
+              die($goDestroySessionAndRedirectToLogin);
          }
          #userinfo of the chosen user
          $data['userinfo'] = $this->gouser->retrievedata('vicidial_users',array('user'=>$_POST['userid']));
@@ -1264,6 +1520,7 @@ class Go_user_ce extends Controller{
       * @author : Franco E. Hora <info@goautodial.com>
       */
      function agentTalkTimeStatus(){
+         $goTotalCalls = $this->lang->line('goUsers_totalCalls');
          if(!empty($_POST)){
              $datefrom = $_POST['dates'][0];
              $dateto = $_POST['dates'][1];
@@ -1304,7 +1561,7 @@ class Go_user_ce extends Controller{
                          $ctr++;
                      }
                      echo "<div class='totaltime'>
-                               <div class='labelcols'>Total Calls</div>
+                               <div class='labelcols'>$goTotalCalls</div>
                                <div class='totalcols'>$totalcalls</div>
                                <div class='totalcols'>".date("H:i:s",mktime(0,0,$totaltime))."</div><br/>
                            </div>";
@@ -1750,7 +2007,8 @@ class Go_user_ce extends Controller{
       * @author: Franco E. Hora <info@goautodial.com>
       */
      function emergencylogout(){
-
+$goEmergencyLogoutComplete = $this->lang->line('goUsers_emergencyLogoutComplete');
+$goProblemInAttempt = $this->lang->line('goUsers_problemInAttempt');
          $NOW_TIME = date("Y-m-d H:i:s");
          $thedate = date('U');
          $inactive_epoch = ($thedate - 60);
@@ -1810,7 +2068,7 @@ class Go_user_ce extends Controller{
                  $this->gouser->asteriskDB->trans_complete();
  
                  if($this->gouser->asteriskDB->trans_status !== false){
-                     die('Emergency logout complete make sure agent browser is closed');
+                     die($goEmergencyLogoutComplete);
                  }else{
                      die('Problem in attempt to logout agent '.$agents[0]->user);
                  }
@@ -1824,7 +2082,7 @@ class Go_user_ce extends Controller{
                  $this->gouser->asteriskDB->trans_complete();
 		 
                  if($this->gouser->asteriskDB->trans_status !== false){
-                     die('Emergency logout complete make sure agent browser is closed');
+                     die($goEmergencyLogoutComplete);
                  }else{
                      die('Problem in attempt to logout agent '.$_POST['user']);
                  }
@@ -1864,6 +2122,8 @@ class Go_user_ce extends Controller{
       * @author : Franco E. Hora <info@goautodial.com>
       */
      function batchupdate(){
+        $goSuccessBatchActionComplete = $this->lang->line('goUsers_successBatchActionComplete');
+        $goErrorNoUsersSelected = $this->lang->line('goUsers_errorNoUsersSelected');
         $username = $this->session->userdata('user_name');
         if(empty($username)){
             $this->commonhelper->deletesession($_SERVER['REMOTE_ADDR']);
@@ -1890,9 +2150,9 @@ class Go_user_ce extends Controller{
                      $ctr++;
                   }
                   #echo json_encode($results);
-                  die("Success: Batch action complete");
+                  die($goSuccessBatchActionComplete);
              }else{
-                die("Error: No users selected");
+                die($goErrorNoUsersSelected);
              }
        # }else{
             #die("Error:You are not allowed to modify this user");
@@ -1900,6 +2160,7 @@ class Go_user_ce extends Controller{
      }
 
      function copyuser(){
+$goSuccessUserCopyComplete = $this->lang->line('goUsers_successUserCopyComplete');
          if(!empty($_POST)){
              $override = $this->gouser->retrievedata('vicidial_override_ids',
                                                      array('id_table'=>'vicidial_users'),
@@ -2002,7 +2263,7 @@ class Go_user_ce extends Controller{
                  #}
                  
                  $this->commonhelper->auditadmin("COPY","User {$_POST['user']} copied from {$_POST['source_user']}");
-                 echo "Success: User copy complete";
+                 echo $goSuccessUserCopyComplete;
              } #empty user 
          } # not empty $_POST
      }
@@ -2020,7 +2281,7 @@ class Go_user_ce extends Controller{
 
     
      function CheckActionIfAllowed(){
-
+          $goErrorUnknownAction = $this->lang->line('goUsers_errorUnknownAction');
           $actionType = $this->uri->segment(3);
           $permissions = $this->commonhelper->getPermissions("user",$this->session->userdata("user_group"));
 	
@@ -2031,7 +2292,7 @@ class Go_user_ce extends Controller{
                      $action = "user_".strtolower($actionType);
                break;
                default: 
-                     die("Error: Unknown action");
+                     die($goErrorUnknownAction);
                break;
           }
 
@@ -2043,6 +2304,16 @@ class Go_user_ce extends Controller{
     
     function pagination($type,$search)
     {
+        $goToFirstPage = $this->lang->line('goUsers_tooltip_goToFirstPage');
+        $goToPreviewsPage = $this->lang->line('goUsers_tooltip_goToPreviousPage');
+        $goToPage = $this->lang->line('goUsers_tooltip_goToPage');
+        $goToNextPage = $this->lang->line('goUsers_tooltip_goToNextPage');
+        $goToLastPage = $this->lang->line('goUsers_tooltip_goToLastPage');
+        $goBackToPaginatedView = $this->lang->line('goUsers_tooltip_backToPaginatedView');
+        $goDisplaying = $this->lang->line('goUsers_displaying');          
+        $goTo = $this->lang->line('goUsers_to');
+        $goOf = $this->lang->line('goUsers_of');
+        $goUsers = $this->lang->line('goUsers_users');
 	$account = $this->session->userdata('user_group');
 
 	if ($this->commonhelper->checkIfTenant($account)) {
@@ -2069,29 +2340,29 @@ class Go_user_ce extends Controller{
 	
 	if ($type=="links") {
 	    if ($pg['last'] > 1) {
-		$pagelinks  = '<a title="Go to First Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
-		$pagelinks .= '<a title="Go to Previous Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
+		$pagelinks  = '<a title="'.$goToFirstPage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
+		$pagelinks .= '<a title="'.$goToPreviewsPage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
 	
 		for ($i=$pg['start'];$i<=$pg['end'];$i++) { 
 		    if ($i==$pg['page']) $current = 'color: #F00;cursor: default;'; else $current="";
 		
-		    $pagelinks .= '<a title="Go to Page '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="gopage('.$i.')"><span>'.$i.'</span></a>';
+		    $pagelinks .= '<a title="'.$goToPage.' '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="gopage('.$i.')"><span>'.$i.'</span></a>';
 		}
 		
 		//$pagelinks .= '<a title="View All Pages" style="vertical-align:text-top;padding: 0px 2px;" onclick="gopage(\'ALL\')"><span>ALL</span></a>';
-		$pagelinks .= '<a title="Go to Next Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
-		$pagelinks .= '<a title="Go to Last Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
+		$pagelinks .= '<a title="'.$goToNextPage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
+		$pagelinks .= '<a title="'.$goToLastPage.'" style="vertical-align:baseline;padding: 0px 2px;" onclick="gopage('.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
 	    } else {
 		if ($rp > 25) {
 		    $pagelinks  = '<div style="cursor: pointer;font-weight: bold;">';
-		    $pagelinks .= '<a title="Back to Paginated View" style="vertical-align:text-top;padding: 0px 2px;" onclick="gopage(1)"><span>BACK</span></a>';
+		    $pagelinks .= '<a title="'.$goBackToPaginatedView.'" style="vertical-align:text-top;padding: 0px 2px;" onclick="gopage(1)"><span>BACK</span></a>';
 		    $pagelinks .= '</div>';
 		} else {
 		    $pagelinks = '';
 		}
 	    }
 	} else {
-	    $pagelinks = "Displaying {$pg['istart']} to {$pg['iend']} of {$pg['total']} users";
+	    $pagelinks = "$goDisplaying {$pg['istart']} $goTo {$pg['iend']} $goOf {$pg['total']} $goUsers";
 	}
 	
 	echo $pagelinks;

@@ -116,7 +116,7 @@ $(function()
 	if (isAdvance)
 	{
 		$('.advance_settings').show();
-		$('#advance_link').html('[ - ADVANCE SETTINGS ]');
+		$('#advance_link').html('[ - <? echo strtoupper($this->lang->line("go_adv_settings")); ?> ]');
 		$('#isAdvance').val('1');
 	}
 	
@@ -127,11 +127,11 @@ $(function()
 		if ($('.advance_settings').is(':hidden'))
 		{
 			$('.advance_settings').show();
-			$('#advance_link').html('[ - ADVANCE SETTINGS ]');
+			$('#advance_link').html('[ - <? echo strtoupper($this->lang->line("go_adv_settings")); ?> ]');
 			$('#isAdvance').val('1');
 		} else {
 			$('.advance_settings').hide();
-			$('#advance_link').html('[ + ADVANCE SETTINGS ]');
+			$('#advance_link').html('[ + <? echo strtoupper($this->lang->line("go_adv_settings")); ?> ]');
 			$('#isAdvance').val('0');
 		}
 	});
@@ -192,7 +192,7 @@ $(function()
 				if (data=="SUCCESS")
 				{
                                         $(".processing").remove();
-					alert("Success!\n\nPlease wait up to 60 seconds for the changes to take effect.");
+					alert("<? echo strtoupper($this->lang->line('go_success')); ?>!\n\n<? echo strtoupper($this->lang->line('go_60_sec_effect')); ?>.");
 					
 					$('#box').animate({'top':'-2550px'},500);
 					$('#overlay').fadeOut('slow');
@@ -222,7 +222,7 @@ $(function()
 				if (data.match(/Not Available/))
 				{
 					$('#server_ip').css('border','solid 1px red');
-					$('#sloading').html('<small style="color:red;">Account entry already exist for this IP</small>');
+					$('#sloading').html('<small style="color:red;"><? echo $this->lang->line("go_acc_already_exist"); ?></small>');
 				} else {
 					$('#server_ip').css('border','solid 1px #999');
 					$('#sloading').html('');
@@ -294,7 +294,7 @@ $(function()
 		{
 			$(".advanceConfig").show();
 			$(".basicConfig").hide();
-			$(this).html("<pre style='display: inline;'>[-]</pre> ADVANCE CONFIGURATION");
+			$(this).html("<pre style='display: inline;'>[-]</pre> <? echo $this->lang->line("go_adv_conf"); ?>");
 			
 			if ($("input[name='reg_auth']:checked").val()=="regstring")
 			{
@@ -306,7 +306,7 @@ $(function()
 			$(".advanceConfig").hide();
 			$(".basicConfig").show();
 			$("#protocol").val(oldprotocol);
-			$(this).html("<pre style='display: inline;'>[+]</pre> ADVANCE CONFIGURATION");
+			$(this).html("<pre style='display: inline;'>[+]</pre> <? echo $this->lang->line("go_adv_conf"); ?>");
 			
 			if ($("input[name='reg_auth']:checked").val()=="regstring")
 			{
@@ -325,7 +325,7 @@ $(function()
 			$(".advanceConfig").show();
 			$(".basicConfig").hide();
 			$("#protocol").show();
-			$("#showAdvanceConfig").html("<pre style='display: inline;'>[-]</pre> ADVANCE CONFIGURATION");
+			$("#showAdvanceConfig").html("<pre style='display: inline;'>[-]</pre> <? echo $this->lang->line("go_adv_conf"); ?>");
 			
 			if ($("input[name='reg_auth']:checked").val()=="regstring")
 			{
@@ -337,7 +337,7 @@ $(function()
 			$(".advanceConfig").hide();
 			$(".basicConfig").show();
 			$("#protocol").hide();
-			$("#showAdvanceConfig").html("<pre style='display: inline;'>[+]</pre> ADVANCE CONFIGURATION");
+			$("#showAdvanceConfig").html("<pre style='display: inline;'>[+]</pre> <? echo $this->lang->line("go_adv_conf"); ?>");
 			
 			if ($("input[name='reg_auth']:checked").val()=="regstring")
 			{
@@ -621,13 +621,13 @@ switch ($type)
 	
 	default:
 ?>
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">MODIFY CARRIER: <?php echo "{$carrier_info->carrier_id}"; ?></div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><? echo $this->lang->line("go_modify_carrier"); ?>: <?php echo "{$carrier_info->carrier_id}"; ?></div>
 <br />
 <form id="modifyCarrier" method="POST">
 <table id="test" border=0 align="center" cellpadding="3" cellspacing="3" style="width:95%; color:#000; margin-left:15%; margin-right:auto;">
 	<tr>
 		<td style="text-align:right;width:25%;height:10px;font-weight:bold;">
-		Carrier ID:
+		<? echo $this->lang->line("go_carrier_id"); ?>:
 		</td>
 		<td>
 		&nbsp;<?=$carrier_info->carrier_id ?>
@@ -638,7 +638,7 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:25%;height:10px;font-weight:bold;">
-		Carrier Name:
+		<? echo $this->lang->line("go_carrier_name"); ?>:
 		</td>
 		<td>
 		<?=form_input('carrier_name',$carrier_info->carrier_name,'id="carrier_name" maxlength="50" size="25"') ?>
@@ -646,7 +646,7 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-		Carrier Description:
+		<? echo $this->lang->line("go_carrier_desc"); ?>:
 		</td>
 		<td>
 		<?=form_input('carrier_description',$carrier_info->carrier_description,'id="carrier_description" maxlength="255" size="40"') ?>
@@ -658,7 +658,7 @@ switch ($type)
 		</td>
 		<td>
 		<?php
-		$groupArray = array("---ALL---"=>"ALL USER GROUPS");
+		$groupArray = array("---{$this->lang->line("go_all")}---"=>"{$this->lang->line("go_all_user_groups_caps")}");
 		foreach ($user_groups as $group)
 		{
 			$groupArray[$group->user_group] = "{$group->user_group} - {$group->group_name}";
@@ -669,40 +669,40 @@ switch ($type)
 	</tr> -->
 	<tr class="basicConfig">
 		<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-		Authentication:
-		</td>
-		<td style="padding-left:5px;">
-		<?=form_radio('reg_auth','ipbased',$ipbasedChecked,'id="reg_auth"'); ?> IP Based &nbsp; 
-		<?=form_radio('reg_auth','regstring',$regstrChecked,'id="reg_auth"'); ?> Registration
-		</td>
-	</tr>
-	<tr class="reg_string" style="display:none;">
-		<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-		Username:
-		</td>
-		<td>
-		<?=form_input('reg_user',$reg_auth[0],'id="username" maxlength="25"'); ?>
-		</td>
-	</tr>
-	<tr class="reg_string" style="display:none;">
-		<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-		Password:
-		</td>
-		<td>
-		<?=form_input('reg_pass',$reg_auth[1],'id="secret" maxlength="25"'); ?>
-		</td>
-	</tr>
-	<tr class="reg_string" style="display:none;">
-		<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-		Server IP/Host:
-		</td>
-		<td>
-		<?=form_input('reg_host',$reg_creds[0],'id="host" maxlength="255" size="40"'); ?>
-		</td>
-	</tr>
-	<tr class="reg_string" style="display:none;">
-		<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-		Port:
+                <? echo $this->lang->line("go_authentication"); ?>:
+                </td>
+                <td style="padding-left:5px;">
+                <?=form_radio('reg_auth','ipbased',$ipbasedChecked,'id="reg_auth"'); ?><? echo $this->lang->line("go_ip_based"); ?> &nbsp;
+                <?=form_radio('reg_auth','regstring',$regstrChecked,'id="reg_auth"'); ?><? echo $this->lang->line("go_registration"); ?>
+                </td>
+        </tr>
+        <tr class="reg_string" style="display:none;">
+                <td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
+                <? echo $this->lang->line("go_username"); ?>:
+                </td>
+                <td>
+                <?=form_input('reg_user',$reg_auth[0],'id="username" maxlength="25"'); ?>
+                </td>
+        </tr>
+        <tr class="reg_string" style="display:none;">
+                <td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
+                <? echo $this->lang->line("go_pass"); ?>:
+                </td>
+                <td>
+                <?=form_input('reg_pass',$reg_auth[1],'id="secret" maxlength="25"'); ?>
+                </td>
+        </tr>
+        <tr class="reg_string" style="display:none;">
+                <td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
+                <? echo $this->lang->line("go_server_ip_host"); ?>:
+                </td>
+                <td>
+                <?=form_input('reg_host',$reg_creds[0],'id="host" maxlength="255" size="40"'); ?>
+                </td>
+        </tr>
+        <tr class="reg_string" style="display:none;">
+                <td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
+                <? echo $this->lang->line("go_port"); ?>:
 		</td>
 		<td>
 		<?=form_input('reg_port',$reg_port[0],'id="port" maxlength="10" size="10"'); ?>
@@ -710,7 +710,7 @@ switch ($type)
 	</tr>
 	<tr class="ip_based" style="display:none;">
 		<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-		Server IP/Host:
+		<? echo $this->lang->line("go_server_ip_host"); ?>:
 		</td>
 		<td>
 		<?=form_input('ip_host',$host,'id="iphost" maxlength="255" size="40"'); ?>
@@ -718,7 +718,7 @@ switch ($type)
 	</tr>
 	<tr class="advanceConfig" style="display:none;">
 		<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-		Registration String:
+		<? echo $this->lang->line("go_reg_str"); ?>:
 		</td>
 		<td>
 		<?=form_input('registration_string',$carrier_info->registration_string,'id="registration_string" maxlength="255" size="70"') ?>
@@ -730,7 +730,7 @@ switch ($type)
 		</td>
 		<td>
 		<?php
-		$tempArray = array(''=>'--NONE--');
+		$tempArray = array(''=>'--'.$this->lang->line("go_none").'--');
 		foreach ($templates as $temp)
 		{
 			$tempArray[$temp->id] = "{$temp->id} - {$temp->name}";
@@ -741,7 +741,7 @@ switch ($type)
 	</tr> -->
 	<tr class="basicConfig">
 		<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-		Codecs:
+		<? echo $this->lang->line("go_codecs"); ?>:
 		</td>
 		<td style="padding-left:5px;white-space:nowrap;">
 		<?=form_checkbox('allow_gsm','allow_gsm',$allowGSM,'id="allow_gsm"'); ?> GSM &nbsp; 
@@ -752,18 +752,18 @@ switch ($type)
 	</tr>
 	<tr class="basicConfig">
 		<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-		DTMF Mode:
+		<? echo $this->lang->line("go_dtmf_mode"); ?>:
 		</td>
 		<td style="padding-left:5px;white-space:nowrap;">
 		<?=form_radio('dtmf_mode','rfc2833',$rfc2833,'id="dtmf_mode"'); ?> RFC2833 &nbsp; 
-		<?=form_radio('dtmf_mode','inband',$inband,'id="dtmf_mode"'); ?> Inband &nbsp; 
-		<?=form_radio('dtmf_mode','custom',$customDTMF,'id="dtmf_mode"'); ?> Custom &nbsp;
+		<?=form_radio('dtmf_mode','inband',$inband,'id="dtmf_mode"'); ?> <? echo $this->lang->line("go_inband"); ?> &nbsp; 
+		<?=form_radio('dtmf_mode','custom',$customDTMF,'id="dtmf_mode"'); ?> <? echo $this->lang->line("go_custom"); ?> &nbsp;
 		<?=form_input('customDTMF',$customDTMFVal,'id="customDTMF" maxlength="20" style="display:none" placeholder="Enter Custom DTMF"'); ?>
 		</td>
 	</tr>
 	<tr class="advanceConfig" style="display:none;">
 		<td style="text-align:right;width:25%;height:10px;font-weight:bold;">
-		Account Entry:
+		<? echo $this->lang->line("go_account_entry"); ?>:
 		</td>
 		<td>
 		<?php
@@ -781,7 +781,7 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:25%;height:10px;font-weight:bold;">
-		Protocol:
+		<? echo $this->lang->line("go_protocol"); ?>:
 		</td>
 		<td>
 		<?php
@@ -794,7 +794,7 @@ switch ($type)
 	</tr>
 	<tr class="advanceConfig" style="display:none">
 		<td style="text-align:right;width:25%;height:10px;font-weight:bold;">
-		Globals String:
+		<? echo $this->lang->line("go_globals_str"); ?>:
 		</td>
 		<td>
 		<?=form_input('globals_string',$carrier_info->globals_string,'id="globals_string" maxlength="255" size="50"') ?>
@@ -802,7 +802,7 @@ switch ($type)
 	</tr>
 	<tr style="display:none;">
 		<td style="text-align:right;width:25%;height:10px;white-space:nowrap;font-weight:bold;">
-		Dial Prefix:
+		<? echo $this->lang->line("go_dial_prefix"); ?>:
 		</td>
 		<td>
 		<?=form_input('dialprefix',$dialprefix,'id="dialprefix" maxlength="15" size="20"'); ?>
@@ -810,7 +810,7 @@ switch ($type)
 	</tr>
 	<tr class="advanceConfig" style="display:none;">
 		<td style="text-align:right;width:25%;height:10px;font-weight:bold;">
-		Dialplan Entry:
+		<? echo $this->lang->line("go_dialplan_entry"); ?>:
 		</td>
 		<td>
 		<?php
@@ -828,7 +828,7 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:25%;height:10px;font-weight:bold;">
-		Server IP:
+		<? echo $this->lang->line("go_server_ip"); ?>:
 		</td>
 		<td>
 		<?php
@@ -844,7 +844,7 @@ switch ($type)
 	</tr>
 	<tr>
 		<td style="text-align:right;width:25%;height:10px;font-weight:bold;">
-		Active:
+		<? echo $this->lang->line("go_active"); ?>:
 		</td>
 		<td>
 		<?php
@@ -854,7 +854,7 @@ switch ($type)
 		</td>
 	</tr>
 	<tr>
-		<td style="text-align:right;width:25%;height:10px;vertical-align:top;font-weight:bold;">Campaigns:</td>
+		<td style="text-align:right;width:25%;height:10px;vertical-align:top;font-weight:bold;"><? echo $this->lang->line("go_campaigns"); ?>:</td>
 		<td >
 			 <div>
 			 <?php
@@ -863,7 +863,7 @@ switch ($type)
 							echo "<div class='corner-all campaigns' onclick=modifycamp('{$campaign->campaign_id}')>{$campaign->campaign_id} - {$campaign->campaign_name}</div><br style='font-size:10px;' /><br />";
 					   }
 				   } else {
-							echo "<span>There are no campaigns using this carrier.</span>";
+							echo "<span> {$this->lang->line('go_no_campaigns')}.</span>";
 				   }
 			 ?>
 			 </div>
@@ -873,7 +873,7 @@ switch ($type)
 		<td>&nbsp;</td>
 	</tr>
 	<tr>
-    	<td><span id="showAdvanceConfig" style="float: left;white-space: nowrap; margin-left:-50%; font-size:11px;color: #7A9E22;cursor: pointer;"><pre style="display: inline;">[+]</pre> ADVANCE CONFIGURATION</span><span id="advance_link" style="cursor:pointer;font-size:9px;display: none;">[ + ADVANCE SETTINGS ]</span><input type="hidden" id="isAdvance" value="0" /></td><td style="text-align:right;"><span style="margin-right:17%;" id="saveSettings" class="buttons">SAVE SETTINGS</span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
+    	<td><span id="showAdvanceConfig" style="float: left;white-space: nowrap; margin-left:-50%; font-size:11px;color: #7A9E22;cursor: pointer;"><pre style="display: inline;">[+]</pre> <? echo $this->lang->line("go_adv_conf"); ?></span><span id="advance_link" style="cursor:pointer;font-size:9px;display: none;">[ + <? echo strtoupper($this->lang->line("go_adv_settings")); ?> ]</span><input type="hidden" id="isAdvance" value="0" /></td><td style="text-align:right;"><span style="margin-right:17%;" id="saveSettings" class="buttons"><? echo strtoupper($this->lang->line("go_save_settings")); ?></span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
     </tr>
 </table>
 </form>

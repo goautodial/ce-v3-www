@@ -25,7 +25,7 @@ $(function()
 		function(data){
 			if (data=="SUCCESS")
 			{
-				alert(data);
+				alert("<? echo $this->lang->line("go_success_caps"); ?>");
 			
 				$('#box').animate({'top':'-2550px'},500);
 				$('#overlay').fadeOut('slow');
@@ -75,22 +75,22 @@ $(function()
 	text-align: left;
 }
 </style>
-<div align="center" style="font-weight:bold; color:#333; font-size:16px;">MODIFY MUSIC ON HOLD: <?php echo $moh_info->moh_id; ?></div>
+<div align="center" style="font-weight:bold; color:#333; font-size:16px;"><? echo $this->lang->line("go_modify_moh"); ?>: <?php echo $moh_info->moh_id; ?></div>
 <br />
 <form id="modifyMoH" method="POST">
 <?=form_hidden('moh_id',$moh_info->moh_id) ?>
 <table id="test" border=0 cellpadding="3" cellspacing="3" style="width:90%; color:#000; margin-left:auto; margin-right:auto;">
 	<tr>
-    	<td style="text-align:right;" nowrap>Music on Hold Name:</td><td><?=form_input('moh_name',$moh_info->moh_name,'size="50" maxlength="100"') ?></td>
+    	<td style="text-align:right;" nowrap><? echo $this->lang->line("go_moh_name"); ?>:</td><td><?=form_input('moh_name',$moh_info->moh_name,'size="50" maxlength="100"') ?></td>
     </tr>
 	<tr>
-    	<td style="text-align:right;" nowrap>Status:</td><td><?=form_dropdown('active',array('N'=>'INACTIVE','Y'=>'ACTIVE'),$moh_info->active) ?></td>
+    	<td style="text-align:right;" nowrap><? echo $this->lang->line("go_status"); ?>:</td><td><?=form_dropdown('active',array('N'=>''.$this->lang->line("go_inactive_caps").'','Y'=>''.$this->lang->line("go_active_caps").''),$moh_info->active) ?></td>
     </tr>
 	<tr style="<?php echo $hideFromTenant; ?>">
-    	<td style="text-align:right;" nowrap>User Group:</td><td><?=form_dropdown('user_group',$user_group_array,$moh_info->user_group) ?></td>
+    	<td style="text-align:right;" nowrap><? echo $this->lang->line("go_user_group"); ?>:</td><td><?=form_dropdown('user_group',$user_group_array,$moh_info->user_group) ?></td>
     </tr>
 	<tr>
-    	<td style="text-align:right;" nowrap>Random Order:</td><td><?=form_dropdown('random',array('N'=>'No','Y'=>'Yes'),$moh_info->random) ?></td>
+    	<td style="text-align:right;" nowrap><? echo $this->lang->line("go_random_order"); ?>:</td><td><?=form_dropdown('random',array('N'=>''.$this->lang->line("go_no").'','Y'=>''.$this->lang->line("go_yes").''),$moh_info->random) ?></td>
     </tr>
 	<tr>
     	<td>&nbsp;</td><td>&nbsp;</td>
@@ -99,9 +99,9 @@ $(function()
     	<td colspan="2">
 		<table border=0 cellpadding="0" cellspacing="0" style="width:70%; color:#000; margin-left:auto; margin-right:auto;">
 			<tr>
-				<td style="font-weight: bold; width: 60px;">&nbsp;RANK</td>
-				<td style="font-weight: bold;">FILE NAME</td>
-				<td style="font-weight: bold; width: 60px;">ACTION</td>
+				<td style="font-weight: bold; width: 60px;">&nbsp;<? echo $this->lang->line("go_rank_caps"); ?></td>
+				<td style="font-weight: bold;"><? echo $this->lang->line("go_filename"); ?></td>
+				<td style="font-weight: bold; width: 60px;"><? echo $this->lang->line("go_action_caps"); ?></td>
 			</tr>
 			<?php
 			$x = 0;
@@ -136,7 +136,7 @@ $(function()
 				<td colspan="3" style="font-size:5px;">&nbsp;</td>
 			</tr>
 			<tr>
-				<td colspan="3" style="white-space:nowrap;text-align:center;">Add an Audio File: <?php echo form_dropdown('filename',$moh_audio_list,null,'id="filename" style="width:300px;"'); ?></td>
+				<td colspan="3" style="white-space:nowrap;text-align:center;"><? echo $this->lang->line("go_add_audio_file"); ?>: <?php echo form_dropdown('filename',$moh_audio_list,null,'id="filename" style="width:300px;"'); ?></td>
 			</tr>
 		</table>
 	</td>
@@ -145,7 +145,7 @@ $(function()
     	<td>&nbsp;</td><td>&nbsp;</td>
     </tr>
 	<tr>
-    	<td>&nbsp;</td><td style="text-align:right;"><span id="saveSettings" class="buttons">SAVE SETTINGS</span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
+    	<td>&nbsp;</td><td style="text-align:right;"><span id="saveSettings" class="buttons"><? echo strtoupper($this->lang->line("go_save_settings")); ?></span><!--<input id="saveSettings" type="submit" value=" SAVE SETTINGS " style="cursor:pointer;" />--></td>
     </tr>
 </table>
 </form>

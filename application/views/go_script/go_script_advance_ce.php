@@ -17,15 +17,16 @@
 <div class="script-advance-container">
     <div class="script-advance-tab-container">
          <div class="script-advance-tab corner-top script-advance-selected" id="vicidial">Vicidial</div>
-         <div class="script-advance-tab corner-top" id="settings">Script settings</div>
-         <div class="script-advance-tab corner-top" id="modify">Modify scripts</div>
-         <div class="script-advance-tab corner-top" id="add">Add questions</div>
+         <div class="script-advance-tab corner-top" id="settings"><? echo lang('go_Scriptsettings'); ?></div>
+         <div class="script-advance-tab corner-top" id="modify"><? echo lang('go_ModifyScript'); ?></div>
+         <div class="script-advance-tab corner-top" id="add"><? echo lang('go_Addquestions'); ?></div>
          <br class="clear"/>
     </div>
     <div class="script-advance-panel">
         <?php
                    if($script[0]->active == "Y"){
-                        echo "<br/><span style='font-style:italic;color:red;font-size:10px;float:left;width:100%;'>Note : Existing Limesurvey scripts can't be edited. Create a new one if you need to add/edit questions.</span><br/>";
+                        $go_NoteExistingLimesurveyscriptscantbeeditedCreateanewoneifyouneedtoaddeditquestionslang = lang('go_NoteExistingLimesurveyscriptscantbeeditedCreateanewoneifyouneedtoaddeditquestions');
+                        echo "<br/><span style='font-style:italic;color:red;font-size:10px;float:left;width:100%;'>$go_NoteExistingLimesurveyscriptscantbeeditedCreateanewoneifyouneedtoaddeditquestionslang</span><br/>";
                         $disable = "disabled";
                         $disabled = array('disabled'=>true);
 
@@ -40,13 +41,13 @@
             <div class="script-vicidial-config">
 
                 <br/>
-                <div class="script-advance-label">Script ID:</div>
+                <div class="script-advance-label"><? echo lang('go_ScriptID_'); ?></div>
                 <div class="script-advance-value"><?=$vicidial_script[0]->script_id.form_hidden('script_id',$vicidial_script[0]->script_id)?></div><br class="clear"/>
-                <div class="script-advance-label">Script Name:</div>
+                <div class="script-advance-label"><? echo lang('go_ScriptName_'); ?></div>
                 <div class="script-advance-value"><?=form_input("script_name",$vicidial_script[0]->script_name,"id='script_name' $disable")?></div><br/>
-                <div class="script-advance-label">Script Comments:</div>
+                <div class="script-advance-label"><? echo lang('go_ScriptComments_'); ?></div>
                 <div class="script-advance-value"><?=form_input("script_comments",$vicidial_script[0]->script_comments,"id='script_comments' $disable")?></div><br/>
-                <div class="script-advance-label">Active:</div>
+                <div class="script-advance-label"><? echo lang('go_Active_'); ?></div>
                 <div class="script-advance-value"><?=form_dropdown("active",array('Y'=>'Yes','N'=>'No'),$vicidial_script[0]->active,"id='active' $disable")?></div><br/>
                 <div class="script-advance-label">Script Text:</div>
                 <div class="script-advance-value">
@@ -63,46 +64,46 @@
             <div class="script-advance-settings" >
                <br/>
 
-               <div class="script-advance-label">Survey URL</div>
+               <div class="script-advance-label"><? echo lang('go_SurveyURL'); ?></div>
                <div class="script-advance-value"><a href="http://<?=$_SERVER['HTTP_HOST']?>/limesurvey/index.php?sid=<?=$script[0]->sid?>&lang=en">http://<?=$_SERVER['HTTP_HOST']?>/limesurvey/index.php?sid=<?=$script[0]->sid?>&lang=en</a></div><br class="clear"/>
-               <div class="script-advance-label">Survey Name</div>
+               <div class="script-advance-label"><? echo lang('go_SurveyName'); ?></div>
                <div class="script-advance-value"><?=form_input('surveyls_title',$script[0]->surveyls_title,"id='surveyls_title' size='25' $disable")?></div><br/>
-               <div class="script-advance-label">Survey Description</div>
+               <div class="script-advance-label"><? echo lang('go_SurveyDescription'); ?></div>
                <div class="script-advance-value">
                                                 <?php
                                                      $attr = array_merge(array('name'=>'surveyls_description','value'=>$script[0]->surveyls_urldescription,'cols'=>'45', 'rows'=>'5'),$disabled);
                                                      echo form_textarea($attr)?></div><br/>
-               <div class="script-advance-label">Welcome Message</div>
+               <div class="script-advance-label"><? echo lang('go_WelcomeMessage'); ?></div>
                <div class="script-advance-value"><?php
                                                      $attr = array_merge(array('name'=>'welcom_message','value'=>$script[0]->surveyls_welcometext,'cols'=>'45', 'rows'=>'5'),$disabled);
                                                      echo form_textarea($attr)?></div><br/>
-               <div class="script-advance-label">End Message</div>
+               <div class="script-advance-label"><? echo lang('go_EndMessage'); ?></div>
                <div class="script-advance-value"><?php
                                                      $attr = array_merge(array('name'=>'end_message','value'=>$script[0]->surveyls_endtext,'cols'=>'45', 'rows'=>'5'),$disabled);
                                                      echo form_textarea($attr)?></div><br/>
-               <div class="script-advance-label">Active</div>
+               <div class="script-advance-label"><? echo lang('go_Active_'); ?></div>
                <div class="script-advance-value"><?=form_dropdown('active',array('Y'=>'Yes','N'=>'No'),$script[0]->active)?></div><br/>
-               <div class="script-advance-label">Base Language</div>
+               <div class="script-advance-label"><? echo lang('go_BaseLanguage'); ?></div>
                <div class="script-advance-value"><?=$script[0]->surveyls_language.form_hidden(array("sid"=>$script[0]->sid,'script_id'=>$script[0]->script_id))?></div><br  class="clear"/>
-               <div class="script-advance-label">Administrator</div>
+               <div class="script-advance-label"><? echo lang('go_Administrator'); ?></div>
                <div class="script-advance-value"><?=form_input("admin",$script[0]->admin,"size='25' $disable")?></div><br/>
-               <div class="script-advance-label">Admin Email</div>
+               <div class="script-advance-label"><? echo lang('go_AdminEmail'); ?></div>
                <div class="script-advance-value"><?=form_input('adminemail',$script[0]->adminemail,"size='25' $disable")?></div><br/>
-               <div class="script-advance-label">End URL</div>
+               <div class="script-advance-label"><? echo lang('go_EndURL'); ?></div>
                <div class="script-advance-value"><?=form_input('surveyls_url',$script[0]->surveyls_url,"size='25' $disable")?></div><br/>
-               <div class="script-advance-label">End URL Description</div>
+               <div class="script-advance-label"><? echo lang('go_EndURLDescription'); ?></div>
                <div class="script-advance-value"><?=form_input('surveyls_urldescription',$script[0]->surveyls_urldescription,"size='25' $disable")?></div><br/>
-               <div class="script-advance-label">Decimal Separator</div>
+               <div class="script-advance-label"><? echo lang('go_DecimalSeparator'); ?></div>
                <div class="script-advance-value"><?=form_dropdown('surveyls_numberformat',$radixpoint,$script[0]->surveyls_numberformat,"$disable")?></div><br/>
             </div>
             <div class="script-advance-modify_question">
                <br/>
                <div class="script-advance-thead">
                    <div class="script-advance-th">ID</div>
-                   <div class="script-advance-th">TITLE</div>
-                   <div class="script-advance-th">QUESTION</div>
-                   <div class="script-advance-th">TYPE</div>
-                   <div class="script-advance-th">MANDATORY</div>
+                   <div class="script-advance-th"><? echo lang('go_TITLE'); ?></div>
+                   <div class="script-advance-th"><? echo lang('go_QUESTION'); ?></div>
+                   <div class="script-advance-th"><? echo lang('go_TYPE'); ?></div>
+                   <div class="script-advance-th"><? echo lang('go_MANDATORY'); ?></div>
                </div>
                <?foreach($questions as $question){?>
                    <div id="<?=$question->qid?>" class="script-advance-row">
@@ -117,69 +118,69 @@
             </div>
             <div class="script-advance-add_question">
                 <br/>
-                 <div class="script-advance-label">Code</div>
+                 <div class="script-advance-label"><? echo lang('go_Code'); ?></div>
                  <div class="script-advance-value"><?=form_input('title',null,'size="25" '.$disable)?></div><br/>
-                 <div class="script-advance-label">Question</div>
+                 <div class="script-advance-label"><? echo lang('go_Question'); ?></div>
                  <div class="script-advance-value"><?=form_textarea(array_merge(array('name'=>'question','value'=>"",'cols'=>'35', 'rows'=>'5'),$disabled))?></div><br/>
-                 <div class="script-advance-label">Help</div>
+                 <div class="script-advance-label"><? echo lang('go_Help'); ?></div>
                  <div class="script-advance-value"><?=form_textarea(array_merge(array('name'=>'help','value'=>"",'cols'=>'35', 'rows'=>'5'),$disabled))?></div><br/>
-                 <div class="script-advance-label">Type</div>
+                 <div class="script-advance-label"><? echo lang('go_Type'); ?></div>
                  <div class="script-advance-value"><?="<select name='type' $disable>$type</select>"?></div><br/>
-                 <div class="script-advance-label">Mandatory</div>
+                 <div class="script-advance-label"><? echo lang('go_Mandatory'); ?></div>
                  <div class="script-advance-value"><?="Yes".form_radio(array_merge(array('name'=>'mandatory','value'=>'Y'),$disabled))."&nbsp;No".form_radio(array_merge(array('name'=>'mandatory','value'=>'N','checked'=>true),$disabled))?></div><br/>
-                 <div class="script-advance-label">Validation</div>
+                 <div class="script-advance-label"><? echo lang('go_Validation'); ?></div>
                  <div class="script-advance-value"><?=form_input('preg',null,'size="25"').form_hidden("sid",$script[0]->sid)?></div><br/>
             </div><br/>
          </div> <!--END Left-->
          <div class="script-advance-right">
              <div class="script-advance-settings">
                  <br/>
-                 <div class="script-advance-label">Format</div>
+                 <div class="script-advance-label"><? echo lang('go_Format'); ?></div>
                  <div class="script-advance-value"><?=form_dropdown('format',array('S'=>'Question by Question','G'=>'Group by Group','A'=>'All in one'),$script[0]->format,"$disable")?></div><br class="clear"/>
-                 <div class="script-advance-label">Template</div>
+                 <div class="script-advance-label"><? echo lang('go_Template'); ?></div>
                  <div class="script-advance-value"><?=form_dropdown('template',$template,$script[0]->template,"$disable")?></div><br class="clear"/>
-                 <div class="script-advance-label">Template Preview</div>
+                 <div class="script-advance-label"><? echo lang('go_TemplatePreview'); ?></div>
                  <div class="script-advance-value"><?="<img src='https://".$_SERVER['HTTP_HOST']."/limesurvey/templates/$preview/preview.png'>"?></div><br class="clear"/>
-                 <div class="script-advance-label">Show welcome screen?</div>
+                 <div class="script-advance-label"><? echo lang('go_Showwelcomescreen'); ?></div>
                  <div class="script-advance-value"><?=form_dropdown('showwelcome',array('Y'=>'Yes','N'=>'No'),$script[0]->showwelcome,"$disable")?></div><br class="clear"/>
-                 <div class="script-advance-label">Navigation delay seconds</div>
+                 <div class="script-advance-label"><? echo lang('go_Navigationdelayseconds'); ?></div>
                  <div class="script-advance-value"><?=form_input('navigationdelay',$script[0]->navigationdelay,"$disable")?></div><br class="clear"/>
                  <div class="script-advance-label">Show[&lt;&lt;Prev] button</div>
                  <div class="script-advance-value"><?=form_dropdown('allowprev',array('Y'=>'Yes','N'=>'No'),$script[0]->allowprev,"$disable")?></div><br class="clear"/>
-                 <div class="script-advance-label">Show question index / allow jumping</div>
+                 <div class="script-advance-label"><? echo lang('go_Showquestionindex_allowjumping'); ?></div>
                  <div class="script-advance-value"><?=form_dropdown('allowjumps',array('Y'=>'Yes','N'=>'No'),$script[0]->allowjumps,"$disable")?></div><br class="clear"/>
-                 <div class="script-advance-label">Keyboard-less operation</div>
+                 <div class="script-advance-label"><? echo lang('go_Keyboardlessoperation'); ?></div>
                  <div class="script-advance-value"><?=form_dropdown('nonkeyboard',array('Y'=>'Yes','N'=>'No'),$script[0]->nokeyboard,"$disable")?></div><br class="clear"/>
-                 <div class="script-advance-label">Show progress bar</div>
+                 <div class="script-advance-label"><? echo lang('go_Showprogressbar'); ?></div>
                  <div class="script-advance-value"><?=form_dropdown('showprogress',array('Y'=>'Yes','N'=>'No'),$script[0]->showprogress,"$disable")?></div><br class="clear"/>
-                 <div class="script-advance-label">Participants may print answers</div>
+                 <div class="script-advance-label"><? echo lang('go_Participantsmayprintanswers'); ?></div>
                  <div class="script-advance-value"><?=form_dropdown('printanswers',array('Y'=>'Yes','N'=>'No'),$script[0]->printanswers,"$disable")?></div><br class="clear"/>
-                 <div class="script-advance-label">Public statistics</div>
+                 <div class="script-advance-label"><? echo lang('go_Publicstatistics'); ?></div>
                  <div class="script-advance-value"><?=form_dropdown('publicstatistics',array('Y'=>'Yes','N'=>'No'),$script[0]->publicstatistics,"$disable")?></div><br class="clear"/>
-                 <div class="script-advance-label">Show graphs in public statistics</div>
+                 <div class="script-advance-label"><? echo lang('go_Showgraphsinpublicstatistics'); ?></div>
                  <div class="script-advance-value"><?=form_dropdown('publicgraphs',array('Y'=>'Yes','N'=>'No'),$script[0]->publicgraphs,"$disable")?></div><br class="clear"/>
-                 <div class="script-advance-label">Automatically load URL when survey complete?</div>
+                 <div class="script-advance-label"><? echo lang('go_AutomaticallyloadURLwhensurveycomplete'); ?></div>
                  <div class="script-advance-value"><?=form_dropdown('autoredirect',array('Y'=>'Yes','N'=>'No'),$script[0]->autoredirect,"$disable")?></div><br class="clear"/>
-                 <div class="script-advance-label">Show "There are X questions in this survey"</div>
+                 <div class="script-advance-label"><? echo lang('go_ShowThereareXquestionsinthissurvey'); ?></div>
                  <div class="script-advance-value"><?=form_dropdown('showXquestions',array('Y'=>'Yes','N'=>'No'),$script[0]->showXquestions,"$disable")?></div><br class="clear"/>
-                 <div class="script-advance-label">Show group name and/or group description</div>
+                 <div class="script-advance-label"><? echo lang('go_Showgroupnameandorgroupdescription'); ?></div>
                  <div class="script-advance-value"><?=form_dropdown('showgroupinfo',array('B'=>'Show both','N'=>'Show group name only','D'=>'Show group description only','X'=>'Hide both'),$script[0]->showgroupinfo,"style='width:150px;' $disable")?></div><br class="clear"/>
-                 <div class="script-advance-label">Show question number and/or code</div>
+                 <div class="script-advance-label"><? echo lang('go_Showquestionnumberandorcode'); ?></div>
                  <div class="script-advance-value"><?=form_dropdown('showqnumcode',array('B'=>'Show both','N'=>'Show group name only','D'=>'Show group description only','X'=>'Hide both'),$script[0]->showqnumcode,"style='width:150px;' $disable")?></div><br/>
              </div>
              <div class="script-advance-modify_question">
                  <br/>
-                 <div class="script-advance-label">Code</div>
+                 <div class="script-advance-label"><? echo lang('go_Code'); ?></div>
                  <div class="script-advance-value"><?=form_input('title',null,'size="25"'.$disable)?></div><br/>
-                 <div class="script-advance-label">Question</div>
+                 <div class="script-advance-label"><? echo lang('go_Question'); ?></div>
                  <div class="script-advance-value"><?=form_textarea(array_merge(array('name'=>'question','value'=>"",'cols'=>'35', 'rows'=>'5'),$disabled))?></div><br/>
-                 <div class="script-advance-label">Help</div>
+                 <div class="script-advance-label"><? echo lang('go_Help'); ?></div>
                  <div class="script-advance-value"><?=form_textarea(array_merge(array('name'=>'help','value'=>"",'cols'=>'35', 'rows'=>'5'),$disabled))?></div><br/>
-                 <div class="script-advance-label">Type</div>
+                 <div class="script-advance-label"><? echo lang('go_Type'); ?></div>
                  <div class="script-advance-value"><?="<select name='type'>$type</select>"?></div><br/>
-                 <div class="script-advance-label">Mandatory</div>
+                 <div class="script-advance-label"> <? echo lang('go_Mandatory'); ?></div>
                  <div class="script-advance-value"><?="Yes".form_radio(array_merge(array('name'=>'mandatory','value'=>'Y'),$disabled))."&nbsp;No".form_radio(array_merge(array('name'=>'mandatory','value'=>'N'),$disabled))?></div><br/>
-                 <div class="script-advance-label">Validation</div>
+                 <div class="script-advance-label"> <? echo lang('go_Validation'); ?></div>
                  <div class="script-advance-value"><?=form_input('preg',null,'size="25"').form_hidden('qid',null)?></div><br/>
              </div>
          </div> <!--END Right -->

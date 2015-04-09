@@ -35,7 +35,7 @@ class Go_moh_ce extends Controller {
 		$data['jsbodyloader'] = 'go_dashboard_body_jsloader.php';
 
 		$data['theme'] = $this->session->userdata('go_theme');
-		$data['bannertitle'] = $this->lang->line('go_moh_banner');
+		$data['bannertitle'] = $this->lang->line("go_moh");
 		$data['sys']= 'wp-has-current-submenu';
 		$data['hostp'] = $_SERVER['SERVER_ADDR'];
 		$data['folded'] = 'folded';
@@ -185,7 +185,7 @@ class Go_moh_ce extends Controller {
 			}
 		} else {
 			$user_group_array = $this->go_dashboard->go_list_user_groups('all');
-			$user_group_array['---ALL---'] = "--- All User Groups ---";
+			$user_group_array['---ALL---'] = "--- {$this->lang->line('go_all_user_groups_caps')} ---";
 			ksort($user_group_array);
 			$data['user_group_array'] = $user_group_array;
 			$data['my_user_group'] = $this->session->userdata('user_group');
@@ -202,7 +202,7 @@ class Go_moh_ce extends Controller {
 		
 		$data['moh_info'] = $result;
 		$user_group_array = $this->go_dashboard->go_list_user_groups('all');
-		$user_group_array['---ALL---'] = "--- All User Groups ---";
+		$user_group_array['---ALL---'] = "--- {$this->lang->line('go_all_user_groups_caps')} ---";
 		ksort($user_group_array);
 		$data['user_group_array'] = $user_group_array;
 		
@@ -263,9 +263,9 @@ class Go_moh_ce extends Controller {
 		
 		if ($return)
 		{
-			$return = "<small style=\"color:red;\">Not Available.</small>";
+			$return = "<small style=\"color:red;\">{$this->lang->line('go_not_available')}</small>";
 		} else {
-			$return = "<small style=\"color:green;\">Available.</small>";
+			$return = "<small style=\"color:green;\">{$this->lang->line('go_available')}</small>";
 		}
 		
 		echo $return;
@@ -279,7 +279,7 @@ class Go_moh_ce extends Controller {
 		$dirpath = "/var/lib/asterisk/sounds";
 		$dh = opendir($dirpath);
 		
-		$file_nameArray[''] = "--- Select an audio file to upload ---";
+		$file_nameArray[''] = "--- {$this->lang->line('go_sel_audio_upload')} ---";
 		while (false !== ($file = readdir($dh)))
 		{
 			# Do not list subdirectories

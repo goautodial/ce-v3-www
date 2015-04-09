@@ -110,20 +110,20 @@ span{padding:3px;}
 		</td> -->
 		<td valign="top" >
                        <div class="welcome-header">
-                          <span>Welcome to</span><br class="clear"/><br class="clear"/>
+                          <span><? echo $this->lang->line("go_welcome_to"); ?></span><br class="clear"/><br class="clear"/>
                           <span><a href="http://justgovoip.com" target="_new"><img src="<?=$base?>img/justgovoip.png"></a></span><br class="clear"/><br class="clear"/>
-                          <span>VoIP services powered<br/>by GOautodial</span><br/>
+                          <span><?=$VARCLOUDCOMPANY;?> <? echo $this->lang->line("go_ccc"); ?></span><br/>
                           <span align="center" style="padding-left: 50px;">
 
-			<p style="width: 50%; padding-left: 185px; line-height: 17px;" align="justify">Tired of getting your dialer traffic rejected all the time? Tired of switching from one carrier to another? We're here for you.  Our VoIP service is designed for high volume call center traffic. Whether you're running 5 seats or 500+, we will connect your calls. No more congestions and headaches. </p><br>
-			<p style="width: 50%; padding-left: 185px; line-height: 17px;" align="justify">Signing up and using our VoIP services directly support the development of the GOautodial open source project (this system that you're currently using).</p>
+			<p style="width: 50%; padding-left: 185px; line-height: 17px;" align="justify"><?=$VARCLOUDCOMPANY;?> <? echo $this->lang->line("go_w1"); ?> <?=$VARCLOUDCOMPANY;?> <? echo $this->lang->line("go_w2"); ?> </p><br>
+			<p style="width: 50%; padding-left: 185px; line-height: 17px;" align="justify"><? echo $this->lang->line("go_w3"); ?> <?=$VARCLOUDCOMPANY;?> <? echo $this->lang->line("go_w4"); ?>.</p>
                           </span><br /><br/>
                           <br/>
                           <span class="signup60"> <img src="<?=$base?>img/signup60free.png"></span><br/>
-                          <span class="sales-email">**email <a href="mailto:sales@justgovoip.com">sales@justgovoip.com</a> to get 60 free minutes (US, UK and Canada calls only).</span><br/>
+                          <span class="sales-email">**<? echo $this->lang->line("go_email"); ?> <a href="mailto:sales@justgovoip.com">sales@justgovoip.com</a> <? echo $this->lang->line("go_w5"); ?>.</span><br/>
                        </div>
 		</td>
 	</tr>
 </table>
 <hr style="border:#DFDFDF 1px solid;" />
-<span id="saveButtons"><span id="cancel" style="white-space: nowrap;">Cancel</span> | <span id="submit" style="white-space: nowrap;">Next</span></span>
+<span id="saveButtons"><span id="cancel" style="white-space: nowrap;"><? echo $this->lang->line("go_cancel"); ?></span> | <span id="submit" style="white-space: nowrap;"><? echo $this->lang->line("go_next"); ?></span></span>

@@ -190,7 +190,7 @@ $(function()
 			$("#table_container").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
 			$('#table_container').load('<? echo $base; ?>index.php/go_logs_ce/go_get_logs/1/'+search);
 		} else {
-			alert("Please enter at least 3 characters to search.");
+			alert("<? echo $this->lang->line('go_entry_3_char_search'); ?>.");
 		}
 	});
 	
@@ -222,7 +222,7 @@ $(function()
 				$("#table_container").empty().html('<p align="center"><img src="<? echo $base; ?>img/goloading.gif" /></p>');
 				$('#table_container').load('<? echo $base; ?>index.php/go_logs_ce/go_get_logs/1/'+search);
 			} else {
-				alert("Please enter at least 3 characters to search.");
+				alert("<? echo $this->lang->line('go_entry_3_char_search'); ?>.");
 			}
 		}
 	});
@@ -240,7 +240,7 @@ function changePage(pagenum)
 <div id='outbody' class="wrap">
 <div id="icon-logs" class="icon32">
 </div>
-<div style="float: right;margin-top:15px;margin-right:25px;"><span id="showAllLists" style="display: none">[Clear Search]</span>&nbsp;<?=form_input('search_list',null,'id="search_list" maxlength="100" placeholder="Search '.$bannertitle.'"') ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_list_button" style="cursor: pointer;" class="toolTip" title="Search for User/IP Address within Admin Logs" /></div>
+<div style="float: right;margin-top:15px;margin-right:25px;"><span id="showAllLists" style="display: none">[<? echo $this->lang->line("go_clear_search"); ?>]</span>&nbsp;<?=form_input('search_list',null,'id="search_list" maxlength="100" placeholder="'.$this->lang->line("go_search").' '.$bannertitle.'"') ?>&nbsp;<img src="<?=base_url()."img/spotlight-black.png"; ?>" id="search_list_button" style="cursor: pointer;" class="toolTip" title=" <? $this->lang->line('go_search_IP_admin'); ?>" /></div>
 <h2><? echo $bannertitle; ?></h2>
 
 	<div id="dashboard-widgets-wrap">
@@ -253,7 +253,7 @@ function changePage(pagenum)
 					<!-- GO WIDGET -->
 					<div id="account_info_status" class="postbox">
 						<div class="rightdiv toolTip" style="display: none;" id="search_logs" title="Search Logs">
-                        	Search Logs <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
+                        	<? echo $this->lang->line("go_search_logs"); ?> <img src="<?php echo $base; ?>img/cross.png" style="height:14px; vertical-align:middle;display:none;" />
 						</div>
 						<div class="hndle">
 							<span><span id="title_bar" />&nbsp;</span><!-- Title Bar -->
@@ -262,7 +262,7 @@ function changePage(pagenum)
 						</div>
 						<div class="inside">
 
-                            <div style="margin:<?php echo (preg_match("/^Windows/",$userOS)) ? "-23px" : "-22px"; ?> 0px -2px -10px;" id="request_tab"><span id="showList" class="tabtoggle menuOn">Logs</span><span id="request" style="display:none;">showList</span></div>
+                            <div style="margin:<?php echo (preg_match("/^Windows/",$userOS)) ? "-23px" : "-22px"; ?> 0px -2px -10px;" id="request_tab"><span id="showList" class="tabtoggle menuOn"><? echo $this->lang->line("go_logs"); ?></span><span id="request" style="display:none;"><? echo $this->lang->line("go_show_list"); ?></span></div>
 
 							<div id="table_container" class="table_container">
                             </div>
@@ -331,7 +331,7 @@ echo "</div>\n";
 <!-- Overlay1 -->
 <div id="overlay" style="display:none;"></div>
 <div id="box">
-<a id="closebox" class="toolTip" title="CLOSE"></a>
+<a id="closebox" class="toolTip" title="<? echo strtoupper($this->lang->line("go_close")); ?>"></a>
 <div id="overlayContent"></div>
 </div>
 

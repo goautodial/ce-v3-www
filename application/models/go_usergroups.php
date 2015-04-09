@@ -127,31 +127,31 @@ class Go_usergroups extends Model {
 	
 		if ($pg['last'] > 1) {
 			$pagelinks  = '<div style="cursor: pointer;font-weight: bold;padding-top: 10px;">';
-			$pagelinks .= '<a title="Go to First Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
-			$pagelinks .= '<a title="Go to Previous Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
-			
-			for ($i=$pg['start'];$i<=$pg['end'];$i++) { 
-			   if ($i==$pg['page']) $current = 'color: #F00;cursor: default;'; else $current="";
-			
-			$pagelinks .= '<a title="Go to Page '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="changePage('.$i.')"><span>'.$i.'</span></a>';
-			
-			}
-	
-			$pagelinks .= '<a title="View All Pages" style="vertical-align:text-top;padding: 0px 2px;" onclick="changePage(\'ALL\')"><span>ALL</span></a>';
-			$pagelinks .= '<a title="Go to Next Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
-			$pagelinks .= '<a title="Go to Last Page" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
-			$pagelinks .= '</div>';
-		} else {
-			if ($rp > 25) {
-				$pagelinks  = '<div style="cursor: pointer;font-weight: bold;padding-top:10px;">';
-				$pagelinks .= '<a title="Back to Paginated View" style="vertical-align:text-top;padding: 0px 2px;" onclick="changePage(1)"><span>BACK</span></a>';
-				$pagelinks .= '</div>';
-			} else {
-				$pagelinks = "";
-			}
-		}
-		
-		$pageinfo = "<span style='float:right;padding-top:10px;'>Displaying {$pg['istart']} to {$pg['iend']} of {$pg['total']} user groups</span>";
+                        $pagelinks .= '<a title="'.$this->lang->line('go_to_1').'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['first'].')"><span><img src="'.base_url().'/img/first.gif"></span></a>';
+                        $pagelinks .= '<a title="'.$this->lang->line('go_to_prev_p').'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['prev'].')"><span><img src="'.base_url().'/img/prev.gif"></span></a>';
+
+                        for ($i=$pg['start'];$i<=$pg['end'];$i++) {
+                           if ($i==$pg['page']) $current = 'color: #F00;cursor: default;'; else $current="";
+
+                        $pagelinks .= '<a title="'.$this->lang->line('go_to_page').' '.$i.'" style="vertical-align:text-top;padding: 0px 2px;'.$current.'" onclick="changePage('.$i.')"><span>'.$i.'</span></a>';
+
+                        }
+
+                        $pagelinks .= '<a title="'.$this->lang->line('go_to_view_all').'" style="vertical-align:text-top;padding: 0px 2px;" onclick="changePage(\'ALL\')"><span>'.strtoupper($this->lang->line('go_all')).'</span></a>';
+                        $pagelinks .= '<a title="'.$this->lang->line('go_to_next').'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['next'].')"><span><img src="'.base_url().'/img/next.gif"></span></a>';
+                        $pagelinks .= '<a title="'.$this->lang->line('go_to_last').'" style="vertical-align:baseline;padding: 0px 2px;" onclick="changePage('.$pg['last'].')"><span><img src="'.base_url().'/img/last.gif"></span></a>';
+                        $pagelinks .= '</div>';
+                } else {
+                        if ($rp > 25) {
+                                $pagelinks  = '<div style="cursor: pointer;font-weight: bold;padding-top:10px;">';
+                                $pagelinks .= '<a title="'.$this->lang->line('go_to_back_pag').'" style="vertical-align:text-top;padding: 0px 2px;" onclick="changePage(1)"><span>'.strtoupper($this->lang->line('go_back')).'</span></a>';
+                                $pagelinks .= '</div>';
+                        } else {
+                                $pagelinks = "";
+                        }
+                }
+
+                $pageinfo = "<span style='float:right;padding-top:10px;'>{$this->lang->line('go_displaying')} {$pg['istart']} {$this->lang->line('go_to')} {$pg['iend']} {$this->lang->line('go_of')} {$pg['total']} {$this->lang->line('go_user_groups_s')}</span>";
 		
 		$return['links'] = $pagelinks;
 		$return['info'] = $pageinfo;

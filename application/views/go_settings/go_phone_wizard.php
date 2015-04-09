@@ -107,10 +107,10 @@ $(function()
                                 $(form).serialize(),
                                 function(data){
                                      if(data.indexOf("Success") !== -1){
-                                          alert("Success: Phone saved");
+                                          alert("<? echo $this->lang->line("go_success_save_phone"); ?>");
                                           location.reload();
                                      }else if(data.indexOf("Error") !== -1){
-                                          alert("Error: Error on saving phone");
+                                          alert("<? echo $this->lang->line("go_err_save_phone"); ?>");
                                      }
                                 }
                          );
@@ -122,12 +122,12 @@ $(function()
             $("#phoneForm > table").find("input").each(function(){
                 if($(this).parent().parent().css("display") !== "none"){
                    if($(this).attr('id').indexOf("pass") !== -1){
-                       $(this).rules("add",{required:true,minlength:2,messages:{required:"* Required",minlength:"Minimum 2 character"}});
+                       $(this).rules("add",{required:true,minlength:2,messages:{required:"* <? echo $this->lang->line("go_required"); ?>",minlength:"<? echo $this->lang->line("go_min_2_char"); ?>"}});
                    }else{
                        if($(this).attr('id').indexOf("extension") !== -1){
-                           $(this).rules("add",{required:true,minlength:2,number:true,checkphones:true,messages:{required:"* Required",minlength:"Minimum 2 character"}});
+                           $(this).rules("add",{required:true,minlength:2,number:true,checkphones:true,messages:{required:"* <? echo $this->lang->line("go_required"); ?>",minlength:"<? echo $this->lang->line("go_min_2_char"); ?>"}});
                        }else{
-                           $(this).rules("add",{required:true,minlength:2,number:true,messages:{required:"* Required",minlength:"Minimum 2 character"}});
+                           $(this).rules("add",{required:true,minlength:2,number:true,messages:{required:"* <? echo $this->lang->line("go_required"); ?>",minlength:"<? echo $this->lang->line("go_min_2_char"); ?>"}});
                        }
                    }
                 }
@@ -142,13 +142,13 @@ $(function()
                                               cache:false,
                                               async:false,
                                               success: function(result){
-                                                   if(result.indexOf("Not Available") === -1){
+                                                   if(result.indexOf("<? echo $this->lang->line("go_not_available"); ?>") === -1){
                                                         respond = 1;
                                                    }
                                               }
                                         });
                                         return Boolean(respond);
-                                  },"Not Available");
+                                  },"<? echo $this->lang->line("go_not_available"); ?>");
 
 
             $("#phoneForm").submit();
@@ -163,7 +163,7 @@ $(function()
 </script>
 
 <div style="float:right;" id="small_step_number"><img src="<?php echo $base; ?>img/step2of2-navigation-small.png" /></div>
-<div style="font-weight:bold;font-size:16px;color:#333;">Phone Wizard &raquo; Add New Phone</div>
+<div style="font-weight:bold;font-size:16px;color:#333;"><? echo $this->lang->line("go_phone_wizard"); ?> &raquo;<? echo $this->lang->line("go_add_new_phone"); ?></div>
 <br style="font-size:6px;" />
 <hr style="border:#DFDFDF 1px solid;" />
 
@@ -181,7 +181,7 @@ $(function()
                 <table id="phoneTable" style="width:100%;">
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;white-space:nowrap;">
-                        <label class="modify-value">Phone Extension/Login:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_phone_exten_login"); ?>:</label>
                         </td>
                         <td>
                         <?=form_input('extension_'.$key,$gens["extension_$key"],'id="extension_'.$key.'" maxlength="20" size="20"') ?>&nbsp;
@@ -190,7 +190,7 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        <label class="modify-value">Phone Login Password:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_phone_login_pass"); ?>:</label>
                         </td>
                         <td>
                         <?=form_input('pass_'.$key,$gens["pass_$key"],'id="pass_'.$key.'" maxlength="10" size="10" onblur="document.getElementById(\'conf_secret_'.$key.'\').value=this.value;"') ?>
@@ -198,7 +198,7 @@ $(function()
                     </tr>
                     <tr class="advance_settings" style="display:none">
                         <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">Phone Registration Password:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_phone_reg_password"); ?></label>
                         </td>
                         <td>
                         <?=form_input('conf_secret_'.$key,$gens["pass_$key"],'id="conf_secret_'.$key.'" maxlength="10" size="10"') ?>
@@ -206,46 +206,46 @@ $(function()
                     </tr>
                     <tr <?=($gens["protocol_$key"]=="EXTERNAL") ? "" : 'style="display:none"'; ?>>
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        <label class="modify-value">Dial Prefix:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_dial_prefix"); ?>:</label>
                         </td>
                         <td>
 						<?php
 						$dial_prefix = (strlen($gens["dial_prefix_$key"]) > 0) ? $gens["dial_prefix_$key"] : "9999";
 						?>
-                        <?=form_input('dial_prefix_'.$key,$dial_prefix,'id="dial_prefix_'.$key.'" maxlength="10" size="10"') ?>&nbsp;<font size="1" color="red">(numeric only)</font>&nbsp;
+                        <?=form_input('dial_prefix_'.$key,$dial_prefix,'id="dial_prefix_'.$key.'" maxlength="10" size="10"') ?>&nbsp;<font size="1" color="red">(<? echo $this->lang->line("go_num_only"); ?>)</font>&nbsp;
                         </td>
                     </tr>
                     <tr style="display:none;">
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        <label class="modify-value">Dial Plan Number:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_dial_plan_num"); ?>:</label>
                         </td>
                         <td>
-                        <?=form_input('dialplan_number_'.$key,$gens["extension_$key"],'id="dialplan_number_'.$key.'" maxlength="15" size="20"') ?>&nbsp;<font size="1" color="red">(numeric only)</font>&nbsp;
+                        <?=form_input('dialplan_number_'.$key,$gens["extension_$key"],'id="dialplan_number_'.$key.'" maxlength="15" size="20"') ?>&nbsp;<font size="1" color="red">(<? echo $this->lang->line("go_num_only"); ?>)</font>&nbsp;
                         </td>
                     </tr>
                     <tr style="display:none;">
                         <td style="text-align:right;width:30%;height:10px;font-weight:bold;">
-                        <label class="modify-value">Voicemail Box:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_voicemail_box"); ?>:</label>
                         </td>
                         <td>
-                        <?=form_input('voicemail_id_'.$key,$gens["extension_$key"],'id="voicemail_id_'.$key.'" maxlength="10" size="15"') ?>&nbsp;<font size="1" color="red">(numeric only)</font>&nbsp;
+                        <?=form_input('voicemail_id_'.$key,$gens["extension_$key"],'id="voicemail_id_'.$key.'" maxlength="10" size="15"') ?>&nbsp;<font size="1" color="red">(<? echo $this->lang->line("go_num_only"); ?>)</font>&nbsp;
                         </td>
                     </tr>
                     <tr style="display:none;">
                         <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">Outbound Caller ID:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_outbound_callerid"); ?>:</label>
                         </td>
                         <td>
-                        <?=form_input('outbound_cid_'.$key,null,'id="outbound_cid_'.$key.'" maxlength="20" size="15"') ?>&nbsp;<font size="1" color="red">(numeric only)</font>&nbsp;
+                        <?=form_input('outbound_cid_'.$key,null,'id="outbound_cid_'.$key.'" maxlength="20" size="15"') ?>&nbsp;<font size="1" color="red">(<? echo $this->lang->line("go_num_only"); ?>)</font>&nbsp;
                         </td>
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">User Group:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_user_group"); ?>:</label>
                         </td>
                         <td>
                         <?php
-						$groupArray = array("---ALL---"=>"ALL USER GROUPS");
+						$groupArray = array("---{$this->lang->line('go_all')}---"=> strtoupper($this->lang->line("go_all_user_groups")));
 						$currentGroup = $this->session->userdata('user_group');
 						foreach ($user_groups as $group)
 						{
@@ -257,7 +257,7 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">Server IP:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_server_ip"); ?>:</label>
                         </td>
                         <td>
                         <?php
@@ -273,7 +273,7 @@ $(function()
                     </tr>
                     <tr class="advance_settings" style="display:none;">
                         <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">Agent Screen Login:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_agent_screen_login"); ?>:</label>
                         </td>
                         <td>
                         <?=form_input('login_'.$key,null,'id="login_'.$key.'" maxlength="15" size="15"') ?>
@@ -281,18 +281,18 @@ $(function()
                     </tr>
                     <tr style="display:none;">
                         <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">Status:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_status"); ?>:</label>
                         </td>
                         <td>
                         <?php
-						$statusArray = array('ACTIVE'=>'ACTIVE','SUSPENDED'=>'SUSPENDED','CLOSED'=>'CLOSED','PENDING'=>'PENDING','ADMIN'=>'ADMIN');
+                                                $statusArray = array($this->lang->line("go_active") => $this->lang->line("go_active") , $this->lang->line("go_suspended")=> $this->lang->line("go_suspended"),$this->lang->line("go_closed") => $this->lang->line("go_closed"), $this->lang->line("go_pending") => $this->lang->line("go_pending"), $this->lang->line("go_admin")=> $this->lang->line("go_admin"));
 						echo form_dropdown('status_'.$key,$statusArray,null,'id="status_'.$key.'"');
 						?>
                         </td>
                     </tr>
                     <tr style="display:none;">
                         <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">Active Account:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_active_account"); ?>:</label>
                         </td>
                         <td>
                         <?php
@@ -303,7 +303,7 @@ $(function()
                     </tr>
                     <tr style="display: none;">
                         <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">Phone Type:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_phone_type"); ?>:</label>
                         </td>
                         <td>
                         <?=form_input('phone_type_'.$key,null,'id="phone_type_'.$key.'" maxlength="50" size="20"') ?>
@@ -311,7 +311,7 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">Fullname:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_full_name"); ?>:</label>
                         </td>
                         <td>
                         <?=form_input('fullname_'.$key,$gens["fullname_$key"],'id="fullname_'.$key.'" maxlength="50" size="20"') ?>
@@ -319,7 +319,7 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">Client Protocol:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_client_protocol"); ?>:</label>
                         </td>
                         <td>
                         <?php
@@ -330,7 +330,7 @@ $(function()
                     </tr>
                     <tr>
                         <td style="text-align:right;width:30%;height:10px;">
-                        <label class="modify-value">Local GMT:</label>
+                        <label class="modify-value"><? echo $this->lang->line("go_local_gmt"); ?>:</label>
                         </td>
                         <td>
                         <?php
@@ -346,7 +346,7 @@ $(function()
 						);
 						echo form_dropdown('local_gmt_'.$key,$gmtArray,$system_settings->default_local_gmt,'id="local_gmt_'.$key.'"');
 						?>
-						(Do NOT adjust for DST)
+						(<? echo $this->lang->line("go_do_not_adjust_DST"); ?>)
                         </td>
                     </tr>
                 </table>
@@ -362,4 +362,4 @@ $(function()
 	</tr>
 </table>
 <hr style="border:#DFDFDF 1px solid;" />
-<span id="saveButtons"><span id="cancel" style="white-space: nowrap;">Back</span> | <span id="submit" style="white-space: nowrap;">Submit</span></span>
+<span id="saveButtons"><span id="cancel" style="white-space: nowrap;"><? echo $this->lang->line("go_back"); ?></span> | <span id="submit" style="white-space: nowrap;"><? echo $this->lang->line("go_submit"); ?></span></span>
