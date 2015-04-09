@@ -202,6 +202,26 @@ include($settings_path);
 }
 
 
+function curPageURL() {
+ $pageURL = 'http';
+ if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+ $pageURL .= "://";
+ if ($_SERVER["SERVER_PORT"] != "80") {
+  $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+ } else {
+  $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+ }
+ return $pageURL;
+}
+
+$curPage = curPageURL();
+$loginURL = "https://".$_SERVER['SERVER_NAME']."/login/";
+
+if($curPage != $loginURL) {
+  header("Location: $loginURL"); /* Redirect browser */
+  exit();
+}
+
 ?>
 
 <html>
@@ -590,15 +610,7 @@ if($verifymail=="1") {
  
 </form>
 <div class="ce">
-<?php
-#if($VARSERVTYPE=="public") {
-?>
-<!-- <font size="4">Sign-up <a id="signup"><u><font size="4" color="#428e00">here</font></u></a> for free 120 minutes</font> -->
-<?php
-#}
-?>
 <br>
-<!--<a href="https://<?=$_SERVER['SERVER_NAME']?>/login/index.php?forgotpass=1" style="color: #428e00;"><font size="2">Forgot password?</font></a>-->
  <a class="ce" href='../credits'>GoAdmin &reg; <?echo $version;?></a> 
 
 </div>
