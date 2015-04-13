@@ -141,10 +141,10 @@ if (isset($_GET["f_rtype_pass"])) {
         $f_rtype_pass=$_POST["f_rtype_pass"];
 }
 
-if (isset($_GET["sgo_language"])) {
-        $sgo_language = $_GET["sgo_language"];
-} elseif (isset($_POST["sgo_language"])) {
-        $sgo_language=$_POST["sgo_language"];
+if (isset($_GET["lang"])) {
+        $sgo_language = $_GET["lang"];
+} elseif (isset($_POST["lang"])) {
+        $sgo_language=$_POST["lang"];
 }
 
 
@@ -184,7 +184,7 @@ $cnt_lang = mysql_num_rows($rsltlang);
                 while ($cnt_lang > $l) {
                         $rowlang=mysql_fetch_row($rsltlang);
                         $lowerlang = strtolower($rowlang[1]);
-                        $LangLink .= "<div id=\"flag-$rowlang[0]\" class=\"flags\" ><a href=\"?sgo_language=$lowerlang\" style=\"display: block; font-size: 10px;\"  title=\"$rowlang[1]\">&nbsp; </a></div>";
+                        $LangLink .= "<div id=\"flag-$rowlang[0]\" class=\"flags\" ><a href=\"?lang=$lowerlang\" style=\"display: block; font-size: 10px;\"  title=\"$rowlang[1]\">&nbsp; </a></div>";
                 $l++;
                 }
         }
@@ -192,6 +192,7 @@ $cnt_lang = mysql_num_rows($rsltlang);
 if(strlen($sgo_language) > 0) {
 $_SESSION['xsgo_language'] = $sgo_language;
 $vgo_language = $_SESSION['xsgo_language'];
+$lang_info = "?lang={$sgo_language}";
 
 $settings_path = "{$_SERVER['DOCUMENT_ROOT']}/application/language/$sgo_language/login_lang.php";
 include($settings_path);
@@ -215,7 +216,7 @@ function curPageURL() {
 }
 
 $curPage = curPageURL();
-$loginURL = "https://".$_SERVER['SERVER_NAME']."/login/";
+$loginURL = "https://".$_SERVER['SERVER_NAME']."/login/{$lang_info}";
 
 if($curPage != $loginURL) {
   header("Location: $loginURL"); /* Redirect browser */
@@ -244,7 +245,7 @@ if($curPage != $loginURL) {
 <script type='text/javascript'>
 $(document).ready(function(){
 	
-	$("#form_login").submit(function() {
+	$("#form_login").submit(function(event) {
 		
     	    var name = $("input#user_name").val();  
     	    var pass = $("input#user_pass").val();
@@ -282,7 +283,8 @@ $(document).ready(function(){
 
 		});     
 
-            return false;
+            //return false;
+	    event.preventDefault();
 
         });
 
