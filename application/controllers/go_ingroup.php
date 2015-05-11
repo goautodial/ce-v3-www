@@ -40,7 +40,7 @@ class Go_ingroup extends Controller {
 
 		$data['userfulname'] = $this->goingroup->go_get_userfulname();
 		
-		$data['permissions'] = $this->commonhelper->getPermissions("ingroups",$this->session->userdata("user_group"));
+		$data['permissions'] = $this->commonhelper->getPermissions("inbound",$this->session->userdata("user_group"));
 		
 		/* insert post values */ 
 	    $addSUBMIT = $this->input->post('addSUBMIT');
