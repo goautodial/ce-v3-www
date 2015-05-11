@@ -1,5 +1,9 @@
 Filename: changelog.txt
 
+1431316800 - Fixed a bug when viewing Ingroup page while the admin user is restricted. (Issue #2063) -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/controllers/go_ingroup.php
+
 1428897600 - Fixed a bug when selecting other languages on GOadmin portal. -- Chris Lomuntad <chris@goautodial.com>
            - * Affected File:
            - * login/index.php
