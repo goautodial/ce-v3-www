@@ -61,10 +61,10 @@ class Gouser extends Model {
                   $notAdminSQL = "AND user_group != 'ADMIN'";
               }
 
-              $xstmt = "SELECT * FROM vicidial_users WHERE user NOT IN ('VDAD','VDCL') AND user_level != '4' $levelSQL $searchSQL $userGroupSQL $notAdminSQL";
+              $xstmt = "SELECT * FROM vicidial_users WHERE user NOT IN ('VDAD','VDCL') AND full_name NOT LIKE 'Survey%' $levelSQL $searchSQL $userGroupSQL $notAdminSQL";
               
 
-              $stmt = "SELECT * FROM vicidial_users WHERE user NOT IN ('VDAD','VDCL') AND user_level != '4' $levelSQL $searchSQL $userGroupSQL $notAdminSQL ORDER BY user ASC LIMIT $offset,$limit";
+              $stmt = "SELECT * FROM vicidial_users WHERE user NOT IN ('VDAD','VDCL') AND full_name NOT LIKE 'Survey%' $levelSQL $searchSQL $userGroupSQL $notAdminSQL ORDER BY user ASC LIMIT $offset,$limit";
               $users = $this->asteriskDB->query($stmt);
               $collectedusers = array(); 
               $ctr = 0;
