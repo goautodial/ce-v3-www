@@ -610,7 +610,7 @@ $(function()
 		<td><select id="isActive"><option value="Y"><? echo lang('go_YES'); ?> </option><option value="N"><? echo lang('go_NO'); ?></option></select></td>
 	</tr>
 	<tr>
-		<td colspan="2" style="text-align: right;"><a id="saveModifiedPauseCodes" class="buttons" style="cursor: pointer"><? echo lang('go_SAVE'); ?></a></td>
+		<td colspan="2" style="text-align: right;"><a id="saveModifiedLeadRecycling" class="buttons" style="cursor: pointer"><? echo lang('go_SAVE'); ?></a></td>
 	</tr>
 </table>
 </div>
