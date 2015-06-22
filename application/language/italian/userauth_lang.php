@@ -926,7 +926,7 @@ $lang['go_Thiscampaignhas']		 = "Questa campagna ha";
 $lang['go_activelistsand']		 = "liste attive e";
 $lang['go_inactivelists']		 = "liste inattivi";
 $lang['go_AttemptDelay']		 = "Ritardo Tentativo";
-$lang['go_Shouldbefrom2to720mins12hrs']  = "Dovrebbe essere 2-7 e 20 minuti (12 ore).";
+$lang['go_Shouldbefrom2to720mins12hrs']  = "Dovrebbe essere 2 e 720 minuti (12 ore).";
 $lang['go_AttemptMaximum_']		 = "Tentativo Massima:";
 $lang['go_MaximumAttempts'] 		 = "Massimo Tentativi:";
 $lang['go_PauseCodeWizard__CreateNewPauseCode'] = "Pausa Codice Wizard » Crea Nuovo Codice Pause";
@@ -2286,7 +2286,13 @@ $lang['go_create_ct'] = "Impossibile creare chiamate Volte";
 $lang['go_create_carriers'] = "Impossibile creare Carriers";
 $lang['go_create_phones'] = "Impossibile creare Cellulari";
 $lang['go_create_vm'] = "Impossibile creare messaggi vocali";
-$lang['go_agent_phone_cnt'] = "Agente/Telefono Contare";
+
+$lang['go_agent_cnt'] = "Conte agente";
+$lang['go_allowed_phone_exten'] = "Ammessi Telefono Interno";
+$lang['go_allowed_to_create'] = "Vi trovate ancora permesso di creare";
+$lang['go_phone_exten'] = "Estensioni Telefoniche";
+$lang['go_reached_limit_phone'] = "Hai raggiunto il limite sulla creazione di nuovi interni telefonici.";
+
 $lang['go_agent_phone_def_pass'] = "Agente/Telefonoagente password di default";
 $lang['go_modify_tenant'] = "MODIFICARE INQUILINO";
 $lang['go_super_admin'] = "Super amministratore";
@@ -2302,6 +2308,7 @@ $lang['go_campaign_id'] = "CAMPAGNA ID";
 $lang['go_campaign_name'] = "NOME CAMPAGNA";
 $lang['go_agent_name'] = "NOME AGENTE";
 $lang['go_list_agents'] = "ELENCO DEGLI AGENTI";
+$lang['go_make_sure_to_delete'] = "NOTA: Assicuratevi di eliminare il numero di interni telefonici che hai dedotto dal locatario interessato.";
 
 // State Call Times
 $lang['go_state_ct_wizard'] = "Stato Tempi Wizard Chiamata";

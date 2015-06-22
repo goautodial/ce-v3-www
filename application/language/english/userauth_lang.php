@@ -927,7 +927,7 @@ $lang['go_Thiscampaignhas']		 = "This Campaign has";
 $lang['go_activelistsand']		 = "active lists and";
 $lang['go_inactivelists']		 = "inactive lists";
 $lang['go_AttemptDelay']		 = "Attempt Delay";
-$lang['go_Shouldbefrom2to720mins12hrs']  = "Should be from 2 to 7 and 20 minutes (12 hours).";
+$lang['go_Shouldbefrom2to720mins12hrs']  = "Should be from 2 to 720 minutes (12 hours).";
 $lang['go_AttemptMaximum_']		 = "Attempt Maximum:";
 $lang['go_MaximumAttempts'] 		 = "Maximum Attempts";
 $lang['go_PauseCodeWizard__CreateNewPauseCode'] = "Pause Code Wizard >> Create New Pause Code";
@@ -1458,7 +1458,7 @@ $lang['go_VoicemailChooser'] = "Voicemail Chooser";
 $lang['go_DropTransferGroup']  = "Drop Transfer Group";
 $lang['go_DropCallMenu'] = "Drop Callmenu";
 $lang['go_CallTime'] = "Calltime";
-$lang['go_AfterHoursAction'] = "After Hours Acción";
+$lang['go_AfterHoursAction'] = "After Hours Action";
 $lang['go_AfterHoursMessageFilename'] = "After Hours Message Filename";
 
 $lang['go_AfterHoursExtension'] = "After Hours Extension";
@@ -2281,7 +2281,13 @@ $lang['go_create_ct'] = "Can Create Call Times";
 $lang['go_create_carriers'] = "Can Create Carriers";
 $lang['go_create_phones'] = "Can Create Phones";
 $lang['go_create_vm'] = "Can Create Voicemails";
-$lang['go_agent_phone_cnt'] = "Agent/Phone Count";
+
+$lang['go_agent_cnt'] = "Agent Count";
+$lang['go_allowed_phone_exten'] = "Allowed Phone Exten";
+$lang['go_allowed_to_create'] = "Your're still allowed to create";
+$lang['go_phone_exten'] = "Phone Extension(s)";
+$lang['go_reached_limit_phone'] = "You've reached the limit on creating new phone extensions.";
+
 $lang['go_agent_phone_def_pass'] = "Agent/Phone Default Password";
 $lang['go_modify_tenant'] = "MODIFY TENANT";
 $lang['go_super_admin'] = "Super Admin";
@@ -2297,6 +2303,7 @@ $lang['go_campaign_id'] = "CAMPAIGN ID";
 $lang['go_campaign_name'] = "CAMPAIGN NAME";
 $lang['go_agent_name'] = "AGENT NAME";
 $lang['go_list_agents'] = "LIST OF AGENTS";
+$lang['go_make_sure_to_delete'] = "NOTE: Please make sure to delete the number of phone extensions you've deducted from the affected tenant.";
 
 // State Call Times
 $lang['go_state_ct_wizard'] = "State Call Times Wizard";

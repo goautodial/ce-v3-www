@@ -961,7 +961,7 @@ $lang['go_Thiscampaignhas']		 = "Ang Kampanyang ito ay may"; //"This Campaign ha
 $lang['go_activelistsand']		 = "aktibong mga litahan at"; //"active lists and";
 $lang['go_inactivelists']		 = "mga listahang hindi aktibo"; //"inactive lists";
 $lang['go_AttemptDelay']		 = "Pagtatangkang Pagkaantala"; //"Attempt Delay";
-$lang['go_Shouldbefrom2to720mins12hrs']  = "Dapat na 2-7 at 20 minuto (12 na oras)."; //"Should be from 2 to 7 and 20 minutes (12 hours).";
+$lang['go_Shouldbefrom2to720mins12hrs']  = "Dapat na 2 hanggang 720 minuto (12 na oras)."; //"Should be from 2 to 7 and 20 minutes (12 hours).";
 $lang['go_AttemptMaximum_']		 = "Hangganan ng Pagtatangka"; //"Attempt Maximum:";
 $lang['go_MaximumAttempts'] 		 = "Hangganan ng Pagtatangka"; //"Maximum Attempts";
 $lang['go_PauseCodeWizard__CreateNewPauseCode'] = "Wizard ng Pause Code >> Lumikha ng Bagong Pause Code"; //"Pause Code Wizard >> Create New Pause Code";
@@ -2329,7 +2329,13 @@ $lang['go_create_ct'] = "Maaari Lumikha ng Call Times";
 $lang['go_create_carriers'] = "Maaari Lumikha ng mga Carrier";
 $lang['go_create_phones'] = "Maaari Lumikha ng Telepono";
 $lang['go_create_vm'] = "Maaari Lumikha ng mga Voicemail";
-$lang['go_agent_phone_cnt'] = "Bilang ng Ahente/Telepono";
+
+$lang['go_agent_cnt'] = "Bilang ng Ahente";
+$lang['go_allowed_phone_exten'] = "Pinapayagan ang Mga Extension ng Telepono";
+$lang['go_allowed_to_create'] = "Ikaw ay Pinapahintulutan pa rin na Lumikha";
+$lang['go_phone_exten'] = "Mga Extension ng Telepono";
+$lang['go_reached_limit_phone'] = "Naabot mo na ang limitasyon sa paglikha ng mga bagong extension ng telepono.";
+
 $lang['go_agent_phone_def_pass'] = "Default na Password ng Ahente/Telepono";
 $lang['go_modify_tenant'] = "BAGUHIN ANG TENANT";
 $lang['go_super_admin'] = "Super Admin";
@@ -2345,6 +2351,7 @@ $lang['go_campaign_id'] = "PAGKAKAKILANLAN NG KAMPANYA";
 $lang['go_campaign_name'] = "PANGALAN NG KAMPANYA";
 $lang['go_agent_name'] = "PANGALAN NG AHENTE";
 $lang['go_list_agents'] = "LISTAHAN NG MGA AHENTE";
+$lang['go_make_sure_to_delete'] = "TANDAAN: Mangyaring siguraduhin na tanggalin ang bilang ng mga extension ng telepono na iyong ibabawas mula sa mga apektadong mga Tenants.";
 
 // State Call Times
 $lang['go_state_ct_wizard'] = "Wizard ng Estado ng Oras ng Tawag";

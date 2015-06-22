@@ -2313,7 +2313,13 @@ $lang['go_create_ct'] = "Puede crear los tiempos de llamada"; //"Can Create Call
 $lang['go_create_carriers'] = "Se puede crear transportistas"; //"Can Create Carriers";
 $lang['go_create_phones'] = "Se puede crear Móviles"; //"Can Create Phones";
 $lang['go_create_vm'] = "Puede crear mensajes de voz"; //"Can Create Voicemails";
-$lang['go_agent_phone_cnt'] = "Agente / Conde de teléfono"; //"Agent/Phone Count";
+
+$lang['go_agent_cnt'] = "Conde Agente";
+$lang['go_allowed_phone_exten'] = "Extensión telefónica mascotas";
+$lang['go_allowed_to_create'] = "Tu eres todavía les permite crear";
+$lang['go_phone_exten'] = "Extensiones Telefónicas";
+$lang['go_reached_limit_phone'] = "Usted ha llegado al límite en la creación de nuevas extensiones de teléfono.";
+
 $lang['go_agent_phone_def_pass'] = "Agente / Teléfono Contraseña por defecto"; //"Agent/Phone Default Password";
 $lang['go_modify_tenant'] = "MODIFICAR INQUILINO"; //"MODIFY TENANT";
 $lang['go_super_admin'] = "Superadministrador"; //"Super Admin";
@@ -2329,6 +2335,7 @@ $lang['go_campaign_id'] = "Identificación del CAMPAÑA"; //"CAMPAIGN ID";
 $lang['go_campaign_name'] = "Nombre de la campaña"; //"CAMPAIGN NAME";
 $lang['go_agent_name'] = "Nombre del agente"; //"AGENT NAME";
 $lang['go_list_agents'] = "LISTA DE AGENTES"; //"LIST OF AGENTS";
+$lang['go_make_sure_to_delete'] = "NOTA: Por favor, asegúrese de borrar el número de extensiones de teléfono que has deducido del inquilino afectado.";
 
 // State Call Times
 $lang['go_state_ct_wizard'] = "Asistente tiempos de llamada estado"; //"State Call Times Wizard";
