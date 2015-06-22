@@ -1,5 +1,9 @@
 Filename: changelog.txt
 
+1435032000 - Fixed an issue when modifying campaign's Lead Recycle statuses. (Issue #2139) -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/views/go_campaign/go_campaign_statuses.php
+
 1431489600 - Fixed the SQL query on displaying the user's list. (Issue #2065) -- Chris Lomuntad <chris@goautodial.com>
            - * Affected File:
            - * application/models/gouser.php
