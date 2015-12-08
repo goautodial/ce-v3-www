@@ -1,5 +1,24 @@
 Filename: changelog.txt
 
+1449550800 - Fixed some vulnerability issues reported by Infogen AL and also removed the folders agc and vicidial from the repository. -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * agent/SCRIPT_multirecording_AJAX.php
+           - * agent/active_list_refresh.php
+           - * agent/conf_exten_check.php
+           - * agent/inbound_popup.php
+           - * agent/live_exten_check.php
+           - * agent/manager_send.php
+           - * agent/park_calls_display.php
+
+           - * Deleted Folders:
+           - * agc/
+           - * vicidial/
+
+
+1438142400 - Fixed an issue when downloading leads with custom fields enabled and the custom table is empty. (Issue #2169) -- Chris Lomuntad <chris@goautodial.com>
+           - * Affected File:
+           - * application/models/golist.php
+
 1435032000 - Fixed an issue when modifying campaign's Lead Recycle statuses. (Issue #2139) -- Chris Lomuntad <chris@goautodial.com>
            - * Affected Files:
            - * application/views/go_campaign/go_campaign_statuses.php
