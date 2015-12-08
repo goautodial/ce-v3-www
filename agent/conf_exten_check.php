@@ -162,7 +162,9 @@ else
 		}
 	else
 		{
-		$stmt="SELECT count(*) from web_client_sessions where session_name='$session_name' and server_ip='$server_ip';";
+		$stmt = sprintf("SELECT count(*) from web_client_sessions where session_name='%s' and server_ip='%s';",
+				mysql_real_escape_string($session_name),
+				mysql_real_escape_string($server_ip));
 		if ($DB) {echo "|$stmt|\n";}
 		$rslt=mysql_query($stmt, $link);
 			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'03002',$user,$server_ip,$session_name,$one_mysql_log);}

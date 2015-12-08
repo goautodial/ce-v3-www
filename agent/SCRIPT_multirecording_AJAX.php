@@ -40,7 +40,8 @@ $exten="8309";
 $ext_context="default";
 #if (eregi("^10.10.", $server_ip)) {$ext_context="demo";} else {$ext_content="default";}
 
-$stmt="select campaign_rec_filename from vicidial_campaigns where campaign_id='$campaign'";
+$stmt = sprintf("select campaign_rec_filename from vicidial_campaigns where campaign_id='%s'",
+		mysql_real_escape_string($campaign));
 $rslt=mysql_query($stmt, $link);
 $row=mysql_fetch_array($rslt);
 $filename=$row["campaign_rec_filename"];

@@ -99,7 +99,9 @@ if ( (eregi("^Zap",$channel)) and (!eregi("-",$channel)) ) {$channel = "$channel
 		}
 	else
 		{
-		$stmt="SELECT count(*) from web_client_sessions where session_name='$session_name' and server_ip='$server_ip';";
+		$stmt = sprintf("SELECT count(*) from web_client_sessions where session_name='%s' and server_ip='%s';",
+                                mysql_real_escape_string($session_name),
+                                mysql_real_escape_string($server_ip));
 		if ($DB) {echo "|$stmt|\n";}
 		$rslt=mysql_query($stmt, $link);
 		$row=mysql_fetch_row($rslt);
